@@ -1,9 +1,8 @@
-// Dart imports:
 import 'dart:io' if (dart.library.html) 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
+import '../../../utils/extensions/extensions.dart';
 
 import 'take.image.option.dart';
 

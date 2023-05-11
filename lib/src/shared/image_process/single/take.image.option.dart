@@ -1,11 +1,10 @@
-// Dart imports:
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
+import '../../../utils/extensions/extensions.dart';
 
 Future<File?> takeImageOption(
   BuildContext context,

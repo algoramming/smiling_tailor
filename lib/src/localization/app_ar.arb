@@ -10,6 +10,7 @@
   "performanceOverlay": "تراكب الأداء",
   "deleteDatabase": "حذف قاعدة البيانات",
   "viewDatabase": "عرض قاعدة البيانات",
+  "urlConfig": "تكوين عنوان",
   "theme": "موضوع",
   "language": "لغة",
   "currency": "عملة",

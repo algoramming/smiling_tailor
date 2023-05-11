@@ -17,57 +17,67 @@ const AppSettingsSchema = CollectionSchema(
   name: r'AppSettings',
   id: -5633561779022347008,
   properties: {
-    r'currency': PropertySchema(
+    r'baseUrl': PropertySchema(
       id: 0,
+      name: r'baseUrl',
+      type: IsarType.string,
+    ),
+    r'currency': PropertySchema(
+      id: 1,
       name: r'currency',
       type: IsarType.string,
     ),
     r'currencyFormat': PropertySchema(
-      id: 1,
+      id: 2,
       name: r'currencyFormat',
       type: IsarType.string,
     ),
     r'dateFormat': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'dateFormat',
       type: IsarType.string,
     ),
     r'firstRun': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'firstRun',
       type: IsarType.bool,
     ),
     r'firstRunDateTime': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'firstRunDateTime',
       type: IsarType.dateTime,
     ),
     r'fontFamily': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'fontFamily',
       type: IsarType.string,
     ),
     r'locale': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'locale',
       type: IsarType.string,
       enumMap: _AppSettingslocaleEnumValueMap,
     ),
     r'performanceOverlayEnable': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'performanceOverlayEnable',
       type: IsarType.bool,
     ),
     r'theme': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'theme',
       type: IsarType.string,
       enumMap: _AppSettingsthemeEnumValueMap,
     ),
     r'timeFormat': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'timeFormat',
       type: IsarType.string,
+    ),
+    r'useSecureProtocol': PropertySchema(
+      id: 11,
+      name: r'useSecureProtocol',
+      type: IsarType.bool,
     )
   },
   estimateSize: _appSettingsEstimateSize,
@@ -90,6 +100,7 @@ int _appSettingsEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  bytesCount += 3 + object.baseUrl.length * 3;
   bytesCount += 3 + object.currency.length * 3;
   bytesCount += 3 + object.currencyFormat.length * 3;
   bytesCount += 3 + object.dateFormat.length * 3;
@@ -106,16 +117,18 @@ void _appSettingsSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.currency);
-  writer.writeString(offsets[1], object.currencyFormat);
-  writer.writeString(offsets[2], object.dateFormat);
-  writer.writeBool(offsets[3], object.firstRun);
-  writer.writeDateTime(offsets[4], object.firstRunDateTime);
-  writer.writeString(offsets[5], object.fontFamily);
-  writer.writeString(offsets[6], object.locale.name);
-  writer.writeBool(offsets[7], object.performanceOverlayEnable);
-  writer.writeString(offsets[8], object.theme.name);
-  writer.writeString(offsets[9], object.timeFormat);
+  writer.writeString(offsets[0], object.baseUrl);
+  writer.writeString(offsets[1], object.currency);
+  writer.writeString(offsets[2], object.currencyFormat);
+  writer.writeString(offsets[3], object.dateFormat);
+  writer.writeBool(offsets[4], object.firstRun);
+  writer.writeDateTime(offsets[5], object.firstRunDateTime);
+  writer.writeString(offsets[6], object.fontFamily);
+  writer.writeString(offsets[7], object.locale.name);
+  writer.writeBool(offsets[8], object.performanceOverlayEnable);
+  writer.writeString(offsets[9], object.theme.name);
+  writer.writeString(offsets[10], object.timeFormat);
+  writer.writeBool(offsets[11], object.useSecureProtocol);
 }
 
 AppSettings _appSettingsDeserialize(
@@ -125,20 +138,22 @@ AppSettings _appSettingsDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = AppSettings();
-  object.currency = reader.readString(offsets[0]);
-  object.currencyFormat = reader.readString(offsets[1]);
-  object.dateFormat = reader.readString(offsets[2]);
-  object.firstRun = reader.readBool(offsets[3]);
-  object.firstRunDateTime = reader.readDateTime(offsets[4]);
-  object.fontFamily = reader.readString(offsets[5]);
+  object.baseUrl = reader.readString(offsets[0]);
+  object.currency = reader.readString(offsets[1]);
+  object.currencyFormat = reader.readString(offsets[2]);
+  object.dateFormat = reader.readString(offsets[3]);
+  object.firstRun = reader.readBool(offsets[4]);
+  object.firstRunDateTime = reader.readDateTime(offsets[5]);
+  object.fontFamily = reader.readString(offsets[6]);
   object.locale =
-      _AppSettingslocaleValueEnumMap[reader.readStringOrNull(offsets[6])] ??
+      _AppSettingslocaleValueEnumMap[reader.readStringOrNull(offsets[7])] ??
           LocaleProfile.arabic;
-  object.performanceOverlayEnable = reader.readBool(offsets[7]);
+  object.performanceOverlayEnable = reader.readBool(offsets[8]);
   object.theme =
-      _AppSettingsthemeValueEnumMap[reader.readStringOrNull(offsets[8])] ??
+      _AppSettingsthemeValueEnumMap[reader.readStringOrNull(offsets[9])] ??
           ThemeProfile.blue;
-  object.timeFormat = reader.readString(offsets[9]);
+  object.timeFormat = reader.readString(offsets[10]);
+  object.useSecureProtocol = reader.readBool(offsets[11]);
   return object;
 }
 
@@ -156,21 +171,25 @@ P _appSettingsDeserializeProp<P>(
     case 2:
       return (reader.readString(offset)) as P;
     case 3:
-      return (reader.readBool(offset)) as P;
-    case 4:
-      return (reader.readDateTime(offset)) as P;
-    case 5:
       return (reader.readString(offset)) as P;
+    case 4:
+      return (reader.readBool(offset)) as P;
+    case 5:
+      return (reader.readDateTime(offset)) as P;
     case 6:
+      return (reader.readString(offset)) as P;
+    case 7:
       return (_AppSettingslocaleValueEnumMap[reader.readStringOrNull(offset)] ??
           LocaleProfile.arabic) as P;
-    case 7:
-      return (reader.readBool(offset)) as P;
     case 8:
+      return (reader.readBool(offset)) as P;
+    case 9:
       return (_AppSettingsthemeValueEnumMap[reader.readStringOrNull(offset)] ??
           ThemeProfile.blue) as P;
-    case 9:
+    case 10:
       return (reader.readString(offset)) as P;
+    case 11:
+      return (reader.readBool(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -298,6 +317,140 @@ extension AppSettingsQueryWhere
 
 extension AppSettingsQueryFilter
     on QueryBuilder<AppSettings, AppSettings, QFilterCondition> {
+  QueryBuilder<AppSettings, AppSettings, QAfterFilterCondition> baseUrlEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'baseUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AppSettings, AppSettings, QAfterFilterCondition>
+      baseUrlGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'baseUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AppSettings, AppSettings, QAfterFilterCondition> baseUrlLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'baseUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AppSettings, AppSettings, QAfterFilterCondition> baseUrlBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'baseUrl',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AppSettings, AppSettings, QAfterFilterCondition>
+      baseUrlStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'baseUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AppSettings, AppSettings, QAfterFilterCondition> baseUrlEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'baseUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AppSettings, AppSettings, QAfterFilterCondition> baseUrlContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'baseUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AppSettings, AppSettings, QAfterFilterCondition> baseUrlMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'baseUrl',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AppSettings, AppSettings, QAfterFilterCondition>
+      baseUrlIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'baseUrl',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<AppSettings, AppSettings, QAfterFilterCondition>
+      baseUrlIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'baseUrl',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<AppSettings, AppSettings, QAfterFilterCondition> currencyEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -1371,6 +1524,16 @@ extension AppSettingsQueryFilter
       ));
     });
   }
+
+  QueryBuilder<AppSettings, AppSettings, QAfterFilterCondition>
+      useSecureProtocolEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'useSecureProtocol',
+        value: value,
+      ));
+    });
+  }
 }
 
 extension AppSettingsQueryObject
@@ -1381,6 +1544,18 @@ extension AppSettingsQueryLinks
 
 extension AppSettingsQuerySortBy
     on QueryBuilder<AppSettings, AppSettings, QSortBy> {
+  QueryBuilder<AppSettings, AppSettings, QAfterSortBy> sortByBaseUrl() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'baseUrl', Sort.asc);
+    });
+  }
+
+  QueryBuilder<AppSettings, AppSettings, QAfterSortBy> sortByBaseUrlDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'baseUrl', Sort.desc);
+    });
+  }
+
   QueryBuilder<AppSettings, AppSettings, QAfterSortBy> sortByCurrency() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'currency', Sort.asc);
@@ -1505,10 +1680,36 @@ extension AppSettingsQuerySortBy
       return query.addSortBy(r'timeFormat', Sort.desc);
     });
   }
+
+  QueryBuilder<AppSettings, AppSettings, QAfterSortBy>
+      sortByUseSecureProtocol() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'useSecureProtocol', Sort.asc);
+    });
+  }
+
+  QueryBuilder<AppSettings, AppSettings, QAfterSortBy>
+      sortByUseSecureProtocolDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'useSecureProtocol', Sort.desc);
+    });
+  }
 }
 
 extension AppSettingsQuerySortThenBy
     on QueryBuilder<AppSettings, AppSettings, QSortThenBy> {
+  QueryBuilder<AppSettings, AppSettings, QAfterSortBy> thenByBaseUrl() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'baseUrl', Sort.asc);
+    });
+  }
+
+  QueryBuilder<AppSettings, AppSettings, QAfterSortBy> thenByBaseUrlDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'baseUrl', Sort.desc);
+    });
+  }
+
   QueryBuilder<AppSettings, AppSettings, QAfterSortBy> thenByCurrency() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'currency', Sort.asc);
@@ -1645,10 +1846,31 @@ extension AppSettingsQuerySortThenBy
       return query.addSortBy(r'timeFormat', Sort.desc);
     });
   }
+
+  QueryBuilder<AppSettings, AppSettings, QAfterSortBy>
+      thenByUseSecureProtocol() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'useSecureProtocol', Sort.asc);
+    });
+  }
+
+  QueryBuilder<AppSettings, AppSettings, QAfterSortBy>
+      thenByUseSecureProtocolDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'useSecureProtocol', Sort.desc);
+    });
+  }
 }
 
 extension AppSettingsQueryWhereDistinct
     on QueryBuilder<AppSettings, AppSettings, QDistinct> {
+  QueryBuilder<AppSettings, AppSettings, QDistinct> distinctByBaseUrl(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'baseUrl', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<AppSettings, AppSettings, QDistinct> distinctByCurrency(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1718,6 +1940,13 @@ extension AppSettingsQueryWhereDistinct
       return query.addDistinctBy(r'timeFormat', caseSensitive: caseSensitive);
     });
   }
+
+  QueryBuilder<AppSettings, AppSettings, QDistinct>
+      distinctByUseSecureProtocol() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'useSecureProtocol');
+    });
+  }
 }
 
 extension AppSettingsQueryProperty
@@ -1725,6 +1954,12 @@ extension AppSettingsQueryProperty
   QueryBuilder<AppSettings, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<AppSettings, String, QQueryOperations> baseUrlProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'baseUrl');
     });
   }
 
@@ -1787,6 +2022,13 @@ extension AppSettingsQueryProperty
   QueryBuilder<AppSettings, String, QQueryOperations> timeFormatProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'timeFormat');
+    });
+  }
+
+  QueryBuilder<AppSettings, bool, QQueryOperations>
+      useSecureProtocolProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'useSecureProtocol');
     });
   }
 }

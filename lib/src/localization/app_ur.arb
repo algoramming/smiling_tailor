@@ -10,6 +10,7 @@
   "performanceOverlay": "پوشش عملکرد",
   "deleteDatabase": "حذف پایگاه داده",
   "viewDatabase": "مشاهده پایگاه داده",
+  "urlConfig": "پیکربندی آدرس",
   "theme": "تم",
   "language": "زبان",
   "currency": "واحد پول",

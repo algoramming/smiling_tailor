@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
+import '../../utils/extensions/extensions.dart';
 
 // class AssetsPath {
 //   static const String help = 'assets/types/help.svg';

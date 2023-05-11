@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_svg/svg.dart';
 
+import '../../../../localization/loalization.dart';
 import '../../../../shared/animations_widget/animated_popup.dart';
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
@@ -24,9 +24,9 @@ class SignoutTile extends StatelessWidget {
           ),
         ),
       ),
-      title: const Text(
-        't.signout',
-        style: TextStyle(fontWeight: FontWeight.bold),
+      title: Text(
+        t.signout,
+        style: const TextStyle(fontWeight: FontWeight.bold),
       ),
       onTap: () async => await showDialog(
         context: context,

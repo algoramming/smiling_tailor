@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smiling_tailor/src/shared/show_toast/show_toast.dart';
+import 'show_toast.dart';
 
 timerSnackbar({
   /// Main body message

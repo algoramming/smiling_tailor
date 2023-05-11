@@ -43,6 +43,10 @@
   "@viewDatabase": {
     "description": "View Database"
   },
+  "urlConfig": "URL Config",
+  "@urlConfig": {
+    "description": "URL Config"
+  },
   "theme": "Theme",
   "@theme": {
     "description": "Theme"

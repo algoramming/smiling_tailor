@@ -155,8 +155,8 @@ final _tooltipTheme = TooltipThemeData(
 final _appBarTheme = AppBarTheme(
   shape: const RoundedRectangleBorder(
     borderRadius: BorderRadius.only(
-      bottomRight: Radius.circular(30),
-      bottomLeft: Radius.circular(30),
+      bottomRight: Radius.circular(15),
+      bottomLeft: Radius.circular(15),
     ),
   ),
   shadowColor: _shadowColor,

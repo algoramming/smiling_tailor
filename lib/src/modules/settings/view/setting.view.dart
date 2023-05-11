@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
+import '../../../utils/extensions/extensions.dart';
 
 import '../../../constants/constants.dart';
 import '../../../localization/loalization.dart';
 import 'advance/db.delete.tile.dart';
 import 'advance/db.view.tile.dart';
 import 'advance/performance.overlay.tile.dart';
+import 'advance/url.config.tile.dart';
 import 'basic/about.tile.dart';
 import 'basic/currency.format.tile.dart';
 import 'basic/currency.tile.dart';
@@ -79,6 +80,7 @@ class AdvancePart extends StatelessWidget {
       child: Column(
         children: [
           PerformanceOverlayTile(),
+          URLConfigTile(),
           DBViewTile(),
           DBDeleteTile(),
         ],

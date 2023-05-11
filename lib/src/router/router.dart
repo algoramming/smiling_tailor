@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/router/provider/data_load_provider.dart';
+import 'provider/data_load_provider.dart';
 
 import '../constants/constants.dart';
 import '../modules/home/view/home.view.dart';

@@ -1,5 +1,8 @@
 import 'dart:convert' show json;
 
+import 'package:flutter/foundation.dart';
+
+import '../../../pocketbase/auth.store/helpers.dart';
 import '../provider/date.format.provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -23,12 +26,14 @@ class AppSettings {
 
   bool firstRun = true;
   String currency = 'BDT';
+  bool useSecureProtocol = kReleaseMode;
   bool performanceOverlayEnable = false;
   String dateFormat = dateFormates.first;
   String timeFormat = timeFormates.first;
   DateTime firstRunDateTime = DateTime.now().toUtc();
   String fontFamily = GoogleFonts.nunito().fontFamily!;
   String currencyFormat = currencyFormates.first['format']!;
+  String baseUrl = kReleaseMode ? globalBaseUrl : localBaseUrl;
 
   @Enumerated(EnumType.name)
   ThemeProfile theme = ThemeProfile.light;
@@ -40,6 +45,7 @@ class AppSettings {
   Map<String, dynamic> toJson() => {
         'firstRunDateTime': firstRunDateTime.toIso8601String(),
         'performanceOverlayEnable': performanceOverlayEnable,
+        'useSecureProtocol': useSecureProtocol,
         'currencyFormat': currencyFormat,
         'dateFormat': dateFormat,
         'timeFormat': timeFormat,
@@ -48,6 +54,7 @@ class AppSettings {
         'firstRun': firstRun,
         'currency': currency,
         'theme': theme.name,
+        'baseUrl': baseUrl,
         'id': id,
       };
 
@@ -57,6 +64,7 @@ class AppSettings {
   factory AppSettings.fromRawJson(Map<String, dynamic> json) => AppSettings()
     ..firstRunDateTime = DateTime.parse(json['firstRunDateTime'] as String)
     ..performanceOverlayEnable = json['performanceOverlayEnable'] as bool
+    ..useSecureProtocol = json['useSecureProtocol'] as bool
     ..currencyFormat = json['currencyFormat'] as String
     ..locale = LocaleProfile.values.firstWhere(
         (e) => e.name == json['locale'] as String,
@@ -68,6 +76,7 @@ class AppSettings {
     ..timeFormat = json['timeFormat'] as String
     ..fontFamily = json['fontFamily'] as String
     ..currency = json['currency'] as String
+    ..baseUrl = json['baseUrl'] as String
     ..firstRun = json['firstRun'] as bool;
 
   @override
