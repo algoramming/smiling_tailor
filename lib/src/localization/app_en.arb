@@ -1,0 +1,94 @@
+{
+  "appTitle": "Smiling Tailor",
+  "@appTitle": {
+    "description": "Smiling Tailor"
+  },
+  "home": "Home",
+  "@home": {
+    "description": "Home"
+  },
+  "cart": "Cart",
+  "@cart": {
+    "description": "Cart"
+  },
+  "profile": "Profile",
+  "@profile": {
+    "description": "Profile"
+  },
+  "more": "More",
+  "@more": {
+    "description": "More"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings"
+  },
+  "basic": "Basic",
+  "@basic": {
+    "description": "Basic"
+  },
+  "advanced": "Advanced",
+  "@advanced": {
+    "description": "Advanced"
+  },
+  "performanceOverlay": "Performance Overlay",
+  "@performanceOverlay": {
+    "description": "Performance Overlay"
+  },
+  "deleteDatabase": "Delete Database",
+  "@deleteDatabase": {
+    "description": "Delete Database"
+  },
+  "viewDatabase": "View Database",
+  "@viewDatabase": {
+    "description": "View Database"
+  },
+  "theme": "Theme",
+  "@theme": {
+    "description": "Theme"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Language"
+  },
+  "currency": "Currency",
+  "@currency": {
+    "description": "Currency"
+  },
+  "currencyFormat": "Currency Format",
+  "@currencyFormat": {
+    "description": "Currency Format"
+  },
+  "dateFormat": "Date Format",
+  "@dateFormat": {
+    "description": "Date Format"
+  },
+  "timeFormat": "Time Format",
+  "@timeFormat": {
+    "description": "Time Format"
+  },
+  "font": "Font",
+  "@font": {
+    "description": "Font"
+  },
+  "signout": "Signout",
+  "@signout": {
+    "description": "Signout"
+  },
+  "about": "About",
+  "@about": {
+    "description": "About"
+  },
+  "weAreUnderMaintenance": "We are Under Maintenance",
+  "@weAreUnderMaintenance": {
+    "description": "We are Under Maintenance"
+  },
+  "weWillBeBackSoon": "We will be back soon!",
+  "@weWillBeBackSoon": {
+    "description": "We will be back soon!"
+  },
+  "contactWithAdmin": "Contact with Admin",
+  "@contactWithAdmin": {
+    "description": "Contact with Admin"
+  }
+}

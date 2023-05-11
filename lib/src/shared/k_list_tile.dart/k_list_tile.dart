@@ -1,0 +1,56 @@
+import 'package:flutter/material.dart';
+
+import '../../constants/constants.dart';
+import '../../utils/extensions/extensions.dart';
+
+class KListTile extends StatelessWidget {
+  const KListTile({
+    super.key,
+    this.onTap,
+    this.title,
+    this.leading,
+    this.padding,
+    this.trailing,
+    this.subtitle,
+  });
+
+  final Widget? title;
+  final Widget? leading;
+  final Widget? subtitle;
+  final Widget? trailing;
+  final void Function()? onTap;
+  final EdgeInsetsGeometry? padding;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      hoverColor: context.theme.primaryColor.withOpacity(0.2),
+      splashColor: context.theme.primaryColor.withOpacity(0.5),
+      borderRadius: borderRadius30,
+      radius: 30,
+      onTap: onTap,
+      child: Padding(
+        padding: padding ??
+            const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+        child: Row(
+          mainAxisAlignment: mainCenter,
+          children: [
+            leading ?? const SizedBox.shrink(),
+            const SizedBox(width: 10),
+            Column(
+              mainAxisSize: mainMin,
+              crossAxisAlignment: crossStart,
+              children: [
+                title ?? const SizedBox.shrink(),
+                if (subtitle != null) const SizedBox(height: 5),
+                subtitle ?? const SizedBox.shrink(),
+              ],
+            ),
+            const Spacer(),
+            trailing ?? const SizedBox.shrink(),
+          ],
+        ),
+      ),
+    );
+  }
+}
