@@ -177,7 +177,6 @@ final _elevatedButtonTheme = ElevatedButtonThemeData(
     visualDensity: VisualDensity.compact,
     backgroundColor: darkPrimaryColor,
     textStyle: _textTheme.titleSmall,
-    minimumSize: const Size(200, 45),
     foregroundColor: Colors.white,
     shape: roundedRectangleBorder25,
   ),
@@ -189,7 +188,6 @@ final _outlinedButtonTheme = OutlinedButtonThemeData(
     visualDensity: VisualDensity.compact,
     foregroundColor: darkPrimaryColor,
     textStyle: _textTheme.titleSmall,
-    minimumSize: const Size(200, 45),
     shape: roundedRectangleBorder25,
   ),
 );

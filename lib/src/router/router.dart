@@ -19,7 +19,7 @@ class AppRouter extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if(!pb.authStore.isValid) return const AuthenticationView();
+    if (!pb.authStore.isValid) return const AuthenticationView();
     return ref.watch(initialDataLoadProvider).when(
           error: (err, _) => KErrorWidget(error: err),
           loading: () => const LoadingWidget(text: 'Initializing...'),
@@ -29,7 +29,15 @@ class AppRouter extends ConsumerWidget {
 }
 
 class AppRouteObserver extends NavigatorObserver {
-  
+  @override
+  void didPush(Route route, Route? previousRoute) {
+    super.didPush(route, previousRoute);
+    final c = route.settings.name;
+    final p = previousRoute?.settings.name;
+    log.wtf('didPush: $p -> $c');
+    // checkGuards(c);
+  }
+
   @override
   void didPop(Route route, Route? previousRoute) {
     super.didPop(route, previousRoute);
@@ -40,14 +48,6 @@ class AppRouteObserver extends NavigatorObserver {
     final c = route.settings.name;
     final p = previousRoute?.settings.name;
     log.wtf('didPop: $p -> $c');
-  }
-
-  @override
-  void didPush(Route route, Route? previousRoute) {
-    super.didPush(route, previousRoute);
-    final c = route.settings.name;
-    final p = previousRoute?.settings.name;
-    log.wtf('didPush: $p -> $c');
   }
 
   @override
@@ -78,5 +78,34 @@ class AppRouteObserver extends NavigatorObserver {
   void didStopUserGesture() {
     super.didStopUserGesture();
     log.wtf('didStopUserGesture');
+  }
+}
+
+const authRequiredRoutes = <String>[
+  '/',
+  HomeView.name,
+];
+
+const authNotRequiredRoutes = <String>[
+  AuthenticationView.name,
+];
+
+void checkGuards(String? route) {
+  log.e('checkGuards: $route');
+  if (authRequiredRoutes.contains(route)) {
+    if (!pb.authStore.isValid) {
+      navigatorKey.currentState?.pushNamedAndRemoveUntil(
+        AuthenticationView.name,
+        (_) => false,
+      );
+    }
+  }
+  if (authNotRequiredRoutes.contains(route)) {
+    if (pb.authStore.isValid) {
+      navigatorKey.currentState?.pushNamedAndRemoveUntil(
+        HomeView.name,
+        (_) => false,
+      );
+    }
   }
 }

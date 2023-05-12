@@ -166,19 +166,20 @@ const _progressIndicatorTheme = ProgressIndicatorThemeData(
 final _elevatedButtonTheme = ElevatedButtonThemeData(
   style: ElevatedButton.styleFrom(
     visualDensity: VisualDensity.compact,
-    textStyle: _textTheme.titleSmall,
     backgroundColor: bluePrimaryColor,
-    shape: roundedRectangleBorder30,
-    elevation: 0.0,
+    textStyle: _textTheme.titleSmall,
+    foregroundColor: Colors.white,
+    shape: roundedRectangleBorder25,
   ),
 );
 
 final _outlinedButtonTheme = OutlinedButtonThemeData(
   style: OutlinedButton.styleFrom(
-    side: BorderSide(color: bluePrimaryColor.withOpacity(0.5)),
-    shape: roundedRectangleBorder15,
+    side: const BorderSide(color: bluePrimaryColor, width: 1.5),
     visualDensity: VisualDensity.compact,
+    foregroundColor: bluePrimaryColor,
     textStyle: _textTheme.titleSmall,
+    shape: roundedRectangleBorder25,
   ),
 );
 

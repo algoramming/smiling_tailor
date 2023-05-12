@@ -1,4 +1,7 @@
 part of '../extensions.dart';
+
+enum ScreenType { mobile, desktop }
+
 extension BuildContextExtension on BuildContext {
   MediaQueryData get mq => MediaQuery.of(this);
   ThemeData get theme => Theme.of(this);
@@ -11,13 +14,24 @@ extension BuildContextExtension on BuildContext {
 
   TextTheme get text => theme.textTheme;
 
+  bool get isAndroid => theme.platform == TargetPlatform.android;
+  bool get isIOS => theme.platform == TargetPlatform.iOS;
+  bool get isWindows => theme.platform == TargetPlatform.windows;
+  bool get isLinux => theme.platform == TargetPlatform.linux;
+  bool get isMacOS => theme.platform == TargetPlatform.macOS;
+  bool get isDesktop => isWindows || isLinux || isMacOS;
+  bool get isMobile => isAndroid || isIOS;
+  ScreenType get screenType =>
+      width > 800 ? ScreenType.desktop : ScreenType.mobile;
+  bool get isScreenDesktop => screenType == ScreenType.desktop;
+
   Future<T?> push<T>(Widget page) =>
       Navigator.of(this).push<T>(MaterialPageRoute(builder: (_) => page));
 
-  Future<T?> pushReplacement<T>(Widget page) => Navigator.of(this)
+  Future<T?> pushReplace<T>(Widget page) => Navigator.of(this)
       .pushReplacement<T, T?>(MaterialPageRoute(builder: (_) => page));
 
-  Future<T?> pushAndRemoveUntil<T>(Widget page) =>
+  Future<T?> pushRemoveUntil<T>(Widget page) =>
       Navigator.of(this).pushAndRemoveUntil<T>(
           MaterialPageRoute(builder: (_) => page), (_) => false);
 
@@ -26,21 +40,29 @@ extension BuildContextExtension on BuildContext {
   Future<T?> pushNamed<T>(String route) =>
       Navigator.of(this).pushNamed<T>(route);
 
-  Future<T?> pushReplacementNamed<T>(String route) =>
+  Future<T?> pushReplaceNamed<T>(String route) =>
       Navigator.of(this).pushReplacementNamed(route);
 
-  bool get isAndroid => theme.platform == TargetPlatform.android;
-  bool get isIOS => theme.platform == TargetPlatform.iOS;
-  bool get isWindows => theme.platform == TargetPlatform.windows;
-  bool get isLinux => theme.platform == TargetPlatform.linux;
-  bool get isMacOS => theme.platform == TargetPlatform.macOS;
-  bool get isDesktop => isWindows || isLinux || isMacOS;
-  bool get isMobile => isAndroid || isIOS;
-
-  ScreenType get screenType =>
-      width > 800 ? ScreenType.desktop : ScreenType.mobile;
-
-  bool get isScreenDesktop => screenType == ScreenType.desktop;
+  Future<T?> pushNamedRemoveUntil<T>(String route) =>
+      Navigator.of(this).pushNamedAndRemoveUntil<T>(route, (_) => false);
 }
 
-enum ScreenType { mobile, desktop }
+extension NavigatorStateExtension on NavigatorState {
+  Future<T?> push<T>(Widget page) =>
+      this.push<T>(MaterialPageRoute(builder: (_) => page));
+
+  Future<T?> pushReplace<T>(Widget page) =>
+      pushReplacement<T, T?>(MaterialPageRoute(builder: (_) => page));
+
+  Future<T?> pushRemoveUntil<T>(Widget page) => pushAndRemoveUntil<T>(
+      MaterialPageRoute(builder: (_) => page), (_) => false);
+
+  void pop<T>([T? result]) => this.pop(result);
+
+  Future<T?> pushNamed<T>(String route) => this.pushNamed<T>(route);
+
+  Future<T?> pushReplaceNamed<T>(String route) => pushReplacementNamed(route);
+
+  Future<T?> pushNamedRemoveUntil<T>(String route) =>
+      pushNamedAndRemoveUntil<T>(route, (_) => false);
+}

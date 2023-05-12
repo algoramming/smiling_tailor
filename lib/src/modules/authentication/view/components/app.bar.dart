@@ -22,6 +22,7 @@ class AuthAppBar extends StatelessWidget implements PreferredSizeWidget {
                 onPressed: () => notifier.toggleIsSignup(),
               ),
               title: const Text('Sign up'),
+              centerTitle: true,
             )
           : null,
     );

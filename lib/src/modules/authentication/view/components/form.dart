@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
 import '../../../../utils/transations/down.to.up.dart';
 import '../../provider/authentication.provider.dart';
@@ -11,7 +12,7 @@ class AuthForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 4.0),
       child: Form(
         key: notifier.formKey,
         child: Column(
@@ -22,11 +23,21 @@ class AuthForm extends StatelessWidget {
                   : Padding(
                       padding: const EdgeInsets.only(bottom: 10.0),
                       child: TextFormField(
-                        controller: notifier.usernameCntrlr,
+                        style: const TextStyle(),
+                        controller: notifier.nameCntrlr,
                         decoration: const InputDecoration(
                           labelText: 'Name',
                           hintText: 'Enter your name...',
                         ),
+                        onFieldSubmitted: (_) async => notifier.submit(context),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        textInputAction: TextInputAction.next,
+                        validator: (v) {
+                          if (notifier.isSignup && v!.isEmpty) {
+                            return 'Name is required';
+                          }
+                          return null;
+                        },
                       ),
                     ),
             ),
@@ -41,6 +52,15 @@ class AuthForm extends StatelessWidget {
                           labelText: 'Username',
                           hintText: 'Enter your username...',
                         ),
+                        onFieldSubmitted: (_) async => notifier.submit(context),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        textInputAction: TextInputAction.next,
+                        validator: (v) {
+                          if (notifier.isSignup && v!.isEmpty) {
+                            return 'Username is required';
+                          }
+                          return null;
+                        },
                       ),
                     ),
             ),
@@ -54,6 +74,18 @@ class AuthForm extends StatelessWidget {
                       ? 'Enter your email...'
                       : 'Enter your email or username...',
                 ),
+                onFieldSubmitted: (_) async => notifier.submit(context),
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                textInputAction: TextInputAction.next,
+                validator: (v) {
+                  if (v!.isEmpty) {
+                    return 'Email is required';
+                  }
+                  if (notifier.isSignup && !v.isEmail) {
+                    return 'Invalid email';
+                  }
+                  return null;
+                },
               ),
             ),
             Padding(
@@ -71,6 +103,20 @@ class AuthForm extends StatelessWidget {
                     onPressed: notifier.togglePwdObscure,
                   ),
                 ),
+                onFieldSubmitted: (_) async => notifier.submit(context),
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                textInputAction: notifier.isSignup
+                    ? TextInputAction.next
+                    : TextInputAction.done,
+                validator: (v) {
+                  if (v!.isEmpty) {
+                    return 'Password is required';
+                  }
+                  if (notifier.isSignup && v.length < 8) {
+                    return 'Password must be at least 8 characters';
+                  }
+                  return null;
+                },
               ),
             ),
             DownToUpTransition(
@@ -91,6 +137,16 @@ class AuthForm extends StatelessWidget {
                             onPressed: notifier.toggleConfirmPwdObscure,
                           ),
                         ),
+                        onFieldSubmitted: (_) async => notifier.submit(context),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        textInputAction: TextInputAction.done,
+                        validator: (v) {
+                          if (notifier.isSignup &&
+                              v != notifier.pwdCntrlr.text) {
+                            return 'Password does not match';
+                          }
+                          return null;
+                        },
                       ),
                     ),
             ),

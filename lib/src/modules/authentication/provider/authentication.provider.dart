@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../api/authentication.api.dart';
+
 typedef AuthNotifier = AutoDisposeNotifierProvider<AuthProvider, void>;
 
 final authProvider = AuthNotifier(AuthProvider.new);
@@ -17,7 +19,6 @@ class AuthProvider extends AutoDisposeNotifier {
   dynamic image;
 
   bool isSignup = false;
-
 
   @override
   void build() {}
@@ -56,5 +57,17 @@ class AuthProvider extends AutoDisposeNotifier {
     nameCntrlr.clear();
     image = null;
     ref.notifyListeners();
+  }
+
+  Future<void> submit(BuildContext context) async => isSignup ? await signup(context) : await signin(context);
+
+  Future<void> signup(BuildContext context) async {
+    if (!formKey.currentState!.validate()) return;
+    await pktbsSignup(context, this);
+  }
+
+  Future<void> signin(BuildContext context) async {
+    if (!formKey.currentState!.validate()) return;
+    await pktbsSignin(context, this);
   }
 }

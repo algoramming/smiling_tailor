@@ -6,6 +6,7 @@ import '../../../../shared/animations_widget/animated_popup.dart';
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
 import '../../../../utils/extensions/extensions.dart';
+import '../../../authentication/api/authentication.api.dart';
 
 class SignoutTile extends StatelessWidget {
   const SignoutTile({super.key});
@@ -53,7 +54,7 @@ class SignoutPopup extends StatelessWidget {
             child: const Text('Cancel'),
           ),
           TextButton(
-            onPressed: () {},
+            onPressed: () async =>  await pktbsSignout(context),
             child: const Text('Confirm', style: TextStyle(color: Colors.red)),
           ),
         ],

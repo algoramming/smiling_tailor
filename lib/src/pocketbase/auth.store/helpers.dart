@@ -17,7 +17,7 @@ const localBaseUrl = '103.113.227.244:4200';
 
 Future<void> initPocketbase() async {
   final sprefs = await SharedPreferences.getInstance();
-  pb = PocketBase(appSettings.baseUrl, authStore: CustomAuthStore(sprefs));
+  pb = PocketBase(baseUrl, authStore: CustomAuthStore(sprefs));
   log.i('Pocketbase initialized. AuthStore isValid: ${pb.authStore.isValid}');
   // await pktbsHealthCheck();
   // await pktbsServerStatus();

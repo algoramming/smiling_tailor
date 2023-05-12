@@ -5,10 +5,12 @@ import 'timer_snackbar.dart';
 
 final snackbarKey = GlobalKey<ScaffoldMessengerState>();
 
-void showTimerSnackbar(String message, [int second = 3]) =>
-    timerSnackbar(contentText: message, second: second);
+void showTimerSnackbar(BuildContext context, String message,
+        [int second = 3]) =>
+    timerSnackbar(context, contentText: message, second: second);
 
-void showAwesomeSnackbar(String title, String message, MessageType messageType,
+void showAwesomeSnackbar(
+    BuildContext context, String title, String message, MessageType messageType,
     [int? second]) {
   final snackBar = SnackBar(
     /// need to set following properties for best effect of awesome_snackbar_content
@@ -26,7 +28,7 @@ void showAwesomeSnackbar(String title, String message, MessageType messageType,
     ),
   );
 
-  ScaffoldMessenger.of(snackbarKey.currentContext!)
+  ScaffoldMessenger.of(context)
     ..hideCurrentSnackBar()
     ..showSnackBar(snackBar);
 }
