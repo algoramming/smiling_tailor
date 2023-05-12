@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../constants/constants.dart';
-import '../../../utils/extensions/extensions.dart';
-import '../../settings/view/setting.view.dart';
+import 'components/body.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -12,13 +11,8 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text(appName)),
-      body: const Center(child: Text('Hello World!')),
-      floatingActionButton: FloatingActionButton.small(
-        child: const Icon(Icons.settings),
-        onPressed: () => context.pushNamed(SettingsView.name),
-      ),
+    return const Scaffold(
+      body: HomeBody(),
     );
   }
 }

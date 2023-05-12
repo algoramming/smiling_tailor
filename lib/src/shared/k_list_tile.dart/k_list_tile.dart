@@ -12,9 +12,11 @@ class KListTile extends StatelessWidget {
     this.padding,
     this.trailing,
     this.subtitle,
+    this.selected,
   });
 
   final Widget? title;
+  final bool? selected;
   final Widget? leading;
   final Widget? subtitle;
   final Widget? trailing;
@@ -29,26 +31,34 @@ class KListTile extends StatelessWidget {
       borderRadius: borderRadius30,
       radius: 30,
       onTap: onTap,
-      child: Padding(
-        padding: padding ??
-            const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
-        child: Row(
-          mainAxisAlignment: mainCenter,
-          children: [
-            leading ?? const SizedBox.shrink(),
-            const SizedBox(width: 10),
-            Column(
-              mainAxisSize: mainMin,
-              crossAxisAlignment: crossStart,
-              children: [
-                title ?? const SizedBox.shrink(),
-                if (subtitle != null) const SizedBox(height: 5),
-                subtitle ?? const SizedBox.shrink(),
-              ],
-            ),
-            const Spacer(),
-            trailing ?? const SizedBox.shrink(),
-          ],
+      child: Container(
+        decoration: BoxDecoration(
+          color: selected == true
+              ? context.theme.primaryColor.withOpacity(0.2)
+              : null,
+          borderRadius: borderRadius30,
+        ),
+        child: Padding(
+          padding: padding ??
+              const EdgeInsets.symmetric(horizontal: 12.0, vertical: 3.0),
+          child: Row(
+            mainAxisAlignment: mainCenter,
+            children: [
+              leading ?? const SizedBox.shrink(),
+              const SizedBox(width: 10),
+              Column(
+                mainAxisSize: mainMin,
+                crossAxisAlignment: crossStart,
+                children: [
+                  title ?? const SizedBox.shrink(),
+                  if (subtitle != null) const SizedBox(height: 5),
+                  subtitle ?? const SizedBox.shrink(),
+                ],
+              ),
+              const Spacer(),
+              trailing ?? const SizedBox.shrink(),
+            ],
+          ),
         ),
       ),
     );

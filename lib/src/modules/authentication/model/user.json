@@ -1,0 +1,13 @@
+{
+    "id": "RECORD_ID",
+    "collectionId": "_pb_users_auth_",
+    "collectionName": "users",
+    "username": "username123",
+    "verified": false,
+    "emailVisibility": true,
+    "email": "test@example.com",
+    "created": "2022-01-01 01:00:00.123Z",
+    "updated": "2022-01-01 23:59:59.456Z",
+    "name": "test",
+    "avatar": "filename.jpg"
+}

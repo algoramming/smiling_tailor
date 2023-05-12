@@ -29,6 +29,8 @@ final borderRadius12 = BorderRadius.circular(12);
 final borderRadius15 = BorderRadius.circular(15);
 final borderRadius25 = BorderRadius.circular(25);
 final borderRadius30 = BorderRadius.circular(30);
+final borderRadius45 = BorderRadius.circular(45);
+final borderRadius60 = BorderRadius.circular(60);
 
 final roundedRectangleBorder10 = RoundedRectangleBorder(borderRadius: borderRadius10);
 final roundedRectangleBorder12 = RoundedRectangleBorder(borderRadius: borderRadius12);

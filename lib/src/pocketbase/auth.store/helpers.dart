@@ -1,7 +1,7 @@
 import 'package:pocketbase/pocketbase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../main.dart';
+
 import '../../utils/logger/logger_helper.dart';
 import 'custom.auth.store.dart';
 
@@ -19,6 +19,7 @@ Future<void> initPocketbase() async {
   final sprefs = await SharedPreferences.getInstance();
   pb = PocketBase(baseUrl, authStore: CustomAuthStore(sprefs));
   log.i('Pocketbase initialized. AuthStore isValid: ${pb.authStore.isValid}');
+  log.i('AuthStore Model: ${pb.authStore.model}');
   // await pktbsHealthCheck();
   // await pktbsServerStatus();
 }
