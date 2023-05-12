@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
-import 'package:smiling_tailor/src/utils/transations/down.to.up.dart';
+import '../../../../utils/extensions/extensions.dart';
+import '../../../../utils/transations/down.to.up.dart';
 
 import '../../../../shared/image.widget/image.widget.dart';
 import '../../../../shared/image_process/single/pick.photo.dart';

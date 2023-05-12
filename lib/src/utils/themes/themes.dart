@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show SystemUiOverlayStyle;
 import 'package:google_fonts/google_fonts.dart';
-import '../../modules/settings/model/settings.model.dart';
 
 import '../../db/isar.dart';
+import '../../modules/settings/model/settings.model.dart';
 import '../../modules/settings/model/theme/theme.model.dart';
 
 final fontFamily =

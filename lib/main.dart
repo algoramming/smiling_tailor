@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart' show runApp;
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'src/constants/get.platform.dart';
-import 'src/modules/settings/model/settings.model.dart';
-import 'src/pocketbase/auth.store/helpers.dart';
 
 import 'src/app.dart' show App;
+import 'src/constants/get.platform.dart';
 import 'src/db/isar.dart' show db, openDB;
+import 'src/modules/settings/model/settings.model.dart';
+import 'src/pocketbase/auth.store/helpers.dart';
 import 'src/utils/themes/themes.dart';
 
 late AppSettings appSettings;

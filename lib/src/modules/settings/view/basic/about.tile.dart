@@ -1,4 +1,3 @@
-import '../../../../utils/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -6,6 +5,7 @@ import '../../../../localization/loalization.dart';
 import '../../../../shared/animations_widget/animated_popup.dart';
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
+import '../../../../utils/extensions/extensions.dart';
 
 class AboutTile extends StatelessWidget {
   const AboutTile({super.key});

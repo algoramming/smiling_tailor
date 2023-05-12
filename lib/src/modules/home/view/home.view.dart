@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../utils/extensions/extensions.dart';
 
 import '../../../constants/constants.dart';
+import '../../../utils/extensions/extensions.dart';
 import '../../settings/view/setting.view.dart';
 
 class HomeView extends StatelessWidget {

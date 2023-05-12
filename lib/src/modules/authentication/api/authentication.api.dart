@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pocketbase/pocketbase.dart';
-import 'package:smiling_tailor/src/modules/authentication/provider/authentication.provider.dart';
-import 'package:smiling_tailor/src/modules/authentication/view/authentication.dart';
-import 'package:smiling_tailor/src/modules/home/view/home.view.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
+import '../provider/authentication.provider.dart';
+import '../view/authentication.dart';
+import '../../home/view/home.view.dart';
+import '../../../utils/extensions/extensions.dart';
 
 import '../../../constants/get.platform.dart';
 import '../../../pocketbase/auth.store/helpers.dart';

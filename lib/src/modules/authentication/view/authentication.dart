@@ -2,11 +2,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/modules/authentication/provider/authentication.provider.dart';
-import 'package:smiling_tailor/src/modules/authentication/view/components/button.dart';
-import 'package:smiling_tailor/src/modules/authentication/view/components/image.select.dart';
-import 'package:smiling_tailor/src/modules/authentication/view/components/signup.text.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
+import '../provider/authentication.provider.dart';
+import 'components/button.dart';
+import 'components/image.select.dart';
+import 'components/signup.text.dart';
+import '../../../utils/extensions/extensions.dart';
 
 import '../../../constants/constants.dart';
 import '../../settings/view/advance/url.config.tile.dart';

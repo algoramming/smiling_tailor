@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+
 import '../../../utils/extensions/extensions.dart';
 
 Future<File?> takeImageOption(

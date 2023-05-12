@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/pocketbase/auth.store/helpers.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
+import '../pocketbase/auth.store/helpers.dart';
+import '../utils/extensions/extensions.dart';
 
 import '../constants/constants.dart';
 import '../constants/is.under.min.size.dart';
