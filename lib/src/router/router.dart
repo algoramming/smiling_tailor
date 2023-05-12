@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smiling_tailor/src/pocketbase/auth.store/helpers.dart';
+import '../modules/authentication/view/authentication.dart';
 import 'provider/data_load_provider.dart';
 
 import '../constants/constants.dart';
@@ -17,6 +19,7 @@ class AppRouter extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    if(!pb.authStore.isValid) return const AuthenticationView();
     return ref.watch(initialDataLoadProvider).when(
           error: (err, _) => KErrorWidget(error: err),
           loading: () => const LoadingWidget(text: 'Initializing...'),

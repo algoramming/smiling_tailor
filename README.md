@@ -2,6 +2,9 @@
 
 A new Flutter project.
 
+
+- `pocketbase serve --http="0.0.0.0:4200"`
+
 ## Getting Started
 
 This project is a starting point for a Flutter application that follows the

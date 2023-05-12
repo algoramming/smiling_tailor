@@ -118,15 +118,6 @@ final _tabBarTheme = TabBarTheme(
   indicator: BoxDecoration(borderRadius: borderRadius30),
 );
 
-final _outlinedButtonTheme = OutlinedButtonThemeData(
-  style: OutlinedButton.styleFrom(
-    side: BorderSide(color: darkPrimaryColor.withOpacity(0.5)),
-    shape: roundedRectangleBorder15,
-    visualDensity: VisualDensity.compact,
-    textStyle: _textTheme.titleSmall,
-  ),
-);
-
 final _cardTheme = CardTheme(
   shape: roundedRectangleBorder12,
   shadowColor: _shadowColor,
@@ -183,11 +174,23 @@ const _progressIndicatorTheme = ProgressIndicatorThemeData(
 
 final _elevatedButtonTheme = ElevatedButtonThemeData(
   style: ElevatedButton.styleFrom(
-    textStyle: _textTheme.titleSmall,
     visualDensity: VisualDensity.compact,
     backgroundColor: darkPrimaryColor,
-    shape: roundedRectangleBorder30,
-    elevation: 0.0,
+    textStyle: _textTheme.titleSmall,
+    minimumSize: const Size(200, 45),
+    foregroundColor: Colors.white,
+    shape: roundedRectangleBorder25,
+  ),
+);
+
+final _outlinedButtonTheme = OutlinedButtonThemeData(
+  style: OutlinedButton.styleFrom(
+    side: const BorderSide(color: darkPrimaryColor, width: 1.5),
+    visualDensity: VisualDensity.compact,
+    foregroundColor: darkPrimaryColor,
+    textStyle: _textTheme.titleSmall,
+    minimumSize: const Size(200, 45),
+    shape: roundedRectangleBorder25,
   ),
 );
 
