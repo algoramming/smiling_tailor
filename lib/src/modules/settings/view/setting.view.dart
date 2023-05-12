@@ -20,28 +20,29 @@ import 'basic/time.formate.tile.dart';
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
 
-  static const name = '/settings';
-  static const label = 'Settings - $appName';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(t.settings)),
-      body: DefaultTabController(
-        length: 2,
-        child: NestedScrollView(
-          headerSliverBuilder: (_, __) => [
-            SliverToBoxAdapter(
-              child: TabBar(
-                splashBorderRadius: borderRadius30,
-                isScrollable: true,
-                physics: const BouncingScrollPhysics(),
-                labelStyle: context.theme.textTheme.labelLarge,
-                tabs: [Tab(text: t.basic), Tab(text: t.advanced)],
-              ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(6.0),
+          child: DefaultTabController(
+            length: 2,
+            child: NestedScrollView(
+              headerSliverBuilder: (_, __) => [
+                SliverToBoxAdapter(
+                  child: TabBar(
+                    splashBorderRadius: borderRadius30,
+                    isScrollable: true,
+                    physics: const BouncingScrollPhysics(),
+                    labelStyle: context.theme.textTheme.labelLarge,
+                    tabs: [Tab(text: t.basic), Tab(text: t.advanced)],
+                  ),
+                ),
+              ],
+              body: const TabBarView(children: [BasicPart(), AdvancePart()]),
             ),
-          ],
-          body: const TabBarView(children: [BasicPart(), AdvancePart()]),
+          ),
         ),
       ),
     );

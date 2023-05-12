@@ -10,7 +10,6 @@ import 'package:flutter/services.dart';
 
 import '../modules/about_us/about_us.dart';
 import '../modules/home/view/home.view.dart';
-import '../modules/settings/view/setting.view.dart';
 import '../utils/themes/themes.dart';
 import 'router.dart' show AppRouter;
 
@@ -26,9 +25,6 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) => PageRouteBuilder(
           case HomeView.name:
             changeWebTitle(HomeView.label);
             return const HomeView();
-          case SettingsView.name:
-            changeWebTitle(SettingsView.label);
-            return const SettingsView();
           case AboutUsView.name:
             changeWebTitle(AboutUsView.label);
             return const AboutUsView();

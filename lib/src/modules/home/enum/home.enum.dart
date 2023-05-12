@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smiling_tailor/src/modules/settings/view/setting.view.dart';
 
 import '../../dashboard/dashboard.dart';
 import '../../employee/view/employee.dart';
@@ -6,7 +7,7 @@ import '../../inventory/view/inventory.dart';
 import '../../order/view/order.dart';
 import '../../profile/profile.dart';
 
-enum KDrawer { dashboard, profile, inventory, employee, orders }
+enum KDrawer { dashboard, profile, inventory, employee, orders, settings }
 
 extension KDrawerExtension on KDrawer {
   String get icon {
@@ -21,8 +22,10 @@ extension KDrawerExtension on KDrawer {
         return 'assets/svgs/employee.svg';
       case KDrawer.orders:
         return 'assets/svgs/order.svg';
+      case KDrawer.settings:
+        return 'assets/svgs/settings.svg';
       default:
-        return '';
+        return 'assets/svgs/home.svg';
     }
   }
 
@@ -38,8 +41,10 @@ extension KDrawerExtension on KDrawer {
         return 'Employees';
       case KDrawer.orders:
         return 'Orders';
+      case KDrawer.settings:
+        return 'Settings';
       default:
-        return '';
+        return 'Home';
     }
   }
 
@@ -55,6 +60,8 @@ extension KDrawerExtension on KDrawer {
         return const EmployeeView();
       case KDrawer.orders:
         return const OrderView();
+      case KDrawer.settings:
+        return const SettingsView();
       default:
         return const DashboardView();
     }

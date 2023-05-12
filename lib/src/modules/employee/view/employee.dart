@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smiling_tailor/src/modules/employee/add/view/add.employee.popup.dart';
 
 import 'components/employee.details.dart';
 import 'components/employee.list.dart';
@@ -23,7 +24,11 @@ class EmployeeView extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton.small(
         tooltip: 'Add Employee',
-        onPressed: () {},
+        onPressed: () async => await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) => const AddEmployeePopup(),
+        ),
         child: const Icon(Icons.add),
       ),
     );

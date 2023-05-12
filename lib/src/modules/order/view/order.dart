@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smiling_tailor/src/modules/order/add/view/add.order.popup.dart';
 
 import 'components/order.details.dart';
 import 'components/order.list.dart';
@@ -23,7 +24,11 @@ class OrderView extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton.small(
         tooltip: 'Add Order',
-        onPressed: () {},
+        onPressed: () async => await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) => const AddOrderPopup(),
+        ),
         child: const Icon(Icons.add),
       ),
     );
