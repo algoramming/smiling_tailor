@@ -26,6 +26,8 @@ import 'package:smiling_tailor/src/shared/show_toast/show_toast.dart';
 
 import 'constants/constants.dart' show appName;
 import 'constants/get.platform.dart';
+import 'constants/is.under.min.size.dart';
+import 'constants/screen_enlarge_warning.dart';
 import 'constants/size.dart';
 import 'localization/loalization.dart'
     show localizationsDelegates, onGenerateTitle, t;
@@ -62,7 +64,9 @@ class App extends ConsumerWidget {
         bottomViewPadding = ctx.mq.viewPadding.bottom;
         return MediaQuery(
           data: ctx.mq.copyWith(textScaleFactor: 1.0, devicePixelRatio: 1.0),
-          child: child ?? const HomeView(),
+          child: isUnderMinSize(ctx.mq.size)
+              ? const ScreenEnlargeWarning()
+              : child ?? const HomeView(),
         );
       },
     );
@@ -107,3 +111,5 @@ const ScrollPhysics _bouncingDesktopPhysics = BouncingScrollPhysics(
   decelerationRate: ScrollDecelerationRate.fast,
   parent: RangeMaintainingScrollPhysics(),
 );
+
+

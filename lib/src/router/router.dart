@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smiling_tailor/src/pocketbase/auth.store/helpers.dart';
-import '../modules/authentication/view/authentication.dart';
-import 'provider/data_load_provider.dart';
+import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
 import '../constants/constants.dart';
+import '../constants/is.under.min.size.dart';
+import '../constants/screen_enlarge_warning.dart';
+import '../modules/authentication/view/authentication.dart';
 import '../modules/home/view/home.view.dart';
 import '../shared/error_widget/error_widget.dart';
 import '../shared/loading_widget/loading_widget.dart';
 import '../utils/logger/logger_helper.dart';
+import 'provider/data_load_provider.dart';
 import 'routes.dart';
 
 class AppRouter extends ConsumerWidget {
-  const AppRouter({Key? key}) : super(key: key);
+  const AppRouter({super.key});
 
   static const name = '/';
   static const label = appName;
@@ -20,6 +23,7 @@ class AppRouter extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (!pb.authStore.isValid) return const AuthenticationView();
+    if (isUnderMinSize(context.mq.size)) return const ScreenEnlargeWarning();
     return ref.watch(initialDataLoadProvider).when(
           error: (err, _) => KErrorWidget(error: err),
           loading: () => const LoadingWidget(text: 'Initializing...'),
