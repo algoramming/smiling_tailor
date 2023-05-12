@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../dashboard/dashboard.dart';
-import '../../employee/employee.dart';
-import '../../inventory/inventory.dart';
-import '../../order/order.dart';
+import '../../employee/view/employee.dart';
+import '../../inventory/view/inventory.dart';
+import '../../order/view/order.dart';
 import '../../profile/profile.dart';
 
 enum KDrawer { dashboard, profile, inventory, employee, orders }

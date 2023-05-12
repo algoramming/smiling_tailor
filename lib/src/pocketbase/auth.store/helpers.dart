@@ -8,9 +8,7 @@ import 'custom.auth.store.dart';
 late PocketBase pb;
 
 String get httpProtocol => appSettings.useSecureProtocol ? 'https' : 'http';
-String get wsProtocol => appSettings.useSecureProtocol ? 'wss' : 'ws';
 String get baseUrl => '$httpProtocol://${appSettings.baseUrl}/';
-String get wsBaseUrl => '$wsProtocol://${appSettings.baseUrl}';
 
 const globalBaseUrl = 'smiling-tailor.pockethost.io';
 const localBaseUrl = '103.113.227.244:4200';

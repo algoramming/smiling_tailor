@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../constants/constants.dart';
+import '../../../../constants/constants.dart';
 
-class EmployeeView extends StatelessWidget {
-  const EmployeeView({super.key});
+class EmployeeDetails extends StatelessWidget {
+  const EmployeeDetails({super.key});
 
   @override
   Widget build(BuildContext context) {

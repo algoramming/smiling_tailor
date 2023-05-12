@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../../../localization/loalization.dart';
-import '../../model/settings.model.dart';
-import '../../../../utils/extensions/extensions.dart';
 
 import '../../../../../main.dart';
+import '../../../../localization/loalization.dart';
 import '../../../../pocketbase/auth.store/helpers.dart';
 import '../../../../shared/animations_widget/animated_popup.dart';
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
+import '../../../../utils/extensions/extensions.dart';
+import '../../model/settings.model.dart';
 import '../../provider/settings.provider.dart';
 
 class URLConfigTile extends StatelessWidget {
@@ -84,28 +84,12 @@ class URLConfigPopup extends ConsumerWidget {
               },
             ),
             const SizedBox(height: 12.0),
-            Row(
-              children: [
-                Expanded(
-                  child: TextFormField(
-                    controller: TextEditingController(text: httpProtocol),
-                    decoration: const InputDecoration(
-                      labelStyle: TextStyle(fontSize: 10.0),
-                      labelText: 'HTTP Protocol',
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 5.0),
-                Expanded(
-                  child: TextFormField(
-                    controller: TextEditingController(text: wsProtocol),
-                    decoration: const InputDecoration(
-                      labelStyle: TextStyle(fontSize: 10.0),
-                      labelText: 'WS Protocol',
-                    ),
-                  ),
-                ),
-              ],
+            TextFormField(
+              controller: TextEditingController(text: httpProtocol),
+              decoration: const InputDecoration(
+                labelStyle: TextStyle(fontSize: 10.0),
+                labelText: 'HTTP Protocol',
+              ),
             ),
             const SizedBox(height: 10.0),
             TextFormField(

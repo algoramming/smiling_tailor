@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../constants/constants.dart';
+import '../../../../constants/constants.dart';
 
-class InventoryView extends StatelessWidget {
-  const InventoryView({super.key});
+class InventoryDetails extends StatelessWidget {
+  const InventoryDetails({super.key});
 
   @override
   Widget build(BuildContext context) {
