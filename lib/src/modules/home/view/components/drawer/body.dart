@@ -6,6 +6,7 @@ import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
 import '../../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../../shared/k_list_tile.dart/k_list_tile.dart';
+import '../../../../settings/view/basic/about.tile.dart';
 import '../../../provider/home.provider.dart';
 
 class KDrawerBody extends ConsumerWidget {
@@ -15,6 +16,8 @@ class KDrawerBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(homeProvider);
     final notifier = ref.read(homeProvider.notifier);
+    final info = ref.watch(infoProvider).value;
+    final bn = info?.buildNumber == '0' ? '' : '(${info?.buildNumber})';
     return ListView(
       children: [
         ...List.generate(
@@ -36,6 +39,9 @@ class KDrawerBody extends ConsumerWidget {
               KDrawer.values[index].title,
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
+            subtitle: KDrawer.values[index] == KDrawer.settings
+                ? Text('Version ${info?.version}$bn')
+                : null,
             onTap: () => notifier.changeDrawer(KDrawer.values[index]),
           ),
         ),

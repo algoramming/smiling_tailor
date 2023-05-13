@@ -5,7 +5,6 @@ import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
 import '../../../../../../main.dart';
 import '../../../../../constants/constants.dart';
-import '../../../../../utils/logger/logger_helper.dart';
 import '../../../../../utils/transations/big.to.small.dart';
 import '../../../../authentication/model/user.dart';
 import '../../../../authentication/provider/user.provider.dart';
@@ -18,7 +17,6 @@ class KDrawerHeader extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final users = ref.watch(userProvider).value ?? [];
     final user = users.isEmpty ? null : users.last;
-    log.i('User Rahat: $user');
     return UserAccountsDrawerHeader(
       decoration: BoxDecoration(color: context.theme.canvasColor),
       accountName: Text(user?.name ?? '...'),
@@ -44,9 +42,9 @@ class KDrawerHeader extends ConsumerWidget {
           icon: RotationTransition(
             turns: const AlwaysStoppedAnimation(45 / 360),
             child: BigToSmallTransition(
-              child: appSettings.theme == ThemeProfile.light
-                  ? const Icon(Icons.brightness_2)
-                  : const Icon(Icons.brightness_7),
+              child: appSettings.theme == ThemeProfile.dark
+                  ? const Icon(Icons.brightness_7)
+                  : const Icon(Icons.brightness_2),
             ),
           ),
           onPressed: () async {

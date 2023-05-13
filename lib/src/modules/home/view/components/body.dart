@@ -7,9 +7,7 @@ import '../../provider/home.provider.dart';
 import 'drawer/drawer.dart';
 
 class HomeBody extends StatelessWidget {
-  const HomeBody({
-    super.key,
-  });
+  const HomeBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +29,9 @@ class MainBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(homeProvider);
     final notifier = ref.read(homeProvider.notifier);
-    return BigToSmallTransition(child: notifier.drawer.widget);
+    return Padding(
+      padding: const EdgeInsets.all(6.0),
+      child: BigToSmallTransition(child: notifier.drawer.widget),
+    );
   }
 }

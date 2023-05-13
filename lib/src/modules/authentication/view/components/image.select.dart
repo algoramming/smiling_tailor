@@ -14,9 +14,8 @@ class AuthImageSelect extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DownToUpTransition(
-      child: !notifier.isSignup
-          ? const SizedBox.shrink()
-          : Padding(
+      child: notifier.isSignup
+          ? Padding(
               padding: const EdgeInsets.only(bottom: 10.0),
               child: InkWell(
                 borderRadius: BorderRadius.circular(100.0),
@@ -67,6 +66,24 @@ class AuthImageSelect extends StatelessWidget {
                         ),
                       ),
                   ],
+                ),
+              ),
+            )
+          : Padding(
+              padding: const EdgeInsets.only(bottom: 10.0),
+              child: Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100.0),
+                  border: Border.all(
+                    color: context.theme.primaryColor,
+                    width: 2.0,
+                  ),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(100.0),
+                  child: Image.asset('assets/icons/splash-icon-384x384.png'),
                 ),
               ),
             ),

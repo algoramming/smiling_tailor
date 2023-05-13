@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:smiling_tailor/src/modules/employee/add/view/add.employee.popup.dart';
+import 'package:smiling_tailor/src/modules/order/add/view/add.order.popup.dart';
 
-import 'components/employee.details.dart';
-import 'components/employee.list.dart';
+import 'components/vendor.details.dart';
+import 'components/vendor.list.dart';
 
-class EmployeeView extends StatelessWidget {
-  const EmployeeView({super.key});
+class VendorView extends StatelessWidget {
+  const VendorView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,18 +13,18 @@ class EmployeeView extends StatelessWidget {
       body: const SafeArea(
         child: Row(
           children: [
-            Expanded(flex: 3, child: EmployeeList()),
+            Expanded(flex: 3, child: VendorList()),
             SizedBox(width: 6.0),
-            Expanded(flex: 5, child: EmployeeDetails()),
+            Expanded(flex: 5, child: VendorDetails()),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton.small(
-        tooltip: 'Add Employee',
+        tooltip: 'Add Vendor',
         onPressed: () async => await showDialog(
           context: context,
           barrierDismissible: false,
-          builder: (context) => const AddEmployeePopup(),
+          builder: (context) => const AddOrderPopup(),
         ),
         child: const Icon(Icons.add),
       ),

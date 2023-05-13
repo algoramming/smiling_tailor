@@ -3,11 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../api/authentication.api.dart';
 
-typedef AuthNotifier = AutoDisposeNotifierProvider<AuthProvider, void>;
+typedef AuthNotifier = AutoDisposeNotifierProviderFamily<AuthProvider, void, bool>;
 
 final authProvider = AuthNotifier(AuthProvider.new);
 
-class AuthProvider extends AutoDisposeNotifier {
+class AuthProvider extends AutoDisposeFamilyNotifier<void, bool> {
   final TextEditingController pwdConfirmCntrlr = TextEditingController();
   final TextEditingController usernameCntrlr = TextEditingController();
   final TextEditingController emailCntrlr = TextEditingController();
@@ -18,10 +18,10 @@ class AuthProvider extends AutoDisposeNotifier {
   bool pwdObscure = true;
   dynamic image;
 
-  bool isSignup = false;
+  late bool isSignup;
 
   @override
-  void build() {}
+  void build(bool arg) => isSignup = arg;
 
   void toggleIsSignup() {
     isSignup = !isSignup;
@@ -63,11 +63,12 @@ class AuthProvider extends AutoDisposeNotifier {
 
   Future<void> signup(BuildContext context) async {
     if (!formKey.currentState!.validate()) return;
-    await pktbsSignup(context, this);
+    await pktbsSignup(context, this, false);
   }
 
   Future<void> signin(BuildContext context) async {
     if (!formKey.currentState!.validate()) return;
     await pktbsSignin(context, this);
   }
+
 }

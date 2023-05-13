@@ -11,15 +11,12 @@ class OrderView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: const SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(6.0),
-          child: Row(
-            children: [
-              Expanded(flex: 3, child: OrderList()),
-              SizedBox(width: 6.0),
-              Expanded(flex: 5, child: OrderDetails()),
-            ],
-          ),
+        child: Row(
+          children: [
+            Expanded(flex: 3, child: OrderList()),
+            SizedBox(width: 6.0),
+            Expanded(flex: 5, child: OrderDetails()),
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton.small(

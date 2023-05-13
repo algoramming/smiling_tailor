@@ -13,7 +13,8 @@ import '../../../shared/show_toast/awesome_snackbar.dart';
 import '../../../shared/show_toast/show_toast.dart';
 import '../../../utils/logger/logger_helper.dart';
 
-Future<void> pktbsSignup(BuildContext context, AuthProvider notifier) async {
+Future<void> pktbsSignup(BuildContext context, AuthProvider notifier,
+    [bool autoSignin = true]) async {
   try {
     await pb.collection(users).create(
       body: {
@@ -39,7 +40,15 @@ Future<void> pktbsSignup(BuildContext context, AuthProvider notifier) async {
                       filename: '${notifier.usernameCntrlr.text}.png',
                     )
             ],
-    ).then((_) async => await pktbsSignin(context, notifier));
+    ).then((_) async {
+      if (autoSignin) {
+        await pktbsSignin(context, notifier);
+      } else {
+        notifier.clear();
+        showAwesomeSnackbar(context, 'Success!', 'User created successfully.',
+            MessageType.success);
+      }
+    });
     return;
   } on ClientException catch (e) {
     log.e('User Creation: $e');
