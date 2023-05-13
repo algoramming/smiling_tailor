@@ -71,6 +71,11 @@ final _pinkInputDecorationTheme = InputDecorationTheme(
     gapPadding: 10,
     borderSide: const BorderSide(color: _bodyTextColor, width: 1.0),
   ),
+  disabledBorder: OutlineInputBorder(
+    borderRadius: borderRadius12,
+    gapPadding: 10,
+    borderSide: BorderSide(color: _bodyTextColor.withOpacity(0.4), width: 1.0),
+  ),
   focusedBorder: OutlineInputBorder(
     borderRadius: borderRadius12,
     gapPadding: 10,

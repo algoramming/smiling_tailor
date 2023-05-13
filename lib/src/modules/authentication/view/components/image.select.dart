@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../utils/transations/big.to.small.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/transations/down.to.up.dart';
 
@@ -19,12 +20,10 @@ class AuthImageSelect extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 10.0),
               child: InkWell(
                 borderRadius: BorderRadius.circular(100.0),
-                onTap: () async {
-                  await pickPhoto(context).then((pk) {
-                    if (pk == null) return;
-                    notifier.setImage(pk);
-                  });
-                },
+                onTap: () async => await pickPhoto(context).then((pk) {
+                  if (pk == null) return;
+                  notifier.setImage(pk);
+                }),
                 child: Stack(
                   children: [
                     Container(
@@ -37,17 +36,19 @@ class AuthImageSelect extends StatelessWidget {
                           width: 2.0,
                         ),
                       ),
-                      child: notifier.image == null
-                          ? const Icon(Icons.add, size: 50.0)
-                          : ClipRRect(
-                              borderRadius: BorderRadius.circular(100.0),
-                              child: ImageWidget(notifier.image!),
-                            ),
+                      child: BigToSmallTransition(
+                        child: notifier.image == null
+                            ? const Icon(Icons.add, size: 50.0)
+                            : ClipRRect(
+                                borderRadius: BorderRadius.circular(100.0),
+                                child: ImageWidget(notifier.image!),
+                              ),
+                      ),
                     ),
                     if (notifier.image != null)
                       Positioned(
-                        top: 2,
-                        right: 2,
+                        top: 3,
+                        right: 3,
                         child: InkWell(
                           borderRadius: BorderRadius.circular(100.0),
                           onTap: () => notifier.removeImage(),
@@ -60,7 +61,7 @@ class AuthImageSelect extends StatelessWidget {
                             child: Icon(
                               Icons.close,
                               color: context.theme.colorScheme.error,
-                              size: 18.0,
+                              size: 16.0,
                             ),
                           ),
                         ),

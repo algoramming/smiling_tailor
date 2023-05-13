@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../provider/authentication.provider.dart';
-import '../../../../utils/extensions/extensions.dart';
-import '../../../../utils/transations/down.to.up.dart';
 
 import '../../../../constants/constants.dart';
+import '../../../../utils/extensions/extensions.dart';
+import '../../../../utils/transations/down.to.up.dart';
+import '../../provider/authentication.provider.dart';
 
 class AuthSignupText extends StatelessWidget {
   const AuthSignupText(this.notifier, {super.key});

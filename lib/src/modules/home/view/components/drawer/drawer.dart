@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smiling_tailor/src/modules/home/view/components/drawer/footer.dart';
+import 'footer.dart';
 
 import 'body.dart';
 import 'header.dart';

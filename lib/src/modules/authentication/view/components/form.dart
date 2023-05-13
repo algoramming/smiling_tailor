@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../../utils/extensions/extensions.dart';
+import 'reset.password.dart';
 
+import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/transations/down.to.up.dart';
 import '../../provider/authentication.provider.dart';
 
@@ -23,7 +24,6 @@ class AuthForm extends StatelessWidget {
                   : Padding(
                       padding: const EdgeInsets.only(bottom: 10.0),
                       child: TextFormField(
-                        style: const TextStyle(),
                         controller: notifier.nameCntrlr,
                         decoration: const InputDecoration(
                           labelText: 'Name',
@@ -89,7 +89,7 @@ class AuthForm extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 10.0),
+              padding: EdgeInsets.only(bottom: notifier.isSignup ? 10.0 : 5.0),
               child: TextFormField(
                 controller: notifier.pwdCntrlr,
                 obscureText: notifier.pwdObscure,
@@ -119,6 +119,7 @@ class AuthForm extends StatelessWidget {
                 },
               ),
             ),
+            ForgetPasswordText(notifier),
             DownToUpTransition(
               child: !notifier.isSignup
                   ? const SizedBox.shrink()

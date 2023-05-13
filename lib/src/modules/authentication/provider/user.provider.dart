@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/modules/authentication/model/user.dart';
-import 'package:smiling_tailor/src/pocketbase/auth.store/helpers.dart';
+import '../model/user.dart';
+import '../../../pocketbase/auth.store/helpers.dart';
 
 typedef UserNotifier = AsyncNotifierProvider<UserProvider, List<PktbsUser>>;
 

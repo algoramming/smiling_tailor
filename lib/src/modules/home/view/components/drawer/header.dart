@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/modules/settings/model/settings.model.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
+import '../../../../settings/model/settings.model.dart';
+import '../../../../../utils/extensions/extensions.dart';
 
 import '../../../../../../main.dart';
 import '../../../../../constants/constants.dart';

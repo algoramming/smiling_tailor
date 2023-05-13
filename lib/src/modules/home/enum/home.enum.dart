@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:smiling_tailor/src/modules/authentication/view/authentication.dart';
-import 'package:smiling_tailor/src/modules/settings/view/setting.view.dart';
-import 'package:smiling_tailor/src/modules/vendor/view/vendor.dart';
+import '../../authentication/view/authentication.dart';
+import '../../settings/view/setting.view.dart';
+import '../../vendor/view/vendor.dart';
 
 import '../../dashboard/dashboard.dart';
 import '../../employee/view/employee.dart';
 import '../../inventory/view/inventory.dart';
 import '../../order/view/order.dart';
-import '../../profile/profile.dart';
+import '../../profile/view/profile.dart';
 
 enum KDrawer {
   dashboard,

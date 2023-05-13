@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/modules/home/enum/home.enum.dart';
-import 'package:smiling_tailor/src/utils/transations/big.to.small.dart';
+import '../../enum/home.enum.dart';
+import '../../../../utils/transations/big.to.small.dart';
 
 import '../../provider/home.provider.dart';
 import 'drawer/drawer.dart';

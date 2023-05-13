@@ -17,7 +17,9 @@ class AuthButton extends StatelessWidget {
         style: context.theme.elevatedButtonTheme.style!.copyWith(
             minimumSize: MaterialStateProperty.all(const Size(180, 45))),
         child: BigToSmallTransition(
-          child: Text(notifier.isSignup ? 'Create Account' : 'Login'),
+          child: notifier.isSignup
+              ? const Text('Create Account')
+              : const Text('Login'),
         ),
         onPressed: () async => await notifier.submit(context),
       ),

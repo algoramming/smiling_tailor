@@ -37,3 +37,5 @@ final roundedRectangleBorder12 = RoundedRectangleBorder(borderRadius: borderRadi
 final roundedRectangleBorder15 = RoundedRectangleBorder(borderRadius: borderRadius15);
 final roundedRectangleBorder25 = RoundedRectangleBorder(borderRadius: borderRadius25);
 final roundedRectangleBorder30 = RoundedRectangleBorder(borderRadius: borderRadius30);
+final roundedRectangleBorder45 = RoundedRectangleBorder(borderRadius: borderRadius45);
+final roundedRectangleBorder60 = RoundedRectangleBorder(borderRadius: borderRadius60);

@@ -7,8 +7,8 @@ import 'package:flutter/material.dart'
         Route,
         RouteSettings;
 import 'package:flutter/services.dart';
+import 'package:smiling_tailor/src/modules/authentication/view/authentication.dart';
 
-import '../modules/about_us/about_us.dart';
 import '../modules/home/view/home.view.dart';
 import '../utils/themes/themes.dart';
 import 'router.dart' show AppRouter;
@@ -25,9 +25,9 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) => PageRouteBuilder(
           case HomeView.name:
             changeWebTitle(HomeView.label);
             return const HomeView();
-          case AboutUsView.name:
-            changeWebTitle(AboutUsView.label);
-            return const AboutUsView();
+          case AuthenticationView.name:
+            changeWebTitle(AuthenticationView.label);
+            return const AuthenticationView();
           default:
             changeWebTitle(AppRouter.label);
             return const AppRouter();

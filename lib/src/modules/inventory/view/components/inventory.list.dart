@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
+import '../../../../utils/extensions/extensions.dart';
 
 import '../../../../constants/constants.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';

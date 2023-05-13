@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smiling_tailor/src/modules/employee/add/view/add.employee.popup.dart';
+import '../add/view/add.employee.popup.dart';
 
 import 'components/employee.details.dart';
 import 'components/employee.list.dart';

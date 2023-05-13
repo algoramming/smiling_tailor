@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../../../../utils/extensions/extensions.dart';
 
 class KDrawerFooter extends StatelessWidget {
   const KDrawerFooter({super.key});
