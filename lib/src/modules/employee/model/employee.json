@@ -1,0 +1,13 @@
+{
+    "id": "RECORD_ID",
+    "collectionId": "ojlqbn2ih9e05m8",
+    "collectionName": "employees",
+    "created": "2022-01-01 01:00:00.123Z",
+    "updated": "2022-01-01 23:59:59.456Z",
+    "name": "test",
+    "email": "test@example.com",
+    "address": "test",
+    "phone": "test",
+    "description": "test",
+    "salary": 123
+}

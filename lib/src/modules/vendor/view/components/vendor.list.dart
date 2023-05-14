@@ -42,11 +42,12 @@ class VendorList extends ConsumerWidget {
                                 color: context.theme.primaryColor, width: 1.3),
                           ),
                           child: ClipRRect(
-                              borderRadius: borderRadius45,
-                              child: SvgPicture.asset(
-                                'assets/svgs/vendor.svg',
-                                fit: BoxFit.cover,
-                              )),
+                            borderRadius: borderRadius45,
+                            child: SvgPicture.asset(
+                              'assets/svgs/vendor.svg',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
                         title: Text(vendor.name),
                         subtitle: Text(vendor.address),
