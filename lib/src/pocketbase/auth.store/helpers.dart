@@ -41,4 +41,7 @@ Future<void> initPocketbase() async {
 /// COllections name
 ///
 const users = 'users';
-const products = 'products';
+const orders = 'orders';
+const vendors = 'vendors';
+const employees = 'employees';
+const inventories = 'inventories';

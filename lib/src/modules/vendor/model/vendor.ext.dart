@@ -1,32 +1,34 @@
-part of 'user.dart';
 
-extension PktbsUserExtension on PktbsUser {
+part of 'vendor.dart';
+
+extension VendorExtension on PktbsVendor {
+
   // copywith function
-  PktbsUser copyWith({
+  PktbsVendor copyWith({
     String? id,
     String? name,
     String? email,
-    bool? verified,
-    String? avatar,
-    String? username,
+    String? phone,
+    String? address,
     DateTime? created,
     DateTime? updated,
+    String? description,
     String? collectionId,
-    bool? emailVisibility,
+    double? openingBalance,
     String? collectionName,
   }) {
-    return PktbsUser(
+    return PktbsVendor(
       id: id ?? this.id,
       name: name ?? this.name,
       email: email ?? this.email,
-      avatar: avatar ?? this.avatar,
+      phone: phone ?? this.phone,
+      address: address ?? this.address,
       created: created ?? this.created,
       updated: updated ?? this.updated,
-      verified: verified ?? this.verified,
-      username: username ?? this.username,
+      description: description ?? this.description,
       collectionId: collectionId ?? this.collectionId,
+      openingBalance: openingBalance ?? this.openingBalance,
       collectionName: collectionName ?? this.collectionName,
-      emailVisibility: emailVisibility ?? this.emailVisibility,
     );
   }
 
@@ -35,19 +37,16 @@ extension PktbsUserExtension on PktbsUser {
         _Json.id: id,
         _Json.name: name,
         _Json.email: email,
-        _Json.avatar: avatar,
-        _Json.verified: verified,
-        _Json.username: username,
+        _Json.phone: phone,
+        _Json.address: address,
+        _Json.description: description,
         _Json.collectionId: collectionId,
+        _Json.openingBalance: openingBalance,
         _Json.collectionName: collectionName,
-        _Json.emailVisibility: emailVisibility,
         _Json.created: created.toIso8601String(),
         _Json.updated: updated?.toIso8601String(),
       };
 
   // to raw json
   String toRawJson() => json.encode(toJson());
-
-  // get Image Url
-  String get imageUrl => '${baseUrl}api/files/$collectionId/$id/$avatar/';
 }

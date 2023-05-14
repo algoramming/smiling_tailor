@@ -5,25 +5,25 @@ import '../../../pocketbase/auth.store/helpers.dart';
 part 'user.ext.dart';
 
 class PktbsUser {
+  String name;
+  bool verified;
+  String avatar;
   final String id;
-  final String name;
+  DateTime? updated;
   final String email;
-  final bool verified;
-  final String avatar;
+  bool emailVisibility;
   final String username;
   final DateTime created;
-  final DateTime updated;
   final String collectionId;
-  final bool emailVisibility;
   final String collectionName;
 
   PktbsUser({
+    this.updated,
     required this.id,
     required this.name,
     required this.email,
     required this.avatar,
     required this.created,
-    required this.updated,
     required this.verified,
     required this.username,
     required this.collectionId,
@@ -44,7 +44,9 @@ class PktbsUser {
       collectionName: json[_Json.collectionName],
       emailVisibility: json[_Json.emailVisibility],
       created: DateTime.parse(json[_Json.created]),
-      updated: DateTime.parse(json[_Json.updated]),
+      updated: json[_Json.updated] == null
+          ? null
+          : DateTime.parse(json[_Json.updated]),
     );
   }
 

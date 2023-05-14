@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../order/add/view/add.order.popup.dart';
+import 'package:smiling_tailor/src/modules/vendor/add/view/add.vendor.popup.dart';
 
 import 'components/vendor.details.dart';
 import 'components/vendor.list.dart';
@@ -24,7 +24,7 @@ class VendorView extends StatelessWidget {
         onPressed: () async => await showDialog(
           context: context,
           barrierDismissible: false,
-          builder: (context) => const AddOrderPopup(),
+          builder: (context) => const AddVendorPopup(),
         ),
         child: const Icon(Icons.add),
       ),

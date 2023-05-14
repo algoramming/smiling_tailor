@@ -32,6 +32,7 @@ class AuthForm extends StatelessWidget {
                         onFieldSubmitted: (_) async => notifier.submit(context),
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.name,
                         validator: (v) {
                           if (notifier.isSignup && v!.isEmpty) {
                             return 'Name is required';
@@ -55,9 +56,13 @@ class AuthForm extends StatelessWidget {
                         onFieldSubmitted: (_) async => notifier.submit(context),
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.name,
                         validator: (v) {
                           if (notifier.isSignup && v!.isEmpty) {
                             return 'Username is required';
+                          }
+                          if (notifier.isSignup && v!.isUsername) {
+                            return 'Username must be at least 6 characters';
                           }
                           return null;
                         },
@@ -76,6 +81,7 @@ class AuthForm extends StatelessWidget {
                 ),
                 onFieldSubmitted: (_) async => notifier.submit(context),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
+                keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
                 validator: (v) {
                   if (v!.isEmpty) {
@@ -108,11 +114,12 @@ class AuthForm extends StatelessWidget {
                 textInputAction: notifier.isSignup
                     ? TextInputAction.next
                     : TextInputAction.done,
+                keyboardType: TextInputType.text,
                 validator: (v) {
                   if (v!.isEmpty) {
                     return 'Password is required';
                   }
-                  if (notifier.isSignup && v.length < 8) {
+                  if (notifier.isSignup && v.isPassword) {
                     return 'Password must be at least 8 characters';
                   }
                   return null;
@@ -141,6 +148,7 @@ class AuthForm extends StatelessWidget {
                         onFieldSubmitted: (_) async => notifier.submit(context),
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.text,
                         validator: (v) {
                           if (notifier.isSignup &&
                               v != notifier.pwdCntrlr.text) {
