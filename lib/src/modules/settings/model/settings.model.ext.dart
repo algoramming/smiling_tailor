@@ -16,7 +16,8 @@ extension SettingExtension on AppSettings {
     bool? performanceOverlayEnable,
   }) =>
       AppSettings()
-        ..performanceOverlayEnable = performanceOverlayEnable ?? this.performanceOverlayEnable
+        ..performanceOverlayEnable =
+            performanceOverlayEnable ?? this.performanceOverlayEnable
         ..useSecureProtocol = useSecureProtocol ?? this.useSecureProtocol
         ..firstRunDateTime = firstRunDateTime ?? this.firstRunDateTime
         ..currencyFormat = currencyFormat ?? this.currencyFormat
@@ -29,10 +30,13 @@ extension SettingExtension on AppSettings {
         ..locale = locale ?? this.locale
         ..theme = theme ?? this.theme;
 
-  
   DateFormat get getDateFormat => DateFormat(dateFormat);
 
   DateFormat get getTimeFormat => DateFormat(timeFormat);
 
+  DateFormat get getDateTimeFormat => DateFormat('$dateFormat $timeFormat');
+
   NumberFormat get getNumberFormat => NumberFormat(currencyFormat);
+
+  // CurrencyProfile get getCurrency => CurrencyProfile(currency);
 }

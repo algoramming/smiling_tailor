@@ -24,14 +24,15 @@ class EmployeeList extends ConsumerWidget {
           ),
         ),
         Flexible(
-          child: notifier.vendorList.isEmpty
+          child: notifier.employeeList.isEmpty
               ? const Center(child: Text('No employee found!'))
               : ListView.builder(
-                  itemCount: notifier.vendorList.length,
-                  itemBuilder: ((_, idx) {
-                    final vendor = notifier.vendorList[idx];
+                  itemCount: notifier.employeeList.length,
+                  itemBuilder: (_, idx) {
+                    final employee = notifier.employeeList[idx];
                     return Card(
                       child: KListTile(
+                        onTap: () => notifier.selectEmployee(employee),
                         leading: Container(
                           height: 45.0,
                           width: 45.0,
@@ -49,14 +50,14 @@ class EmployeeList extends ConsumerWidget {
                             ),
                           ),
                         ),
-                        title: Text(vendor.name),
-                        subtitle: Text(vendor.address),
+                        title: Text(employee.name),
+                        subtitle: Text(employee.address),
                         trailing: const Icon(Icons.arrow_circle_right_outlined),
                       ),
                     );
-                  }),
+                  },
                 ),
-        )
+        ),
       ],
     );
   }

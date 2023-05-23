@@ -84,7 +84,7 @@ class AuthImageSelect extends StatelessWidget {
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(100.0),
-                  child: Image.asset('assets/icons/splash-icon-384x384.png'),
+                  child: Image.asset('assets/icons/splash-icon-384x384.jpg'),
                 ),
               ),
             ),

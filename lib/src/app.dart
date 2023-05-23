@@ -23,6 +23,7 @@ import 'package:smiling_tailor/src/modules/settings/model/theme/theme.model.dart
 import 'package:smiling_tailor/src/router/router.dart';
 import 'package:smiling_tailor/src/router/routes.dart';
 import 'package:smiling_tailor/src/shared/show_toast/show_toast.dart';
+import 'package:smiling_tailor/src/utils/logger/logger_helper.dart';
 
 import 'constants/constants.dart' show appName;
 import 'constants/get.platform.dart';
@@ -62,6 +63,7 @@ class App extends ConsumerWidget {
         t = AppLocalizations.of(ctx)!;
         topBarSize = ctx.mq.viewPadding.top;
         bottomViewPadding = ctx.mq.viewPadding.bottom;
+        log.i('App build. Height: ${ctx.height} px, Width: ${ctx.width} px');
         return MediaQuery(
           data: ctx.mq.copyWith(textScaleFactor: 1.0, devicePixelRatio: 1.0),
           child: isUnderMinSize(ctx.mq.size)
@@ -111,5 +113,3 @@ const ScrollPhysics _bouncingDesktopPhysics = BouncingScrollPhysics(
   decelerationRate: ScrollDecelerationRate.fast,
   parent: RangeMaintainingScrollPhysics(),
 );
-
-

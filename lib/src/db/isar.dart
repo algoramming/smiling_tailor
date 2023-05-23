@@ -1,13 +1,14 @@
 import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:isar/isar.dart' show Isar;
 
+import '../modules/settings/model/currency/currency.model.dart';
 import '../modules/settings/model/settings.model.dart';
 import 'paths.dart' show AppDir, appDir, initDir;
 
 
 late final Isar db;
 
-const _schema = [AppSettingsSchema];
+const _schema = [AppSettingsSchema, CurrencyProfileSchema];
 
 Future<void> openDB() async {
   await initDir();

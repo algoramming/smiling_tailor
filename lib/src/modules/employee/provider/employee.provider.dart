@@ -14,6 +14,7 @@ final employeeProvider = EmployeeNotifier(EmployeeProvider.new);
 
 class EmployeeProvider extends AutoDisposeAsyncNotifier<List<PktbsEmployee>> {
   TextEditingController searchCntrlr = TextEditingController();
+  PktbsEmployee? selectedEmployee;
   late List<PktbsEmployee> _employees;
   @override
   FutureOr<List<PktbsEmployee>> build() async {
@@ -48,7 +49,7 @@ class EmployeeProvider extends AutoDisposeAsyncNotifier<List<PktbsEmployee>> {
     });
   }
 
-  List<PktbsEmployee> get vendorList {
+  List<PktbsEmployee> get employeeList {
     _employees.sort((a, b) => b.created.compareTo(a.created));
     final vs = _employees;
     return vs
@@ -59,5 +60,10 @@ class EmployeeProvider extends AutoDisposeAsyncNotifier<List<PktbsEmployee>> {
             (e.email?.toLowerCase().contains(searchCntrlr.text.toLowerCase()) ??
                 false))
         .toList();
+  }
+
+  void selectEmployee(PktbsEmployee employee) {
+    selectedEmployee = employee;
+    ref.notifyListeners();
   }
 }

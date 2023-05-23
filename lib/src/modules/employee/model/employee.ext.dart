@@ -1,7 +1,7 @@
 
 part of 'employee.dart';
 
-extension VendorExtension on PktbsEmployee {
+extension EmployeeExtension on PktbsEmployee {
 
   // copywith function
   PktbsEmployee copyWith({

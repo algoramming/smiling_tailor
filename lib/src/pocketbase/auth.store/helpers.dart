@@ -45,3 +45,4 @@ const orders = 'orders';
 const vendors = 'vendors';
 const employees = 'employees';
 const inventories = 'inventories';
+const transactions = 'transactions';

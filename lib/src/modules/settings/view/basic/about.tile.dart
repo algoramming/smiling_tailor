@@ -42,7 +42,7 @@ void showInfoDialog(BuildContext context) => showAboutDialog(
       applicationName: 'Smiling Tailor',
       applicationVersion: '1.0.0',
       applicationLegalese: '© 2023 Smiling Tailor',
-      applicationIcon: Image.asset('assets/icons/splash-icon-384x384.png',
+      applicationIcon: Image.asset('assets/icons/splash-icon-384x384.jpg',
           height: 48, width: 48),
       children: const [
         Text(

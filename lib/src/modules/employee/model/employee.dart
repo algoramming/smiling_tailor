@@ -47,21 +47,21 @@ class PktbsEmployee {
         salary: json[_Json.salary].toString().toDouble ?? 0.0,
       );
 
-  Map<String, dynamic> toJson() => {
-        _Json.id: id,
-        _Json.name: name,
-        _Json.email: email,
-        _Json.phone: phone,
-        _Json.salary: salary,
-        _Json.address: address,
-        _Json.description: description,
-        _Json.collectionId: collectionId,
-        _Json.collectionName: collectionName,
-        _Json.created: created.toIso8601String(),
-        _Json.updated: updated?.toIso8601String(),
-      };
+  factory PktbsEmployee.fromRawJson(String str) =>
+      PktbsEmployee.fromJson(json.decode(str));
 
-  String toRawJson() => json.encode(toJson());
+  @override
+  String toString() =>
+      'PktbsEmployee(name: $name, phone: $phone, email: $email, salary: $salary, address: $address, id: $id, updated: $updated, description: $description, created: $created, collectionId: $collectionId, collectionName: $collectionName)';
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is PktbsEmployee && other.id == id;
+  }
+
+  @override
+  int get hashCode => id.hashCode;
 }
 
 class _Json {
