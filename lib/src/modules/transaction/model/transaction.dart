@@ -20,6 +20,7 @@ class PktbsTrx {
   PktbsUser? updatedBy;
   final DateTime created;
   Map<String, dynamic> gl;
+  bool isReceiveable;
 
   PktbsTrx({
     this.updated,
@@ -32,6 +33,7 @@ class PktbsTrx {
     required this.created,
     required this.createdBy,
     required this.updatedBy,
+    this.isReceiveable = false,
   });
 
   factory PktbsTrx.fromJson(Map<String, dynamic> json) => PktbsTrx(
@@ -45,8 +47,11 @@ class PktbsTrx {
             ? null
             : PktbsUser.fromJson(json[_Json.expand][_Json.updatedBy]),
         createdBy: PktbsUser.fromJson(json[_Json.expand][_Json.createdBy]),
+        isReceiveable: json[_Json.isReceiveable] as bool? ?? false,
         amount: json[_Json.amount].toString().toDouble ?? 0.0,
-        updated: json[_Json.updated] == null ? null : DateTime.parse(json[_Json.updated]),
+        updated: json[_Json.updated] == null
+            ? null
+            : DateTime.parse(json[_Json.updated]),
       );
 
   factory PktbsTrx.fromRawJson(String str) =>
@@ -54,7 +59,7 @@ class PktbsTrx {
 
   @override
   String toString() =>
-      'PktbsTrx(glId: $glId, type: $type, amount: $amount, id: $id, updated: $updated, description: $description, createdBy: $createdBy, updatedBy: $updatedBy, created: $created, gl: $gl)';
+      'PktbsTrx(glId: $glId, type: $type, amount: $amount, id: $id, updated: $updated, description: $description, createdBy: $createdBy, updatedBy: $updatedBy, created: $created, gl: $gl, isReceiveable: $isReceiveable)';
 }
 
 class _Json {
@@ -69,4 +74,5 @@ class _Json {
   static const String createdBy = 'created_by';
   static const String updatedBy = 'updated_by';
   static const String description = 'description';
+  static const String isReceiveable = 'is_receiveable';
 }

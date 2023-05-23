@@ -8,6 +8,7 @@ extension TrxExtension on PktbsTrx {
     double? amount,
     DateTime? created,
     DateTime? updated,
+    bool? isReceiveable,
     String? description,
     PktbsUser? updatedBy,
     PktbsUser? createdBy,
@@ -24,6 +25,7 @@ extension TrxExtension on PktbsTrx {
       createdBy: createdBy ?? this.createdBy,
       updatedBy: updatedBy ?? this.updatedBy,
       description: description ?? this.description,
+      isReceiveable: isReceiveable ?? this.isReceiveable,
     );
   }
 
@@ -34,6 +36,7 @@ extension TrxExtension on PktbsTrx {
         _Json.amount: amount,
         _Json.type: type.title,
         _Json.description: description,
+        _Json.isReceiveable: isReceiveable,
         _Json.createdBy: createdBy.toJson(),
         _Json.updatedBy: updatedBy?.toJson(),
         _Json.created: created.toIso8601String(),

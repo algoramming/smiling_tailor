@@ -33,7 +33,6 @@ class EmployeeTrxsProvider
         return PktbsTrx.fromJson(e.toJson());
       }).toList();
     });
-
     return _trxs;
   }
 
