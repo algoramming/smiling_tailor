@@ -2,19 +2,19 @@ part of '../extensions.dart';
 
 extension DoubleExt on double {
   String get formatted => NumberFormat.currency(
-        customPattern: currency?.numberPattern,
-        symbol: currency?.symbol,
+        customPattern: currency.numberPattern,
+        symbol: currency.symbol,
         decimalDigits: 0,
       ).format(this);
 
   String get formattedFloat => NumberFormat.currency(
-        customPattern: currency?.numberPattern,
-        symbol: currency?.symbol,
+        customPattern: currency.numberPattern,
+        symbol: currency.symbol,
         decimalDigits: 2,
       ).format(this);
 
   String get formattedCompat => NumberFormat.compactCurrency(
-        symbol: currency?.symbol,
+        symbol: currency.symbol,
         decimalDigits: 0,
       ).format(this);
 

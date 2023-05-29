@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'reset.password.dart';
 
 import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/transations/down.to.up.dart';
 import '../../provider/authentication.provider.dart';
+import 'reset.password.dart';
 
 class AuthForm extends StatelessWidget {
   const AuthForm(this.notifier, {super.key});

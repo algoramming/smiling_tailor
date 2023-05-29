@@ -2,11 +2,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../provider/profile.provider.dart';
-import '../../../utils/extensions/extensions.dart';
-import '../../../utils/transations/big.to.small.dart';
 
 import '../../../constants/constants.dart';
+import '../../../utils/extensions/extensions.dart';
+import '../../../utils/transations/big.to.small.dart';
+import '../provider/profile.provider.dart';
 import 'components/button.dart';
 import 'components/form.dart';
 import 'components/image.select.dart';

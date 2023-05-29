@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:smiling_tailor/src/modules/vendor/provider/vendor.provider.dart';
 
 import '../../../../constants/constants.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
 import '../../../../utils/extensions/extensions.dart';
+import '../../provider/vendor.provider.dart';
 
 class VendorList extends ConsumerWidget {
   const VendorList({super.key});

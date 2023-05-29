@@ -2,17 +2,17 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/modules/employee/model/employee.dart';
 
 import '../../../pocketbase/auth.store/helpers.dart';
 import '../../../utils/logger/logger_helper.dart';
+import '../model/employee.dart';
 
 typedef EmployeeNotifier
-    = AutoDisposeAsyncNotifierProvider<EmployeeProvider, List<PktbsEmployee>>;
+    = AsyncNotifierProvider<EmployeeProvider, List<PktbsEmployee>>;
 
 final employeeProvider = EmployeeNotifier(EmployeeProvider.new);
 
-class EmployeeProvider extends AutoDisposeAsyncNotifier<List<PktbsEmployee>> {
+class EmployeeProvider extends AsyncNotifier<List<PktbsEmployee>> {
   TextEditingController searchCntrlr = TextEditingController();
   PktbsEmployee? selectedEmployee;
   late List<PktbsEmployee> _employees;

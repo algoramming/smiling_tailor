@@ -23,6 +23,8 @@ extension DateUtils on DateTime {
 
   DateTime get dateOnly => DateTime(year, month, day);
 
+  String get monthName => DateFormat.MMMM().format(this);
+
   bool get isToday {
     final nowDate = DateTime.now();
     return year == nowDate.year && month == nowDate.month && day == nowDate.day;

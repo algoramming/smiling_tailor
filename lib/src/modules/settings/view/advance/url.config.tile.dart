@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../../main.dart';
+import '../../../../db/isar.dart';
 import '../../../../localization/loalization.dart';
 import '../../../../pocketbase/auth.store/helpers.dart';
 import '../../../../shared/animations_widget/animated_popup.dart';

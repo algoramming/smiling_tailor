@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/modules/employee/model/employee.dart';
-import 'package:smiling_tailor/src/modules/transaction/api/add.trx.employee.api.dart';
+import '../../model/employee.dart';
+import '../../../transaction/api/add.trx.employee.api.dart';
 
 typedef AddTrxEmployeeNotifier = AutoDisposeNotifierProviderFamily<
     AddTrxEmployeeProvider, void, PktbsEmployee>;

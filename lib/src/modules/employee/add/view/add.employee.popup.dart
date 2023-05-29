@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
+import '../../../../utils/extensions/extensions.dart';
 
 import '../../../../shared/animations_widget/animated_popup.dart';
 import '../provider/add.employee.provider.dart';
@@ -43,18 +43,17 @@ class AddEmployeePopup extends ConsumerWidget {
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
-                  controller: notifier.addressCntrlr,
+                  controller: notifier.emailCntrlr,
                   decoration: const InputDecoration(
-                    labelText: 'Employee Address',
-                    hintText: 'Enter employee\'s address...',
+                    labelText: 'Employee Email',
+                    hintText: 'Enter employee\'s email address...',
                   ),
                   onFieldSubmitted: (_) async => notifier.submit(context),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  keyboardType: TextInputType.streetAddress,
                   textInputAction: TextInputAction.next,
                   validator: (v) {
-                    if (v!.isEmpty) {
-                      return 'Address is required';
+                    if (v!.isNotEmpty && !v.isEmail) {
+                      return 'Invalid email';
                     }
                     return null;
                   },
@@ -82,38 +81,6 @@ class AddEmployeePopup extends ConsumerWidget {
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
-                  controller: notifier.emailCntrlr,
-                  decoration: const InputDecoration(
-                    labelText: 'Employee Email',
-                    hintText: 'Enter employee\'s email address...',
-                  ),
-                  onFieldSubmitted: (_) async => notifier.submit(context),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  textInputAction: TextInputAction.next,
-                  validator: (v) {
-                    if (v!.isNotEmpty && !v.isEmail) {
-                      return 'Invalid email';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 10),
-                TextFormField(
-                  controller: notifier.descriptionCntrlr,
-                  decoration: const InputDecoration(
-                    labelText: 'Description',
-                    hintText: 'Enter any Description (if have)...',
-                  ),
-                  onFieldSubmitted: (_) async => notifier.submit(context),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.text,
-                  validator: (v) {
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 10),
-                TextFormField(
                   controller: notifier.salaryCntrlr,
                   decoration: const InputDecoration(
                     labelText: 'Salary',
@@ -130,6 +97,39 @@ class AddEmployeePopup extends ConsumerWidget {
                     if (!v.isNumeric) {
                       return 'Invalid opening balance';
                     }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 10),
+                TextFormField(
+                  controller: notifier.addressCntrlr,
+                  decoration: const InputDecoration(
+                    labelText: 'Employee Address',
+                    hintText: 'Enter employee\'s address...',
+                  ),
+                  onFieldSubmitted: (_) async => notifier.submit(context),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  keyboardType: TextInputType.streetAddress,
+                  textInputAction: TextInputAction.next,
+                  validator: (v) {
+                    if (v!.isEmpty) {
+                      return 'Address is required';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 10),
+                TextFormField(
+                  controller: notifier.descriptionCntrlr,
+                  decoration: const InputDecoration(
+                    labelText: 'Description',
+                    hintText: 'Enter any Description (if have)...',
+                  ),
+                  onFieldSubmitted: (_) async => notifier.submit(context),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  textInputAction: TextInputAction.next,
+                  keyboardType: TextInputType.text,
+                  validator: (v) {
                     return null;
                   },
                 ),

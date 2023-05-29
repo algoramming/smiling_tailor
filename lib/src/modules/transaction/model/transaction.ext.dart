@@ -60,4 +60,8 @@ extension TrxExtension on PktbsTrx {
         return null;
     }
   }
+
+  String get createdDate => appSettings.getDateTimeFormat.format(created);
+
+  String get updatedDate => appSettings.getDateTimeFormat.format(updated!);
 }

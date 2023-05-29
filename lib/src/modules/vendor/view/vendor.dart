@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smiling_tailor/src/modules/vendor/add/view/add.vendor.popup.dart';
 
+import '../add/view/add.vendor.popup.dart';
 import 'components/vendor.details.dart';
 import 'components/vendor.list.dart';
 

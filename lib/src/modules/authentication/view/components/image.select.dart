@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../../../utils/transations/big.to.small.dart';
-import '../../../../utils/extensions/extensions.dart';
-import '../../../../utils/transations/down.to.up.dart';
 
 import '../../../../shared/image.widget/image.widget.dart';
 import '../../../../shared/image_process/single/pick.photo.dart';
+import '../../../../utils/extensions/extensions.dart';
+import '../../../../utils/transations/big.to.small.dart';
+import '../../../../utils/transations/down.to.up.dart';
 import '../../provider/authentication.provider.dart';
 
 class AuthImageSelect extends StatelessWidget {

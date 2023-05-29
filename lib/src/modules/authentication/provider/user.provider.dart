@@ -1,7 +1,9 @@
 import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../model/user.dart';
+
 import '../../../pocketbase/auth.store/helpers.dart';
+import '../model/user.dart';
 
 typedef UserNotifier = AsyncNotifierProvider<UserProvider, List<PktbsUser>>;
 

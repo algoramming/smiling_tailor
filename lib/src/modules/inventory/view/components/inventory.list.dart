@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../../utils/extensions/extensions.dart';
 
 import '../../../../constants/constants.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
+import '../../../../utils/extensions/extensions.dart';
 
 class InventoryList extends StatelessWidget {
   const InventoryList({super.key});

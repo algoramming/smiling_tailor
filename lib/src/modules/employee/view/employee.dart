@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import '../add/view/add.employee.popup.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../utils/transations/big.to.small.dart';
+import '../add/view/add.employee.popup.dart';
+import '../provider/employee.provider.dart';
 import 'components/employee.details.dart';
 import 'components/employee.list.dart';
 
@@ -19,15 +22,23 @@ class EmployeeView extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton.small(
-        tooltip: 'Add Employee',
-        onPressed: () async => await showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) => const AddEmployeePopup(),
-        ),
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: Consumer(builder: (_, ref, __) {
+        ref.watch(employeeProvider);
+        final notifier = ref.watch(employeeProvider.notifier).selectedEmployee;
+        return BigToSmallTransition(
+          child: notifier != null
+              ? const SizedBox.shrink()
+              : FloatingActionButton.small(
+                  tooltip: 'Add Employee',
+                  onPressed: () async => await showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (context) => const AddEmployeePopup(),
+                  ),
+                  child: const Icon(Icons.add),
+                ),
+        );
+      }),
     );
   }
 }

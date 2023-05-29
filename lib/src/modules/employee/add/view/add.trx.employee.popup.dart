@@ -2,10 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/modules/employee/model/employee.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
 import '../../../../shared/animations_widget/animated_popup.dart';
+import '../../../../utils/extensions/extensions.dart';
+import '../../model/employee.dart';
 import '../provider/add.trx.employee.provider.dart';
 
 class AddTrxEmployeePopup extends ConsumerWidget {

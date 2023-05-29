@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/modules/vendor/model/vendor.dart';
 
 import '../../../pocketbase/auth.store/helpers.dart';
 import '../../../utils/logger/logger_helper.dart';
+import '../model/vendor.dart';
 
 typedef VendorNotifier
     = AutoDisposeAsyncNotifierProvider<VendorProvider, List<PktbsVendor>>;

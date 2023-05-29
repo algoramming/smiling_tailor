@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../../authentication/api/authentication.api.dart';
-import '../../../../utils/transations/big.to.small.dart';
 
 import '../../../../shared/animations_widget/animated_popup.dart';
 import '../../../../utils/extensions/extensions.dart';
+import '../../../../utils/transations/big.to.small.dart';
+import '../../../authentication/api/authentication.api.dart';
 import '../../provider/profile.provider.dart';
 
 class ProfileButton extends StatelessWidget {

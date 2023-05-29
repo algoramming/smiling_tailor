@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../authentication/model/user.dart';
-import '../../authentication/provider/user.provider.dart';
 
 import '../../authentication/api/authentication.api.dart';
+import '../../authentication/model/user.dart';
+import '../../authentication/provider/user.provider.dart';
 
 typedef ProfileNotifier = NotifierProvider<ProfileProvider, PktbsUser?>;
 

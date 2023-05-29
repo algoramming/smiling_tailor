@@ -1,12 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart' show kReleaseMode;
-import 'package:isar/isar.dart' show Isar;
+import 'package:flutter/services.dart';
+import 'package:isar/isar.dart' show Isar, QueryExecute;
 
 import '../modules/settings/model/currency/currency.model.dart';
 import '../modules/settings/model/settings.model.dart';
+import '../utils/logger/logger_helper.dart';
 import 'paths.dart' show AppDir, appDir, initDir;
 
-
 late final Isar db;
+late AppSettings appSettings;
+late CurrencyProfile currency;
 
 const _schema = [AppSettingsSchema, CurrencyProfileSchema];
 
@@ -21,3 +26,35 @@ Future<void> openDB() async {
 
 void openDBSync(AppDir dir) => db =
     Isar.openSync(_schema, inspector: !kReleaseMode, directory: dir.db.path);
+
+Future<void> initAppDatum() async {
+  if (await db.currencyProfiles.where().count() == 0) await currencyInit();
+  appSettings = await db.appSettings.get(0) ?? AppSettings();
+  currency = (await db.currencyProfiles
+      .where()
+      .shortFormEqualTo(appSettings.currency)
+      .findFirst())!;
+  listenForAppConfig();
+}
+
+Future<void> currencyInit() async {
+  List<CurrencyProfile> currencies = [];
+  final currenciesJson =
+      await rootBundle.loadString('assets/json/currency_data.json');
+  final jsonList = jsonDecode(currenciesJson) as List;
+  for (final json in jsonList) {
+    final curr = CurrencyProfile.fromJson(json);
+    currencies.add(curr);
+  }
+  log.i('First time Currency Initiated with ${currencies.length} currencies');
+  await currencies.saveAll();
+}
+
+void listenForAppConfig() =>
+    db.appSettings.watchObjectLazy(0).listen((_) async {
+      appSettings = await db.appSettings.get(0) ?? AppSettings();
+      currency = (await db.currencyProfiles
+          .where()
+          .shortFormEqualTo(appSettings.currency)
+          .findFirst())!;
+    });

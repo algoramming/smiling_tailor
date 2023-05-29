@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../../authentication/model/user.dart';
-import '../../../../utils/transations/big.to.small.dart';
 
 import '../../../../shared/image.widget/image.widget.dart';
 import '../../../../shared/image_process/single/pick.photo.dart';
 import '../../../../utils/extensions/extensions.dart';
+import '../../../../utils/transations/big.to.small.dart';
+import '../../../authentication/model/user.dart';
 import '../../provider/profile.provider.dart';
 
 class ProfileImage extends StatelessWidget {

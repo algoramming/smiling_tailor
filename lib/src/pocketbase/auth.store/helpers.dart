@@ -1,7 +1,7 @@
 import 'package:pocketbase/pocketbase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../main.dart';
+import '../../db/isar.dart';
 import '../../utils/logger/logger_helper.dart';
 import 'custom.auth.store.dart';
 

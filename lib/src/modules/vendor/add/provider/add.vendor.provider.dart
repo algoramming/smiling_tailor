@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/modules/vendor/api/vendor.api.dart';
+import '../../api/vendor.api.dart';
 
 typedef AddVendorNotifier
     = AutoDisposeNotifierProvider<AddVendorProvider, void>;

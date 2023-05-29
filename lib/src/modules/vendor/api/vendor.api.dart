@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pocketbase/pocketbase.dart';
-import 'package:smiling_tailor/src/modules/vendor/add/provider/add.vendor.provider.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
+import '../add/provider/add.vendor.provider.dart';
+import '../../../utils/extensions/extensions.dart';
 
 import '../../../pocketbase/auth.store/helpers.dart';
 import '../../../pocketbase/error.handle/error.handle.func.dart';
