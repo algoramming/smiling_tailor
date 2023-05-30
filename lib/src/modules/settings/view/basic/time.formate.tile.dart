@@ -45,9 +45,15 @@ class TimeFormatTile extends StatelessWidget {
           size: 15.0,
           color: context.theme.primaryColor,
         ),
-        icon: Text(
-          '10:32 PM',
-          style: context.theme.textTheme.bodySmall!.copyWith(fontSize: 13.0),
+        icon: Consumer(
+          builder: (_, ref, __) {
+            final timeFormat = ref.watch(timeFormatProvider);
+            return Text(
+              DateFormat(timeFormat).format(DateTime.now()),
+              style:
+                  context.theme.textTheme.bodySmall!.copyWith(fontSize: 13.0),
+            );
+          },
         ),
       ),
     );
