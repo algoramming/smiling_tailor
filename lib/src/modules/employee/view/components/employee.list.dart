@@ -31,9 +31,6 @@ class EmployeeList extends ConsumerWidget {
                   itemBuilder: (_, idx) {
                     final employee = notifier.employeeList[idx];
                     return Card(
-                      color: idx % 2 == 0
-                          ? context.theme.primaryColor.withOpacity(0.2)
-                          : null,
                       child: KListTile(
                         onTap: () => notifier.selectEmployee(employee),
                         leading: Container(
@@ -50,6 +47,8 @@ class EmployeeList extends ConsumerWidget {
                             child: SvgPicture.asset(
                               'assets/svgs/employee.svg',
                               fit: BoxFit.cover,
+                              colorFilter:
+                                  context.theme.primaryColor.toColorFilter,
                             ),
                           ),
                         ),

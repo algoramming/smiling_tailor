@@ -95,9 +95,6 @@ class _TrxTable extends ConsumerWidget {
               itemBuilder: (_, i) {
                 final trx = noti.trxList[i];
                 return Card(
-                  color: i % 2 != 0
-                      ? context.theme.primaryColor.withOpacity(0.2)
-                      : null,
                   child: ListTile(
                     leading: Card(
                       color: trx.isReceiveable

@@ -16,5 +16,4 @@ SystemUiOverlayStyle get uiConfig => themeType.uiConfig;
 const Color white = Colors.white;
 const Color black = Colors.black;
 
-const Color primaryColor = Color.fromARGB(255, 92, 107, 192);
-
+const Color kPrimaryColor = Colors.teal;

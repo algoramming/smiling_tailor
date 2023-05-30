@@ -12,18 +12,18 @@ const lightUiConfig = SystemUiOverlayStyle(
   systemNavigationBarIconBrightness: Brightness.dark,
 );
 
-const lightPrimaryColor = Color(0xFFF0836B);
-const _headLineTextColor = Color(0xFF1B3A68);
-const _iconColorSecondary = Color(0xFF6A81A4);
+const lightPrimaryColor = kPrimaryColor;
+const _headLineTextColor = Colors.black;
+const _iconColorSecondary = kPrimaryColor;
 const _backgroundColor = Colors.white;
-const _bodyTextColor = Color(0xFF6A81A4);
-const _unselectedColor = Color(0xFF6A81A4);
-const _titleTextColor = Color(0xFF1B3A68);
-const _primaryLightColor = Color(0xFFFFE7E7);
-const _cardBackgroundColor = Color(0xFFF2F4FA);
+const _bodyTextColor = Colors.black;
+const _unselectedColor = Color.fromARGB(255, 55, 56, 58);
+const _titleTextColor = Colors.black;
+const _primaryLightColor = Color.fromARGB(100, 0, 150, 135);
+const _cardBackgroundColor = Color.fromARGB(255, 255, 255, 255);
 const _scaffoldBackgroundColor = Color(0xFFF2F4FA);
-const _floatingActionButtonColor = Color.fromARGB(255, 238, 123, 98);
-const _shadowColor = Color.fromARGB(100, 200, 200, 200);
+const _floatingActionButtonColor = Color.fromARGB(255, 0, 73, 66);
+const _shadowColor = Color.fromARGB(255, 12, 129, 118);
 
 final lightTheme = ThemeData(
   useMaterial3: true,
@@ -42,7 +42,6 @@ final lightTheme = ThemeData(
   snackBarTheme: _snackBarTheme,
   primaryColor: lightPrimaryColor,
   cardColor: _cardBackgroundColor,
-  // backgroundColor: _backgroundColor,
   unselectedWidgetColor: _unselectedColor,
   bottomNavigationBarTheme: _bottomNavBar,
   textSelectionTheme: _textSelectionTheme,
@@ -126,7 +125,7 @@ final _tabBarTheme = TabBarTheme(
 final _cardTheme = CardTheme(
   shape: roundedRectangleBorder12,
   shadowColor: _shadowColor,
-  color: _backgroundColor,
+  color: _cardBackgroundColor,
   elevation: 0,
 );
 

@@ -37,5 +37,5 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) => PageRouteBuilder(
 
 changeWebTitle(String label) {
   SystemChrome.setApplicationSwitcherDescription(ApplicationSwitcherDescription(
-      label: label, primaryColor: primaryColor.value));
+      label: label, primaryColor: kPrimaryColor.value));
 }

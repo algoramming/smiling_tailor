@@ -28,7 +28,7 @@ class KListTile extends StatelessWidget {
     return InkWell(
       hoverColor: context.theme.primaryColor.withOpacity(0.2),
       splashColor: context.theme.primaryColor.withOpacity(0.5),
-      borderRadius: borderRadius30,
+      borderRadius: borderRadius15,
       radius: 30,
       onTap: onTap,
       child: Container(
@@ -36,7 +36,7 @@ class KListTile extends StatelessWidget {
           color: selected == true
               ? context.theme.primaryColor.withOpacity(0.2)
               : null,
-          borderRadius: borderRadius30,
+          borderRadius: borderRadius15,
         ),
         child: Padding(
           padding: padding ??
