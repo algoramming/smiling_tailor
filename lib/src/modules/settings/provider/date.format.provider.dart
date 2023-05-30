@@ -7,8 +7,8 @@ import '../model/settings.model.dart';
 import 'settings.provider.dart';
 
 const dateFormates = [
-  'dd MMM, yyyy',
   'dd MMM, yy',
+  'dd MMM, yyyy',
   'dd/MM/yy',
   'dd/MM/yyyy',
   'dd-MM-yy',

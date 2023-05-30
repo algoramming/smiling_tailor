@@ -145,7 +145,7 @@ final _tooltipTheme = TooltipThemeData(
   padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
   decoration: BoxDecoration(
     borderRadius: borderRadius15,
-    color: _floatingActionButtonColor.withOpacity(0.9),
+    color: _floatingActionButtonColor.withOpacity(0.8),
   ),
   textStyle: _textTheme.titleSmall,
 );
