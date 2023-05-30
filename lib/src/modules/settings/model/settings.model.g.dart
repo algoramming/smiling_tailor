@@ -151,7 +151,7 @@ AppSettings _appSettingsDeserialize(
   object.performanceOverlayEnable = reader.readBool(offsets[8]);
   object.theme =
       _AppSettingsthemeValueEnumMap[reader.readStringOrNull(offsets[9])] ??
-          ThemeProfile.blue;
+          ThemeProfile.dark;
   object.timeFormat = reader.readString(offsets[10]);
   object.useSecureProtocol = reader.readBool(offsets[11]);
   return object;
@@ -185,7 +185,7 @@ P _appSettingsDeserializeProp<P>(
       return (reader.readBool(offset)) as P;
     case 9:
       return (_AppSettingsthemeValueEnumMap[reader.readStringOrNull(offset)] ??
-          ThemeProfile.blue) as P;
+          ThemeProfile.dark) as P;
     case 10:
       return (reader.readString(offset)) as P;
     case 11:
@@ -210,20 +210,12 @@ const _AppSettingslocaleValueEnumMap = {
   r'urdu': LocaleProfile.urdu,
 };
 const _AppSettingsthemeEnumValueMap = {
-  r'blue': r'blue',
   r'dark': r'dark',
   r'light': r'light',
-  r'maroon': r'maroon',
-  r'pink': r'pink',
-  r'yellow': r'yellow',
 };
 const _AppSettingsthemeValueEnumMap = {
-  r'blue': ThemeProfile.blue,
   r'dark': ThemeProfile.dark,
   r'light': ThemeProfile.light,
-  r'maroon': ThemeProfile.maroon,
-  r'pink': ThemeProfile.pink,
-  r'yellow': ThemeProfile.yellow,
 };
 
 Id _appSettingsGetId(AppSettings object) {

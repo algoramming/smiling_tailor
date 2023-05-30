@@ -15,8 +15,10 @@ class ThemeProvider extends Notifier<ThemeProfile> {
   @override
   ThemeProfile build() => ref.watch(settingsProvider.select((v) => v.theme));
 
-  Future<void> changeTheme(ThemeProfile theme) async =>
-      await compute(_changeTheme, _Data(ref.read(settingsProvider), theme));
+  ThemeProfile get theme => state;
+
+  Future<void> changeTheme() async => await compute(
+      _changeTheme, _Data(ref.read(settingsProvider), theme.toggled));
 }
 
 void _changeTheme(_Data data) {
