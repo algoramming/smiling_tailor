@@ -12,6 +12,7 @@ import '../../vendor/model/vendor.dart';
 part 'transaction.ext.dart';
 
 class PktbsTrx {
+  double due;
   String glId;
   GLType type;
   double amount;
@@ -22,9 +23,9 @@ class PktbsTrx {
   PktbsUser? updatedBy;
   final DateTime created;
   Map<String, dynamic> gl;
-  bool isReceiveable;
 
   PktbsTrx({
+    this.due = 0.0,
     this.updated,
     this.description,
     required this.gl,
@@ -35,7 +36,6 @@ class PktbsTrx {
     required this.created,
     required this.createdBy,
     required this.updatedBy,
-    this.isReceiveable = false,
   });
 
   factory PktbsTrx.fromJson(Map<String, dynamic> json) => PktbsTrx(
@@ -45,11 +45,11 @@ class PktbsTrx {
         gl: json[_Json.gl] as Map<String, dynamic>,
         created: DateTime.parse(json[_Json.created]),
         description: json[_Json.description] as String?,
+        due: json[_Json.due].toString().toDouble ?? 0.0,
         updatedBy: json[_Json.updatedBy] == null || json[_Json.updatedBy] == ''
             ? null
             : PktbsUser.fromJson(json[_Json.expand][_Json.updatedBy]),
         createdBy: PktbsUser.fromJson(json[_Json.expand][_Json.createdBy]),
-        isReceiveable: json[_Json.isReceiveable] as bool? ?? false,
         amount: json[_Json.amount].toString().toDouble ?? 0.0,
         updated: json[_Json.updated] == null
             ? null
@@ -61,12 +61,13 @@ class PktbsTrx {
 
   @override
   String toString() =>
-      'PktbsTrx(glId: $glId, type: $type, amount: $amount, id: $id, updated: $updated, description: $description, createdBy: $createdBy, updatedBy: $updatedBy, created: $created, gl: $gl, isReceiveable: $isReceiveable)';
+      'PktbsTrx(glId: $glId, type: $type, amount: $amount, due: $due id: $id, updated: $updated, description: $description, createdBy: $createdBy, updatedBy: $updatedBy, created: $created, gl: $gl)';
 }
 
 class _Json {
   static const String gl = 'gl';
   static const String id = 'id';
+  static const String due = 'due';
   static const String type = 'type';
   static const String glId = 'gl_id';
   static const String expand = 'expand';
@@ -76,5 +77,4 @@ class _Json {
   static const String createdBy = 'created_by';
   static const String updatedBy = 'updated_by';
   static const String description = 'description';
-  static const String isReceiveable = 'is_receiveable';
 }

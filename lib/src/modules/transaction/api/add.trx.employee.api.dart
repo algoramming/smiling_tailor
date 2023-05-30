@@ -20,6 +20,7 @@ Future<void> pktbsAddTrxEmployee(
         'gl': employee.toJson(),
         'type': GLType.employee.title,
         'amount': notifier.amountCntrlr.text.toDouble ?? 0.0,
+        'due': 0.0,
         'created_by': pb.authStore.model?.id,
         'gl_id': employee.id,
         'updated_by': null,

@@ -3,6 +3,7 @@ part of 'transaction.dart';
 extension TrxExtension on PktbsTrx {
   PktbsTrx copyWith({
     String? id,
+    double? due,
     GLType? type,
     String? glId,
     double? amount,
@@ -17,6 +18,7 @@ extension TrxExtension on PktbsTrx {
     return PktbsTrx(
       gl: gl ?? this.gl,
       id: id ?? this.id,
+      due: due ?? this.due,
       type: type ?? this.type,
       glId: glId ?? this.glId,
       amount: amount ?? this.amount,
@@ -25,18 +27,17 @@ extension TrxExtension on PktbsTrx {
       createdBy: createdBy ?? this.createdBy,
       updatedBy: updatedBy ?? this.updatedBy,
       description: description ?? this.description,
-      isReceiveable: isReceiveable ?? this.isReceiveable,
     );
   }
 
   Map<String, dynamic> toJson() => {
         _Json.id: id,
         _Json.gl: gl,
+        _Json.due: due,
         _Json.glId: glId,
         _Json.amount: amount,
         _Json.type: type.title,
         _Json.description: description,
-        _Json.isReceiveable: isReceiveable,
         _Json.createdBy: createdBy.toJson(),
         _Json.updatedBy: updatedBy?.toJson(),
         _Json.created: created.toIso8601String(),

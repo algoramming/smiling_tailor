@@ -32,6 +32,7 @@ class EmployeeList extends ConsumerWidget {
                     final employee = notifier.employeeList[idx];
                     return Card(
                       child: KListTile(
+                        selected: notifier.selectedEmployee == employee,
                         onTap: () => notifier.selectEmployee(employee),
                         leading: Container(
                           height: 45.0,

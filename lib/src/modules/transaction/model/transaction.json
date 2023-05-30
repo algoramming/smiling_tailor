@@ -36,6 +36,7 @@
             }
         },
         "amount": 500,
+        "due": 0,
         "created_by": "t70zhucozbedycq",
         "description": "ABC",
         "gl": {
@@ -65,6 +66,7 @@
             "collectionName": "transactions",
             "expand": {},
             "amount": 50,
+            "due": 0,
             "created_by": "t70zhucozbedycq",
             "description": "fgfgdfgdf",
             "gl": {

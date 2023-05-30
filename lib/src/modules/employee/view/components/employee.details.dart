@@ -97,27 +97,23 @@ class _TrxTable extends ConsumerWidget {
                 return Card(
                   child: ListTile(
                     leading: Card(
-                      color: trx.isReceiveable
-                          ? Colors.green[100]
-                          : Colors.red[100],
+                      color: Colors.red[100],
                       shape: roundedRectangleBorder10,
                       child: Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: Transform.flip(
-                          flipY: !trx.isReceiveable,
-                          child: Icon(
+                          flipY: true,
+                          child: const Icon(
                             Icons.arrow_outward_rounded,
                             size: 22.0,
-                            color:
-                                trx.isReceiveable ? Colors.green : Colors.red,
+                            color: Colors.red,
                           ),
                         ),
                       ),
                     ),
                     title: Text(noti.trxList[i].createdDate),
-                    subtitle: noti.trxList[i].description == null
-                        ? null
-                        : Text(noti.trxList[i].description!),
+                    subtitle:
+                        trx.description == null ? null : Text(trx.description!),
                     // trailing: Text(
                     //   noti.trxList[i].amount.formattedCompat,
                     //   style: context.text.labelLarge!.copyWith(
@@ -135,9 +131,7 @@ class _TrxTable extends ConsumerWidget {
                         return Text(
                           x.formattedCompat,
                           style: context.text.labelLarge!.copyWith(
-                            color: noti.trxList[i].isReceiveable
-                                ? Colors.green
-                                : Colors.red,
+                            color: Colors.red,
                           ),
                         );
                       },
@@ -165,11 +159,10 @@ class _TotalAmount extends ConsumerWidget {
         ? 0.0
         : noti.rawTrxs
             .where((e) =>
-                !e.isReceiveable &&
                 e.created.month ==
-                    (noti.showPrevMonth
-                        ? DateTime.now().previousMonth.month
-                        : DateTime.now().month))
+                (noti.showPrevMonth
+                    ? DateTime.now().previousMonth.month
+                    : DateTime.now().month))
             .fold<double>(0.0, (p, c) => p + c.amount);
     final due = salary - taken;
     return Row(

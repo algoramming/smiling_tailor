@@ -81,10 +81,14 @@ class AuthImageSelect extends StatelessWidget {
                     color: context.theme.primaryColor,
                     width: 2.0,
                   ),
+                  color: Colors.white,
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(100.0),
-                  child: Image.asset('assets/icons/splash-icon-384x384.jpg'),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Image.asset('assets/icons/splash-icon-384x384.png'),
+                  ),
                 ),
               ),
             ),

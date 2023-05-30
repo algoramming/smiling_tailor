@@ -43,9 +43,14 @@ class VendorList extends ConsumerWidget {
                           ),
                           child: ClipRRect(
                             borderRadius: borderRadius45,
-                            child: SvgPicture.asset(
-                              'assets/svgs/vendor.svg',
-                              fit: BoxFit.cover,
+                            child: Padding(
+                              padding: const EdgeInsets.all(3.0),
+                              child: SvgPicture.asset(
+                                'assets/svgs/vendor.svg',
+                                fit: BoxFit.cover,
+                                colorFilter:
+                                    context.theme.primaryColor.toColorFilter,
+                              ),
                             ),
                           ),
                         ),
