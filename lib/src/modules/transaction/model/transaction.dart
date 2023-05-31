@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import '../../authentication/model/user.dart';
+import '../../inventory/model/inventory.dart';
 import '../../settings/model/settings.model.dart';
 import '../enum/trx.type.dart';
 import '../../../utils/extensions/extensions.dart';

@@ -49,5 +49,7 @@ extension PktbsUserExtension on PktbsUser {
   String toRawJson() => json.encode(toJson());
 
   // get Image Url
-  String get imageUrl => '${baseUrl}api/files/$collectionId/$id/$avatar/';
+  String? get imageUrl => avatar == null || avatar == ''
+      ? null
+      : '${baseUrl}api/files/$collectionId/$id/$avatar/';
 }

@@ -53,8 +53,7 @@ extension TrxExtension on PktbsTrx {
       case GLType.employee:
         return PktbsEmployee.fromJson(gl);
       case GLType.inventory:
-        // return PktbsInventory.fromJson(gl);
-        return null;
+        return PktbsInventory.fromJson(gl);
       case GLType.unknown:
         return null;
       default:

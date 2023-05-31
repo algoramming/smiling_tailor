@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../../../../constants/constants.dart';
 import '../../../../../db/isar.dart';
@@ -29,12 +30,20 @@ class KDrawerHeader extends ConsumerWidget {
         ),
         child: ClipRRect(
           borderRadius: borderRadius45,
-          child: FadeInImage(
-            placeholder: const AssetImage('assets/gifs/loading.gif'),
-            image: NetworkImage(
-                user?.imageUrl ?? 'https://picsum.photos/250?image=9'),
-            fit: BoxFit.cover,
-          ),
+          child: user == null || user.imageUrl == null
+              ? Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: SvgPicture.asset(
+                    'assets/svgs/profile.svg',
+                    fit: BoxFit.cover,
+                    colorFilter: context.theme.primaryColor.toColorFilter,
+                  ),
+                )
+              : FadeInImage(
+                  placeholder: const AssetImage('assets/gifs/loading.gif'),
+                  image: NetworkImage(user.imageUrl!),
+                  fit: BoxFit.cover,
+                ),
         ),
       ),
       otherAccountsPictures: [

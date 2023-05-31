@@ -7,7 +7,7 @@ part 'user.ext.dart';
 class PktbsUser {
   String name;
   bool verified;
-  String avatar;
+  String? avatar;
   final String id;
   DateTime? updated;
   final String email;
@@ -22,7 +22,7 @@ class PktbsUser {
     required this.id,
     required this.name,
     required this.email,
-    required this.avatar,
+    this.avatar,
     required this.created,
     required this.verified,
     required this.username,
