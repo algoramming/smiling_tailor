@@ -8,11 +8,11 @@ import '../../../utils/logger/logger_helper.dart';
 import '../model/vendor.dart';
 
 typedef VendorNotifier
-    = AutoDisposeAsyncNotifierProvider<VendorProvider, List<PktbsVendor>>;
+    = AsyncNotifierProvider<VendorProvider, List<PktbsVendor>>;
 
 final vendorProvider = VendorNotifier(VendorProvider.new);
 
-class VendorProvider extends AutoDisposeAsyncNotifier<List<PktbsVendor>> {
+class VendorProvider extends AsyncNotifier<List<PktbsVendor>> {
   TextEditingController searchCntrlr = TextEditingController();
   late List<PktbsVendor> _vendors;
   @override

@@ -8,16 +8,16 @@ import '../../../utils/logger/logger_helper.dart';
 import '../../transaction/model/transaction.dart';
 import '../model/employee.dart';
 
-typedef EmployeeTrxsNotifier = AutoDisposeAsyncNotifierProviderFamily<
-    EmployeeTrxsProvider, List<PktbsTrx>, PktbsEmployee>;
+typedef EmployeeTrxsNotifier = AsyncNotifierProviderFamily<EmployeeTrxsProvider,
+    List<PktbsTrx>, PktbsEmployee>;
 
 final employeeTrxsProvider = EmployeeTrxsNotifier(EmployeeTrxsProvider.new);
 
 class EmployeeTrxsProvider
-    extends AutoDisposeFamilyAsyncNotifier<List<PktbsTrx>, PktbsEmployee> {
+    extends FamilyAsyncNotifier<List<PktbsTrx>, PktbsEmployee> {
   TextEditingController searchCntrlr = TextEditingController();
   late List<PktbsTrx> _trxs;
-  bool  _showPrevMonth = false;
+  bool _showPrevMonth = false;
   @override
   FutureOr<List<PktbsTrx>> build(PktbsEmployee arg) async {
     _trxs = [];
@@ -45,7 +45,6 @@ class EmployeeTrxsProvider
     _showPrevMonth = !_showPrevMonth;
     ref.notifyListeners();
   }
-
 
   _stream() {
     // Implement Stream needs pocketbase update to add filter and expand options then the autodispose had to remove

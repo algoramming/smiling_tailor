@@ -97,8 +97,8 @@ class _ForgetPasswordPopupState extends State<ForgetPasswordPopup> {
           ),
           TextButton(
             onPressed: () async => await submit(),
-            child:
-                const Text('Send Email', style: TextStyle(color: Colors.green)),
+            child: Text('Send Email',
+                style: TextStyle(color: context.theme.primaryColor)),
           ),
         ],
       ),

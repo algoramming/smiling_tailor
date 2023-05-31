@@ -144,8 +144,8 @@ class AddEmployeePopup extends ConsumerWidget {
           ),
           TextButton(
             onPressed: () async => await notifier.submit(context),
-            child: const Text('Add Employee',
-                style: TextStyle(color: Colors.green)),
+            child: Text('Add Employee',
+                style: TextStyle(color: context.theme.primaryColor)),
           ),
         ],
       ),

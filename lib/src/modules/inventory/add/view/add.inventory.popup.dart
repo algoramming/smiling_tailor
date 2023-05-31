@@ -1,25 +1,160 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smiling_tailor/src/constants/constants.dart';
 
 import '../../../../shared/animations_widget/animated_popup.dart';
+import '../../../../utils/extensions/extensions.dart';
+import '../provider/add.inventory.provider.dart';
 
-class AddInventoryPopup extends StatelessWidget {
+class AddInventoryPopup extends ConsumerWidget {
   const AddInventoryPopup({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(addInventoryProvider);
+    final notifier = ref.read(addInventoryProvider.notifier);
     return AnimatedPopup(
       child: AlertDialog(
-        title: const Text('Title - Add Inventory'),
-        content: const Text(
-            'This is a demo alert dialog. Would you like to approve of this message?'),
+        title: const Text('Add Inventory'),
+        content: SizedBox(
+          width: min(400, context.width),
+          child: Form(
+            key: notifier.formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                DropdownButtonFormField(
+                  borderRadius: borderRadius15,
+                  value: notifier.createdForm,
+                  decoration: const InputDecoration(
+                    labelText: 'Select Vendor',
+                    hintText: 'From where you buy this inventory...',
+                  ),
+                  onChanged: (v) => notifier.setCreatedForm(v!),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  items: notifier.vendors
+                      .map((e) =>
+                          DropdownMenuItem(value: e, child: Text(e.name)))
+                      .toList(),
+                  validator: (v) {
+                    if (v == null) {
+                      return 'Vendor selection is required';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 10),
+                TextFormField(
+                  controller: notifier.titleCntrlr,
+                  decoration: const InputDecoration(
+                    labelText: 'Inventory Title',
+                    hintText: 'Enter inventory\'s title...',
+                  ),
+                  onFieldSubmitted: (_) async => notifier.submit(context),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  textInputAction: TextInputAction.next,
+                  keyboardType: TextInputType.name,
+                  validator: (v) {
+                    if (v!.isEmpty) {
+                      return 'Title is required';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 10),
+                TextFormField(
+                  controller: notifier.descriptionCntrlr,
+                  decoration: const InputDecoration(
+                    labelText: 'Description',
+                    hintText: 'Enter any Description (if have)...',
+                  ),
+                  onFieldSubmitted: (_) async => notifier.submit(context),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  textInputAction: TextInputAction.next,
+                  keyboardType: TextInputType.text,
+                  validator: (v) => null,
+                ),
+                const SizedBox(height: 10),
+                TextFormField(
+                  controller: notifier.quantityCntrlr,
+                  decoration: const InputDecoration(
+                    labelText: 'Quantity',
+                    hintText: 'Enter inventory\'s quantity...',
+                  ),
+                  onFieldSubmitted: (_) async => notifier.submit(context),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  textInputAction: TextInputAction.done,
+                  keyboardType: TextInputType.number,
+                  validator: (v) {
+                    if (v!.isEmpty) {
+                      return 'Quantity is required';
+                    }
+                    if (!v.isNumeric) {
+                      return 'Invalid quantity';
+                    }
+                    if (!v.isInt) {
+                      return 'Quantity must be integer';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 10),
+                TextFormField(
+                  controller: notifier.amountCntrlr,
+                  decoration: const InputDecoration(
+                    labelText: 'Total Amount',
+                    hintText: 'Enter inventory\'s amount...',
+                  ),
+                  onFieldSubmitted: (_) async => notifier.submit(context),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  textInputAction: TextInputAction.done,
+                  keyboardType: TextInputType.number,
+                  validator: (v) {
+                    if (v!.isEmpty) {
+                      return 'Amount is required';
+                    }
+                    if (!v.isNumeric) {
+                      return 'Invalid amount';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 10),
+                TextFormField(
+                  controller: notifier.advanceCntrlr,
+                  decoration: const InputDecoration(
+                    labelText: 'Advance Payment',
+                    hintText: 'Enter inventory\'s advance payment...',
+                  ),
+                  onFieldSubmitted: (_) async => notifier.submit(context),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  textInputAction: TextInputAction.done,
+                  keyboardType: TextInputType.number,
+                  validator: (v) {
+                    if (v!.isEmpty) {
+                      return 'Amount is required';
+                    }
+                    if (!v.isNumeric) {
+                      return 'Invalid amount';
+                    }
+                    return null;
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => context.pop(),
             child: const Text('Cancel'),
           ),
           TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Confirm', style: TextStyle(color: Colors.green)),
+            onPressed: () async => await notifier.submit(context),
+            child: Text('Add Inventory',
+                style: TextStyle(color: context.theme.primaryColor)),
           ),
         ],
       ),

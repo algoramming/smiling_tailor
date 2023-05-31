@@ -54,7 +54,7 @@ class ConfirmationSendPopup extends StatelessWidget {
           TextButton(
             onPressed: () async => await pktbsResetPassword(context, email)
                 .then((_) => context.pop()),
-            child: const Text('Confirm', style: TextStyle(color: Colors.green)),
+            child: Text('Confirm', style: TextStyle(color: context.theme.primaryColor)),
           ),
         ],
       ),

@@ -11,6 +11,8 @@ extension StringUtils on String {
 
   bool get isNumeric => num.tryParse(this) != null;
 
+  bool get isInt => int.tryParse(this) != null;
+
   int get wordCount => words.length;
 
   List<String> get words => split(' ');

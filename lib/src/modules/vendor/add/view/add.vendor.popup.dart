@@ -144,8 +144,8 @@ class AddVendorPopup extends ConsumerWidget {
           ),
           TextButton(
             onPressed: () async => await notifier.submit(context),
-            child:
-                const Text('Add Vendor', style: TextStyle(color: Colors.green)),
+            child: Text('Add Vendor',
+                style: TextStyle(color: context.theme.primaryColor)),
           ),
         ],
       ),

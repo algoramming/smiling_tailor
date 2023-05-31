@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
 import '../../../../shared/animations_widget/animated_popup.dart';
 
@@ -19,7 +20,8 @@ class AddOrderPopup extends StatelessWidget {
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Confirm', style: TextStyle(color: Colors.green)),
+            child: Text('Confirm',
+                style: TextStyle(color: context.theme.primaryColor)),
           ),
         ],
       ),
