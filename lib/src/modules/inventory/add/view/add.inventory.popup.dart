@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/constants/constants.dart';
 
+import '../../../../constants/constants.dart';
 import '../../../../shared/animations_widget/animated_popup.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../provider/add.inventory.provider.dart';
@@ -27,12 +27,12 @@ class AddInventoryPopup extends ConsumerWidget {
               children: [
                 DropdownButtonFormField(
                   borderRadius: borderRadius15,
-                  value: notifier.createdForm,
+                  value: notifier.createdFrom,
                   decoration: const InputDecoration(
                     labelText: 'Vendor',
                     hintText: 'From where you buy this inventory...',
                   ),
-                  onChanged: (v) => notifier.setCreatedForm(v!),
+                  onChanged: (v) => notifier.setCreatedFrom(v!),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   items: notifier.vendors
                       .map((e) =>

@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../enum/home.enum.dart';
 
 typedef HomeNotifier = NotifierProvider<HomeProvider, void>;

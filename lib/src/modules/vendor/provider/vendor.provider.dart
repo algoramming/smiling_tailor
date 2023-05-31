@@ -49,7 +49,7 @@ class VendorProvider extends AsyncNotifier<List<PktbsVendor>> {
   }
 
   List<PktbsVendor> get vendorList {
-    _vendors.sort((a, b) => b.created.compareTo(a.created));
+    _vendors.sort((a, b) => b.created.toLocal().compareTo(a.created.toLocal()));
     final vs = _vendors;
     return vs
         .where((e) =>

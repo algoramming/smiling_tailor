@@ -128,10 +128,13 @@ class _TrxTable extends ConsumerWidget {
                       tween:
                           Tween<double>(begin: 0, end: noti.trxList[i].amount),
                       builder: (_, double x, __) {
-                        return Text(
-                          x.formattedCompat,
-                          style: context.text.labelLarge!.copyWith(
-                            color: Colors.red,
+                        return Tooltip(
+                          message: x.formattedFloat,
+                          child: Text(
+                            x.formattedCompat,
+                            style: context.text.labelLarge!.copyWith(
+                              color: Colors.red,
+                            ),
                           ),
                         );
                       },
@@ -159,7 +162,7 @@ class _TotalAmount extends ConsumerWidget {
         ? 0.0
         : noti.rawTrxs
             .where((e) =>
-                e.created.month ==
+                e.created.toLocal().month ==
                 (noti.showPrevMonth
                     ? DateTime.now().previousMonth.month
                     : DateTime.now().month))
@@ -211,10 +214,13 @@ class _TotalAmount extends ConsumerWidget {
                 duration: kAnimationDuration(0.5),
                 tween: Tween<double>(begin: 0, end: due),
                 builder: (_, double x, __) {
-                  return Text(
-                    x.formattedCompat,
-                    style: context.text.labelLarge!.copyWith(
-                      color: x.isNegative ? Colors.green : Colors.red,
+                  return Tooltip(
+                    message: x.formattedFloat,
+                    child: Text(
+                      x.formattedCompat,
+                      style: context.text.labelLarge!.copyWith(
+                        color: x.isNegative ? Colors.green : Colors.red,
+                      ),
                     ),
                   );
                 },

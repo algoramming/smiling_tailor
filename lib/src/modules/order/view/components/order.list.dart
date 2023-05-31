@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../../../constants/constants.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
@@ -34,12 +35,13 @@ class OrderList extends StatelessWidget {
                     ),
                     child: ClipRRect(
                       borderRadius: borderRadius45,
-                      child: FadeInImage(
-                        placeholder:
-                            const AssetImage('assets/gifs/loading.gif'),
-                        image: NetworkImage(
-                            'https://picsum.photos/250?image=$index'),
-                        fit: BoxFit.cover,
+                      child: Padding(
+                        padding: const EdgeInsets.all(6.0),
+                        child: SvgPicture.asset(
+                          'assets/svgs/order.svg',
+                          fit: BoxFit.cover,
+                          colorFilter: context.theme.primaryColor.toColorFilter,
+                        ),
                       ),
                     ),
                   ),

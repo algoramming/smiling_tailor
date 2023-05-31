@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import '../../authentication/view/authentication.dart';
-import '../../settings/view/setting.view.dart';
-import '../../vendor/view/vendor.dart';
 
+import '../../authentication/view/authentication.dart';
 import '../../dashboard/dashboard.dart';
 import '../../employee/view/employee.dart';
 import '../../inventory/view/inventory.dart';
 import '../../order/view/order.dart';
 import '../../profile/view/profile.dart';
+import '../../settings/view/setting.view.dart';
+import '../../vendor/view/vendor.dart';
 
 enum KDrawer {
   dashboard,

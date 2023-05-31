@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:smiling_tailor/src/modules/settings/provider/time.format.provider.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
 import '../../../../../constants/constants.dart';
+import '../../../../../utils/extensions/extensions.dart';
 import '../../../../settings/provider/date.format.provider.dart';
+import '../../../../settings/provider/time.format.provider.dart';
 
 DateFormat get getClockFormat =>
     DateFormat('${dateFormates.first}  ${timeFormates[1]}');

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
+import '../../../../utils/extensions/extensions.dart';
 
 import '../../../../shared/animations_widget/animated_popup.dart';
 

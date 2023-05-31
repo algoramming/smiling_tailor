@@ -1,13 +1,13 @@
 import 'dart:convert';
 
 import 'package:isar/isar.dart';
-import 'package:smiling_tailor/src/modules/settings/model/measurement/measurement.dart';
-import 'package:smiling_tailor/src/modules/vendor/model/vendor.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
 import '../../../db/isar.dart';
+import '../../../utils/extensions/extensions.dart';
 import '../../authentication/model/user.dart';
+import '../../settings/model/measurement/measurement.dart';
 import '../../settings/model/settings.model.dart';
+import '../../vendor/model/vendor.dart';
 
 part 'inventory.ext.dart';
 

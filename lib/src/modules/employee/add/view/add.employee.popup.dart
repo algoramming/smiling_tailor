@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../utils/extensions/extensions.dart';
 
 import '../../../../shared/animations_widget/animated_popup.dart';
+import '../../../../utils/extensions/extensions.dart';
 import '../provider/add.employee.provider.dart';
 
 class AddEmployeePopup extends ConsumerWidget {

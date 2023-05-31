@@ -21,7 +21,7 @@ Future<void> pktbsAddInventory(
         'amount': notifier.amountCntrlr.text.toDouble,
         'advance': notifier.advanceCntrlr.text.toDouble,
         'created_by': pb.authStore.model?.id,
-        'created_from': notifier.createdForm?.id,
+        'created_from': notifier.createdFrom?.id,
       },
     ).then((_) async {
       notifier.clear();

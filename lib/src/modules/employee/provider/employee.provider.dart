@@ -50,7 +50,7 @@ class EmployeeProvider extends AsyncNotifier<List<PktbsEmployee>> {
   }
 
   List<PktbsEmployee> get employeeList {
-    _employees.sort((a, b) => b.created.compareTo(a.created));
+    _employees.sort((a, b) => b.created.toLocal().compareTo(a.created.toLocal()));
     final vs = _employees;
     return vs
         .where((e) =>

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../model/employee.dart';
+
 import '../../../transaction/api/add.trx.employee.api.dart';
+import '../../model/employee.dart';
 
 typedef AddTrxEmployeeNotifier = AutoDisposeNotifierProviderFamily<
     AddTrxEmployeeProvider, void, PktbsEmployee>;

@@ -1,14 +1,13 @@
 import 'dart:convert';
 
+import '../../../db/isar.dart';
+import '../../../utils/extensions/extensions.dart';
 import '../../authentication/model/user.dart';
+import '../../employee/model/employee.dart';
 import '../../inventory/model/inventory.dart';
 import '../../settings/model/settings.model.dart';
-import '../enum/trx.type.dart';
-import '../../../utils/extensions/extensions.dart';
-
-import '../../../db/isar.dart';
-import '../../employee/model/employee.dart';
 import '../../vendor/model/vendor.dart';
+import '../enum/trx.type.dart';
 
 part 'transaction.ext.dart';
 

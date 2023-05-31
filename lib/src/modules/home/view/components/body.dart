@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../enum/home.enum.dart';
-import '../../../../utils/transations/big.to.small.dart';
 
+import '../../../../utils/transations/big.to.small.dart';
+import '../../enum/home.enum.dart';
 import '../../provider/home.provider.dart';
 import 'drawer/drawer.dart';
 

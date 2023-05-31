@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
-import 'package:smiling_tailor/src/modules/vendor/provider/vendor.provider.dart';
 
 import '../../../../db/isar.dart';
 import '../../../settings/model/measurement/measurement.dart';
 import '../../../vendor/model/vendor.dart';
+import '../../../vendor/provider/vendor.provider.dart';
 import '../../api/add.inventory.api.dart';
 
 final lengthMeasurementsProvider = FutureProvider((_) async {
@@ -31,7 +31,7 @@ class AddInventoryProvider extends AutoDisposeAsyncNotifier<void> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   List<Measurement> measurements = [];
   List<PktbsVendor> vendors = [];
-  PktbsVendor? createdForm;
+  PktbsVendor? createdFrom;
   Measurement? unit;
 
   @override
@@ -45,8 +45,8 @@ class AddInventoryProvider extends AutoDisposeAsyncNotifier<void> {
     await pktbsAddInventory(context, this);
   }
 
-  void setCreatedForm(PktbsVendor? value) {
-    createdForm = value;
+  void setCreatedFrom(PktbsVendor? value) {
+    createdFrom = value;
     ref.notifyListeners();
   }
 
@@ -62,7 +62,7 @@ class AddInventoryProvider extends AutoDisposeAsyncNotifier<void> {
     advanceCntrlr.clear();
     amountCntrlr.clear();
     titleCntrlr.clear();
-    createdForm = null;
+    createdFrom = null;
     unit = null;
     ref.notifyListeners();
   }

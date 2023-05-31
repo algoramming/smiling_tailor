@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/modules/inventory/model/inventory.dart';
 
 import '../../../pocketbase/auth.store/helpers.dart';
 import '../../../utils/logger/logger_helper.dart';
+import '../model/inventory.dart';
 
 typedef InventoryNotifier
     = AsyncNotifierProvider<InventoryProvider, List<PktbsInventory>>;
@@ -57,7 +57,7 @@ class InventoryProvider extends AsyncNotifier<List<PktbsInventory>> {
   }
 
   List<PktbsInventory> get inventoryList {
-    _inventories.sort((a, b) => b.created.compareTo(a.created));
+    _inventories.sort((a, b) => b.created.toLocal().compareTo(a.created.toLocal()));
     final vs = _inventories;
     return vs
         .where((e) =>
