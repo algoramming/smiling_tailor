@@ -171,6 +171,11 @@ class AddInventoryPopup extends ConsumerWidget {
                     if (!v.isNumeric) {
                       return 'Invalid amount';
                     }
+                    if (notifier.amountCntrlr.text.isNotEmpty &&
+                        double.parse(v) >
+                            double.parse(notifier.amountCntrlr.text)) {
+                      return 'Advance payment must be less than total amount';
+                    }
                     return null;
                   },
                 ),

@@ -53,9 +53,6 @@ class EmployeeTrxsProvider
     pb.collection(transactions).subscribe('*', (s) async {
       log.i('Stream $s');
       if (s.record?.getStringValue('gl_id') != arg.id) return;
-      debugPrint(
-          'Stream gl_id: ${s.record?.getStringValue('gl_id')} => ${arg.id}');
-      debugPrint('Stream action: ${s.action}');
       debugPrint('Stream record: ${s.record!.toJson()['id']}');
       await pb
           .collection(transactions)
