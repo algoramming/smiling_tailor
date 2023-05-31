@@ -23,13 +23,13 @@ class AddInventoryPopup extends ConsumerWidget {
           child: Form(
             key: notifier.formKey,
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              mainAxisSize: mainMin,
               children: [
                 DropdownButtonFormField(
                   borderRadius: borderRadius15,
                   value: notifier.createdForm,
                   decoration: const InputDecoration(
-                    labelText: 'Select Vendor',
+                    labelText: 'Vendor',
                     hintText: 'From where you buy this inventory...',
                   ),
                   onChanged: (v) => notifier.setCreatedForm(v!),
@@ -77,28 +77,60 @@ class AddInventoryPopup extends ConsumerWidget {
                   validator: (v) => null,
                 ),
                 const SizedBox(height: 10),
-                TextFormField(
-                  controller: notifier.quantityCntrlr,
-                  decoration: const InputDecoration(
-                    labelText: 'Quantity',
-                    hintText: 'Enter inventory\'s quantity...',
-                  ),
-                  onFieldSubmitted: (_) async => notifier.submit(context),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  textInputAction: TextInputAction.done,
-                  keyboardType: TextInputType.number,
-                  validator: (v) {
-                    if (v!.isEmpty) {
-                      return 'Quantity is required';
-                    }
-                    if (!v.isNumeric) {
-                      return 'Invalid quantity';
-                    }
-                    if (!v.isInt) {
-                      return 'Quantity must be integer';
-                    }
-                    return null;
-                  },
+                Row(
+                  crossAxisAlignment: crossStart,
+                  children: [
+                    Expanded(
+                      flex: 5,
+                      child: TextFormField(
+                        controller: notifier.quantityCntrlr,
+                        decoration: const InputDecoration(
+                          labelText: 'Quantity',
+                          hintText: 'Enter inventory\'s quantity...',
+                        ),
+                        onFieldSubmitted: (_) async => notifier.submit(context),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.number,
+                        validator: (v) {
+                          if (v!.isEmpty) {
+                            return 'Quantity is required';
+                          }
+                          if (!v.isNumeric) {
+                            return 'Invalid quantity';
+                          }
+                          if (!v.isInt) {
+                            return 'Quantity must be integer';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      flex: 2,
+                      child: DropdownButtonFormField(
+                        borderRadius: borderRadius15,
+                        value: notifier.unit,
+                        decoration: const InputDecoration(
+                          labelText: 'Unit',
+                          hintText: 'Select',
+                        ),
+                        onChanged: (v) => notifier.setUnit(v!),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        items: notifier.measurements
+                            .map((e) => DropdownMenuItem(
+                                value: e, child: Text(e.symbol, maxLines: 1)))
+                            .toList(),
+                        validator: (v) {
+                          if (v == null) {
+                            return 'required*';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 10),
                 TextFormField(

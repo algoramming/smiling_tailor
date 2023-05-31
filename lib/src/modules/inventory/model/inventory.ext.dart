@@ -1,7 +1,6 @@
 part of 'inventory.dart';
 
 extension InventoryExtension on PktbsInventory {
-
   // copywith
   PktbsInventory copyWith({
     String? id,
@@ -47,7 +46,7 @@ extension InventoryExtension on PktbsInventory {
         _Json.created: created.toUtc().toIso8601String(),
         _Json.updated: updated?.toUtc().toIso8601String(),
       };
-  
+
   String toRawJson() => json.encode(toJson());
 
   String get createdDate =>
@@ -56,4 +55,7 @@ extension InventoryExtension on PktbsInventory {
   String? get updatedDate => updated != null
       ? appSettings.getDateTimeFormat.format(updated!.toLocal())
       : null;
+
+  Future<Measurement?> get measurement async =>
+      await db.measurements.where().filter().nameEqualTo(unit).findFirst();
 }

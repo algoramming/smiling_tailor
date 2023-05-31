@@ -1,6 +1,9 @@
 import 'dart:convert';
 
+import 'package:isar/isar.dart';
+import 'package:smiling_tailor/src/modules/settings/model/measurement/measurement.dart';
 import 'package:smiling_tailor/src/modules/vendor/model/vendor.dart';
+import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
 import '../../../db/isar.dart';
 import '../../authentication/model/user.dart';
@@ -42,12 +45,14 @@ class PktbsInventory {
       id: json[_Json.id],
       unit: json[_Json.unit],
       title: json[_Json.title],
-      amount: json[_Json.amount],
-      advance: json[_Json.advance],
-      quantity: json[_Json.quantity],
+      amount: json[_Json.amount].toString().toDouble ?? 0.0,
+      advance: json[_Json.advance].toString().toDouble ?? 0.0,
+      quantity: json[_Json.quantity].toString().toInt ?? 0,
       description: json[_Json.description],
-      created: json[_Json.created].toDateTime(),
-      updated: json[_Json.updated]?.toDateTime(),
+      created: DateTime.parse(json[_Json.created]).toLocal(),
+      updated: json[_Json.updated] == null || json[_Json.updated] == ''
+          ? null
+          : DateTime.parse(json[_Json.updated]).toLocal(),
       createdBy: PktbsUser.fromJson(json[_Json.expand][_Json.createdBy]),
       updatedBy: json[_Json.updatedBy] == null || json[_Json.updatedBy] == ''
           ? null

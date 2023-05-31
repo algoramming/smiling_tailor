@@ -2,9 +2,19 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:isar/isar.dart';
 import 'package:smiling_tailor/src/modules/vendor/provider/vendor.provider.dart';
 
+import '../../../../db/isar.dart';
+import '../../../settings/model/measurement/measurement.dart';
 import '../../../vendor/model/vendor.dart';
+import '../../api/add.inventory.api.dart';
+
+final lengthMeasurementsProvider = FutureProvider((_) async {
+  final ms = await db.measurements.where().filter().unitOfEqualTo('Length').findAll();
+  ms.removeWhere((element) => element.name == 'Mile');
+  return ms;
+});
 
 typedef AddInventoryNotifier
     = AutoDisposeAsyncNotifierProvider<AddInventoryProvider, void>;
@@ -19,18 +29,20 @@ class AddInventoryProvider extends AutoDisposeAsyncNotifier<void> {
   final TextEditingController descriptionCntrlr = TextEditingController();
   final TextEditingController titleCntrlr = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  PktbsVendor? createdForm;
-  String? unit;
+  List<Measurement> measurements = [];
   List<PktbsVendor> vendors = [];
+  PktbsVendor? createdForm;
+  Measurement? unit;
 
   @override
   FutureOr<void> build() {
     vendors = ref.watch(vendorProvider).value ?? [];
+    measurements = ref.watch(lengthMeasurementsProvider).value ?? [];
   }
 
   Future<void> submit(BuildContext context) async {
     if (!formKey.currentState!.validate()) return;
-    // await pktbsAddEmployee(context, this);
+    await pktbsAddInventory(context, this);
   }
 
   void setCreatedForm(PktbsVendor? value) {
@@ -38,7 +50,7 @@ class AddInventoryProvider extends AutoDisposeAsyncNotifier<void> {
     ref.notifyListeners();
   }
 
-  void setUnit(String? value) {
+  void setUnit(Measurement? value) {
     unit = value;
     ref.notifyListeners();
   }

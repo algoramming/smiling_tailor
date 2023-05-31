@@ -21,7 +21,7 @@ class InventoryProvider extends AsyncNotifier<List<PktbsInventory>> {
     _inventories = [];
     _listener();
     _stream();
-    _inventories = await pb.collection(inventories).getFullList().then((v) {
+    _inventories = await pb.collection(inventories).getFullList(expand: 'created_by, updated_by, created_from').then((v) {
       log.i('Inventories: $v');
       return v.map((e) {
         log.wtf('Inventory: $e');

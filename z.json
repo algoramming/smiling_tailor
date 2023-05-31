@@ -1,0 +1,28 @@
+{
+    "id": "16xe9q19wv91bow",
+    "created": "2023-05-31 18:16:19.543Z",
+    "updated": "2023-05-31 18:16:19.543Z",
+    "collectionId": "qfrg5f60fa9bxvm",
+    "collectionName": "transactions",
+    "expand": {},
+    "amount": 600,
+    "created_by": "8b4yapa7syg2kbo",
+    "description": "dgsdfgd",
+    "due": 0,
+    "gl": {
+        "address": "Lorem Ipsum",
+        "collectionId": "ojlqbn2ih9e05m8",
+        "collectionName": "employees",
+        "created": "2023-05-30T19:03:09.952Z",
+        "description": "Lorem Ipsum Description",
+        "email": "aaa@emp.com",
+        "id": "hwsr8dpplao996t",
+        "name": "AAA Emp",
+        "phone": "01234567890",
+        "salary": 10000,
+        "updated": "2023-05-30T19:03:09.952Z"
+    },
+    "gl_id": "hwsr8dpplao996t",
+    "type": "Employee",
+    "updated_by": ""
+}

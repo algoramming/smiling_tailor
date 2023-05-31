@@ -45,11 +45,14 @@ class InventoryList extends ConsumerWidget {
                           ),
                           child: ClipRRect(
                             borderRadius: borderRadius45,
-                            child: SvgPicture.asset(
-                              'assets/svgs/inventory.svg',
-                              fit: BoxFit.cover,
-                              colorFilter:
-                                  context.theme.primaryColor.toColorFilter,
+                            child: Padding(
+                              padding: const EdgeInsets.all(6.0),
+                              child: SvgPicture.asset(
+                                'assets/svgs/inventory.svg',
+                                fit: BoxFit.cover,
+                                colorFilter:
+                                    context.theme.primaryColor.toColorFilter,
+                              ),
                             ),
                           ),
                         ),

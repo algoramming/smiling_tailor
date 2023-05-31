@@ -26,7 +26,9 @@ class EmployeeTrxsProvider
     _trxs = await pb
         .collection(transactions)
         .getFullList(
-            filter: 'gl_id = "${arg.id}"', expand: 'created_by, updated_by')
+          filter: 'gl_id = "${arg.id}"',
+          expand: 'created_by, updated_by',
+        )
         .then((v) {
       log.i('Employees Trxs: $v');
       return v.map((e) {
