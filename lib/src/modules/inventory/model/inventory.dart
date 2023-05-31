@@ -45,11 +45,11 @@ class PktbsInventory {
       id: json[_Json.id],
       unit: json[_Json.unit],
       title: json[_Json.title],
-      amount: json[_Json.amount].toString().toDouble ?? 0.0,
-      advance: json[_Json.advance].toString().toDouble ?? 0.0,
-      quantity: json[_Json.quantity].toString().toInt ?? 0,
       description: json[_Json.description],
+      quantity: json[_Json.quantity].toString().toInt ?? 0,
+      amount: json[_Json.amount].toString().toDouble ?? 0.0,
       created: DateTime.parse(json[_Json.created]).toLocal(),
+      advance: json[_Json.advance].toString().toDouble ?? 0.0,
       updated: json[_Json.updated] == null || json[_Json.updated] == ''
           ? null
           : DateTime.parse(json[_Json.updated]).toLocal(),
@@ -65,7 +65,8 @@ class PktbsInventory {
       PktbsInventory.fromJson(json.decode(str));
 
   @override
-  String toString() => 'PktbsInventory{quantity: $quantity, unit: $unit, title: $title, amount: $amount, advance: $advance, id: $id, updated: $updated, description: $description, createdBy: $createdBy, updatedBy: $updatedBy, created: $created, createdFrom: $createdFrom}';
+  String toString() =>
+      'PktbsInventory{quantity: $quantity, unit: $unit, title: $title, amount: $amount, advance: $advance, id: $id, updated: $updated, description: $description, createdBy: $createdBy, updatedBy: $updatedBy, created: $created, createdFrom: $createdFrom}';
 
   @override
   bool operator ==(Object other) {
