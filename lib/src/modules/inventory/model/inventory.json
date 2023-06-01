@@ -1,48 +1,63 @@
-[
-    {
-        "id": "1vnaxftwsuazc6c",
-        "created": "2023-05-31 18:06:56.907Z",
-        "updated": "2023-05-31 18:06:56.907Z",
-        "collectionId": "o7d5a6z1ebu30ul",
-        "collectionName": "inventories",
-        "expand": {
-            "created_by": {
-                "id": "8b4yapa7syg2kbo",
-                "created": "2023-05-31 12:38:10.857Z",
-                "updated": "2023-05-31 12:38:10.857Z",
-                "collectionId": "_pb_users_auth_",
-                "collectionName": "users",
-                "expand": {},
-                "avatar": "",
-                "email": "another@user.com",
-                "emailVisibility": true,
-                "name": "Another User",
-                "username": "anotheruser",
-                "verified": false
-            },
-            "created_from": {
-                "id": "vk5p5fooi8ukf2p",
-                "created": "2023-05-30 19:20:36.806Z",
-                "updated": "2023-05-30 19:20:36.806Z",
-                "collectionId": "t3si1vfrp0ooi0f",
-                "collectionName": "vendors",
-                "expand": {},
-                "address": "Lorem Ipsum",
-                "description": "Lorem Ipsum Description",
-                "email": "aaa@vendor.com",
-                "name": "AAA Vendor",
-                "opening_balance": 15000,
-                "phone": "01234567890"
-            }
+{
+    "id": "tugj1vb37n4l726",
+    "created": "2023-06-01 16:37:59.385Z",
+    "updated": "2023-06-01 16:37:59.385Z",
+    "collectionId": "o7d5a6z1ebu30ul",
+    "collectionName": "inventories",
+    "expand": {
+        "creator": {
+            "id": "tax09erkk74ywpz",
+            "created": "2023-05-31 18:23:18.727Z",
+            "updated": "2023-05-31 18:23:18.727Z",
+            "collectionId": "_pb_users_auth_",
+            "collectionName": "users",
+            "expand": {},
+            "avatar": "rahat_avatar_VrZdB286h7.jpg",
+            "email": "sabikrahat72428@gmail.com",
+            "emailVisibility": false,
+            "name": "Md. Sabik Alam Rahat",
+            "username": "sabikrahat",
+            "verified": true
         },
-        "advance": 30000,
-        "amount": 50000,
-        "created_by": "8b4yapa7syg2kbo",
-        "created_from": "vk5p5fooi8ukf2p",
-        "description": "Lorem Ipsum",
-        "quantity": 100,
-        "title": "Abc Fabrics",
-        "unit": "Parsec",
-        "updated_by": ""
-    }
-]
+        "from": {
+            "id": "w4zf7y6ketwnfsw",
+            "created": "2023-06-01 16:24:20.286Z",
+            "updated": "2023-06-01 16:24:20.286Z",
+            "collectionId": "t3si1vfrp0ooi0f",
+            "collectionName": "vendors",
+            "expand": {
+                "creator": {
+                    "id": "tax09erkk74ywpz",
+                    "created": "2023-05-31 18:23:18.727Z",
+                    "updated": "2023-05-31 18:23:18.727Z",
+                    "collectionId": "_pb_users_auth_",
+                    "collectionName": "users",
+                    "expand": {},
+                    "avatar": "rahat_avatar_VrZdB286h7.jpg",
+                    "email": "sabikrahat72428@gmail.com",
+                    "emailVisibility": false,
+                    "name": "Md. Sabik Alam Rahat",
+                    "username": "sabikrahat",
+                    "verified": true
+                }
+            },
+            "address": "Lorem Ipsum",
+            "creator": "tax09erkk74ywpz",
+            "description": "Lorem Ipsum Description",
+            "email": "aaa@vendor.com",
+            "name": "AAA Vendor",
+            "opening_balance": 10000,
+            "phone": "01234567890",
+            "updator": ""
+        }
+    },
+    "advance": 20000,
+    "amount": 50000,
+    "creator": "tax09erkk74ywpz",
+    "description": "Lorem Ipsum Description",
+    "from": "w4zf7y6ketwnfsw",
+    "quantity": 30,
+    "title": "AAC inventory",
+    "unit": "Parsec",
+    "updator": ""
+}

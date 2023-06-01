@@ -18,6 +18,7 @@ Future<void> pktbsAddVendor(BuildContext context, AddVendorProvider notifier) as
         'description': notifier.descriptionCntrlr.text,
         'email': notifier.emailCntrlr.text,
         'phone': notifier.phoneCntrlr.text,
+        'creator': pb.authStore.model!.id,
         'opening_balance': notifier.openingBalanceCntrlr.text.toDouble ?? 0.0,
       },
     ).then((_) async {

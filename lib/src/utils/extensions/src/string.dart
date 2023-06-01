@@ -40,6 +40,10 @@ extension StringUtils on String {
   bool hasMatch(String v) => toLowerCase().contains(v.toLowerCase());
 }
 
+extension StringNullUtils on String? {
+  bool isNullOrEmpty() => this == null || this!.isEmpty;
+}
+
 String pluralize(
   int number,
   String form1,

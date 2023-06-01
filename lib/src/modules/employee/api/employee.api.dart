@@ -19,6 +19,7 @@ Future<void> pktbsAddEmployee(
         'description': notifier.descriptionCntrlr.text,
         'email': notifier.emailCntrlr.text,
         'phone': notifier.phoneCntrlr.text,
+        'creator': pb.authStore.model!.id,
         'salary': notifier.salaryCntrlr.text.toDouble ?? 0.0,
       },
     ).then((_) async {

@@ -9,10 +9,12 @@ extension TrxExtension on PktbsTrx {
     double? amount,
     DateTime? created,
     DateTime? updated,
+    PktbsUser? updator,
+    PktbsUser? creator,
     bool? isReceiveable,
     String? description,
-    PktbsUser? updatedBy,
-    PktbsUser? createdBy,
+    String? collectionId,
+    String? collectionName,
     Map<String, dynamic>? gl,
   }) {
     return PktbsTrx(
@@ -24,9 +26,11 @@ extension TrxExtension on PktbsTrx {
       amount: amount ?? this.amount,
       updated: updated ?? this.updated,
       created: created ?? this.created,
-      createdBy: createdBy ?? this.createdBy,
-      updatedBy: updatedBy ?? this.updatedBy,
+      creator: creator ?? this.creator,
+      updator: updator ?? this.updator,
       description: description ?? this.description,
+      collectionId: collectionId ?? this.collectionId,
+      collectionName: collectionName ?? this.collectionName,
     );
   }
 
@@ -38,8 +42,10 @@ extension TrxExtension on PktbsTrx {
         _Json.amount: amount,
         _Json.type: type.title,
         _Json.description: description,
-        _Json.createdBy: createdBy.toJson(),
-        _Json.updatedBy: updatedBy?.toJson(),
+        _Json.creator: creator.toJson(),
+        _Json.updator: updator?.toJson(),
+        _Json.collectionId: collectionId,
+        _Json.collectionName: collectionName,
         _Json.created: created.toIso8601String(),
         _Json.updated: updated?.toIso8601String(),
       };

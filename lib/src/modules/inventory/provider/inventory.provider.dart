@@ -21,12 +21,13 @@ class InventoryProvider extends AsyncNotifier<List<PktbsInventory>> {
     _inventories = [];
     _listener();
     _stream();
-    _inventories = await pb.collection(inventories).getFullList(expand: 'created_by, updated_by, created_from').then((v) {
+    _inventories = await pb
+        .collection(inventories)
+        .getFullList(
+            expand: 'creator, updator, from, from.creator, from.updator')
+        .then((v) {
       log.i('Inventories: $v');
-      return v.map((e) {
-        log.wtf('Inventory: $e');
-        return PktbsInventory.fromJson(e.toJson());
-      }).toList();
+      return v.map((e) => PktbsInventory.fromJson(e.toJson())).toList();
     });
 
     return _inventories;
@@ -40,16 +41,19 @@ class InventoryProvider extends AsyncNotifier<List<PktbsInventory>> {
       log.i('Stream $s');
       await pb
           .collection(inventories)
-          .getOne(s.record!.toJson()['id'], expand: 'created_by, updated_by, created_from')
-          .then((inventory) {
-        log.i('Stream After Get Inventory: $inventory');
+          .getOne(
+            s.record!.toJson()['id'],
+            expand: 'creator, updator, from, from.creator, from.updator',
+          )
+          .then((inven) {
+        log.i('Stream After Get Inventory: $inven');
         if (s.action == 'create') {
-          _inventories.add(PktbsInventory.fromJson(inventory.toJson()));
+          _inventories.add(PktbsInventory.fromJson(inven.toJson()));
         } else if (s.action == 'update') {
-          _inventories.removeWhere((e) => e.id == inventory.id);
-          _inventories.add(PktbsInventory.fromJson(inventory.toJson()));
+          _inventories.removeWhere((e) => e.id == inven.id);
+          _inventories.add(PktbsInventory.fromJson(inven.toJson()));
         } else if (s.action == 'delete') {
-          _inventories.removeWhere((e) => e.id == inventory.id);
+          _inventories.removeWhere((e) => e.id == inven.id);
         }
         ref.notifyListeners();
       });
@@ -57,15 +61,16 @@ class InventoryProvider extends AsyncNotifier<List<PktbsInventory>> {
   }
 
   List<PktbsInventory> get inventoryList {
-    _inventories.sort((a, b) => b.created.toLocal().compareTo(a.created.toLocal()));
+    _inventories
+        .sort((a, b) => b.created.toLocal().compareTo(a.created.toLocal()));
     final vs = _inventories;
     return vs
         .where((e) =>
             e.title.toLowerCase().contains(searchCntrlr.text.toLowerCase()) ||
-            e.createdFrom.name
+            e.from.name
                 .toLowerCase()
                 .contains(searchCntrlr.text.toLowerCase()) ||
-            e.createdFrom.phone
+            e.from.phone
                 .toLowerCase()
                 .contains(searchCntrlr.text.toLowerCase()) ||
             (e.description

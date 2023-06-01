@@ -20,12 +20,12 @@ class VendorProvider extends AsyncNotifier<List<PktbsVendor>> {
     _vendors = [];
     _listener();
     _stream();
-    _vendors = await pb.collection(vendors).getFullList().then((v) {
+    _vendors = await pb
+        .collection(vendors)
+        .getFullList(expand: 'creator, updator')
+        .then((v) {
       log.i('Vendors: $v');
-      return v.map((e) {
-        log.wtf('Vendor: $e');
-        return PktbsVendor.fromJson(e.toJson());
-      }).toList();
+      return v.map((e) => PktbsVendor.fromJson(e.toJson())).toList();
     });
 
     return _vendors;
@@ -34,17 +34,24 @@ class VendorProvider extends AsyncNotifier<List<PktbsVendor>> {
   _listener() => searchCntrlr.addListener(() => ref.notifyListeners());
 
   _stream() {
-    pb.collection(vendors).subscribe('*', (s) {
-      log.i('Stream ${s.toJson()}');
-      if (s.action == 'create') {
-        _vendors.add(PktbsVendor.fromJson(s.record!.toJson()));
-      } else if (s.action == 'update') {
-        _vendors.removeWhere((e) => e.id == s.record!.id);
-        _vendors.add(PktbsVendor.fromJson(s.record!.toJson()));
-      } else if (s.action == 'delete') {
-        _vendors.removeWhere((e) => e.id == s.record!.id);
-      }
-      ref.notifyListeners();
+    // Implement Stream needs pocketbase update to add filter and expand options then the autodispose had to remove
+    pb.collection(vendors).subscribe('*', (s) async {
+      log.i('Stream $s');
+      await pb
+          .collection(vendors)
+          .getOne(s.record!.toJson()['id'], expand: 'creator, updator')
+          .then((ven) {
+        log.i('Stream After Get Vendor: $ven');
+        if (s.action == 'create') {
+          _vendors.add(PktbsVendor.fromJson(ven.toJson()));
+        } else if (s.action == 'update') {
+          _vendors.removeWhere((e) => e.id == ven.id);
+          _vendors.add(PktbsVendor.fromJson(ven.toJson()));
+        } else if (s.action == 'delete') {
+          _vendors.removeWhere((e) => e.id == ven.id);
+        }
+        ref.notifyListeners();
+      });
     });
   }
 

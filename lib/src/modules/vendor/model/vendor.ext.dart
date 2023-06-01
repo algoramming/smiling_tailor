@@ -1,9 +1,6 @@
-
 part of 'vendor.dart';
 
 extension VendorExtension on PktbsVendor {
-
-  // copywith function
   PktbsVendor copyWith({
     String? id,
     String? name,
@@ -12,6 +9,8 @@ extension VendorExtension on PktbsVendor {
     String? address,
     DateTime? created,
     DateTime? updated,
+    PktbsUser? creator,
+    PktbsUser? updator,
     String? description,
     String? collectionId,
     double? openingBalance,
@@ -22,6 +21,8 @@ extension VendorExtension on PktbsVendor {
       name: name ?? this.name,
       email: email ?? this.email,
       phone: phone ?? this.phone,
+      creator: creator ?? this.creator,
+      updator: updator ?? this.updator,
       address: address ?? this.address,
       created: created ?? this.created,
       updated: updated ?? this.updated,
@@ -32,7 +33,6 @@ extension VendorExtension on PktbsVendor {
     );
   }
 
-  // to json
   Map<String, dynamic> toJson() => {
         _Json.id: id,
         _Json.name: name,
@@ -40,6 +40,8 @@ extension VendorExtension on PktbsVendor {
         _Json.phone: phone,
         _Json.address: address,
         _Json.description: description,
+        _Json.creator: creator.toJson(),
+        _Json.updator: updator?.toJson(),
         _Json.collectionId: collectionId,
         _Json.openingBalance: openingBalance,
         _Json.collectionName: collectionName,
@@ -47,6 +49,12 @@ extension VendorExtension on PktbsVendor {
         _Json.updated: updated?.toIso8601String(),
       };
 
-  // to raw json
   String toRawJson() => json.encode(toJson());
+
+  String get createdDate =>
+      appSettings.getDateTimeFormat.format(created.toLocal());
+
+  String? get updatedDate => updated != null
+      ? appSettings.getDateTimeFormat.format(updated!.toLocal())
+      : null;
 }
