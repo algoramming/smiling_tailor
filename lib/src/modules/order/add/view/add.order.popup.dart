@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../../utils/extensions/extensions.dart';
 
 import '../../../../shared/animations_widget/animated_popup.dart';
+import '../../../../utils/extensions/extensions.dart';
 
 class AddOrderPopup extends StatelessWidget {
   const AddOrderPopup({super.key});

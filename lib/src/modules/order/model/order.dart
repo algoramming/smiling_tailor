@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:smiling_tailor/src/modules/employee/model/employee.dart';
-import 'package:smiling_tailor/src/modules/inventory/model/inventory.dart';
-import 'package:smiling_tailor/src/modules/order/model/enum.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
+import '../../employee/model/employee.dart';
+import '../../inventory/model/inventory.dart';
+import 'enum.dart';
+import '../../../utils/extensions/extensions.dart';
 
 import '../../../db/isar.dart';
 import '../../authentication/model/user.dart';
