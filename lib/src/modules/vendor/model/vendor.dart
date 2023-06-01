@@ -1,8 +1,10 @@
 import 'dart:convert';
-import '../../authentication/model/user.dart';
-import '../../settings/model/settings.model.dart';
+
 import '../../../db/isar.dart';
 import '../../../utils/extensions/extensions.dart';
+import '../../authentication/model/user.dart';
+import '../../settings/model/settings.model.dart';
+
 part 'vendor.ext.dart';
 
 class PktbsVendor {
