@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../constants/constants.dart';
 import '../../../../db/isar.dart';
+import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../transaction/model/transaction.dart';
 import '../../add/view/add.employee.popup.dart';
@@ -95,7 +96,7 @@ class _TrxTable extends ConsumerWidget {
               itemBuilder: (_, i) {
                 final trx = noti.trxList[i];
                 return Card(
-                  child: ListTile(
+                  child: KListTile(
                     leading: Card(
                       color: Colors.red[100],
                       shape: roundedRectangleBorder10,

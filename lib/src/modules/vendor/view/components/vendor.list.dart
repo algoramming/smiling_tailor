@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../constants/constants.dart';
+import '../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../provider/vendor.provider.dart';
@@ -32,25 +32,15 @@ class VendorList extends ConsumerWidget {
                     final vendor = notifier.vendorList[idx];
                     return Card(
                       child: KListTile(
-                        leading: Container(
-                          height: 45.0,
-                          width: 45.0,
-                          padding: const EdgeInsets.all(1.0),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                                color: context.theme.primaryColor, width: 1.3),
-                          ),
-                          child: ClipRRect(
-                            borderRadius: borderRadius45,
-                            child: Padding(
-                              padding: const EdgeInsets.all(3.0),
-                              child: SvgPicture.asset(
-                                'assets/svgs/vendor.svg',
-                                fit: BoxFit.cover,
-                                colorFilter:
-                                    context.theme.primaryColor.toColorFilter,
-                              ),
+                        leading: AnimatedWidgetShower(
+                          size: 30.0,
+                          child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: SvgPicture.asset(
+                              'assets/svgs/vendor.svg',
+                              colorFilter:
+                                  context.theme.primaryColor.toColorFilter,
+                              semanticsLabel: 'Vendor',
                             ),
                           ),
                         ),
