@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:smiling_tailor/src/modules/employee/model/employee.dart';
 import 'package:smiling_tailor/src/modules/inventory/model/inventory.dart';
 import 'package:smiling_tailor/src/modules/order/model/enum.dart';
+import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
 import '../../../db/isar.dart';
 import '../../authentication/model/user.dart';
@@ -33,10 +34,11 @@ class PktbsOrder {
   String? pocket;
   String? button;
   String? measurementNote;
+  int quantity;
   //
   PktbsEmployee tailorEmployee;
-  double employeeCharge;
-  String? employeeNote;
+  double tailorCharge;
+  String? tailorNote;
   //
   PktbsInventory? inventory;
   int? inventoryQuantity;
@@ -51,7 +53,7 @@ class PktbsOrder {
   String? deliveryNote;
   //
   PaymentMethod paymentMethod;
-  double paymentNote;
+  String? paymentNote;
   double advanceAmount;
   //
   DateTime deliveryTime;
@@ -80,10 +82,11 @@ class PktbsOrder {
     this.pocket,
     this.button,
     this.measurementNote,
+    required this.quantity,
     //
     required this.tailorEmployee,
-    required this.employeeCharge,
-    this.employeeNote,
+    required this.tailorCharge,
+    this.tailorNote,
     //
     this.inventory,
     this.inventoryQuantity,
@@ -111,8 +114,10 @@ class PktbsOrder {
       id: json[_Json.id],
       created: json[_Json.created].toDateTime(),
       updated: json[_Json.updated].toDateTime(),
-      creator: json[_Json.creator].toUser(),
-      updator: json[_Json.updator].toUser(),
+      creator: PktbsUser.fromJson(json[_Json.expand][_Json.creator]),
+      updator: json[_Json.updator] == null || json[_Json.updator] == ''
+          ? null
+          : PktbsUser.fromJson(json[_Json.expand][_Json.updator]),
       collectionId: json[_Json.collectionId],
       collectionName: json[_Json.collectionName],
       //
@@ -129,30 +134,37 @@ class PktbsOrder {
       pocket: json[_Json.pocket],
       button: json[_Json.button],
       measurementNote: json[_Json.measurementNote],
+      quantity: json[_Json.quantity].toString().toInt ?? 0,
       //
-      tailorEmployee: json[_Json.tailorEmployee].toEmployee(),
-      employeeCharge: json[_Json.employeeCharge],
-      employeeNote: json[_Json.employeeNote],
+      tailorEmployee:
+          PktbsEmployee.fromJson(json[_Json.expand][_Json.tailorEmployee]),
+      tailorCharge: json[_Json.tailorCharge].toString().toDouble ?? 0.0,
+      tailorNote: json[_Json.tailorNote],
       //
-      inventory: json[_Json.inventory].toInventory(),
-      inventoryQuantity: json[_Json.inventoryQuantity],
+      inventory: json[_Json.inventory] == null || json[_Json.inventory] == ''
+          ? null
+          : PktbsInventory.fromJson(json[_Json.expand][_Json.inventory]),
+      inventoryQuantity: json[_Json.inventoryQuantity].toString().toInt,
       inventoryUnit: json[_Json.inventoryUnit],
-      inventoryPrice: json[_Json.inventoryPrice],
+      inventoryPrice: json[_Json.inventoryPrice].toString().toDouble,
       inventoryNote: json[_Json.inventoryNote],
       //
       isHomeDeliveryNeeded: json[_Json.isHomeDeliveryNeeded],
-      deliveryEmployee: json[_Json.deliveryEmployee].toEmployee(),
+      deliveryEmployee: json[_Json.deliveryEmployee] == null ||
+              json[_Json.deliveryEmployee] == ''
+          ? null
+          : PktbsEmployee.fromJson(json[_Json.expand][_Json.deliveryEmployee]),
       deliveryAddress: json[_Json.deliveryAddress],
-      deliveryCharge: json[_Json.deliveryCharge],
+      deliveryCharge: json[_Json.deliveryCharge].toString().toDouble,
       deliveryNote: json[_Json.deliveryNote],
       //
-      paymentMethod: json[_Json.paymentMethod].toPaymentMethod(),
+      paymentMethod: (json[_Json.paymentMethod] as String).toPaymentMethod,
       paymentNote: json[_Json.paymentNote],
-      advanceAmount: json[_Json.advanceAmount],
+      advanceAmount: json[_Json.advanceAmount].toString().toDouble ?? 0.0,
       //
-      deliveryTime: json[_Json.deliveryTime].toDateTime(),
+      deliveryTime: DateTime.parse(json[_Json.deliveryTime]).toLocal(),
       description: json[_Json.description],
-      status: json[_Json.status].toOrderStatus(),
+      status: (json[_Json.status] as String).toOrderStatus,
     );
   }
 
@@ -161,7 +173,7 @@ class PktbsOrder {
 
   @override
   String toString() =>
-      'PktbsOrder(id: $id, created: $created, updated: $updated, creator: $creator, updator: $updator, collectionId: $collectionId, collectionName: $collectionName, customerName: $customerName, customerEmail: $customerEmail, customerPhone: $customerPhone, customerAddress: $customerAddress, customerNote: $customerNote, measurement: $measurement, plate: $plate, sleeve: $sleeve, colar: $colar, pocket: $pocket, button: $button, measurementNote: $measurementNote, tailorEmployee: $tailorEmployee, employeeCharge: $employeeCharge, employeeNote: $employeeNote, inventory: $inventory, inventoryQuantity: $inventoryQuantity, inventoryUnit: $inventoryUnit, inventoryPrice: $inventoryPrice, inventoryNote: $inventoryNote, isHomeDeliveryNeeded: $isHomeDeliveryNeeded, deliveryEmployee: $deliveryEmployee, deliveryAddress: $deliveryAddress, deliveryCharge: $deliveryCharge, deliveryNote: $deliveryNote, paymentMethod: $paymentMethod, paymentNote: $paymentNote, advanceAmount: $advanceAmount, deliveryTime: $deliveryTime, description: $description, status: $status)';
+      'PktbsOrder(id: $id, created: $created, updated: $updated, creator: $creator, updator: $updator, collectionId: $collectionId, collectionName: $collectionName, customerName: $customerName, customerEmail: $customerEmail, customerPhone: $customerPhone, customerAddress: $customerAddress, customerNote: $customerNote, measurement: $measurement, plate: $plate, sleeve: $sleeve, colar: $colar, pocket: $pocket, button: $button, measurementNote: $measurementNote, quantity: $quantity, tailorEmployee: $tailorEmployee, tailorCharge: $tailorCharge, tailorNote: $tailorNote, inventory: $inventory, inventoryQuantity: $inventoryQuantity, inventoryUnit: $inventoryUnit, inventoryPrice: $inventoryPrice, inventoryNote: $inventoryNote, isHomeDeliveryNeeded: $isHomeDeliveryNeeded, deliveryEmployee: $deliveryEmployee, deliveryAddress: $deliveryAddress, deliveryCharge: $deliveryCharge, deliveryNote: $deliveryNote, paymentMethod: $paymentMethod, paymentNote: $paymentNote, advanceAmount: $advanceAmount, deliveryTime: $deliveryTime, description: $description, status: $status)';
 
   @override
   bool operator ==(Object other) {
@@ -179,6 +191,7 @@ class _Json {
   static const updated = 'updated';
   static const creator = 'creator';
   static const updator = 'updator';
+  static const expand = 'expand';
   static const collectionId = 'collectionId';
   static const collectionName = 'collectionName';
   //
@@ -195,10 +208,11 @@ class _Json {
   static const pocket = 'pocket';
   static const button = 'button';
   static const measurementNote = 'measurementNote';
+  static const quantity = 'quantity';
   //
   static const tailorEmployee = 'tailorEmployee';
-  static const employeeCharge = 'employeeCharge';
-  static const employeeNote = 'employeeNote';
+  static const tailorCharge = 'tailorCharge';
+  static const tailorNote = 'tailorNote';
   //
   static const inventory = 'inventory';
   static const inventoryQuantity = 'inventoryQuantity';

@@ -23,10 +23,11 @@ extension OrderExtension on PktbsOrder {
     String? pocket,
     String? button,
     String? measurementNote,
+    int? quantity,
     //
     PktbsEmployee? tailorEmployee,
-    double? employeeCharge,
-    String? employeeNote,
+    double? tailorCharge,
+    String? tailorNote,
     //
     PktbsInventory? inventory,
     int? inventoryQuantity,
@@ -41,7 +42,7 @@ extension OrderExtension on PktbsOrder {
     String? deliveryNote,
     //
     PaymentMethod? paymentMethod,
-    double? paymentNote,
+    String? paymentNote,
     double? advanceAmount,
     //
     DateTime? deliveryTime,
@@ -70,10 +71,11 @@ extension OrderExtension on PktbsOrder {
         pocket: pocket ?? this.pocket,
         button: button ?? this.button,
         measurementNote: measurementNote ?? this.measurementNote,
+        quantity: quantity ?? this.quantity,
         //
         tailorEmployee: tailorEmployee ?? this.tailorEmployee,
-        employeeCharge: employeeCharge ?? this.employeeCharge,
-        employeeNote: employeeNote ?? this.employeeNote,
+        tailorCharge: tailorCharge ?? this.tailorCharge,
+        tailorNote: tailorNote ?? this.tailorNote,
         //
         inventory: inventory ?? this.inventory,
         inventoryQuantity: inventoryQuantity ?? this.inventoryQuantity,
@@ -118,10 +120,11 @@ extension OrderExtension on PktbsOrder {
         _Json.pocket: pocket,
         _Json.button: button,
         _Json.measurementNote: measurementNote,
+        _Json.quantity: quantity,
         //
         _Json.tailorEmployee: tailorEmployee.toJson(),
-        _Json.employeeCharge: employeeCharge,
-        _Json.employeeNote: employeeNote,
+        _Json.tailorCharge: tailorCharge,
+        _Json.tailorNote: tailorNote,
         //
         _Json.inventory: inventory?.toJson(),
         _Json.inventoryQuantity: inventoryQuantity,

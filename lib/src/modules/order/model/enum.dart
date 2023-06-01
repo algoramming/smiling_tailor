@@ -22,7 +22,7 @@ extension OrderStatusExtension on OrderStatus {
 }
 
 extension StringOrderStatusExtension on String {
-  OrderStatus get orderStatus {
+  OrderStatus get toOrderStatus {
     switch (this) {
       case 'Pending':
         return OrderStatus.pending;
@@ -64,7 +64,7 @@ extension PaymentMethodExtension on PaymentMethod {
 }
 
 extension StringPaymentMethodExtension on String {
-  PaymentMethod get paymentMethod {
+  PaymentMethod get toPaymentMethod {
     switch (this) {
       case 'Cash':
         return PaymentMethod.cash;
