@@ -11,6 +11,9 @@ import '../../settings/model/settings.model.dart';
 
 part 'order.ext.dart';
 
+const pktbsOrderExpand =
+    'creator, updator, tailorEmployee, tailorEmployee.creator, tailorEmployee.updator, inventory, inventory.creator, inventory.updator, inventory.from, inventory.from.creator, inventory.from.updator, deliveryEmployee, deliveryEmployee.creator, deliveryEmployee.updator';
+
 class PktbsOrder {
   //
   final String id;
@@ -112,8 +115,10 @@ class PktbsOrder {
   factory PktbsOrder.fromJson(Map<String, dynamic> json) {
     return PktbsOrder(
       id: json[_Json.id],
-      created: json[_Json.created].toDateTime(),
-      updated: json[_Json.updated].toDateTime(),
+      created: DateTime.parse(json[_Json.created]).toLocal(),
+      updated: json[_Json.updated] == null || json[_Json.updated] == ''
+          ? null
+          : DateTime.parse(json[_Json.updated]).toLocal(),
       creator: PktbsUser.fromJson(json[_Json.expand][_Json.creator]),
       updator: json[_Json.updator] == null || json[_Json.updator] == ''
           ? null

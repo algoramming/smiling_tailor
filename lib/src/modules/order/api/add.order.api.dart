@@ -46,6 +46,7 @@ Future<void> pktbsAddOrder(
         'deliveryTime': notifier.deliveryTime.toUtc().toIso8601String(),
         'description': notifier.descriptionCntrlr.text,
         'status': notifier.status.label,
+        'creator': pb.authStore.model!.id
       },
     ).then((_) async {
       notifier.clear();
