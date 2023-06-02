@@ -51,8 +51,10 @@ class AddOrderPopup extends ConsumerWidget {
           ),
           TextButton(
             onPressed: () async => await notifier.submit(context),
-            child: Text('Add Order',
-                style: TextStyle(color: context.theme.primaryColor)),
+            child: Text(
+              'Add Order',
+              style: TextStyle(color: context.theme.primaryColor),
+            ),
           ),
         ],
       ),

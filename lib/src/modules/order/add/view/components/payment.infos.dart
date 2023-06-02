@@ -37,7 +37,7 @@ class PaymentInfos extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         TextFormField(
-          controller: notifier.advanceCntrlr,
+          controller: notifier.advanceAmountCntrlr,
           decoration: const InputDecoration(
             labelText: 'Advance Amount',
             hintText: 'Enter advance amount...',
@@ -58,7 +58,7 @@ class PaymentInfos extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         TextFormField(
-          controller: notifier.deliveryNoteCntrlr,
+          controller: notifier.paymentNoteCntrlr,
           decoration: const InputDecoration(
             labelText: 'Payment Note',
             hintText: 'Enter payment note (if any)...',

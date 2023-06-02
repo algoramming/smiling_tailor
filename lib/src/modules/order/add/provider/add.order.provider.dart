@@ -60,7 +60,7 @@ class AddOrderProvider extends AutoDisposeAsyncNotifier<void> {
   //
   PaymentMethod paymentMethod = PaymentMethod.cash;
   final paymentNoteCntrlr = TextEditingController();
-  final advanceCntrlr = TextEditingController(text: '0.0');
+  final advanceAmountCntrlr = TextEditingController(text: '0.0');
   //
   DateTime deliveryTime = DateTime.now().addDays(7);
   final descriptionCntrlr = TextEditingController();
@@ -159,7 +159,7 @@ class AddOrderProvider extends AutoDisposeAsyncNotifier<void> {
     //
     paymentMethod = PaymentMethod.cash;
     paymentNoteCntrlr.clear();
-    advanceCntrlr.text = '0.0';
+    advanceAmountCntrlr.text = '0.0';
     //
     deliveryTime = DateTime.now().addDays(7);
     descriptionCntrlr.clear();
