@@ -9,13 +9,12 @@ typedef AddVendorNotifier
 final addVendorProvider = AddVendorNotifier(AddVendorProvider.new);
 
 class AddVendorProvider extends AutoDisposeNotifier<void> {
-  final TextEditingController openingBalanceCntrlr =
-      TextEditingController(text: '0.0');
-  final TextEditingController descriptionCntrlr = TextEditingController();
-  final TextEditingController addressCntrlr = TextEditingController();
-  final TextEditingController emailCntrlr = TextEditingController();
-  final TextEditingController phoneCntrlr = TextEditingController();
-  final TextEditingController nameCntrlr = TextEditingController();
+  final openingBalanceCntrlr = TextEditingController(text: '0.0');
+  final descriptionCntrlr = TextEditingController();
+  final addressCntrlr = TextEditingController();
+  final emailCntrlr = TextEditingController();
+  final phoneCntrlr = TextEditingController();
+  final nameCntrlr = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override

@@ -8,7 +8,6 @@ import '../../../../db/isar.dart';
 import '../../../settings/model/measurement/measurement.dart';
 import '../../../vendor/model/vendor.dart';
 import '../../../vendor/provider/vendor.provider.dart';
-import '../../api/add.inventory.api.dart';
 
 final lengthMeasurementsProvider = FutureProvider((_) async {
   final ms =
@@ -17,12 +16,20 @@ final lengthMeasurementsProvider = FutureProvider((_) async {
   return ms;
 });
 
-typedef AddInventoryNotifier
-    = AutoDisposeAsyncNotifierProvider<AddInventoryProvider, void>;
+typedef AddOrderNotifier
+    = AutoDisposeAsyncNotifierProvider<AddOrderProvider, void>;
 
-final addInventoryProvider = AddInventoryNotifier(AddInventoryProvider.new);
+final addOrderProvider = AddOrderNotifier(AddOrderProvider.new);
 
-class AddInventoryProvider extends AutoDisposeAsyncNotifier<void> {
+class AddOrderProvider extends AutoDisposeAsyncNotifier<void> {
+  final customerNameCntrlr = TextEditingController();
+  final customerEmailCntrlr = TextEditingController();
+  final customerPhoneCntrlr = TextEditingController();
+  final customerAddressCntrlr = TextEditingController();
+  final customerNoteCntrlr = TextEditingController();
+  //
+  final measurementCntrlr = TextEditingController();
+
   final quantityCntrlr = TextEditingController(text: '0');
   final advanceCntrlr = TextEditingController(text: '0.0');
   final amountCntrlr = TextEditingController(text: '0.0');
@@ -42,7 +49,7 @@ class AddInventoryProvider extends AutoDisposeAsyncNotifier<void> {
 
   Future<void> submit(BuildContext context) async {
     if (!formKey.currentState!.validate()) return;
-    await pktbsAddInventory(context, this);
+    // await pktbsAddInventory(context, this);
   }
 
   void setCreatedFrom(PktbsVendor? value) {

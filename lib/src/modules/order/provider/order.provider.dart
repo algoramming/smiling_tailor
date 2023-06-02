@@ -1,10 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class EmployeeProvider extends Notifier {
-
-  
+class OrderProvider extends Notifier {
   @override
   void build() {}
-
-
 }

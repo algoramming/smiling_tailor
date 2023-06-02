@@ -7,12 +7,13 @@ import '../../model/employee.dart';
 typedef AddTrxEmployeeNotifier = AutoDisposeNotifierProviderFamily<
     AddTrxEmployeeProvider, void, PktbsEmployee>;
 
-final addTrxEmployeeProvider = AddTrxEmployeeNotifier(AddTrxEmployeeProvider.new);
+final addTrxEmployeeProvider =
+    AddTrxEmployeeNotifier(AddTrxEmployeeProvider.new);
 
 class AddTrxEmployeeProvider
     extends AutoDisposeFamilyNotifier<void, PktbsEmployee> {
-  final TextEditingController amountCntrlr = TextEditingController(text: '0.0');
-  final TextEditingController descriptionCntrlr = TextEditingController();
+  final amountCntrlr = TextEditingController(text: '0.0');
+  final descriptionCntrlr = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override

@@ -9,12 +9,12 @@ typedef AddEmployeeNotifier
 final addEmployeeProvider = AddEmployeeNotifier(AddEmployeeProvider.new);
 
 class AddEmployeeProvider extends AutoDisposeNotifier<void> {
-  final TextEditingController salaryCntrlr = TextEditingController(text: '0.0');
-  final TextEditingController descriptionCntrlr = TextEditingController();
-  final TextEditingController addressCntrlr = TextEditingController();
-  final TextEditingController emailCntrlr = TextEditingController();
-  final TextEditingController phoneCntrlr = TextEditingController();
-  final TextEditingController nameCntrlr = TextEditingController();
+  final salaryCntrlr = TextEditingController(text: '0.0');
+  final descriptionCntrlr = TextEditingController();
+  final addressCntrlr = TextEditingController();
+  final emailCntrlr = TextEditingController();
+  final phoneCntrlr = TextEditingController();
+  final nameCntrlr = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
