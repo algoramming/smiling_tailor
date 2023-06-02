@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../provider/order.provider.dart';
 
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
 import '../../../../utils/extensions/extensions.dart';
+import '../../provider/order.provider.dart';
 
 class OrderList extends ConsumerWidget {
   const OrderList({super.key});

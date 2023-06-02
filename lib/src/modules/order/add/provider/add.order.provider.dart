@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
-import '../../../employee/model/employee.dart';
-import '../../../employee/provider/employee.provider.dart';
-import '../../../../utils/extensions/extensions.dart';
 
 import '../../../../db/isar.dart';
+import '../../../../utils/extensions/extensions.dart';
+import '../../../employee/model/employee.dart';
+import '../../../employee/provider/employee.provider.dart';
 import '../../../inventory/model/inventory.dart';
 import '../../../inventory/provider/inventory.provider.dart';
 import '../../../settings/model/measurement/measurement.dart';

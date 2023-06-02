@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../constants/constants.dart';
+import '../../shared/dash.flutter.muscot/dash.flutter.muscot.dart';
 
 class DashboardView extends StatelessWidget {
   const DashboardView({super.key});
@@ -8,9 +9,16 @@ class DashboardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text(
-        '$appName - Dashboard',
-        textAlign: TextAlign.center,
+      child: Column(
+        mainAxisSize: mainMin,
+        mainAxisAlignment: mainCenter,
+        children: [
+          DashFlutterMuscot(),
+          Text(
+            '$appName - Dashboard',
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }

@@ -23,14 +23,15 @@ class ClockWidget extends StatelessWidget {
       ),
       child: Center(
         child: StreamBuilder(
-            stream: Stream.periodic(const Duration(seconds: 1)),
-            builder: (context, snapshot) {
-              return Text(
-                getClockFormat.format(DateTime.now()),
-                style: context.text.titleMedium!
-                    .copyWith(color: context.theme.primaryColor),
-              );
-            }),
+          stream: Stream.periodic(const Duration(seconds: 1)),
+          builder: (context, snapshot) {
+            return Text(
+              getClockFormat.format(DateTime.now()),
+              style: context.text.titleMedium!
+                  .copyWith(color: context.theme.primaryColor),
+            );
+          },
+        ),
       ),
     );
   }

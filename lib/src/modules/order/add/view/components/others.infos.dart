@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../../../settings/model/settings.model.dart';
-import '../../../../../utils/extensions/extensions.dart';
 
 import '../../../../../constants/constants.dart';
 import '../../../../../db/isar.dart';
 import '../../../../../shared/date_time_picker/k_date_time_picker.dart';
+import '../../../../../utils/extensions/extensions.dart';
+import '../../../../settings/model/settings.model.dart';
 import '../../../model/enum.dart';
 import '../../provider/add.order.provider.dart';
 import 'info.title.dart';
