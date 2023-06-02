@@ -31,7 +31,7 @@ class AddInventoryProvider extends AutoDisposeAsyncNotifier<void> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   List<Measurement> measurements = [];
   List<PktbsVendor> vendors = [];
-  PktbsVendor? createdFrom;
+  PktbsVendor? from;
   Measurement? unit;
 
   @override
@@ -46,7 +46,7 @@ class AddInventoryProvider extends AutoDisposeAsyncNotifier<void> {
   }
 
   void setCreatedFrom(PktbsVendor? value) {
-    createdFrom = value;
+    from = value;
     ref.notifyListeners();
   }
 
@@ -62,7 +62,7 @@ class AddInventoryProvider extends AutoDisposeAsyncNotifier<void> {
     advanceCntrlr.clear();
     amountCntrlr.clear();
     titleCntrlr.clear();
-    createdFrom = null;
+    from = null;
     unit = null;
     ref.notifyListeners();
   }

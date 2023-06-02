@@ -27,7 +27,7 @@ class AddInventoryPopup extends ConsumerWidget {
               children: [
                 DropdownButtonFormField(
                   borderRadius: borderRadius15,
-                  value: notifier.createdFrom,
+                  value: notifier.from,
                   decoration: const InputDecoration(
                     labelText: 'Vendor',
                     hintText: 'From where you buy this inventory...',
