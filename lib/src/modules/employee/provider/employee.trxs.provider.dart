@@ -25,7 +25,7 @@ class EmployeeTrxsProvider
     _stream();
     _trxs = await pb
         .collection(transactions)
-        .getFullList(filter: 'gl_id = "${arg.id}"', expand: 'creator, updator')
+        .getFullList(filter: 'gl_id = "${arg.id}"', expand: pktbsTrxExpand)
         .then((v) {
       log.i('Employees Trxs: $v');
       return v.map((e) => PktbsTrx.fromJson(e.toJson())).toList();
@@ -49,7 +49,7 @@ class EmployeeTrxsProvider
       if (s.record?.getStringValue('gl_id') != arg.id) return;
       await pb
           .collection(transactions)
-          .getOne(s.record!.toJson()['id'], expand: 'creator, updator')
+          .getOne(s.record!.toJson()['id'], expand: pktbsTrxExpand)
           .then((trx) {
         log.i('Stream After Get Trx: $trx');
         if (s.action == 'create') {

@@ -11,6 +11,8 @@ import '../../vendor/model/vendor.dart';
 
 part 'inventory.ext.dart';
 
+const pktbsInventoryExpand = 'creator, updator, from, from.creator, from.updator';
+
 class PktbsInventory {
   int quantity;
   String unit;

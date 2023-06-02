@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/modules/order/model/order.dart';
 
 import '../../../pocketbase/auth.store/helpers.dart';
 import '../../../utils/logger/logger_helper.dart';
+import '../model/order.dart';
 
 typedef OrderNotifier = AsyncNotifierProvider<OrderProvider, List<PktbsOrder>>;
 
@@ -39,10 +39,7 @@ class OrderProvider extends AsyncNotifier<List<PktbsOrder>> {
       log.i('Stream $s');
       await pb
           .collection(orders)
-          .getOne(
-            s.record!.toJson()['id'],
-            expand: pktbsOrderExpand,
-          )
+          .getOne(s.record!.toJson()['id'], expand: pktbsOrderExpand)
           .then((order) {
         log.i('Stream After Get Order: $order');
         if (s.action == 'create') {

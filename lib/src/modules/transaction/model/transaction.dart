@@ -11,6 +11,8 @@ import '../enum/trx.type.dart';
 
 part 'transaction.ext.dart';
 
+const pktbsTrxExpand = 'creator, updator';
+
 class PktbsTrx {
   double due;
   String glId;

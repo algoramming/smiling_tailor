@@ -7,6 +7,8 @@ import '../../settings/model/settings.model.dart';
 
 part 'employee.ext.dart';
 
+const pktbsEmployeeExpand = 'creator, updator';
+
 class PktbsEmployee {
   String name;
   String phone;

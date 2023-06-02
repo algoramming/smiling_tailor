@@ -23,8 +23,7 @@ class InventoryProvider extends AsyncNotifier<List<PktbsInventory>> {
     _stream();
     _inventories = await pb
         .collection(inventories)
-        .getFullList(
-            expand: 'creator, updator, from, from.creator, from.updator')
+        .getFullList(expand: pktbsInventoryExpand)
         .then((v) {
       log.i('Inventories: $v');
       return v.map((e) => PktbsInventory.fromJson(e.toJson())).toList();
@@ -41,10 +40,7 @@ class InventoryProvider extends AsyncNotifier<List<PktbsInventory>> {
       log.i('Stream $s');
       await pb
           .collection(inventories)
-          .getOne(
-            s.record!.toJson()['id'],
-            expand: 'creator, updator, from, from.creator, from.updator',
-          )
+          .getOne(s.record!.toJson()['id'], expand: pktbsInventoryExpand)
           .then((inven) {
         log.i('Stream After Get Inventory: $inven');
         if (s.action == 'create') {

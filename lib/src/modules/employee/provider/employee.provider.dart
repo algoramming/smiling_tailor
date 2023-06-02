@@ -23,7 +23,7 @@ class EmployeeProvider extends AsyncNotifier<List<PktbsEmployee>> {
     _stream();
     _employees = await pb
         .collection(employees)
-        .getFullList(expand: 'creator, updator')
+        .getFullList(expand: pktbsEmployeeExpand)
         .then((v) {
       log.i('Employees: $v');
       return v.map((e) => PktbsEmployee.fromJson(e.toJson())).toList();
@@ -40,7 +40,7 @@ class EmployeeProvider extends AsyncNotifier<List<PktbsEmployee>> {
       log.i('Stream $s');
       await pb
           .collection(employees)
-          .getOne(s.record!.toJson()['id'], expand: 'creator, updator')
+          .getOne(s.record!.toJson()['id'], expand: pktbsEmployeeExpand)
           .then((emp) {
         log.i('Stream After Get Employee: $emp');
         if (s.action == 'create') {

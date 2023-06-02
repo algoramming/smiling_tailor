@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
+import '../../../../../utils/extensions/extensions.dart';
 import '../../provider/add.order.provider.dart';
 import 'info.title.dart';
 

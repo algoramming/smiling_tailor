@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
-import 'package:smiling_tailor/src/utils/transations/big.to.small.dart';
 
 import '../../../../../constants/constants.dart';
+import '../../../../../utils/extensions/extensions.dart';
+import '../../../../../utils/transations/big.to.small.dart';
 import '../../provider/add.order.provider.dart';
 import 'info.title.dart';
 

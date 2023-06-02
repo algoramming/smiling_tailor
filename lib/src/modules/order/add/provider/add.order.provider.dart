@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
-import 'package:smiling_tailor/src/modules/employee/model/employee.dart';
-import 'package:smiling_tailor/src/modules/employee/provider/employee.provider.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
+import '../../../employee/model/employee.dart';
+import '../../../employee/provider/employee.provider.dart';
+import '../../../../utils/extensions/extensions.dart';
 
 import '../../../../db/isar.dart';
 import '../../../inventory/model/inventory.dart';

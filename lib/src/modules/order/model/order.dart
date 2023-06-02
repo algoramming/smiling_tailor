@@ -1,13 +1,12 @@
 import 'dart:convert';
 
+import '../../../db/isar.dart';
+import '../../../utils/extensions/extensions.dart';
+import '../../authentication/model/user.dart';
 import '../../employee/model/employee.dart';
 import '../../inventory/model/inventory.dart';
-import 'enum.dart';
-import '../../../utils/extensions/extensions.dart';
-
-import '../../../db/isar.dart';
-import '../../authentication/model/user.dart';
 import '../../settings/model/settings.model.dart';
+import 'enum.dart';
 
 part 'order.ext.dart';
 
