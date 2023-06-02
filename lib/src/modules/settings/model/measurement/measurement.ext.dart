@@ -29,3 +29,8 @@ extension ListMeasurementTrxExt on List<Measurement> {
       () async => await db.measurements.deleteAll(map((e) => e.id!).toList()),
       silent: silent);
 }
+
+extension MeasurementStringExt on String {
+  Future<Measurement?> getMeasurement() async =>
+      await db.measurements.where().filter().nameEqualTo(this).findFirst();
+}

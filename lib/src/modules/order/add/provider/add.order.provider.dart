@@ -48,7 +48,7 @@ class AddOrderProvider extends AutoDisposeAsyncNotifier<void> {
   //
   PktbsInventory? inventory;
   final inventoryQuantityCntrlr = TextEditingController(text: '1');
-  String? inventoryUnit;
+  Measurement? inventoryUnit;
   final inventoryPriceCntrlr = TextEditingController(text: '0.0');
   final inventoryNoteCntrlr = TextEditingController();
   //
@@ -83,15 +83,16 @@ class AddOrderProvider extends AutoDisposeAsyncNotifier<void> {
     ref.notifyListeners();
   }
 
-  void setInventory(PktbsInventory? inventory) {
+  Future<void> setInventory(PktbsInventory? inventory) async {
     this.inventory = inventory;
+    inventoryUnit = await inventory?.unit.getMeasurement();
     ref.notifyListeners();
   }
 
-  void setInventoryUnit(String? unit) {
-    inventoryUnit = unit;
-    ref.notifyListeners();
-  }
+  // void setInventoryUnit(String? unit) {
+  //   inventoryUnit = unit;
+  //   ref.notifyListeners();
+  // }
 
   void toggleHomeDelivery() {
     isHomeDeliveryNeeded = !isHomeDeliveryNeeded;
@@ -113,7 +114,7 @@ class AddOrderProvider extends AutoDisposeAsyncNotifier<void> {
     ref.notifyListeners();
   }
 
-  void setStatus(OrderStatus status) {
+  void setOrderStatus(OrderStatus status) {
     this.status = status;
     ref.notifyListeners();
   }
