@@ -136,3 +136,9 @@
 //   double due;
 //   String? description;
 // }
+
+// enum PaymentMethod { cash, mfs, card, cheque, others }
+
+// enum OrderStatus { pending, processing, ready, shipping, completed, cancelled }
+
+// enum GLType { vendor, employee, inventory, unknown }
