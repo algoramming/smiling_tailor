@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../constants/constants.dart';
+import '../../../config/constants.dart';
 import '../../../utils/extensions/extensions.dart';
 import '../../settings/view/advance/url.config.tile.dart';
 import '../provider/authentication.provider.dart';

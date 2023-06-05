@@ -6,7 +6,7 @@ import 'package:path_provider/path_provider.dart'
     show getApplicationDocumentsDirectory;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../constants/constants.dart' show appName;
+import '../config/constants.dart' show appName;
 import '../utils/extensions/extensions.dart';
 import '../utils/logger/logger_helper.dart';
 

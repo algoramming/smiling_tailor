@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../constants/constants.dart';
+import '../../../../../config/constants.dart';
 import '../../../../../db/isar.dart';
 import '../../../../../shared/date_time_picker/k_date_time_picker.dart';
 import '../../../../../utils/extensions/extensions.dart';

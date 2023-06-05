@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pocketbase/pocketbase.dart';
 
-import '../../../constants/get.platform.dart';
+import '../../../config/get.platform.dart';
 import '../../../pocketbase/auth.store/helpers.dart';
 import '../../../pocketbase/error.handle/error.handle.func.dart';
 import '../../../shared/show_toast/awesome_snackbar.dart';

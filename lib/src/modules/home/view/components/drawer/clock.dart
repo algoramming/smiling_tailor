@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../../constants/constants.dart';
+import '../../../../../config/constants.dart';
 import '../../../../../utils/extensions/extensions.dart';
 import '../../../../settings/provider/date.format.provider.dart';
 import '../../../../settings/provider/time.format.provider.dart';

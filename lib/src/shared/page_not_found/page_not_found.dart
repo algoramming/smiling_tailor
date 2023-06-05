@@ -15,7 +15,7 @@ import 'package:flutter/material.dart'
         Widget;
 import 'package:flutter_svg/flutter_svg.dart' show SvgPicture;
 
-import '../../constants/constants.dart';
+import '../../config/constants.dart';
 import '../../utils/extensions/extensions.dart';
 
 class KPageNotFound extends StatelessWidget {

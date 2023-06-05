@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../constants/constants.dart';
+import '../../../../config/constants.dart';
 
 class VendorDetails extends StatelessWidget {
   const VendorDetails({super.key});

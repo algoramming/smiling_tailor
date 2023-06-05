@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../constants/get.platform.dart';
+import '../../../config/get.platform.dart';
 import 'file.picker.dart';
 import 'modal.bottom.sheet.menu.dart';
 

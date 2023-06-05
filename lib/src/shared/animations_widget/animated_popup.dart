@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../constants/constants.dart';
+import '../../config/constants.dart';
 
 class AnimatedPopup extends StatefulWidget {
   const AnimatedPopup({super.key, required this.child});

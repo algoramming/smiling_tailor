@@ -1,7 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
 
-import '../../../constants/constants.dart';
+import '../../../config/constants.dart';
 import '../../../utils/logger/logger_helper.dart';
 
 Future<PlatformFile?> filePickFromDevice() async {

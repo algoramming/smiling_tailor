@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../constants/constants.dart';
+import '../../../../config/constants.dart';
 
 class InventoryDetails extends StatelessWidget {
   const InventoryDetails({super.key});

@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import '../../constants/constants.dart';
+import '../../config/constants.dart';
 import '../../utils/extensions/extensions.dart';
 
 class LoadingWidget extends StatelessWidget {

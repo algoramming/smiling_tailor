@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../constants/constants.dart';
+import '../../../config/constants.dart';
 import '../../../localization/loalization.dart';
 import '../../../utils/extensions/extensions.dart';
 import 'advance/db.delete.tile.dart';

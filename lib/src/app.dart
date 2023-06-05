@@ -25,11 +25,11 @@ import 'package:smiling_tailor/src/router/routes.dart';
 import 'package:smiling_tailor/src/shared/show_toast/show_toast.dart';
 import 'package:smiling_tailor/src/utils/logger/logger_helper.dart';
 
-import 'constants/constants.dart' show appName;
-import 'constants/get.platform.dart';
-import 'constants/is.under.min.size.dart';
-import 'constants/screen_enlarge_warning.dart';
-import 'constants/size.dart';
+import 'config/constants.dart' show appName;
+import 'config/get.platform.dart';
+import 'config/is.under.min.size.dart';
+import 'config/screen_enlarge_warning.dart';
+import 'config/size.dart';
 import 'localization/loalization.dart'
     show localizationsDelegates, onGenerateTitle, t;
 import 'modules/home/view/home.view.dart';

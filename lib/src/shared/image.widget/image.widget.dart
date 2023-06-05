@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../constants/get.platform.dart';
+import '../../config/get.platform.dart';
 import 'components/android.ios.image.dart';
 import 'components/linux.windows.macos.image.dart';
 import 'components/web.image.dart';

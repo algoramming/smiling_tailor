@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../constants/constants.dart';
+import '../../config/constants.dart';
 
 class KErrorWidget extends StatelessWidget {
   const KErrorWidget({

@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'src/app.dart' show App;
-import 'src/constants/get.platform.dart';
+import 'src/config/get.platform.dart';
 import 'src/db/isar.dart' show initAppDatum, openDB;
 import 'src/pocketbase/auth.store/helpers.dart';
 import 'src/utils/themes/themes.dart';

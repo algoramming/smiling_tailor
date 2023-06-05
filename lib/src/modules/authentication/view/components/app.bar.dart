@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../constants/size.dart';
+import '../../../../config/size.dart';
 import '../../../../utils/transations/down.to.up.dart';
 import '../../provider/authentication.provider.dart';
 

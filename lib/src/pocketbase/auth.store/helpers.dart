@@ -12,6 +12,7 @@ String get baseUrl => '$httpProtocol://${appSettings.baseUrl}/';
 
 const globalBaseUrl = 'smiling-tailor.pockethost.io';
 const localBaseUrl = '127.0.0.1:8090';
+// const localBaseUrl = '103.113.227.244:4200';
 
 Future<void> initPocketbase() async {
   final sprefs = await SharedPreferences.getInstance();

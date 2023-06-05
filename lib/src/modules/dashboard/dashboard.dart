@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../constants/constants.dart';
+import '../../config/constants.dart';
 import '../../shared/dash.flutter.muscot/dash.flutter.muscot.dart';
 
 class DashboardView extends StatelessWidget {

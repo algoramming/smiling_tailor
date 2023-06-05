@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../constants/constants.dart';
-import '../constants/is.under.min.size.dart';
-import '../constants/screen_enlarge_warning.dart';
+import '../config/constants.dart';
+import '../config/is.under.min.size.dart';
+import '../config/screen_enlarge_warning.dart';
 import '../modules/authentication/view/authentication.dart';
 import '../modules/home/view/home.view.dart';
 import '../pocketbase/auth.store/helpers.dart';
