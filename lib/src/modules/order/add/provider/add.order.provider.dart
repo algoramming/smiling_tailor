@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
+import 'package:smiling_tailor/src/modules/order/model/order.dart';
 
 import '../../../../db/isar.dart';
 import '../../../../utils/extensions/extensions.dart';
@@ -13,6 +14,7 @@ import '../../../inventory/provider/inventory.provider.dart';
 import '../../../settings/model/measurement/measurement.dart';
 import '../../api/add.order.api.dart';
 import '../../model/enum.dart';
+import '../../provider/order.provider.dart';
 
 final lengthMeasurementsProvider = FutureProvider((_) async {
   final ms =
@@ -52,7 +54,6 @@ class AddOrderProvider extends AutoDisposeAsyncNotifier<void> {
   final inventoryPriceCntrlr = TextEditingController(text: '0.0');
   final inventoryNoteCntrlr = TextEditingController();
   //
-  bool isHomeDeliveryNeeded = false;
   PktbsEmployee? deliveryEmployee;
   final deliveryAddressCntrlr = TextEditingController();
   final deliveryChargeCntrlr = TextEditingController(text: '0.0');
@@ -70,12 +71,17 @@ class AddOrderProvider extends AutoDisposeAsyncNotifier<void> {
   List<PktbsEmployee> employees = [];
   List<PktbsInventory> inventories = [];
   List<Measurement> measurements = [];
+  List<PktbsOrder> orders = [];
+  //
+  bool isHomeDeliveryNeeded = false;
+  bool isInventoryNeeded = false;
 
   @override
   FutureOr<void> build() {
     employees = ref.watch(employeeProvider).value ?? [];
     inventories = ref.watch(inventoryProvider).value ?? [];
     measurements = ref.watch(lengthMeasurementsProvider).value ?? [];
+    orders = ref.watch(orderProvider).value ?? [];
   }
 
   void setTailorEmployee(PktbsEmployee? employee) {
@@ -86,16 +92,6 @@ class AddOrderProvider extends AutoDisposeAsyncNotifier<void> {
   Future<void> setInventory(PktbsInventory? inventory) async {
     this.inventory = inventory;
     inventoryUnit = await inventory?.unit.getMeasurement();
-    ref.notifyListeners();
-  }
-
-  // void setInventoryUnit(String? unit) {
-  //   inventoryUnit = unit;
-  //   ref.notifyListeners();
-  // }
-
-  void toggleHomeDelivery() {
-    isHomeDeliveryNeeded = !isHomeDeliveryNeeded;
     ref.notifyListeners();
   }
 
@@ -122,6 +118,16 @@ class AddOrderProvider extends AutoDisposeAsyncNotifier<void> {
   Future<void> submit(BuildContext context) async {
     if (!formKey.currentState!.validate()) return;
     await pktbsAddOrder(context, this);
+  }
+
+  void toggleHomeDeliveryNeeded(bool v) {
+    isHomeDeliveryNeeded = v;
+    ref.notifyListeners();
+  }
+
+  void toggleInventoryNeeded(bool v) {
+    isInventoryNeeded = v;
+    ref.notifyListeners();
   }
 
   void clear() {
@@ -151,7 +157,6 @@ class AddOrderProvider extends AutoDisposeAsyncNotifier<void> {
     inventoryPriceCntrlr.text = '0.0';
     inventoryNoteCntrlr.clear();
     //
-    isHomeDeliveryNeeded = false;
     deliveryEmployee = null;
     deliveryAddressCntrlr.clear();
     deliveryChargeCntrlr.text = '0.0';
@@ -164,6 +169,9 @@ class AddOrderProvider extends AutoDisposeAsyncNotifier<void> {
     deliveryTime = DateTime.now().addDays(7);
     descriptionCntrlr.clear();
     status = OrderStatus.pending;
+    //
+    isHomeDeliveryNeeded = false;
+    isInventoryNeeded = false;
     //
     ref.notifyListeners();
   }

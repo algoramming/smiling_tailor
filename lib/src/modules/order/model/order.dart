@@ -38,7 +38,7 @@ class PktbsOrder {
   String? measurementNote;
   int quantity;
   //
-  PktbsEmployee tailorEmployee;
+  PktbsEmployee? tailorEmployee;
   double tailorCharge;
   String? tailorNote;
   //
@@ -48,7 +48,6 @@ class PktbsOrder {
   double? inventoryPrice;
   String? inventoryNote;
   //
-  bool isHomeDeliveryNeeded;
   PktbsEmployee? deliveryEmployee;
   String? deliveryAddress;
   double? deliveryCharge;
@@ -96,7 +95,6 @@ class PktbsOrder {
     this.inventoryPrice,
     this.inventoryNote,
     //
-    required this.isHomeDeliveryNeeded,
     this.deliveryEmployee,
     this.deliveryAddress,
     this.deliveryCharge,
@@ -140,8 +138,10 @@ class PktbsOrder {
       measurementNote: json[_Json.measurementNote],
       quantity: json[_Json.quantity].toString().toInt ?? 0,
       //
-      tailorEmployee:
-          PktbsEmployee.fromJson(json[_Json.expand][_Json.tailorEmployee]),
+      tailorEmployee: json[_Json.tailorEmployee] == null ||
+              json[_Json.tailorEmployee] == ''
+          ? null
+          : PktbsEmployee.fromJson(json[_Json.expand][_Json.tailorEmployee]),
       tailorCharge: json[_Json.tailorCharge].toString().toDouble ?? 0.0,
       tailorNote: json[_Json.tailorNote],
       //
@@ -153,7 +153,6 @@ class PktbsOrder {
       inventoryPrice: json[_Json.inventoryPrice].toString().toDouble,
       inventoryNote: json[_Json.inventoryNote],
       //
-      isHomeDeliveryNeeded: json[_Json.isHomeDeliveryNeeded],
       deliveryEmployee: json[_Json.deliveryEmployee] == null ||
               json[_Json.deliveryEmployee] == ''
           ? null
@@ -177,7 +176,7 @@ class PktbsOrder {
 
   @override
   String toString() =>
-      'PktbsOrder(id: $id, created: $created, updated: $updated, creator: $creator, updator: $updator, collectionId: $collectionId, collectionName: $collectionName, customerName: $customerName, customerEmail: $customerEmail, customerPhone: $customerPhone, customerAddress: $customerAddress, customerNote: $customerNote, measurement: $measurement, plate: $plate, sleeve: $sleeve, colar: $colar, pocket: $pocket, button: $button, measurementNote: $measurementNote, quantity: $quantity, tailorEmployee: $tailorEmployee, tailorCharge: $tailorCharge, tailorNote: $tailorNote, inventory: $inventory, inventoryQuantity: $inventoryQuantity, inventoryUnit: $inventoryUnit, inventoryPrice: $inventoryPrice, inventoryNote: $inventoryNote, isHomeDeliveryNeeded: $isHomeDeliveryNeeded, deliveryEmployee: $deliveryEmployee, deliveryAddress: $deliveryAddress, deliveryCharge: $deliveryCharge, deliveryNote: $deliveryNote, paymentMethod: $paymentMethod, paymentNote: $paymentNote, advanceAmount: $advanceAmount, deliveryTime: $deliveryTime, description: $description, status: $status)';
+      'PktbsOrder(id: $id, created: $created, updated: $updated, creator: $creator, updator: $updator, collectionId: $collectionId, collectionName: $collectionName, customerName: $customerName, customerEmail: $customerEmail, customerPhone: $customerPhone, customerAddress: $customerAddress, customerNote: $customerNote, measurement: $measurement, plate: $plate, sleeve: $sleeve, colar: $colar, pocket: $pocket, button: $button, measurementNote: $measurementNote, quantity: $quantity, tailorEmployee: $tailorEmployee, tailorCharge: $tailorCharge, tailorNote: $tailorNote, inventory: $inventory, inventoryQuantity: $inventoryQuantity, inventoryUnit: $inventoryUnit, inventoryPrice: $inventoryPrice, inventoryNote: $inventoryNote, deliveryEmployee: $deliveryEmployee, deliveryAddress: $deliveryAddress, deliveryCharge: $deliveryCharge, deliveryNote: $deliveryNote, paymentMethod: $paymentMethod, paymentNote: $paymentNote, advanceAmount: $advanceAmount, deliveryTime: $deliveryTime, description: $description, status: $status)';
 
   @override
   bool operator ==(Object other) {
@@ -224,7 +223,6 @@ class _Json {
   static const inventoryPrice = 'inventoryPrice';
   static const inventoryNote = 'inventoryNote';
   //
-  static const isHomeDeliveryNeeded = 'isHomeDeliveryNeeded';
   static const deliveryEmployee = 'deliveryEmployee';
   static const deliveryAddress = 'deliveryAddress';
   static const deliveryCharge = 'deliveryCharge';

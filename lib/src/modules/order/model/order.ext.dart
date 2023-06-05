@@ -35,7 +35,6 @@ extension OrderExtension on PktbsOrder {
     double? inventoryPrice,
     String? inventoryNote,
     //
-    bool? isHomeDeliveryNeeded,
     PktbsEmployee? deliveryEmployee,
     String? deliveryAddress,
     double? deliveryCharge,
@@ -83,7 +82,6 @@ extension OrderExtension on PktbsOrder {
         inventoryPrice: inventoryPrice ?? this.inventoryPrice,
         inventoryNote: inventoryNote ?? this.inventoryNote,
         //
-        isHomeDeliveryNeeded: isHomeDeliveryNeeded ?? this.isHomeDeliveryNeeded,
         deliveryEmployee: deliveryEmployee ?? this.deliveryEmployee,
         deliveryAddress: deliveryAddress ?? this.deliveryAddress,
         deliveryCharge: deliveryCharge ?? this.deliveryCharge,
@@ -122,7 +120,7 @@ extension OrderExtension on PktbsOrder {
         _Json.measurementNote: measurementNote,
         _Json.quantity: quantity,
         //
-        _Json.tailorEmployee: tailorEmployee.toJson(),
+        _Json.tailorEmployee: tailorEmployee?.toJson(),
         _Json.tailorCharge: tailorCharge,
         _Json.tailorNote: tailorNote,
         //
@@ -132,7 +130,6 @@ extension OrderExtension on PktbsOrder {
         _Json.inventoryPrice: inventoryPrice,
         _Json.inventoryNote: inventoryNote,
         //
-        _Json.isHomeDeliveryNeeded: isHomeDeliveryNeeded,
         _Json.deliveryEmployee: deliveryEmployee?.toJson(),
         _Json.deliveryAddress: deliveryAddress,
         _Json.deliveryCharge: deliveryCharge,

@@ -28,9 +28,9 @@ class TailorInfos extends StatelessWidget {
               .map((e) => DropdownMenuItem(value: e, child: Text(e.name)))
               .toList(),
           validator: (v) {
-            if (v == null) {
-              return 'Employee selection is required';
-            }
+            // if (v == null) {
+            //   return 'Employee selection is required';
+            // }
             return null;
           },
         ),
@@ -46,10 +46,7 @@ class TailorInfos extends StatelessWidget {
           textInputAction: TextInputAction.next,
           keyboardType: TextInputType.number,
           validator: (v) {
-            if (v!.isEmpty) {
-              return 'Tailoring Charge is required';
-            }
-            if (!v.isNumeric) {
+            if (v!.isNotEmpty && !v.isNumeric) {
               return 'Invalid amount';
             }
             return null;

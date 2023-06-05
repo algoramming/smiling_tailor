@@ -35,8 +35,8 @@ class AddOrderPopup extends ConsumerWidget {
               children: [
                 CustomerInfos(notifier: notifier),
                 MeasurementInfos(notifier: notifier),
-                InventoryInfos(notifier: notifier),
                 TailorInfos(notifier: notifier),
+                InventoryInfos(notifier: notifier),
                 DeliveryInfos(notifier: notifier),
                 PaymentInfos(notifier: notifier),
                 OthersInfos(notifier: notifier),

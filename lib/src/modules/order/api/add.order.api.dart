@@ -36,7 +36,6 @@ Future<void> pktbsAddOrder(
         'inventoryUnit': notifier.inventoryUnit!.name,
         'inventoryPrice': notifier.inventoryPriceCntrlr.text.toDouble,
         'inventoryNote': notifier.inventoryNoteCntrlr.text,
-        'isHomeDeliveryNeeded': notifier.isHomeDeliveryNeeded,
         'deliveryEmployee': notifier.deliveryEmployee?.id,
         'deliveryAddress': notifier.deliveryAddressCntrlr.text,
         'deliveryCharge': notifier.deliveryChargeCntrlr.text.toDouble,

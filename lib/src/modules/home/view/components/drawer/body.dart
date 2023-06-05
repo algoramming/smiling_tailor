@@ -22,27 +22,30 @@ class KDrawerBody extends ConsumerWidget {
       children: [
         ...List.generate(
           KDrawer.values.length,
-          (index) => KListTile(
-            selected: notifier.drawer == KDrawer.values[index],
-            leading: AnimatedWidgetShower(
-              size: 30.0,
-              child: Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: SvgPicture.asset(
-                  KDrawer.values[index].icon,
-                  colorFilter: context.theme.primaryColor.toColorFilter,
-                  semanticsLabel: KDrawer.values[index].title,
+          (index) => Padding(
+            padding: const EdgeInsets.all(1.0),
+            child: KListTile(
+              selected: notifier.drawer == KDrawer.values[index],
+              leading: AnimatedWidgetShower(
+                size: 30.0,
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: SvgPicture.asset(
+                    KDrawer.values[index].icon,
+                    colorFilter: context.theme.primaryColor.toColorFilter,
+                    semanticsLabel: KDrawer.values[index].title,
+                  ),
                 ),
               ),
+              title: Text(
+                KDrawer.values[index].title,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: KDrawer.values[index] == KDrawer.settings
+                  ? Text('Version ${info?.version}$bn')
+                  : null,
+              onTap: () => notifier.changeDrawer(KDrawer.values[index]),
             ),
-            title: Text(
-              KDrawer.values[index].title,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            subtitle: KDrawer.values[index] == KDrawer.settings
-                ? Text('Version ${info?.version}$bn')
-                : null,
-            onTap: () => notifier.changeDrawer(KDrawer.values[index]),
           ),
         ),
         // const SignoutTile(),

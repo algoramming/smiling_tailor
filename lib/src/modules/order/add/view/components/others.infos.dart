@@ -20,6 +20,7 @@ class OthersInfos extends StatelessWidget {
       children: [
         const InfoTitle('Others Information'),
         InkWell(
+          borderRadius: borderRadius12,
           onTap: () async =>
               await selectDateTimeFromPicker(context, notifier.deliveryTime)
                   .then((dt) {
@@ -56,7 +57,7 @@ class OthersInfos extends StatelessWidget {
               .toList(),
           validator: (v) {
             if (v == null) {
-              return 'Payment method selection is required';
+              return 'Order status selection is required';
             }
             return null;
           },
