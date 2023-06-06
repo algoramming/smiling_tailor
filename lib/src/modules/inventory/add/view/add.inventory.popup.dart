@@ -165,10 +165,7 @@ class AddInventoryPopup extends ConsumerWidget {
                   textInputAction: TextInputAction.done,
                   keyboardType: TextInputType.number,
                   validator: (v) {
-                    if (v!.isEmpty) {
-                      return 'Amount is required';
-                    }
-                    if (!v.isNumeric) {
+                    if (v!.isEmpty && !v.isNumeric) {
                       return 'Invalid amount';
                     }
                     if (notifier.amountCntrlr.text.isNotEmpty &&

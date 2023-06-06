@@ -18,7 +18,6 @@ class PktbsInventory {
   String unit;
   String title;
   double amount;
-  double advance;
   final String id;
   PktbsVendor from;
   DateTime? updated;
@@ -38,7 +37,6 @@ class PktbsInventory {
     required this.unit,
     required this.title,
     required this.amount,
-    required this.advance,
     required this.created,
     required this.creator,
     required this.quantity,
@@ -57,7 +55,6 @@ class PktbsInventory {
       quantity: json[_Json.quantity].toString().toInt ?? 0,
       amount: json[_Json.amount].toString().toDouble ?? 0.0,
       created: DateTime.parse(json[_Json.created]).toLocal(),
-      advance: json[_Json.advance].toString().toDouble ?? 0.0,
       from: PktbsVendor.fromJson(json[_Json.expand][_Json.from]),
       creator: PktbsUser.fromJson(json[_Json.expand][_Json.creator]),
       updator: json[_Json.updator] == null || json[_Json.updator] == ''
@@ -74,7 +71,7 @@ class PktbsInventory {
 
   @override
   String toString() =>
-      'PktbsInventory(id: $id, from: $from, unit: $unit, title: $title, amount: $amount, advance: $advance, created: $created, creator: $creator, updator: $updator, updated: $updated, quantity: $quantity, description: $description, collectionId: $collectionId, collectionName: $collectionName)';
+      'PktbsInventory(id: $id, from: $from, unit: $unit, title: $title, amount: $amount, created: $created, creator: $creator, updator: $updator, updated: $updated, quantity: $quantity, description: $description, collectionId: $collectionId, collectionName: $collectionName)';
 
   @override
   bool operator ==(Object other) {
@@ -93,7 +90,6 @@ class _Json {
   static const String title = 'title';
   static const String amount = 'amount';
   static const String expand = 'expand';
-  static const String advance = 'advance';
   static const String created = 'created';
   static const String updated = 'updated';
   static const String creator = 'creator';
