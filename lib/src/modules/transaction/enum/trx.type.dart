@@ -1,4 +1,9 @@
-enum GLType {vendor, employee, inventory, unknown}
+import 'package:smiling_tailor/src/modules/vendor/model/vendor.dart';
+
+import '../../employee/model/employee.dart';
+import '../../inventory/model/inventory.dart';
+
+enum GLType { vendor, employee, inventory, unknown }
 
 extension GLTypeExt on GLType {
   String get title {
@@ -28,6 +33,21 @@ extension GLTypeStringExt on String {
         return GLType.inventory;
       case 'Unknown':
         return GLType.unknown;
+      default:
+        return GLType.unknown;
+    }
+  }
+}
+
+extension GLTypeObjectExt on Object {
+  GLType get glType {
+    switch (this) {
+      case PktbsVendor:
+        return GLType.vendor;
+      case PktbsEmployee:
+        return GLType.employee;
+      case PktbsInventory:
+        return GLType.inventory;
       default:
         return GLType.unknown;
     }

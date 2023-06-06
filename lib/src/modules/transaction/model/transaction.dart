@@ -14,7 +14,6 @@ part 'transaction.ext.dart';
 const pktbsTrxExpand = 'creator, updator';
 
 class PktbsTrx {
-  double due;
   String glId;
   GLType type;
   double amount;
@@ -30,7 +29,6 @@ class PktbsTrx {
 
   PktbsTrx({
     this.updated,
-    this.due = 0.0,
     this.description,
     required this.gl,
     required this.id,
@@ -56,7 +54,6 @@ class PktbsTrx {
         gl: json[_Json.gl] as Map<String, dynamic>,
         created: DateTime.parse(json[_Json.created]),
         description: json[_Json.description] as String?,
-        due: json[_Json.due].toString().toDouble ?? 0.0,
         amount: json[_Json.amount].toString().toDouble ?? 0.0,
         creator: PktbsUser.fromJson(json[_Json.expand][_Json.creator]),
         updator: json[_Json.updator] == null || json[_Json.updator] == ''
@@ -69,7 +66,7 @@ class PktbsTrx {
 
   @override
   String toString() =>
-      'PktbsTrx(due: $due, glId: $glId, type: $type, amount: $amount, id: $id, updated: $updated, updator: $updator, description: $description, created: $created, gl: $gl, creator: $creator, collectionId: $collectionId, collectionName: $collectionName)';
+      'PktbsTrx(glId: $glId, type: $type, amount: $amount, id: $id, updated: $updated, updator: $updator, description: $description, created: $created, gl: $gl, creator: $creator, collectionId: $collectionId, collectionName: $collectionName)';
 
   @override
   bool operator ==(Object other) {
@@ -84,7 +81,6 @@ class PktbsTrx {
 class _Json {
   static const String gl = 'gl';
   static const String id = 'id';
-  static const String due = 'due';
   static const String type = 'type';
   static const String glId = 'gl_id';
   static const String expand = 'expand';

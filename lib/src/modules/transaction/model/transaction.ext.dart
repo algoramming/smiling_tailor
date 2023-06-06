@@ -20,7 +20,6 @@ extension TrxExtension on PktbsTrx {
     return PktbsTrx(
       gl: gl ?? this.gl,
       id: id ?? this.id,
-      due: due ?? this.due,
       type: type ?? this.type,
       glId: glId ?? this.glId,
       amount: amount ?? this.amount,
@@ -37,7 +36,6 @@ extension TrxExtension on PktbsTrx {
   Map<String, dynamic> toJson() => {
         _Json.id: id,
         _Json.gl: gl,
-        _Json.due: due,
         _Json.glId: glId,
         _Json.amount: amount,
         _Json.type: type.title,

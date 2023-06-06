@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import '../../../db/isar.dart';
-import '../../../utils/extensions/extensions.dart';
 import '../../authentication/model/user.dart';
 import '../../settings/model/settings.model.dart';
 
@@ -16,7 +15,6 @@ class PktbsVendor {
   DateTime? updated;
   String description;
   PktbsUser? updator;
-  double openingBalance;
   final DateTime created;
   final PktbsUser creator;
   final String collectionId;
@@ -34,7 +32,6 @@ class PktbsVendor {
     required this.creator,
     required this.description,
     required this.collectionId,
-    required this.openingBalance,
     required this.collectionName,
   });
 
@@ -56,7 +53,6 @@ class PktbsVendor {
       updator: json[_Json.updator] == null || json[_Json.updator] == ''
           ? null
           : PktbsUser.fromJson(json[_Json.expand][_Json.updator]),
-      openingBalance: json[_Json.openingBalance].toString().toDouble ?? 0.0,
     );
   }
 
@@ -65,7 +61,7 @@ class PktbsVendor {
 
   @override
   String toString() =>
-      'PktbsVendor(name: $name, phone: $phone, email: $email, address: $address, id: $id, updated: $updated, description: $description, updator: $updator, openingBalance: $openingBalance, created: $created, creator: $creator, collectionId: $collectionId, collectionName: $collectionName)';
+      'PktbsVendor(name: $name, phone: $phone, email: $email, address: $address, id: $id, updated: $updated, description: $description, updator: $updator, created: $created, creator: $creator, collectionId: $collectionId, collectionName: $collectionName)';
 
   @override
   bool operator ==(Object other) {
@@ -92,5 +88,4 @@ class _Json {
   static const String description = 'description';
   static const String collectionId = 'collectionId';
   static const String collectionName = 'collectionName';
-  static const String openingBalance = 'opening_balance';
 }

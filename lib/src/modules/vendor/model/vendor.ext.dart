@@ -13,7 +13,6 @@ extension VendorExtension on PktbsVendor {
     PktbsUser? updator,
     String? description,
     String? collectionId,
-    double? openingBalance,
     String? collectionName,
   }) {
     return PktbsVendor(
@@ -28,7 +27,6 @@ extension VendorExtension on PktbsVendor {
       updated: updated ?? this.updated,
       description: description ?? this.description,
       collectionId: collectionId ?? this.collectionId,
-      openingBalance: openingBalance ?? this.openingBalance,
       collectionName: collectionName ?? this.collectionName,
     );
   }
@@ -43,7 +41,6 @@ extension VendorExtension on PktbsVendor {
         _Json.creator: creator.toJson(),
         _Json.updator: updator?.toJson(),
         _Json.collectionId: collectionId,
-        _Json.openingBalance: openingBalance,
         _Json.collectionName: collectionName,
         _Json.created: created.toIso8601String(),
         _Json.updated: updated?.toIso8601String(),
