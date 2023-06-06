@@ -22,7 +22,7 @@ class VendorProvider extends AsyncNotifier<List<PktbsVendor>> {
     _stream();
     _vendors = await pb
         .collection(vendors)
-        .getFullList(expand: 'creator, updator')
+        .getFullList(expand: pktbsVendorExpand)
         .then((v) {
       log.i('Vendors: $v');
       return v.map((e) => PktbsVendor.fromJson(e.toJson())).toList();
@@ -39,7 +39,7 @@ class VendorProvider extends AsyncNotifier<List<PktbsVendor>> {
       log.i('Stream $s');
       await pb
           .collection(vendors)
-          .getOne(s.record!.toJson()['id'], expand: 'creator, updator')
+          .getOne(s.record!.toJson()['id'], expand: pktbsVendorExpand)
           .then((ven) {
         log.i('Stream After Get Vendor: $ven');
         if (s.action == 'create') {

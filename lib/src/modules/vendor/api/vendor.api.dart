@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pocketbase/pocketbase.dart';
+import 'package:smiling_tailor/src/modules/transaction/api/add.trx.employee.api.dart';
+import 'package:smiling_tailor/src/modules/transaction/enum/trx.type.dart';
 
 import '../../../pocketbase/auth.store/helpers.dart';
 import '../../../pocketbase/error.handle/error.handle.func.dart';
@@ -8,8 +10,10 @@ import '../../../shared/show_toast/show_toast.dart';
 import '../../../utils/extensions/extensions.dart';
 import '../../../utils/logger/logger_helper.dart';
 import '../add/provider/add.vendor.provider.dart';
+import '../model/vendor.dart';
 
-Future<void> pktbsAddVendor(BuildContext context, AddVendorProvider notifier) async {
+Future<void> pktbsAddVendor(
+    BuildContext context, AddVendorProvider notifier) async {
   try {
     await pb.collection(vendors).create(
       body: {
@@ -19,13 +23,39 @@ Future<void> pktbsAddVendor(BuildContext context, AddVendorProvider notifier) as
         'email': notifier.emailCntrlr.text,
         'phone': notifier.phoneCntrlr.text,
         'creator': pb.authStore.model!.id,
-        'opening_balance': notifier.openingBalanceCntrlr.text.toDouble ?? 0.0,
       },
-    ).then((_) async {
-      notifier.clear();
-      context.pop();
-      showAwesomeSnackbar(context, 'Success!', 'Vendor created successfully.',
-          MessageType.success);
+    ).then((r) async {
+      // check trx nedded or not
+      if (notifier.openingBalanceCntrlr.text.isNotNullOrEmpty() &&
+          notifier.openingBalanceCntrlr.text.toDouble != 0.0) {
+        final openingBalance = notifier.openingBalanceCntrlr.text.toDouble;
+        await pb
+            .collection(vendors)
+            .getOne(r.toJson()['id'], expand: pktbsVendorExpand)
+            .then((v) async {
+          final ven = PktbsVendor.fromJson(v.toJson());
+          log.i('Need Trx for ${ven.name} of $openingBalance}');
+          await pktbsAddTrx(
+            context,
+            glJson: ven.toJson(),
+            glId: ven.id,
+            type: GLType.vendor,
+            amount: openingBalance,
+            description: 'System Generated Opening Balance!',
+          ).then((value) {
+            notifier.clear();
+            context.pop();
+            showAwesomeSnackbar(context, 'Success!',
+                'Vendor added successfully.', MessageType.success);
+          });
+        });
+      } else {
+        log.i('No Trx needed!');
+        notifier.clear();
+        context.pop();
+        showAwesomeSnackbar(context, 'Success!', 'Vendor added successfully.',
+            MessageType.success);
+      }
     });
     return;
   } on ClientException catch (e) {

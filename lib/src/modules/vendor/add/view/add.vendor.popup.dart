@@ -91,16 +91,24 @@ class AddVendorPopup extends ConsumerWidget {
                   textInputAction: TextInputAction.done,
                   keyboardType: TextInputType.number,
                   validator: (v) {
-                    if (v!.isEmpty) {
-                      return 'Opening balance is required';
-                    }
-                    if (!v.isNumeric) {
+                    if (v!.isEmpty && !v.isNumeric) {
                       return 'Invalid opening balance';
                     }
                     return null;
                   },
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 3),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    '• Enter Negative value if your balance is receivable.',
+                    style: context.text.bodySmall!.copyWith(
+                      color: context.theme.primaryColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
                 TextFormField(
                   controller: notifier.addressCntrlr,
                   decoration: const InputDecoration(

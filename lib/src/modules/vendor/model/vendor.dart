@@ -6,6 +6,8 @@ import '../../settings/model/settings.model.dart';
 
 part 'vendor.ext.dart';
 
+const pktbsVendorExpand = 'creator, updator';
+
 class PktbsVendor {
   String name;
   String phone;

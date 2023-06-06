@@ -42,6 +42,8 @@ extension StringUtils on String {
 
 extension StringNullUtils on String? {
   bool isNullOrEmpty() => this == null || this!.isEmpty;
+
+  bool isNotNullOrEmpty() => !isNullOrEmpty();
 }
 
 String pluralize(
