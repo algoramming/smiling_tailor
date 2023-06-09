@@ -15,10 +15,16 @@ class AddVendorProvider extends AutoDisposeNotifier<void> {
   final emailCntrlr = TextEditingController();
   final phoneCntrlr = TextEditingController();
   final nameCntrlr = TextEditingController();
+  bool isPaybale = true;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   void build() {}
+
+  void toggleIsPayable() {
+    isPaybale = !isPaybale;
+    ref.notifyListeners();
+  }
 
   Future<void> submit(BuildContext context) async {
     if (!formKey.currentState!.validate()) return;

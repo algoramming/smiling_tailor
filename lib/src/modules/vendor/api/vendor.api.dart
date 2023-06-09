@@ -43,7 +43,7 @@ Future<void> pktbsAddVendor(
             toId: ven.id,
             toJson: ven.toJson(),
             toType: ven.glType,
-            trxType: TrxType.payable,
+            trxType: notifier.isPaybale ? TrxType.payable : TrxType.receivable,
             isSystemGenerated: true,
             amount: openingBalance,
             description: 'System Generated: Opening Balance of ${ven.name}',

@@ -80,28 +80,41 @@ class AddVendorPopup extends ConsumerWidget {
                   },
                 ),
                 const SizedBox(height: 10),
-                TextFormField(
-                  controller: notifier.openingBalanceCntrlr,
-                  decoration: const InputDecoration(
-                    labelText: 'Opening Balance',
-                    hintText: 'Enter vendor\'s opening balance...',
-                  ),
-                  onFieldSubmitted: (_) async => notifier.submit(context),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  textInputAction: TextInputAction.done,
-                  keyboardType: TextInputType.number,
-                  validator: (v) {
-                    if (v!.isEmpty && !v.isNumeric) {
-                      return 'Invalid opening balance';
-                    }
-                    return null;
-                  },
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        controller: notifier.openingBalanceCntrlr,
+                        decoration: const InputDecoration(
+                          labelText: 'Opening Balance',
+                          hintText: 'Enter vendor\'s opening balance...',
+                        ),
+                        onFieldSubmitted: (_) async => notifier.submit(context),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.number,
+                        validator: (v) {
+                          if (v!.isEmpty && !v.isNumeric) {
+                            return 'Invalid opening balance';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 5.0),
+                    Switch.adaptive(
+                      value: notifier.isPaybale,
+                      onChanged: (_) => notifier.toggleIsPayable(),
+                    )
+                  ],
                 ),
                 const SizedBox(height: 3),
                 Align(
                   alignment: Alignment.centerRight,
                   child: Text(
-                    '• Enter Negative value if your balance is receivable.',
+                    notifier.isPaybale
+                        ? '• This Vendor owe from you. (Accounts Payable)'
+                        : '• You\'re owe to this Vendor. (Accounts Receivable))',
                     style: context.text.bodySmall!.copyWith(
                       color: context.theme.primaryColor,
                       fontWeight: FontWeight.bold,
