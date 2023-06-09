@@ -14,6 +14,7 @@ final vendorProvider = VendorNotifier(VendorProvider.new);
 
 class VendorProvider extends AsyncNotifier<List<PktbsVendor>> {
   TextEditingController searchCntrlr = TextEditingController();
+  PktbsVendor? selectedVendor;
   late List<PktbsVendor> _vendors;
   @override
   FutureOr<List<PktbsVendor>> build() async {
@@ -66,5 +67,11 @@ class VendorProvider extends AsyncNotifier<List<PktbsVendor>> {
             (e.email?.toLowerCase().contains(searchCntrlr.text.toLowerCase()) ??
                 false))
         .toList();
+  }
+
+  
+  void selectVendor(PktbsVendor vendor) {
+    selectedVendor = vendor;
+    ref.notifyListeners();
   }
 }

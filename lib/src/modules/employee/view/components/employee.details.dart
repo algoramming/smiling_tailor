@@ -21,7 +21,7 @@ class EmployeeDetails extends ConsumerWidget {
     return notifier.selectedEmployee == null
         ? const Center(
             child: Text(
-              'No Employee Selected!\n Please select a employee see full information.',
+              'No Employee Selected!\n Please select an employee see full information.',
               textAlign: TextAlign.center,
             ),
           )

@@ -32,6 +32,8 @@ class VendorList extends ConsumerWidget {
                     final vendor = notifier.vendorList[idx];
                     return Card(
                       child: KListTile(
+                        selected: notifier.selectedVendor == vendor,
+                        onTap: () => notifier.selectVendor(vendor),
                         leading: AnimatedWidgetShower(
                           size: 30.0,
                           child: Padding(
