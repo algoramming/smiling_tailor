@@ -31,7 +31,7 @@ extension OrderExtension on PktbsOrder {
     //
     PktbsInventory? inventory,
     int? inventoryQuantity,
-    String? inventoryUnit,
+    Measurement? inventoryUnit,
     double? inventoryPrice,
     String? inventoryNote,
     //
@@ -126,7 +126,7 @@ extension OrderExtension on PktbsOrder {
         //
         _Json.inventory: inventory?.toJson(),
         _Json.inventoryQuantity: inventoryQuantity,
-        _Json.inventoryUnit: inventoryUnit,
+        _Json.inventoryUnit: inventoryUnit?.name,
         _Json.inventoryPrice: inventoryPrice,
         _Json.inventoryNote: inventoryNote,
         //

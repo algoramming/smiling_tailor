@@ -20,6 +20,8 @@ Future<RecordModel?> pktbsAddTrx(
   required TrxType trxType,
   String? description,
   bool isSystemGenerated = false,
+  String? unit,
+  bool isGoods = false,
 }) async {
   try {
     return await pb.collection(transactions).create(
@@ -31,6 +33,8 @@ Future<RecordModel?> pktbsAddTrx(
         'to': toJson,
         'toType': toType.title,
         'amount': amount ?? 0.0,
+        'unit': unit,
+        'isGoods': isGoods,
         'trxType': trxType.title,
         'description': description,
         'isSystemGenerated': isSystemGenerated,

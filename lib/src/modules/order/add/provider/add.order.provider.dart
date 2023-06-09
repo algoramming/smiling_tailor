@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:isar/isar.dart';
 import 'package:smiling_tailor/src/modules/order/model/order.dart';
 
 import '../../../../db/isar.dart';
@@ -16,12 +15,12 @@ import '../../api/add.order.api.dart';
 import '../../enum/order.enum.dart';
 import '../../provider/order.provider.dart';
 
-final lengthMeasurementsProvider = FutureProvider((_) async {
-  final ms =
-      await db.measurements.where().filter().unitOfEqualTo('Length').findAll();
-  ms.removeWhere((element) => element.name == 'Mile');
-  return ms;
-});
+// final lengthMeasurementsProvider = FutureProvider((_) async {
+//   final ms =
+//       await db.measurements.where().filter().unitOfEqualTo('Length').findAll();
+//   ms.removeWhere((element) => element.name == 'Mile');
+//   return ms;
+// });
 
 typedef AddOrderNotifier
     = AutoDisposeAsyncNotifierProvider<AddOrderProvider, void>;
@@ -80,7 +79,9 @@ class AddOrderProvider extends AutoDisposeAsyncNotifier<void> {
   FutureOr<void> build() {
     employees = ref.watch(employeeProvider).value ?? [];
     inventories = ref.watch(inventoryProvider).value ?? [];
-    measurements = ref.watch(lengthMeasurementsProvider).value ?? [];
+    measurements = appMeasurements
+        .where((e) => e.unitOf == 'Length' && e.name != 'Mile')
+        .toList();
     orders = ref.watch(orderProvider).value ?? [];
   }
 
@@ -89,9 +90,9 @@ class AddOrderProvider extends AutoDisposeAsyncNotifier<void> {
     ref.notifyListeners();
   }
 
-  Future<void> setInventory(PktbsInventory? inventory) async {
+  void setInventory(PktbsInventory? inventory) {
     this.inventory = inventory;
-    inventoryUnit = await inventory?.unit.getMeasurement();
+    inventoryUnit = inventory?.unit;
     ref.notifyListeners();
   }
 

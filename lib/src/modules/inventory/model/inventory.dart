@@ -4,6 +4,7 @@ import 'dart:convert';
 import '../../../db/isar.dart';
 import '../../../utils/extensions/extensions.dart';
 import '../../authentication/model/user.dart';
+import '../../settings/model/measurement/measurement.dart';
 import '../../settings/model/settings.model.dart';
 import '../../transaction/enum/trx.type.dart';
 import '../../vendor/model/vendor.dart';
@@ -14,11 +15,11 @@ const pktbsInventoryExpand = 'creator, updator, from, from.creator, from.updator
 
 class PktbsInventory {
   int quantity;
-  String unit;
   String title;
   double amount;
   final String id;
   PktbsVendor from;
+  Measurement unit;
   DateTime? updated;
   PktbsUser? updator;
   String? description;
@@ -46,11 +47,11 @@ class PktbsInventory {
   factory PktbsInventory.fromJson(Map<String, dynamic> json) {
     return PktbsInventory(
       id: json[_Json.id],
-      unit: json[_Json.unit],
       title: json[_Json.title],
       description: json[_Json.description],
       collectionId: json[_Json.collectionId],
       collectionName: json[_Json.collectionName],
+      unit: (json[_Json.unit] as String).getMeasurement!,
       quantity: json[_Json.quantity].toString().toInt ?? 0,
       amount: json[_Json.amount].toString().toDouble ?? 0.0,
       created: DateTime.parse(json[_Json.created]).toLocal(),

@@ -31,6 +31,9 @@ extension ListMeasurementTrxExt on List<Measurement> {
 }
 
 extension MeasurementStringExt on String {
-  Future<Measurement?> getMeasurement() async =>
-      await db.measurements.where().filter().nameEqualTo(this).findFirst();
+  Measurement? get getMeasurement {
+    return appMeasurements.any((e) => e.name == this)
+        ? appMeasurements.firstWhere((e) => e.name == this)
+        : null;
+  }
 }

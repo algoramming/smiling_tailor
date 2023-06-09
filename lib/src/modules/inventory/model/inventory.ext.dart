@@ -3,10 +3,10 @@ part of 'inventory.dart';
 extension InventoryExtension on PktbsInventory {
   PktbsInventory copyWith({
     String? id,
-    String? unit,
     String? title,
     int? quantity,
     double? amount,
+    Measurement? unit,
     PktbsVendor? from,
     DateTime? created,
     DateTime? updated,
@@ -35,9 +35,9 @@ extension InventoryExtension on PktbsInventory {
 
   Map<String, dynamic> toJson() => {
         _Json.id: id,
-        _Json.unit: unit,
         _Json.title: title,
         _Json.amount: amount,
+        _Json.unit: unit.name,
         _Json.quantity: quantity,
         _Json.from: from.toJson(),
         _Json.description: description,
@@ -57,9 +57,6 @@ extension InventoryExtension on PktbsInventory {
   String? get updatedDate => updated != null
       ? appSettings.getDateTimeFormat.format(updated!.toLocal())
       : null;
-
-  // Future<Measurement?> get measurement async =>
-  //     await db.measurements.where().filter().nameEqualTo(unit).findFirst();
 
   GLType get glType => GLType.inventory;
 }

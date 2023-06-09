@@ -23,47 +23,62 @@ Future<void> pktbsAddInventory(
         'quantity': notifier.quantityCntrlr.text.toInt,
         'unit': notifier.unit?.name,
         'amount': notifier.amountCntrlr.text.toDouble,
-        // 'advance': notifier.advanceCntrlr.text.toDouble,
         'creator': pb.authStore.model?.id,
         'from': notifier.from?.id,
       },
-    ).then((r) async {
-      // check trx nedded or not
-      if (notifier.advanceCntrlr.text.isNotNullOrEmpty() &&
-          notifier.advanceCntrlr.text.toDouble != 0.0) {
-        final advanceBalance = notifier.advanceCntrlr.text.toDouble;
-        await pb
+    ).then((r) async => await pb
             .collection(inventories)
             .getOne(r.toJson()['id'], expand: pktbsInventoryExpand)
             .then((i) async {
           final inven = PktbsInventory.fromJson(i.toJson());
-          log.i('Need Trx for ${inven.title} of $advanceBalance}');
+          log.i('Need Goods Trx for ${inven.title} of ${inven.from.name}');
           await pktbsAddTrx(
             context,
-            fromId: notifier.from!.id,
-            fromJson: notifier.from!.toJson(),
-            fromType: notifier.from!.glType,
+            fromId: inven.from.id,
+            fromJson: inven.from.toJson(),
+            fromType: inven.from.glType,
             toId: inven.id,
             toJson: inven.toJson(),
             toType: inven.glType,
-            amount: advanceBalance,
-            trxType: TrxType.payable,
-            description: 'System Generated: advance amount! of ${inven.title}',
-          ).then((value) {
-            notifier.clear();
-            context.pop();
-            showAwesomeSnackbar(context, 'Success!',
-                'Inventory added successfully.', MessageType.success);
+            trxType: TrxType.receivable,
+            amount: inven.quantity.toString().toDouble,
+            description: 'System Generated: goods! of ${inven.title}',
+            isGoods: true,
+            isSystemGenerated: true,
+            unit: inven.unit.name,
+          ).then((_) async {
+            // check another trx nedded or not
+            if (notifier.advanceCntrlr.text.isNotNullOrEmpty() &&
+                notifier.advanceCntrlr.text.toDouble != 0.0) {
+              final advanceBalance = notifier.advanceCntrlr.text.toDouble;
+              log.i('Need Another Trx for ${inven.title} of $advanceBalance}');
+              await pktbsAddTrx(
+                context,
+                fromId: pb.authStore.model?.id,
+                fromJson: pb.authStore.model?.toJson(),
+                fromType: GLType.user,
+                toId: inven.id,
+                toJson: inven.toJson(),
+                toType: inven.glType,
+                trxType: TrxType.payable,
+                amount: advanceBalance,
+                description:
+                    'System Generated: advance amount! of ${inven.title}',
+              ).then((_) {
+                notifier.clear();
+                context.pop();
+                showAwesomeSnackbar(context, 'Success!',
+                    'Inventory added successfully.', MessageType.success);
+              });
+            } else {
+              log.i('No Trx needed!');
+              notifier.clear();
+              context.pop();
+              showAwesomeSnackbar(context, 'Success!',
+                  'Inventory added successfully.', MessageType.success);
+            }
           });
-        });
-      } else {
-        log.i('No Trx needed!');
-        notifier.clear();
-        context.pop();
-        showAwesomeSnackbar(context, 'Success!',
-            'Inventory added successfully.', MessageType.success);
-      }
-    });
+        }));
     return;
   } on ClientException catch (e) {
     log.e('Inventory Creation: $e');

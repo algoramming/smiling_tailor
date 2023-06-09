@@ -188,7 +188,7 @@ class _TotalAmount extends ConsumerWidget {
             padding:
                 const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
             child: Text(
-              currency.symbol,
+              appCurrency.symbol,
               style: context.text.labelLarge!.copyWith(
                 color: due.isNegative ? Colors.green : Colors.red,
               ),

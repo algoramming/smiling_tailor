@@ -12,7 +12,8 @@ import 'paths.dart' show AppDir, appDir, initDir;
 
 late final Isar db;
 late AppSettings appSettings;
-late CurrencyProfile currency;
+late CurrencyProfile appCurrency;
+late List<Measurement> appMeasurements;
 
 const _schema = [AppSettingsSchema, CurrencyProfileSchema, MeasurementSchema];
 
@@ -32,10 +33,13 @@ Future<void> initAppDatum() async {
   if (await db.currencyProfiles.where().count() == 0) await currencyInit();
   if (await db.measurements.where().count() == 0) await measurementInit();
   appSettings = await db.appSettings.get(0) ?? AppSettings();
-  currency = (await db.currencyProfiles
+  appCurrency = (await db.currencyProfiles
       .where()
       .shortFormEqualTo(appSettings.currency)
       .findFirst())!;
+  appMeasurements = await db.measurements.where().findAll();
+  log.i(
+      'App Initiated with currency: ${appCurrency.shortForm} and measurements: ${appMeasurements.length} units');
   listenForAppConfig();
 }
 
@@ -68,7 +72,7 @@ Future<void> measurementInit() async {
 void listenForAppConfig() =>
     db.appSettings.watchObjectLazy(0).listen((_) async {
       appSettings = await db.appSettings.get(0) ?? AppSettings();
-      currency = (await db.currencyProfiles
+      appCurrency = (await db.currencyProfiles
           .where()
           .shortFormEqualTo(appSettings.currency)
           .findFirst())!;

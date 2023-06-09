@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:smiling_tailor/src/modules/settings/model/measurement/measurement.dart';
+
 import '../../../db/isar.dart';
 import '../../../utils/extensions/extensions.dart';
 import '../../authentication/model/user.dart';
@@ -32,6 +34,8 @@ class PktbsTrx {
   GLType toType;
   //
   double amount;
+  Measurement? unit;
+  bool isGoods;
   TrxType trxType;
   String? description;
   bool isSystemGenerated;
@@ -54,6 +58,8 @@ class PktbsTrx {
     required this.toType,
     //
     required this.amount,
+    this.unit,
+    this.isGoods = false,
     required this.trxType,
     this.description,
     this.isSystemGenerated = false,
@@ -81,6 +87,8 @@ class PktbsTrx {
         toType: (json[_Json.toType] as String).glType,
         //
         amount: json[_Json.amount].toString().toDouble ?? 0.0,
+        unit: (json[_Json.unit] as String?)?.getMeasurement,
+        isGoods: json[_Json.isGoods] as bool? ?? false,
         trxType: (json[_Json.trxType] as String).trxType,
         description: json[_Json.description] as String?,
         isSystemGenerated: json[_Json.isSystemGenerated] as bool? ?? false,
@@ -108,7 +116,7 @@ class PktbsTrx {
 
   @override
   String toString() =>
-      'PktbsTrx(id: $id, created: $created, updated: $updated, creator: $creator, updator: $updator, collectionId: $collectionId, collectionName: $collectionName, fromId: $fromId, from: $from, fromType: $fromType, toId: $toId, to: $to, toType: $toType, amount: $amount, trxType: $trxType, description: $description, isSystemGenerated: $isSystemGenerated)';
+      'PktbsTrx(id: $id, created: $created, updated: $updated, creator: $creator, updator: $updator, collectionId: $collectionId, collectionName: $collectionName, fromId: $fromId, from: $from, fromType: $fromType, toId: $toId, to: $to, toType: $toType, amount: $amount, unit: $unit, isGoods: $isGoods, trxType: $trxType, description: $description, isSystemGenerated: $isSystemGenerated)';
 
   @override
   bool operator ==(Object other) {
@@ -139,6 +147,8 @@ class _Json {
   static const String toType = 'toType';
   //
   static const String amount = 'amount';
+  static const String unit = 'unit';
+  static const String isGoods = 'isGoods';
   static const String trxType = 'trxType';
   static const String description = 'description';
   static const String isSystemGenerated = 'isSystemGenerated';

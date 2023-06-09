@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:smiling_tailor/src/modules/settings/model/measurement/measurement.dart';
+
 import '../../../db/isar.dart';
 import '../../../utils/extensions/extensions.dart';
 import '../../authentication/model/user.dart';
@@ -45,7 +47,7 @@ class PktbsOrder {
   //
   PktbsInventory? inventory;
   int? inventoryQuantity;
-  String? inventoryUnit;
+  Measurement? inventoryUnit;
   double? inventoryPrice;
   String? inventoryNote;
   //
@@ -150,7 +152,7 @@ class PktbsOrder {
           ? null
           : PktbsInventory.fromJson(json[_Json.expand][_Json.inventory]),
       inventoryQuantity: json[_Json.inventoryQuantity].toString().toInt,
-      inventoryUnit: json[_Json.inventoryUnit],
+      inventoryUnit: (json[_Json.inventoryUnit] as String?)?.getMeasurement,
       inventoryPrice: json[_Json.inventoryPrice].toString().toDouble,
       inventoryNote: json[_Json.inventoryNote],
       //
