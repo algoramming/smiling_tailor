@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pocketbase/pocketbase.dart';
+import 'package:smiling_tailor/src/modules/vendor/model/vendor.dart';
 
 import '../../../pocketbase/auth.store/helpers.dart';
 import '../../../pocketbase/error.handle/error.handle.func.dart';
@@ -7,7 +8,7 @@ import '../../../shared/show_toast/awesome_snackbar.dart';
 import '../../../shared/show_toast/show_toast.dart';
 import '../../../utils/extensions/extensions.dart';
 import '../../../utils/logger/logger_helper.dart';
-import '../../transaction/api/add.trx.employee.api.dart';
+import '../../transaction/api/add.trx.api.dart';
 import '../../transaction/enum/trx.type.dart';
 import '../add/provider/add.inventory.provider.dart';
 import '../model/inventory.dart';
@@ -39,11 +40,15 @@ Future<void> pktbsAddInventory(
           log.i('Need Trx for ${inven.title} of $advanceBalance}');
           await pktbsAddTrx(
             context,
-            glJson: inven.toJson(),
-            glId: inven.id,
-            type: GLType.inventory,
+            fromId: notifier.from!.id,
+            fromJson: notifier.from!.toJson(),
+            fromType: notifier.from!.glType,
+            toId: inven.id,
+            toJson: inven.toJson(),
+            toType: inven.glType,
             amount: advanceBalance,
-            description: 'System Generated advance amount!',
+            trxType: TrxType.payable,
+            description: 'System Generated: advance amount! of ${inven.title}',
           ).then((value) {
             notifier.clear();
             context.pop();

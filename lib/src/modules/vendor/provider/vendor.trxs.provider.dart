@@ -6,7 +6,6 @@ import 'package:smiling_tailor/src/modules/inventory/provider/inventory.provider
 
 import '../../../pocketbase/auth.store/helpers.dart';
 import '../../../utils/logger/logger_helper.dart';
-import '../../inventory/model/inventory.dart';
 import '../../transaction/model/transaction.dart';
 import '../model/vendor.dart';
 
@@ -19,7 +18,7 @@ class VendorTrxsProvider
     extends AutoDisposeFamilyAsyncNotifier<List<PktbsTrx>, PktbsVendor> {
   TextEditingController searchCntrlr = TextEditingController();
   late List<PktbsTrx> _trxs;
-  late List<PktbsInventory> _inventories;
+  // late List<PktbsInventory> _inventories;
   double _totalPurchase = 0.0;
   @override
   FutureOr<List<PktbsTrx>> build(PktbsVendor arg) async {

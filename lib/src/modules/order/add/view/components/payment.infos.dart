@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../config/constants.dart';
 import '../../../../../utils/extensions/extensions.dart';
-import '../../../model/enum.dart';
+import '../../../enum/order.enum.dart';
 import '../../provider/add.order.provider.dart';
 import 'info.title.dart';
 

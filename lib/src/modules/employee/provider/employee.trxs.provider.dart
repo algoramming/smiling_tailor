@@ -25,7 +25,9 @@ class EmployeeTrxsProvider
     _stream();
     _trxs = await pb
         .collection(transactions)
-        .getFullList(filter: 'gl_id = "${arg.id}"', expand: pktbsTrxExpand)
+        .getFullList(
+            filter: 'from_id = "${arg.id}" || to_id = "${arg.id}"',
+            expand: pktbsTrxExpand)
         .then((v) {
       log.i('Employees Trxs: $v');
       return v.map((e) => PktbsTrx.fromJson(e.toJson())).toList();
@@ -46,7 +48,8 @@ class EmployeeTrxsProvider
     // Implement Stream needs pocketbase update to add filter and expand options then the autodispose had to remove
     pb.collection(transactions).subscribe('*', (s) async {
       log.i('Stream $s');
-      if (s.record?.getStringValue('gl_id') != arg.id) return;
+      if (s.record?.getStringValue('from_id') != arg.id &&
+          s.record?.getStringValue('to_id') != arg.id) return;
       await pb
           .collection(transactions)
           .getOne(s.record!.toJson()['id'], expand: pktbsTrxExpand)

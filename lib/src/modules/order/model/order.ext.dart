@@ -155,4 +155,6 @@ extension OrderExtension on PktbsOrder {
 
   String get deliveryTimeDate =>
       appSettings.getDateTimeFormat.format(deliveryTime.toLocal());
+
+  GLType get glType => GLType.order;
 }

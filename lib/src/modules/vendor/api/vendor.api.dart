@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pocketbase/pocketbase.dart';
-import 'package:smiling_tailor/src/modules/transaction/api/add.trx.employee.api.dart';
 import 'package:smiling_tailor/src/modules/transaction/enum/trx.type.dart';
 
 import '../../../pocketbase/auth.store/helpers.dart';
@@ -9,6 +8,7 @@ import '../../../shared/show_toast/awesome_snackbar.dart';
 import '../../../shared/show_toast/show_toast.dart';
 import '../../../utils/extensions/extensions.dart';
 import '../../../utils/logger/logger_helper.dart';
+import '../../transaction/api/add.trx.api.dart';
 import '../add/provider/add.vendor.provider.dart';
 import '../model/vendor.dart';
 
@@ -37,11 +37,16 @@ Future<void> pktbsAddVendor(
           log.i('Need Trx for ${ven.name} of $openingBalance}');
           await pktbsAddTrx(
             context,
-            glJson: ven.toJson(),
-            glId: ven.id,
-            type: GLType.vendor,
+            fromId: pb.authStore.model?.id,
+            fromJson: pb.authStore.model?.toJson(),
+            fromType: GLType.user,
+            toId: ven.id,
+            toJson: ven.toJson(),
+            toType: ven.glType,
+            trxType: TrxType.payable,
+            isSystemGenerated: true,
             amount: openingBalance,
-            description: 'System Generated Opening Balance!',
+            description: 'System Generated: Opening Balance of ${ven.name}',
           ).then((value) {
             notifier.clear();
             context.pop();

@@ -3,6 +3,7 @@ import 'dart:convert';
 import '../../../db/isar.dart';
 import '../../authentication/model/user.dart';
 import '../../settings/model/settings.model.dart';
+import '../../transaction/enum/trx.type.dart';
 
 part 'vendor.ext.dart';
 

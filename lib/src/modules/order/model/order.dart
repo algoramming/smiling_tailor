@@ -6,7 +6,8 @@ import '../../authentication/model/user.dart';
 import '../../employee/model/employee.dart';
 import '../../inventory/model/inventory.dart';
 import '../../settings/model/settings.model.dart';
-import 'enum.dart';
+import '../../transaction/enum/trx.type.dart';
+import '../enum/order.enum.dart';
 
 part 'order.ext.dart';
 

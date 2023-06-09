@@ -5,6 +5,7 @@ import '../../../utils/extensions/extensions.dart';
 import '../../authentication/model/user.dart';
 import '../../employee/model/employee.dart';
 import '../../inventory/model/inventory.dart';
+import '../../order/model/order.dart';
 import '../../settings/model/settings.model.dart';
 import '../../vendor/model/vendor.dart';
 import '../enum/trx.type.dart';
@@ -14,59 +15,100 @@ part 'transaction.ext.dart';
 const pktbsTrxExpand = 'creator, updator';
 
 class PktbsTrx {
-  String glId;
-  GLType type;
-  double amount;
   final String id;
-  DateTime? updated;
-  PktbsUser? updator;
-  String? description;
   final DateTime created;
-  Map<String, dynamic> gl;
+  DateTime? updated;
   final PktbsUser creator;
+  PktbsUser? updator;
   final String collectionId;
   final String collectionName;
+  //
+  String fromId;
+  Map<String, dynamic> from;
+  GLType fromType;
+  //
+  String toId;
+  Map<String, dynamic> to;
+  GLType toType;
+  //
+  double amount;
+  TrxType trxType;
+  String? description;
+  bool isSystemGenerated;
 
   PktbsTrx({
-    this.updated,
-    this.description,
-    required this.gl,
     required this.id,
-    required this.type,
-    required this.glId,
-    required this.amount,
     required this.created,
+    this.updated,
     required this.creator,
-    required this.updator,
+    this.updator,
     required this.collectionId,
     required this.collectionName,
+    //
+    required this.fromId,
+    required this.from,
+    required this.fromType,
+    //
+    required this.toId,
+    required this.to,
+    required this.toType,
+    //
+    required this.amount,
+    required this.trxType,
+    this.description,
+    this.isSystemGenerated = false,
   });
 
   factory PktbsTrx.fromJson(Map<String, dynamic> json) => PktbsTrx(
-        id: json[_Json.id],
-        glId: json[_Json.glId],
-        collectionId: json[_Json.collectionId],
+        id: json[_Json.id] as String,
+        created: DateTime.parse(json[_Json.created] as String),
         updated: json[_Json.updated] == null
             ? null
-            : DateTime.parse(json[_Json.updated]),
-        collectionName: json[_Json.collectionName],
-        type: (json[_Json.type] as String).glType,
-        gl: json[_Json.gl] as Map<String, dynamic>,
-        created: DateTime.parse(json[_Json.created]),
-        description: json[_Json.description] as String?,
-        amount: json[_Json.amount].toString().toDouble ?? 0.0,
+            : DateTime.parse(json[_Json.updated] as String),
         creator: PktbsUser.fromJson(json[_Json.expand][_Json.creator]),
         updator: json[_Json.updator] == null || json[_Json.updator] == ''
             ? null
             : PktbsUser.fromJson(json[_Json.expand][_Json.updator]),
+        collectionId: json[_Json.collectionId] as String,
+        collectionName: json[_Json.collectionName] as String,
+        //
+        fromId: json[_Json.fromId] as String,
+        from: json[_Json.from] as Map<String, dynamic>,
+        fromType: (json[_Json.fromType] as String).glType,
+        //
+        toId: json[_Json.toId] as String,
+        to: json[_Json.to] as Map<String, dynamic>,
+        toType: (json[_Json.toType] as String).glType,
+        //
+        amount: json[_Json.amount].toString().toDouble ?? 0.0,
+        trxType: (json[_Json.trxType] as String).trxType,
+        description: json[_Json.description] as String?,
+        isSystemGenerated: json[_Json.isSystemGenerated] as bool? ?? false,
       );
+  // id: json[_Json.id],
+  // glId: json[_Json.glId],
+  // collectionId: json[_Json.collectionId],
+  // updated: json[_Json.updated] == null
+  //     ? null
+  //     : DateTime.parse(json[_Json.updated]),
+  // collectionName: json[_Json.collectionName],
+  // type: (json[_Json.type] as String).glType,
+  // gl: json[_Json.gl] as Map<String, dynamic>,
+  // created: DateTime.parse(json[_Json.created]),
+  // description: json[_Json.description] as String?,
+  // amount: json[_Json.amount].toString().toDouble ?? 0.0,
+  // creator: PktbsUser.fromJson(json[_Json.expand][_Json.creator]),
+  // updator: json[_Json.updator] == null || json[_Json.updator] == ''
+  //     ? null
+  //     : PktbsUser.fromJson(json[_Json.expand][_Json.updator]),
+  // );
 
   factory PktbsTrx.fromRawJson(String str) =>
       PktbsTrx.fromJson(json.decode(str) as Map<String, dynamic>);
 
   @override
   String toString() =>
-      'PktbsTrx(glId: $glId, type: $type, amount: $amount, id: $id, updated: $updated, updator: $updator, description: $description, created: $created, gl: $gl, creator: $creator, collectionId: $collectionId, collectionName: $collectionName)';
+      'PktbsTrx(id: $id, created: $created, updated: $updated, creator: $creator, updator: $updator, collectionId: $collectionId, collectionName: $collectionName, fromId: $fromId, from: $from, fromType: $fromType, toId: $toId, to: $to, toType: $toType, amount: $amount, trxType: $trxType, description: $description, isSystemGenerated: $isSystemGenerated)';
 
   @override
   bool operator ==(Object other) {
@@ -79,17 +121,25 @@ class PktbsTrx {
 }
 
 class _Json {
-  static const String gl = 'gl';
   static const String id = 'id';
-  static const String type = 'type';
-  static const String glId = 'gl_id';
   static const String expand = 'expand';
-  static const String amount = 'amount';
   static const String created = 'created';
   static const String updated = 'updated';
   static const String creator = 'creator';
   static const String updator = 'updator';
   static const collectionId = 'collectionId';
   static const collectionName = 'collectionName';
+  //
+  static const String fromId = 'from_id';
+  static const String from = 'from';
+  static const String fromType = 'fromType';
+  //
+  static const String toId = 'to_id';
+  static const String to = 'to';
+  static const String toType = 'toType';
+  //
+  static const String amount = 'amount';
+  static const String trxType = 'trxType';
   static const String description = 'description';
+  static const String isSystemGenerated = 'isSystemGenerated';
 }

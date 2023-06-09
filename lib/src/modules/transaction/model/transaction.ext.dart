@@ -1,67 +1,100 @@
 part of 'transaction.dart';
 
 extension TrxExtension on PktbsTrx {
+  // copywith
   PktbsTrx copyWith({
     String? id,
-    double? due,
-    GLType? type,
-    String? glId,
-    double? amount,
     DateTime? created,
     DateTime? updated,
-    PktbsUser? updator,
     PktbsUser? creator,
-    bool? isReceiveable,
-    String? description,
+    PktbsUser? updator,
     String? collectionId,
     String? collectionName,
-    Map<String, dynamic>? gl,
+    String? fromId,
+    Map<String, dynamic>? from,
+    GLType? fromType,
+    String? toId,
+    Map<String, dynamic>? to,
+    GLType? toType,
+    double? amount,
+    TrxType? trxType,
+    String? description,
+    bool? isSystemGenerated,
   }) {
     return PktbsTrx(
-      gl: gl ?? this.gl,
       id: id ?? this.id,
-      type: type ?? this.type,
-      glId: glId ?? this.glId,
-      amount: amount ?? this.amount,
-      updated: updated ?? this.updated,
       created: created ?? this.created,
+      updated: updated ?? this.updated,
       creator: creator ?? this.creator,
       updator: updator ?? this.updator,
-      description: description ?? this.description,
       collectionId: collectionId ?? this.collectionId,
       collectionName: collectionName ?? this.collectionName,
+      fromId: fromId ?? this.fromId,
+      from: from ?? this.from,
+      fromType: fromType ?? this.fromType,
+      toId: toId ?? this.toId,
+      to: to ?? this.to,
+      toType: toType ?? this.toType,
+      amount: amount ?? this.amount,
+      trxType: trxType ?? this.trxType,
+      description: description ?? this.description,
+      isSystemGenerated: isSystemGenerated ?? this.isSystemGenerated,
     );
   }
 
   Map<String, dynamic> toJson() => {
         _Json.id: id,
-        _Json.gl: gl,
-        _Json.glId: glId,
-        _Json.amount: amount,
-        _Json.type: type.title,
-        _Json.description: description,
+        _Json.created: created.toIso8601String(),
+        _Json.updated: updated?.toIso8601String(),
         _Json.creator: creator.toJson(),
         _Json.updator: updator?.toJson(),
         _Json.collectionId: collectionId,
         _Json.collectionName: collectionName,
-        _Json.created: created.toIso8601String(),
-        _Json.updated: updated?.toIso8601String(),
+        _Json.fromId: fromId,
+        _Json.from: from,
+        _Json.fromType: fromType.title,
+        _Json.toId: toId,
+        _Json.to: to,
+        _Json.toType: toType.title,
+        _Json.amount: amount,
+        _Json.trxType: trxType.title,
+        _Json.description: description,
+        _Json.isSystemGenerated: isSystemGenerated,
       };
 
   String toRawJson() => json.encode(toJson());
 
-  Object? getGLObject() {
-    switch (type) {
+  Object getFromObject() {
+    switch (fromType) {
       case GLType.vendor:
-        return PktbsVendor.fromJson(gl);
-      case GLType.employee:
-        return PktbsEmployee.fromJson(gl);
+        return PktbsVendor.fromJson(from);
       case GLType.inventory:
-        return PktbsInventory.fromJson(gl);
-      case GLType.unknown:
-        return null;
+        return PktbsInventory.fromJson(from);
+      case GLType.employee:
+        return PktbsEmployee.fromJson(from);
+      case GLType.order:
+        return PktbsOrder.fromJson(from);
+      case GLType.user:
+        return PktbsUser.fromJson(from);
       default:
-        return null;
+        return PktbsUser.fromJson(from);
+    }
+  }
+
+  Object getToObject() {
+    switch (toType) {
+      case GLType.vendor:
+        return PktbsVendor.fromJson(to);
+      case GLType.inventory:
+        return PktbsInventory.fromJson(to);
+      case GLType.employee:
+        return PktbsEmployee.fromJson(to);
+      case GLType.order:
+        return PktbsOrder.fromJson(to);
+      case GLType.user:
+        return PktbsUser.fromJson(to);
+      default:
+        return PktbsUser.fromJson(to);
     }
   }
 

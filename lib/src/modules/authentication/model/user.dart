@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import '../../../pocketbase/auth.store/helpers.dart';
+import '../../transaction/enum/trx.type.dart';
 
 part 'user.ext.dart';
 

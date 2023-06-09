@@ -52,4 +52,6 @@ extension PktbsUserExtension on PktbsUser {
   String? get imageUrl => avatar == null || avatar == ''
       ? null
       : '${baseUrl}api/files/$collectionId/$id/$avatar/';
+
+  GLType get glType => GLType.user;
 }

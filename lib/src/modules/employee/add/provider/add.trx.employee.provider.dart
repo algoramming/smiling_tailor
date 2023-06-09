@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
+import '../../../../pocketbase/auth.store/helpers.dart';
 import '../../../../shared/show_toast/awesome_snackbar.dart';
 import '../../../../shared/show_toast/show_toast.dart';
-import '../../../transaction/api/add.trx.employee.api.dart';
+import '../../../transaction/api/add.trx.api.dart';
 import '../../../transaction/enum/trx.type.dart';
 import '../../model/employee.dart';
 
@@ -29,13 +30,15 @@ class AddTrxEmployeeProvider
     if (!formKey.currentState!.validate()) return;
     await pktbsAddTrx(
       context,
-      glJson: employee.toJson(),
-      glId: employee.id,
-      type: GLType.employee,
+      fromId: pb.authStore.model?.id,
+      fromJson: pb.authStore.model?.toJson(),
+      fromType: GLType.user,
+      toId: employee.id,
+      toJson: employee.toJson(),
+      toType: employee.glType,
+      amount: double.parse(amountCntrlr.text),
+      trxType: TrxType.payable,
       description: descriptionCntrlr.text,
-      amount: double.parse(
-        amountCntrlr.text,
-      ),
     ).then((r) {
       if (r != null) {
         clear();

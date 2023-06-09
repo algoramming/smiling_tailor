@@ -8,7 +8,7 @@ import '../../../shared/show_toast/show_toast.dart';
 import '../../../utils/extensions/extensions.dart';
 import '../../../utils/logger/logger_helper.dart';
 import '../add/provider/add.order.provider.dart';
-import '../model/enum.dart';
+import '../enum/order.enum.dart';
 
 Future<void> pktbsAddOrder(
     BuildContext context, AddOrderProvider notifier) async {

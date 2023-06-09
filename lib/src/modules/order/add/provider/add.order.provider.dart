@@ -13,7 +13,7 @@ import '../../../inventory/model/inventory.dart';
 import '../../../inventory/provider/inventory.provider.dart';
 import '../../../settings/model/measurement/measurement.dart';
 import '../../api/add.order.api.dart';
-import '../../model/enum.dart';
+import '../../enum/order.enum.dart';
 import '../../provider/order.provider.dart';
 
 final lengthMeasurementsProvider = FutureProvider((_) async {

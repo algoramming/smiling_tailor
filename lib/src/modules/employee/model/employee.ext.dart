@@ -57,4 +57,6 @@ extension EmployeeExtension on PktbsEmployee {
   String? get updatedDate => updated != null
       ? appSettings.getDateTimeFormat.format(updated!.toLocal())
       : null;
+
+  GLType get glType => GLType.employee;
 }

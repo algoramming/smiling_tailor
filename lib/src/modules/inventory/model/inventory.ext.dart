@@ -58,6 +58,8 @@ extension InventoryExtension on PktbsInventory {
       ? appSettings.getDateTimeFormat.format(updated!.toLocal())
       : null;
 
-  Future<Measurement?> get measurement async =>
-      await db.measurements.where().filter().nameEqualTo(unit).findFirst();
+  // Future<Measurement?> get measurement async =>
+  //     await db.measurements.where().filter().nameEqualTo(unit).findFirst();
+
+  GLType get glType => GLType.inventory;
 }
