@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smiling_tailor/src/shared/textfield.suffix.widget/suffix.widget.dart';
 
 import '../../../../shared/animations_widget/animated_popup.dart';
 import '../../../../utils/extensions/extensions.dart';
@@ -88,6 +89,7 @@ class AddVendorPopup extends ConsumerWidget {
                         decoration: const InputDecoration(
                           labelText: 'Opening Balance',
                           hintText: 'Enter vendor\'s opening balance...',
+                          suffixIcon: KSuffixIcon(),
                         ),
                         onFieldSubmitted: (_) async => notifier.submit(context),
                         autovalidateMode: AutovalidateMode.onUserInteraction,

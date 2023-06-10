@@ -29,4 +29,6 @@ class UserProvider extends AsyncNotifier<List<PktbsUser>> {
       ref.notifyListeners();
     });
   }
+
+  Future<void> streamUnsubscribe() async => await pb.collection(users).unsubscribe();
 }

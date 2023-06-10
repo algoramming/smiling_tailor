@@ -59,8 +59,12 @@ class DeleteDatabaseWarningPopup extends StatelessWidget {
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
+            onPressed: () => context.pop(),
+            child: Text(
+              'Cancel',
+              style:
+                  TextStyle(color: context.theme.dividerColor.withOpacity(0.8)),
+            ),
           ),
           TextButton(
             onPressed: onPressed,

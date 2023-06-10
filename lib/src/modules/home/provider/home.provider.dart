@@ -2,11 +2,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../enum/home.enum.dart';
 
-typedef HomeNotifier = NotifierProvider<HomeProvider, void>;
+typedef HomeNotifier = AutoDisposeNotifierProvider<HomeProvider, void>;
 
 final homeProvider = HomeNotifier(HomeProvider.new);
 
-class HomeProvider extends Notifier {
+class HomeProvider extends AutoDisposeNotifier {
   KDrawer _drawer = KDrawer.dashboard;
 
   @override

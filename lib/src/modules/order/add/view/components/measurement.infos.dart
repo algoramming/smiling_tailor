@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../../utils/extensions/extensions.dart';
 import '../../provider/add.order.provider.dart';
 import 'info.title.dart';
@@ -110,6 +111,7 @@ class MeasurementInfos extends StatelessWidget {
           decoration: const InputDecoration(
             labelText: 'Quantity',
             hintText: 'Enter quantity of this measurement...',
+            suffixIcon: KSuffixIcon(text: 'pc'),
           ),
           onFieldSubmitted: (_) async => notifier.submit(context),
           autovalidateMode: AutovalidateMode.onUserInteraction,

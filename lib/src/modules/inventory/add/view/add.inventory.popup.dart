@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../config/constants.dart';
 import '../../../../shared/animations_widget/animated_popup.dart';
+import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../provider/add.inventory.provider.dart';
 
@@ -84,13 +85,15 @@ class AddInventoryPopup extends ConsumerWidget {
                       flex: 5,
                       child: TextFormField(
                         controller: notifier.quantityCntrlr,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           labelText: 'Quantity',
                           hintText: 'Enter inventory\'s quantity...',
+                          suffixIcon:
+                              KSuffixIcon(text: notifier.unit?.symbol ?? '??'),
                         ),
                         onFieldSubmitted: (_) async => notifier.submit(context),
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        textInputAction: TextInputAction.done,
+                        textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.number,
                         validator: (v) {
                           if (v!.isEmpty) {
@@ -138,10 +141,11 @@ class AddInventoryPopup extends ConsumerWidget {
                   decoration: const InputDecoration(
                     labelText: 'Total Amount',
                     hintText: 'Enter inventory\'s amount...',
+                    suffixIcon: KSuffixIcon(),
                   ),
                   onFieldSubmitted: (_) async => notifier.submit(context),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  textInputAction: TextInputAction.done,
+                  textInputAction: TextInputAction.next,
                   keyboardType: TextInputType.number,
                   validator: (v) {
                     if (v!.isEmpty) {
@@ -159,6 +163,7 @@ class AddInventoryPopup extends ConsumerWidget {
                   decoration: const InputDecoration(
                     labelText: 'Advance Payment',
                     hintText: 'Enter inventory\'s advance payment...',
+                    suffixIcon: KSuffixIcon(),
                   ),
                   onFieldSubmitted: (_) async => notifier.submit(context),
                   autovalidateMode: AutovalidateMode.onUserInteraction,

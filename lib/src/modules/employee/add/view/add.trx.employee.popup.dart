@@ -3,7 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../db/isar.dart';
 import '../../../../shared/animations_widget/animated_popup.dart';
+import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../model/employee.dart';
 import '../provider/add.trx.employee.provider.dart';
@@ -39,7 +41,7 @@ class AddTrxEmployeePopup extends ConsumerWidget {
                             .copyWith(color: context.theme.primaryColor),
                       ),
                       TextSpan(
-                        text: ' salary. [Total Salary: ',
+                        text: ' salary. [ Total Salary: ',
                         style: context.text.labelLarge,
                       ),
                       TextSpan(
@@ -48,7 +50,7 @@ class AddTrxEmployeePopup extends ConsumerWidget {
                             .copyWith(color: context.theme.primaryColor),
                       ),
                       TextSpan(
-                        text: ']',
+                        text: '${appCurrency.symbol} ]',
                         style: context.text.labelLarge,
                       ),
                     ],
@@ -60,11 +62,12 @@ class AddTrxEmployeePopup extends ConsumerWidget {
                   decoration: const InputDecoration(
                     labelText: 'Amount',
                     hintText: 'Enter employee\'s amount...',
+                    suffixIcon: KSuffixIcon(),
                   ),
                   onFieldSubmitted: (_) async => notifier.submit(context),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.name,
+                  keyboardType: TextInputType.number,
                   validator: (v) {
                     if (v!.isEmpty) {
                       return 'Amount is required';
@@ -84,7 +87,7 @@ class AddTrxEmployeePopup extends ConsumerWidget {
                   ),
                   onFieldSubmitted: (_) async => notifier.submit(context),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  textInputAction: TextInputAction.next,
+                  textInputAction: TextInputAction.done,
                   keyboardType: TextInputType.text,
                   validator: (v) => null,
                 ),

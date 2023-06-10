@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:smiling_tailor/src/shared/textfield.suffix.widget/suffix.widget.dart';
 
 import '../../../../../config/constants.dart';
-import '../../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../../utils/extensions/extensions.dart';
 import '../../provider/add.order.provider.dart';
 
@@ -74,22 +74,12 @@ class InventoryInfos extends StatelessWidget {
               decoration: InputDecoration(
                 labelText: 'Inventory Quantity',
                 hintText: 'Enter inventory\'s quantity...',
-                suffixIcon: AnimatedWidgetShower(
-                  size: 28.0,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 2),
-                    child: Center(
-                      child: Text(
-                        notifier.inventoryUnit?.symbol ?? '??',
-                        style: context.text.labelLarge,
-                      ),
-                    ),
-                  ),
-                ),
+                suffixIcon:
+                    KSuffixIcon(text: notifier.inventoryUnit?.symbol ?? '??'),
               ),
               onFieldSubmitted: (_) async => notifier.submit(context),
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              textInputAction: TextInputAction.done,
+              textInputAction: TextInputAction.next,
               keyboardType: TextInputType.number,
               validator: (v) {
                 if (notifier.isInventoryNeeded && v!.isEmpty) {
@@ -110,6 +100,7 @@ class InventoryInfos extends StatelessWidget {
               decoration: const InputDecoration(
                 labelText: 'Inventory Charge',
                 hintText: 'Enter inventory charge...',
+                suffixIcon: KSuffixIcon(),
               ),
               onFieldSubmitted: (_) async => notifier.submit(context),
               onChanged: (_) => notifier.reload(),

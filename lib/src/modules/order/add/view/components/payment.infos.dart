@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:smiling_tailor/src/db/isar.dart';
 
 import '../../../../../config/constants.dart';
+import '../../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../../utils/extensions/extensions.dart';
 import '../../../enum/order.enum.dart';
 import '../../provider/add.order.provider.dart';
@@ -41,6 +43,7 @@ class PaymentInfos extends StatelessWidget {
           decoration: const InputDecoration(
             labelText: 'Advance Amount',
             hintText: 'Enter advance amount...',
+            suffixIcon: KSuffixIcon(),
           ),
           onFieldSubmitted: (_) async => notifier.submit(context),
           onChanged: (_) => notifier.reload(),
@@ -68,7 +71,7 @@ class PaymentInfos extends StatelessWidget {
                     (notifier.deliveryChargeCntrlr.text.toString().toDouble ??
                         0.0);
             return Text(
-              'Total: $total and Remaining: ${total - (notifier.advanceAmountCntrlr.text.toString().toDouble ?? 0.0)}',
+              'Total: $total${appCurrency.symbol} and Remaining: ${total - (notifier.advanceAmountCntrlr.text.toString().toDouble ?? 0.0)}${appCurrency.symbol}',
               style: context.text.labelMedium,
             );
           }),

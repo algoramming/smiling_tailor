@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../shared/animations_widget/animated_popup.dart';
+import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../provider/add.employee.provider.dart';
 
@@ -85,14 +86,15 @@ class AddEmployeePopup extends ConsumerWidget {
                   decoration: const InputDecoration(
                     labelText: 'Salary',
                     hintText: 'Enter employee\'s salary...',
+                    suffixIcon: KSuffixIcon(),
                   ),
                   onFieldSubmitted: (_) async => notifier.submit(context),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  textInputAction: TextInputAction.done,
+                  textInputAction: TextInputAction.next,
                   keyboardType: TextInputType.number,
                   validator: (v) {
                     if (v!.isEmpty) {
-                      return 'Opening balance is required';
+                      return 'Salary is required';
                     }
                     if (!v.isNumeric) {
                       return 'Invalid opening balance';

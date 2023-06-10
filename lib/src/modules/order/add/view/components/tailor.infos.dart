@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../config/constants.dart';
+import '../../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../../utils/extensions/extensions.dart';
 import '../../provider/add.order.provider.dart';
 
@@ -73,6 +74,7 @@ class TailorInfos extends StatelessWidget {
               decoration: const InputDecoration(
                 labelText: 'Tailoring Charge',
                 hintText: 'Enter tailoring charge...',
+                suffixIcon: KSuffixIcon(),
               ),
               onFieldSubmitted: (_) async => notifier.submit(context),
               onChanged: (_) => notifier.reload(),

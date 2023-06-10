@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../config/constants.dart';
+import '../../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../../utils/extensions/extensions.dart';
 import '../../provider/add.order.provider.dart';
 
@@ -90,6 +91,7 @@ class DeliveryInfos extends StatelessWidget {
               decoration: const InputDecoration(
                 labelText: 'Delivery Charge',
                 hintText: 'Enter delivery charge...',
+                suffixIcon: KSuffixIcon(),
               ),
               onFieldSubmitted: (_) async => notifier.submit(context),
               onChanged: (_) => notifier.reload(),
