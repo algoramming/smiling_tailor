@@ -75,6 +75,7 @@ class TailorInfos extends StatelessWidget {
                 hintText: 'Enter tailoring charge...',
               ),
               onFieldSubmitted: (_) async => notifier.submit(context),
+              onChanged: (_) => notifier.reload(),
               autovalidateMode: AutovalidateMode.onUserInteraction,
               textInputAction: TextInputAction.next,
               keyboardType: TextInputType.number,

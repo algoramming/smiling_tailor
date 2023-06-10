@@ -43,6 +43,7 @@ class PaymentInfos extends StatelessWidget {
             hintText: 'Enter advance amount...',
           ),
           onFieldSubmitted: (_) async => notifier.submit(context),
+          onChanged: (_) => notifier.reload(),
           autovalidateMode: AutovalidateMode.onUserInteraction,
           textInputAction: TextInputAction.next,
           keyboardType: TextInputType.number,
@@ -56,7 +57,23 @@ class PaymentInfos extends StatelessWidget {
             return null;
           },
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 3),
+        Align(
+          alignment: Alignment.centerRight,
+          child: Builder(builder: (context) {
+            final total =
+                (notifier.tailorChargeCntrlr.text.toString().toDouble ?? 0.0) +
+                    (notifier.inventoryPriceCntrlr.text.toString().toDouble ??
+                        0.0) +
+                    (notifier.deliveryChargeCntrlr.text.toString().toDouble ??
+                        0.0);
+            return Text(
+              'Total: $total and Remaining: ${total - (notifier.advanceAmountCntrlr.text.toString().toDouble ?? 0.0)}',
+              style: context.text.labelMedium,
+            );
+          }),
+        ),
+        const SizedBox(height: 7),
         TextFormField(
           controller: notifier.paymentNoteCntrlr,
           decoration: const InputDecoration(

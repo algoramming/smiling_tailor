@@ -122,6 +122,8 @@ class AddOrderProvider extends AutoDisposeAsyncNotifier<void> {
     await pktbsAddOrder(context, this);
   }
 
+  void reload() => ref.notifyListeners();
+
   void toggleAllocateTailorNow(bool v) {
     allocateTailorNow = v;
     if (v == false) {

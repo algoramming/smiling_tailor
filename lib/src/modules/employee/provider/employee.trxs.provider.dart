@@ -26,8 +26,9 @@ class EmployeeTrxsProvider
     _trxs = await pb
         .collection(transactions)
         .getFullList(
-            filter: 'from_id = "${arg.id}" || to_id = "${arg.id}"',
-            expand: pktbsTrxExpand)
+          filter: 'from_id = "${arg.id}" || to_id = "${arg.id}"',
+          expand: pktbsTrxExpand,
+        )
         .then((v) {
       log.i('Employees Trxs: $v');
       return v.map((e) => PktbsTrx.fromJson(e.toJson())).toList();

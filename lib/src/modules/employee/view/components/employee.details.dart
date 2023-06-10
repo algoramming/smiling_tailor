@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smiling_tailor/src/modules/transaction/enum/trx.type.dart';
 
 import '../../../../config/constants.dart';
 import '../../../../db/isar.dart';
@@ -70,31 +71,110 @@ class EmployeeDetails extends ConsumerWidget {
               ),
               const SizedBox(height: 10),
               _TrxTable(notifier),
-              const SizedBox(height: 10),
-              _TotalAmount(notifier),
+              // const SizedBox(height: 10),
+              // _TotalAmount(notifier),
             ],
           );
   }
 }
 
-class _TrxTable extends ConsumerWidget {
+class _TrxTable extends StatelessWidget {
   const _TrxTable(this.notifier);
 
   final EmployeeProvider notifier;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: DefaultTabController(
+        length: 2,
+        child: NestedScrollView(
+          floatHeaderSlivers: true,
+          headerSliverBuilder: (_, __) => [
+            SliverToBoxAdapter(
+              child: TabBar(
+                splashBorderRadius: borderRadius15,
+                isScrollable: true,
+                physics: const BouncingScrollPhysics(),
+                labelStyle: context.theme.textTheme.labelLarge,
+                tabs: const [Tab(text: 'Financials'), Tab(text: 'Orders')],
+              ),
+            ),
+          ],
+          body: TabBarView(
+            children: [
+              _FinancialsTab(notifier),
+              _OrdersTab(notifier),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _FinancialsTab extends StatelessWidget {
+  const _FinancialsTab(this.notifier);
+
+  final EmployeeProvider notifier;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _TrxList(notifier, condition: (t) => t.fromType == GLType.user),
+        const SizedBox(height: 10),
+        _TotalSummary(
+          notifier,
+          (t) => t.fromType == GLType.user,
+          isOrder: false,
+        ),
+      ],
+    );
+  }
+}
+
+class _OrdersTab extends StatelessWidget {
+  const _OrdersTab(this.notifier);
+
+  final EmployeeProvider notifier;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _TrxList(notifier, condition: (t) => t.fromType == GLType.order),
+        const SizedBox(height: 10),
+        _TotalSummary(
+          notifier,
+          (t) => t.fromType == GLType.order,
+          isOrder: true,
+        ),
+      ],
+    );
+  }
+}
+
+class _TrxList extends ConsumerWidget {
+  const _TrxList(this.notifier, {required this.condition});
+
+  final EmployeeProvider notifier;
+  final bool Function(PktbsTrx trx) condition;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(employeeTrxsProvider(notifier.selectedEmployee!));
     final noti =
         ref.watch(employeeTrxsProvider(notifier.selectedEmployee!).notifier);
+    final trxs = noti.trxList.where(condition).toList();
     return Expanded(
-      child: noti.trxList.isEmpty
+      child: trxs.isEmpty
           ? const Center(
               child: Text('No Transaction Found!', textAlign: TextAlign.center))
           : ListView.builder(
-              itemCount: noti.trxList.length,
+              itemCount: trxs.length,
               itemBuilder: (_, i) {
-                final trx = noti.trxList[i];
+                final trx = trxs[i];
                 return Card(
                   child: KListTile(
                     leading: Card(
@@ -126,8 +206,7 @@ class _TrxTable extends ConsumerWidget {
                     trailing: TweenAnimationBuilder(
                       curve: Curves.easeOut,
                       duration: kAnimationDuration(0.5),
-                      tween:
-                          Tween<double>(begin: 0, end: noti.trxList[i].amount),
+                      tween: Tween<double>(begin: 0, end: trx.amount),
                       builder: (_, double x, __) {
                         return Tooltip(
                           message: x.formattedFloat,
@@ -148,10 +227,12 @@ class _TrxTable extends ConsumerWidget {
   }
 }
 
-class _TotalAmount extends ConsumerWidget {
-  const _TotalAmount(this.notifier);
+class _TotalSummary extends ConsumerWidget {
+  const _TotalSummary(this.notifier, this.condition, {this.isOrder = false});
 
   final EmployeeProvider notifier;
+  final bool Function(PktbsTrx trx) condition;
+  final bool isOrder;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -159,9 +240,10 @@ class _TotalAmount extends ConsumerWidget {
     final noti =
         ref.watch(employeeTrxsProvider(notifier.selectedEmployee!).notifier);
     final salary = notifier.selectedEmployee!.salary;
-    final taken = noti.rawTrxs.isEmpty
+    final trxs = noti.rawTrxs.where(condition).toList();
+    final taken = trxs.isEmpty
         ? 0.0
-        : noti.rawTrxs
+        : trxs
             .where((e) =>
                 e.created.toLocal().month ==
                 (noti.showPrevMonth
@@ -195,9 +277,12 @@ class _TotalAmount extends ConsumerWidget {
                 ),
               ),
               title: Text(
-                  'Total Due of this Month (${(noti.showPrevMonth ? DateTime.now().previousMonth : DateTime.now()).monthName})'),
-              subtitle: Text(
-                  'Salary: ${salary.formattedCompat} & Taken: ${taken.formattedCompat}'),
+                  '${isOrder ? 'Total completed orders' : 'Total owe'} for Month (${(noti.showPrevMonth ? DateTime.now().previousMonth : DateTime.now()).monthName})'),
+              subtitle: isOrder
+                  ? Text(
+                      'Total Order: ${trxs.length} pcs & Earned: ${taken.formattedFloat}')
+                  : Text(
+                      'Salary: ${salary.formattedFloat} & Taken: ${taken.formattedFloat}'),
               // trailing: Text(due.formattedCompat,
               //   style: context.text.labelLarge!.copyWith(
               //     color: noti.trxList.isEmpty
@@ -213,7 +298,7 @@ class _TotalAmount extends ConsumerWidget {
               trailing: TweenAnimationBuilder(
                 curve: Curves.easeOut,
                 duration: kAnimationDuration(0.5),
-                tween: Tween<double>(begin: 0, end: due),
+                tween: Tween<double>(begin: 0, end: isOrder ? taken : due),
                 builder: (_, double x, __) {
                   return Tooltip(
                     message: x.formattedFloat,

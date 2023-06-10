@@ -92,6 +92,7 @@ class DeliveryInfos extends StatelessWidget {
                 hintText: 'Enter delivery charge...',
               ),
               onFieldSubmitted: (_) async => notifier.submit(context),
+              onChanged: (_) => notifier.reload(),
               autovalidateMode: AutovalidateMode.onUserInteraction,
               textInputAction: TextInputAction.next,
               keyboardType: TextInputType.number,
