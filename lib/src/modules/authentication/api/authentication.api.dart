@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import 'package:pocketbase/pocketbase.dart';
 
@@ -16,6 +19,7 @@ import '../view/authentication.dart';
 
 Future<void> pktbsSignup(BuildContext context, AuthProvider notifier,
     [bool autoSignin = true]) async {
+  EasyLoading.show(status: 'Creating account...');
   try {
     await pb.collection(users).create(
       body: {
@@ -51,6 +55,9 @@ Future<void> pktbsSignup(BuildContext context, AuthProvider notifier,
       }
     });
     return;
+  } on SocketException catch (e) {
+    EasyLoading.showError('No Internet Connection. $e');
+    return;
   } on ClientException catch (e) {
     log.e('User Creation: $e');
     showAwesomeSnackbar(
@@ -60,6 +67,7 @@ Future<void> pktbsSignup(BuildContext context, AuthProvider notifier,
 }
 
 Future<void> pktbsSignin(BuildContext context, AuthProvider notifier) async {
+  EasyLoading.show(status: 'Matching Credentials...');
   final nav = Navigator.of(context);
   try {
     await pb
@@ -69,7 +77,11 @@ Future<void> pktbsSignin(BuildContext context, AuthProvider notifier) async {
       log.i('User signin: $res');
       notifier.clear();
     });
+    EasyLoading.dismiss();
     await nav.pushNamedRemoveUntil(HomeView.name);
+    return;
+  } on SocketException catch (e) {
+    EasyLoading.showError('No Internet Connection. $e');
     return;
   } on ClientException catch (e) {
     log.e('User signin: $e');
@@ -80,9 +92,14 @@ Future<void> pktbsSignin(BuildContext context, AuthProvider notifier) async {
 }
 
 Future<void> pktbsSignout(BuildContext context) async {
+  EasyLoading.show(status: 'Signing out...');
   try {
     pb.authStore.clear();
+    EasyLoading.dismiss();
     await context.pushNamedRemoveUntil(AuthenticationView.name);
+    return;
+  } on SocketException catch (e) {
+    EasyLoading.showError('No Internet Connection. $e');
     return;
   } on ClientException catch (e) {
     log.e('User signout: $e');
@@ -93,31 +110,49 @@ Future<void> pktbsSignout(BuildContext context) async {
 }
 
 Future<void> pktbsSendVerificationEmail(
-    BuildContext context, String email) async {
-  await pb
-      .collection(users)
-      .requestVerification(email)
-      .onError((error, stackTrace) => showAwesomeSnackbar(context, 'Failed!',
-          getErrorMessage(error as ClientException), MessageType.failure))
-      .then((_) => showAwesomeSnackbar(context, 'Success!',
-          'Verification email sent.', MessageType.success));
-  return;
+  BuildContext context,
+  String email,
+) async {
+  try {
+    EasyLoading.show(status: 'Sending email...');
+    await pb
+        .collection(users)
+        .requestVerification(email)
+        .onError((error, stackTrace) => showAwesomeSnackbar(context, 'Failed!',
+            getErrorMessage(error as ClientException), MessageType.failure))
+        .then((_) => showAwesomeSnackbar(context, 'Success!',
+            'Verification email sent.', MessageType.success));
+    return;
+  } on SocketException catch (e) {
+    EasyLoading.showError('No Internet Connection. $e');
+    return;
+  }
 }
 
 Future<void> pktbsResetPassword(BuildContext context, String email) async {
-  await pb
-      .collection(users)
-      .requestPasswordReset(email)
-      .onError((error, stackTrace) => showAwesomeSnackbar(context, 'Failed!',
-          getErrorMessage(error as ClientException), MessageType.failure))
-      .then((_) => showAwesomeSnackbar(context, 'Success!',
-          'Password reset email sent.', MessageType.success));
-  return;
+  EasyLoading.show(status: 'Sending email...');
+  try {
+    await pb
+        .collection(users)
+        .requestPasswordReset(email)
+        .onError((error, stackTrace) => showAwesomeSnackbar(context, 'Failed!',
+            getErrorMessage(error as ClientException), MessageType.failure))
+        .then((_) => showAwesomeSnackbar(context, 'Success!',
+            'Password reset email sent.', MessageType.success));
+    return;
+  } on SocketException catch (e) {
+    EasyLoading.showError('No Internet Connection. $e');
+    return;
+  }
 }
 
 Future<void> pktbsUpdate(
-    BuildContext context, ProfileProvider notifier, bool isImageUpdated) async {
+  BuildContext context,
+  ProfileProvider notifier,
+  bool isImageUpdated,
+) async {
   try {
+    EasyLoading.show(status: 'Updating...');
     await pb
         .collection(users)
         .update(
@@ -148,6 +183,9 @@ Future<void> pktbsUpdate(
       showAwesomeSnackbar(context, 'Success!', 'User updated successfully.',
           MessageType.success);
     });
+    return;
+  } on SocketException catch (e) {
+    EasyLoading.showError('No Internet Connection. $e');
     return;
   } on ClientException catch (e) {
     log.e('User Update: $e');

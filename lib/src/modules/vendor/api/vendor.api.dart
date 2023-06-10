@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:smiling_tailor/src/modules/transaction/enum/trx.type.dart';
 
@@ -15,6 +18,7 @@ import '../model/vendor.dart';
 Future<void> pktbsAddVendor(
     BuildContext context, AddVendorProvider notifier) async {
   try {
+    EasyLoading.show(status: 'Creating vendor...');
     await pb.collection(vendors).create(
       body: {
         'name': notifier.nameCntrlr.text,
@@ -62,6 +66,9 @@ Future<void> pktbsAddVendor(
             MessageType.success);
       }
     });
+    return;
+  } on SocketException catch (e) {
+    EasyLoading.showError('No Internet Connection. $e');
     return;
   } on ClientException catch (e) {
     log.e('Vendor Creation: $e');

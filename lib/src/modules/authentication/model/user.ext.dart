@@ -1,7 +1,6 @@
 part of 'user.dart';
 
 extension PktbsUserExtension on PktbsUser {
-  // copywith function
   PktbsUser copyWith({
     String? id,
     String? name,
@@ -30,7 +29,6 @@ extension PktbsUserExtension on PktbsUser {
     );
   }
 
-  // to json
   Map<String, dynamic> toJson() => {
         _Json.id: id,
         _Json.name: name,
@@ -45,10 +43,8 @@ extension PktbsUserExtension on PktbsUser {
         _Json.updated: updated?.toIso8601String(),
       };
 
-  // to raw json
   String toRawJson() => json.encode(toJson());
 
-  // get Image Url
   String? get imageUrl => avatar == null || avatar == ''
       ? null
       : '${baseUrl}api/files/$collectionId/$id/$avatar/';

@@ -3,7 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../api/authentication.api.dart';
 
-typedef AuthNotifier = AutoDisposeNotifierProviderFamily<AuthProvider, void, bool>;
+typedef AuthNotifier
+    = AutoDisposeNotifierProviderFamily<AuthProvider, void, bool>;
 
 final authProvider = AuthNotifier(AuthProvider.new);
 
@@ -59,7 +60,8 @@ class AuthProvider extends AutoDisposeFamilyNotifier<void, bool> {
     ref.notifyListeners();
   }
 
-  Future<void> submit(BuildContext context) async => isSignup ? await signup(context) : await signin(context);
+  Future<void> submit(BuildContext context) async =>
+      isSignup ? await signup(context) : await signin(context);
 
   Future<void> signup(BuildContext context) async {
     if (!formKey.currentState!.validate()) return;
@@ -70,5 +72,4 @@ class AuthProvider extends AutoDisposeFamilyNotifier<void, bool> {
     if (!formKey.currentState!.validate()) return;
     await pktbsSignin(context, this);
   }
-
 }

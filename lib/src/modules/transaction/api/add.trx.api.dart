@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 import '../../../pocketbase/auth.store/helpers.dart';
@@ -41,6 +44,9 @@ Future<RecordModel?> pktbsAddTrx(
         'creator': pb.authStore.model?.id,
       },
     );
+  } on SocketException catch (e) {
+    EasyLoading.showError('No Internet Connection. $e');
+    return null;
   } on ClientException catch (e) {
     log.e('Transaction Creation: $e');
     showAwesomeSnackbar(

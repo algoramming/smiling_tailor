@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:smiling_tailor/src/modules/vendor/model/vendor.dart';
 
@@ -16,6 +19,7 @@ import '../model/inventory.dart';
 Future<void> pktbsAddInventory(
     BuildContext context, AddInventoryProvider notifier) async {
   try {
+    EasyLoading.show(status: 'Creating inventory...');
     await pb.collection(inventories).create(
       body: {
         'title': notifier.titleCntrlr.text,
@@ -79,6 +83,9 @@ Future<void> pktbsAddInventory(
             }
           });
         }));
+    return;
+  } on SocketException catch (e) {
+    EasyLoading.showError('No Internet Connection. $e');
     return;
   } on ClientException catch (e) {
     log.e('Inventory Creation: $e');

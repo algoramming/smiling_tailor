@@ -19,11 +19,11 @@ class PktbsUser {
   final String collectionName;
 
   PktbsUser({
+    this.avatar,
     this.updated,
     required this.id,
     required this.name,
     required this.email,
-    this.avatar,
     required this.created,
     required this.verified,
     required this.username,
@@ -32,7 +32,6 @@ class PktbsUser {
     required this.emailVisibility,
   });
 
-  // from json
   factory PktbsUser.fromJson(Map<String, dynamic> json) {
     return PktbsUser(
       id: json[_Json.id],
@@ -51,11 +50,9 @@ class PktbsUser {
     );
   }
 
-  // from raw json
   factory PktbsUser.fromRawJson(String str) =>
       PktbsUser.fromJson(json.decode(str));
 
-  // to string
   @override
   String toString() =>
       'PktbsUser(id: $id, name: $name, email: $email, avatar: $avatar, created: $created, updated: $updated, verified: $verified, username: $username, collectionId: $collectionId, collectionName: $collectionName, emailVisibility: $emailVisibility)';

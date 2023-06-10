@@ -61,7 +61,7 @@ class VendorDetails extends ConsumerWidget {
                   const SizedBox(width: 6.0),
                   OutlinedButton.icon(
                     onPressed: () async {
-                      //TODO: Add Transaction
+                      // Add Transaction
                       //   await showDialog(
                       //   context: context,
                       //   barrierDismissible: false,

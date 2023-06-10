@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 import '../../../pocketbase/auth.store/helpers.dart';
@@ -12,6 +15,7 @@ import '../add/provider/add.employee.provider.dart';
 Future<void> pktbsAddEmployee(
     BuildContext context, AddEmployeeProvider notifier) async {
   try {
+    EasyLoading.show(status: 'Creating employee...');
     await pb.collection(employees).create(
       body: {
         'name': notifier.nameCntrlr.text,
@@ -28,6 +32,9 @@ Future<void> pktbsAddEmployee(
       showAwesomeSnackbar(context, 'Success!', 'Employee created successfully.',
           MessageType.success);
     });
+    return;
+  } on SocketException catch (e) {
+    EasyLoading.showError('No Internet Connection. $e');
     return;
   } on ClientException catch (e) {
     log.e('Employee Creation: $e');

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pocketbase/pocketbase.dart';
@@ -17,8 +19,8 @@ import '../enum/order.enum.dart';
 import '../model/order.dart';
 
 Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
-  EasyLoading.show(status: 'Confirming Order...');
   try {
+    EasyLoading.show(status: 'Confirming Order...');
     final amount = (noti.tailorChargeCntrlr.text.toDouble ?? 0.0) +
         (noti.inventoryPriceCntrlr.text.toDouble ?? 0.0) +
         (noti.deliveryChargeCntrlr.text.toDouble ?? 0.0);
@@ -169,6 +171,9 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
             }
           });
         }));
+    return;
+  } on SocketException catch (e) {
+    EasyLoading.showError('No Internet Connection. $e');
     return;
   } on ClientException catch (e) {
     log.e('Order Creation: $e');
