@@ -26,23 +26,23 @@ extension OrderExtension on PktbsOrder {
     int? quantity,
     //
     PktbsEmployee? tailorEmployee,
-    double? tailorCharge,
+    // double? tailorCharge,
     String? tailorNote,
     //
     PktbsInventory? inventory,
     int? inventoryQuantity,
     Measurement? inventoryUnit,
-    double? inventoryPrice,
+    // double? inventoryPrice,
     String? inventoryNote,
     //
     PktbsEmployee? deliveryEmployee,
     String? deliveryAddress,
-    double? deliveryCharge,
+    // double? deliveryCharge,
     String? deliveryNote,
     //
     PaymentMethod? paymentMethod,
     String? paymentNote,
-    double? advanceAmount,
+    double? amount,
     //
     DateTime? deliveryTime,
     String? description,
@@ -73,23 +73,23 @@ extension OrderExtension on PktbsOrder {
         quantity: quantity ?? this.quantity,
         //
         tailorEmployee: tailorEmployee ?? this.tailorEmployee,
-        tailorCharge: tailorCharge ?? this.tailorCharge,
+        // tailorCharge: tailorCharge ?? this.tailorCharge,
         tailorNote: tailorNote ?? this.tailorNote,
         //
         inventory: inventory ?? this.inventory,
         inventoryQuantity: inventoryQuantity ?? this.inventoryQuantity,
         inventoryUnit: inventoryUnit ?? this.inventoryUnit,
-        inventoryPrice: inventoryPrice ?? this.inventoryPrice,
+        // inventoryPrice: inventoryPrice ?? this.inventoryPrice,
         inventoryNote: inventoryNote ?? this.inventoryNote,
         //
         deliveryEmployee: deliveryEmployee ?? this.deliveryEmployee,
         deliveryAddress: deliveryAddress ?? this.deliveryAddress,
-        deliveryCharge: deliveryCharge ?? this.deliveryCharge,
+        // deliveryCharge: deliveryCharge ?? this.deliveryCharge,
         deliveryNote: deliveryNote ?? this.deliveryNote,
         //
         paymentMethod: paymentMethod ?? this.paymentMethod,
         paymentNote: paymentNote ?? this.paymentNote,
-        advanceAmount: advanceAmount ?? this.advanceAmount,
+        amount: amount ?? this.amount,
         //
         deliveryTime: deliveryTime ?? this.deliveryTime,
         description: description ?? this.description,
@@ -121,23 +121,23 @@ extension OrderExtension on PktbsOrder {
         _Json.quantity: quantity,
         //
         _Json.tailorEmployee: tailorEmployee?.toJson(),
-        _Json.tailorCharge: tailorCharge,
+        // _Json.tailorCharge: tailorCharge,
         _Json.tailorNote: tailorNote,
         //
         _Json.inventory: inventory?.toJson(),
         _Json.inventoryQuantity: inventoryQuantity,
         _Json.inventoryUnit: inventoryUnit?.name,
-        _Json.inventoryPrice: inventoryPrice,
+        // _Json.inventoryPrice: inventoryPrice,
         _Json.inventoryNote: inventoryNote,
         //
         _Json.deliveryEmployee: deliveryEmployee?.toJson(),
         _Json.deliveryAddress: deliveryAddress,
-        _Json.deliveryCharge: deliveryCharge,
+        // _Json.deliveryCharge: deliveryCharge,
         _Json.deliveryNote: deliveryNote,
         //
         _Json.paymentMethod: paymentMethod.label,
         _Json.paymentNote: paymentNote,
-        _Json.advanceAmount: advanceAmount,
+        _Json.amount: amount,
         //
         _Json.deliveryTime: deliveryTime.toIso8601String(),
         _Json.description: description,

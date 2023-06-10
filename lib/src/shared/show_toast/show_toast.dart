@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'awesome_snackbar.dart';
 import 'timer_snackbar.dart';
@@ -27,6 +28,9 @@ void showAwesomeSnackbar(
       messageType: messageType,
     ),
   );
+
+  // EasyLoading.dismiss();
+  if (EasyLoading.isShow) EasyLoading.dismiss();
 
   ScaffoldMessenger.of(context)
     ..hideCurrentSnackBar()

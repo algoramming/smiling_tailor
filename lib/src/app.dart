@@ -14,6 +14,7 @@ import 'package:flutter/material.dart'
         ScrollableDetails,
         ThemeData,
         Widget;
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart'
     show AppLocalizations;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
@@ -59,7 +60,7 @@ class App extends ConsumerWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       scrollBehavior: _scrollBehavior.copyWith(scrollbars: false),
       showPerformanceOverlay: ref.watch(performanceOverlayProvider),
-      builder: (ctx, child) {
+      builder: EasyLoading.init(builder: (ctx, child) {
         t = AppLocalizations.of(ctx)!;
         topBarSize = ctx.mq.viewPadding.top;
         bottomViewPadding = ctx.mq.viewPadding.bottom;
@@ -70,7 +71,7 @@ class App extends ConsumerWidget {
               ? const ScreenEnlargeWarning()
               : child ?? const HomeView(),
         );
-      },
+      }),
     );
   }
 }

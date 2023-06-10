@@ -28,6 +28,25 @@ class InventoryInfos extends StatelessWidget {
           childrenPadding: const EdgeInsets.fromLTRB(4, 10, 4, 4),
           initiallyExpanded: notifier.isInventoryNeeded,
           title: const Text('• Do the customer purchase inventory?'),
+          trailing: Container(
+            height: 22.0,
+            width: 40.0,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              borderRadius: borderRadius45,
+              color: context.theme.primaryColor.withOpacity(0.3),
+              border: Border.all(
+                color: context.theme.primaryColor,
+                width: 1.3,
+              ),
+            ),
+            child: Text(
+              notifier.isInventoryNeeded ? 'Yes' : 'No',
+              style: context.text.labelMedium!.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
           onExpansionChanged: notifier.toggleInventoryNeeded,
           children: [
             DropdownButtonFormField(
@@ -73,10 +92,10 @@ class InventoryInfos extends StatelessWidget {
               textInputAction: TextInputAction.done,
               keyboardType: TextInputType.number,
               validator: (v) {
-                if (notifier.isInventoryNeeded &&  v!.isEmpty) {
+                if (notifier.isInventoryNeeded && v!.isEmpty) {
                   return 'Quantity is required';
                 }
-                if (notifier.isInventoryNeeded &&  !v!.isNumeric) {
+                if (notifier.isInventoryNeeded && !v!.isNumeric) {
                   return 'Invalid quantity';
                 }
                 if (notifier.isInventoryNeeded && !v!.isInt) {

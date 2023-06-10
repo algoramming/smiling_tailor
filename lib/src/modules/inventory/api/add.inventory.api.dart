@@ -40,7 +40,7 @@ Future<void> pktbsAddInventory(
             toId: inven.id,
             toJson: inven.toJson(),
             toType: inven.glType,
-            trxType: TrxType.receivable,
+            trxType: TrxType.debit,
             amount: inven.quantity.toString().toDouble,
             description: 'System Generated: goods! of ${inven.title}',
             isGoods: true,
@@ -60,7 +60,7 @@ Future<void> pktbsAddInventory(
                 toId: inven.id,
                 toJson: inven.toJson(),
                 toType: inven.glType,
-                trxType: TrxType.payable,
+                trxType: TrxType.credit,
                 amount: advanceBalance,
                 description:
                     'System Generated: advance amount! of ${inven.title}',

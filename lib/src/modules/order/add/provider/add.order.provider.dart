@@ -72,6 +72,7 @@ class AddOrderProvider extends AutoDisposeAsyncNotifier<void> {
   List<Measurement> measurements = [];
   List<PktbsOrder> orders = [];
   //
+  bool allocateTailorNow = false;
   bool isHomeDeliveryNeeded = false;
   bool isInventoryNeeded = false;
 
@@ -121,13 +122,36 @@ class AddOrderProvider extends AutoDisposeAsyncNotifier<void> {
     await pktbsAddOrder(context, this);
   }
 
+  void toggleAllocateTailorNow(bool v) {
+    allocateTailorNow = v;
+    if (v == false) {
+      tailorEmployee = null;
+      tailorChargeCntrlr.text = '0.0';
+      tailorNoteCntrlr.clear();
+    }
+    ref.notifyListeners();
+  }
+
   void toggleHomeDeliveryNeeded(bool v) {
     isHomeDeliveryNeeded = v;
+    if (v == false) {
+      deliveryEmployee = null;
+      deliveryAddressCntrlr.clear();
+      deliveryChargeCntrlr.text = '0.0';
+      deliveryNoteCntrlr.clear();
+    }
     ref.notifyListeners();
   }
 
   void toggleInventoryNeeded(bool v) {
     isInventoryNeeded = v;
+    if (v == false) {
+      inventory = null;
+      inventoryQuantityCntrlr.text = '1';
+      inventoryUnit = null;
+      inventoryPriceCntrlr.text = '0.0';
+      inventoryNoteCntrlr.clear();
+    }
     ref.notifyListeners();
   }
 

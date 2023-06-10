@@ -85,38 +85,38 @@ extension GLTypeObjectExt on Object {
 }
 
 
-enum TrxType { receivable, payable }
+enum TrxType { debit, credit }
 
 extension TrxTypeExt on TrxType {
   String get title {
     switch (this) {
-      case TrxType.receivable:
-        return 'Receivable';
-      case TrxType.payable:
-        return 'Payable';
+      case TrxType.debit:
+        return 'Debit';
+      case TrxType.credit:
+        return 'Credit';
       default:
-        return 'Receivable';
+        return 'Debit';
     }
   }
 
-  bool get isReceivable => this == TrxType.receivable;
+  bool get isDebit => this == TrxType.debit;
 
-  bool get isPayable => this == TrxType.payable;
+  bool get isCredit => this == TrxType.credit;
 
-  bool get isNotReceivable => this != TrxType.receivable;
+  bool get isNotDebit => this != TrxType.debit;
 
-  bool get isNotPayable => this != TrxType.payable;
+  bool get isNotCredit => this != TrxType.credit;
 }
 
 extension TrxTypeStringExt on String {
   TrxType get trxType {
     switch (this) {
-      case 'Receivable':
-        return TrxType.receivable;
-      case 'Payable':
-        return TrxType.payable;
+      case 'Debit':
+        return TrxType.debit;
+      case 'Credit':
+        return TrxType.credit;
       default:
-        return TrxType.receivable;
+        return TrxType.credit;
     }
   }
 }

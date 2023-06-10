@@ -37,7 +37,7 @@ class AddTrxEmployeeProvider
       toJson: employee.toJson(),
       toType: employee.glType,
       amount: double.parse(amountCntrlr.text),
-      trxType: TrxType.payable,
+      trxType: TrxType.credit,
       description: descriptionCntrlr.text,
     ).then((r) {
       if (r != null) {

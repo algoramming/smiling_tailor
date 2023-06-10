@@ -42,23 +42,23 @@ class PktbsOrder {
   int quantity;
   //
   PktbsEmployee? tailorEmployee;
-  double tailorCharge;
+  // double tailorCharge;
   String? tailorNote;
   //
   PktbsInventory? inventory;
   int? inventoryQuantity;
   Measurement? inventoryUnit;
-  double? inventoryPrice;
+  // double? inventoryPrice;
   String? inventoryNote;
   //
   PktbsEmployee? deliveryEmployee;
   String? deliveryAddress;
-  double? deliveryCharge;
+  // double? deliveryCharge;
   String? deliveryNote;
   //
   PaymentMethod paymentMethod;
   String? paymentNote;
-  double advanceAmount;
+  double amount;
   //
   DateTime deliveryTime;
   String? description;
@@ -88,24 +88,24 @@ class PktbsOrder {
     this.measurementNote,
     required this.quantity,
     //
-    required this.tailorEmployee,
-    required this.tailorCharge,
+    this.tailorEmployee,
+    // required this.tailorCharge,
     this.tailorNote,
     //
     this.inventory,
     this.inventoryQuantity,
     this.inventoryUnit,
-    this.inventoryPrice,
+    // this.inventoryPrice,
     this.inventoryNote,
     //
     this.deliveryEmployee,
     this.deliveryAddress,
-    this.deliveryCharge,
+    // this.deliveryCharge,
     this.deliveryNote,
     //
     required this.paymentMethod,
-    required this.paymentNote,
-    required this.advanceAmount,
+    this.paymentNote,
+    required this.amount,
     //
     required this.deliveryTime,
     this.description,
@@ -145,7 +145,7 @@ class PktbsOrder {
               json[_Json.tailorEmployee] == ''
           ? null
           : PktbsEmployee.fromJson(json[_Json.expand][_Json.tailorEmployee]),
-      tailorCharge: json[_Json.tailorCharge].toString().toDouble ?? 0.0,
+      // tailorCharge: json[_Json.tailorCharge].toString().toDouble ?? 0.0,
       tailorNote: json[_Json.tailorNote],
       //
       inventory: json[_Json.inventory] == null || json[_Json.inventory] == ''
@@ -153,7 +153,7 @@ class PktbsOrder {
           : PktbsInventory.fromJson(json[_Json.expand][_Json.inventory]),
       inventoryQuantity: json[_Json.inventoryQuantity].toString().toInt,
       inventoryUnit: (json[_Json.inventoryUnit] as String?)?.getMeasurement,
-      inventoryPrice: json[_Json.inventoryPrice].toString().toDouble,
+      // inventoryPrice: json[_Json.inventoryPrice].toString().toDouble,
       inventoryNote: json[_Json.inventoryNote],
       //
       deliveryEmployee: json[_Json.deliveryEmployee] == null ||
@@ -161,12 +161,12 @@ class PktbsOrder {
           ? null
           : PktbsEmployee.fromJson(json[_Json.expand][_Json.deliveryEmployee]),
       deliveryAddress: json[_Json.deliveryAddress],
-      deliveryCharge: json[_Json.deliveryCharge].toString().toDouble,
+      // deliveryCharge: json[_Json.deliveryCharge].toString().toDouble,
       deliveryNote: json[_Json.deliveryNote],
       //
       paymentMethod: (json[_Json.paymentMethod] as String).toPaymentMethod,
       paymentNote: json[_Json.paymentNote],
-      advanceAmount: json[_Json.advanceAmount].toString().toDouble ?? 0.0,
+      amount: json[_Json.amount].toString().toDouble ?? 0.0,
       //
       deliveryTime: DateTime.parse(json[_Json.deliveryTime]).toLocal(),
       description: json[_Json.description],
@@ -179,7 +179,7 @@ class PktbsOrder {
 
   @override
   String toString() =>
-      'PktbsOrder(id: $id, created: $created, updated: $updated, creator: $creator, updator: $updator, collectionId: $collectionId, collectionName: $collectionName, customerName: $customerName, customerEmail: $customerEmail, customerPhone: $customerPhone, customerAddress: $customerAddress, customerNote: $customerNote, measurement: $measurement, plate: $plate, sleeve: $sleeve, colar: $colar, pocket: $pocket, button: $button, measurementNote: $measurementNote, quantity: $quantity, tailorEmployee: $tailorEmployee, tailorCharge: $tailorCharge, tailorNote: $tailorNote, inventory: $inventory, inventoryQuantity: $inventoryQuantity, inventoryUnit: $inventoryUnit, inventoryPrice: $inventoryPrice, inventoryNote: $inventoryNote, deliveryEmployee: $deliveryEmployee, deliveryAddress: $deliveryAddress, deliveryCharge: $deliveryCharge, deliveryNote: $deliveryNote, paymentMethod: $paymentMethod, paymentNote: $paymentNote, advanceAmount: $advanceAmount, deliveryTime: $deliveryTime, description: $description, status: $status)';
+      'PktbsOrder(id: $id, created: $created, updated: $updated, creator: $creator, updator: $updator, collectionId: $collectionId, collectionName: $collectionName, customerName: $customerName, customerEmail: $customerEmail, customerPhone: $customerPhone, customerAddress: $customerAddress, customerNote: $customerNote, measurement: $measurement, plate: $plate, sleeve: $sleeve, colar: $colar, pocket: $pocket, button: $button, measurementNote: $measurementNote, quantity: $quantity, tailorEmployee: $tailorEmployee, tailorNote: $tailorNote, inventory: $inventory, inventoryQuantity: $inventoryQuantity, inventoryUnit: $inventoryUnit, inventoryNote: $inventoryNote, deliveryEmployee: $deliveryEmployee, deliveryAddress: $deliveryAddress, deliveryNote: $deliveryNote, paymentMethod: $paymentMethod, paymentNote: $paymentNote, amount: $amount, deliveryTime: $deliveryTime, description: $description, status: $status)';
 
   @override
   bool operator ==(Object other) {
@@ -217,23 +217,23 @@ class _Json {
   static const quantity = 'quantity';
   //
   static const tailorEmployee = 'tailorEmployee';
-  static const tailorCharge = 'tailorCharge';
+  // static const tailorCharge = 'tailorCharge';
   static const tailorNote = 'tailorNote';
   //
   static const inventory = 'inventory';
   static const inventoryQuantity = 'inventoryQuantity';
   static const inventoryUnit = 'inventoryUnit';
-  static const inventoryPrice = 'inventoryPrice';
+  // static const inventoryPrice = 'inventoryPrice';
   static const inventoryNote = 'inventoryNote';
   //
   static const deliveryEmployee = 'deliveryEmployee';
   static const deliveryAddress = 'deliveryAddress';
-  static const deliveryCharge = 'deliveryCharge';
+  // static const deliveryCharge = 'deliveryCharge';
   static const deliveryNote = 'deliveryNote';
   //
   static const paymentMethod = 'paymentMethod';
   static const paymentNote = 'paymentNote';
-  static const advanceAmount = 'advanceAmount';
+  static const amount = 'amount';
   //
   static const deliveryTime = 'deliveryTime';
   static const description = 'description';

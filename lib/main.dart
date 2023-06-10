@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' show runApp;
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'src/app.dart' show App;
@@ -17,6 +18,15 @@ void main() async {
 Future<void> _init() async {
   pt = PlatformInfo.getCurrentPlatformType();
   await openDB();
+  configLoading();
   await initAppDatum();
   await initPocketbase();
+}
+
+void configLoading() {
+  EasyLoading.instance
+    ..dismissOnTap = false
+    ..userInteractions = false
+    ..maskType = EasyLoadingMaskType.black
+    ..indicatorType = EasyLoadingIndicatorType.fadingCircle;
 }
