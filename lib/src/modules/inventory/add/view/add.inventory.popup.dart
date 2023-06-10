@@ -183,7 +183,11 @@ class AddInventoryPopup extends ConsumerWidget {
         actions: [
           TextButton(
             onPressed: () => context.pop(),
-            child: const Text('Cancel'),
+            child: Text(
+              'Cancel',
+              style:
+                  TextStyle(color: context.theme.dividerColor.withOpacity(0.8)),
+            ),
           ),
           TextButton(
             onPressed: () async => await notifier.submit(context),

@@ -65,15 +65,15 @@ class ProfileImage extends StatelessWidget {
                     notifier.setImage(pk);
                   }),
                   child: Container(
-                    padding: const EdgeInsetsDirectional.all(3.0),
+                    padding: const EdgeInsetsDirectional.all(4.0),
                     decoration: BoxDecoration(
                       color: context.theme.primaryColor,
                       borderRadius: BorderRadius.circular(100.0),
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.edit,
-                      color: context.theme.colorScheme.error,
-                      size: 16.0,
+                      color: Colors.white,
+                      size: 14.0,
                     ),
                   ),
                 ),

@@ -50,15 +50,23 @@ class ProfileView extends ConsumerWidget {
       floatingActionButton: ElevatedButton.icon(
         label: BigToSmallTransition(
             child: !notifier.isEditable
-                ? const Text('Tap to Editing Mode')
-                : const Text('tap to View Mode')),
+                ? Text(
+                    'Tap to Editing Mode',
+                    style:
+                        context.text.labelLarge!.copyWith(color: Colors.white),
+                  )
+                : Text(
+                    'Tap to View Mode',
+                    style:
+                        context.text.labelLarge!.copyWith(color: Colors.white),
+                  )),
         icon: BigToSmallTransition(
           child: !notifier.isEditable
-              ? const Icon(Icons.edit, size: 18.0)
-              : const Icon(Icons.remove_red_eye, size: 20.0),
+              ? const Icon(Icons.edit, size: 16.0)
+              : const Icon(Icons.remove_red_eye, size: 16.0),
         ),
         style: context.theme.elevatedButtonTheme.style!.copyWith(
-            minimumSize: MaterialStateProperty.all(const Size(155, 52))),
+            minimumSize: MaterialStateProperty.all(const Size(200, 45))),
         onPressed: () => notifier.toggleEditable(),
       ),
     );
