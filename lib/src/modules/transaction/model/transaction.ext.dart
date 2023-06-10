@@ -87,6 +87,23 @@ extension TrxExtension on PktbsTrx {
     }
   }
 
+  String get fromName {
+    switch (fromType) {
+      case GLType.vendor:
+        return PktbsVendor.fromJson(from).name;
+      case GLType.inventory:
+        return PktbsInventory.fromJson(from).title;
+      case GLType.employee:
+        return PktbsEmployee.fromJson(from).name;
+      case GLType.order:
+        return PktbsOrder.fromJson(from).customerName;
+      case GLType.user:
+        return PktbsUser.fromJson(from).name;
+      default:
+        return PktbsUser.fromJson(from).name;
+    }
+  }
+
   Object getToObject() {
     switch (toType) {
       case GLType.vendor:
@@ -101,6 +118,23 @@ extension TrxExtension on PktbsTrx {
         return PktbsUser.fromJson(to);
       default:
         return PktbsUser.fromJson(to);
+    }
+  }
+
+  String get toName {
+    switch (toType) {
+      case GLType.vendor:
+        return PktbsVendor.fromJson(to).name;
+      case GLType.inventory:
+        return PktbsInventory.fromJson(to).title;
+      case GLType.employee:
+        return PktbsEmployee.fromJson(to).name;
+      case GLType.order:
+        return PktbsOrder.fromJson(to).customerName;
+      case GLType.user:
+        return PktbsUser.fromJson(to).name;
+      default:
+        return PktbsUser.fromJson(to).name;
     }
   }
 

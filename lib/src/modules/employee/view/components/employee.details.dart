@@ -71,8 +71,6 @@ class EmployeeDetails extends ConsumerWidget {
               ),
               const SizedBox(height: 10),
               _TrxTable(notifier),
-              // const SizedBox(height: 10),
-              // _TotalAmount(notifier),
             ],
           );
   }
@@ -192,7 +190,41 @@ class _TrxList extends ConsumerWidget {
                         ),
                       ),
                     ),
-                    title: Text(noti.trxList[i].createdDate),
+                    // title: Text(trx.createdDate),
+                    title: RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: trx.fromName,
+                            style: context.text.titleSmall,
+                          ),
+                          WidgetSpan(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 3.0),
+                              child: RotatedBox(
+                                quarterTurns: trx.trxType.isDebit ? 0 : 1,
+                                // turns: AlwaysStoppedAnimation(
+                                //   // trx.isTransfer
+                                //   //   ? 45 / 360 :
+                                //     trx.trxType.isDebit
+                                //         ? 1
+                                //         : 90 / 360),
+                                child: Icon(Icons.arrow_outward_rounded,
+                                    size: 16,
+                                    color: trx.trxType.isDebit
+                                        ? Colors.green
+                                        : Colors.red),
+                              ),
+                            ),
+                          ),
+                          TextSpan(
+                            text: trx.toName,
+                            style: context.text.titleSmall,
+                          ),
+                        ],
+                      ),
+                    ),
                     subtitle:
                         trx.description == null ? null : Text(trx.description!),
                     // trailing: Text(
