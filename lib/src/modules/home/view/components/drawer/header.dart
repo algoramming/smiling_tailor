@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
 
-import '../../../../../config/constants.dart';
 import '../../../../../db/isar.dart';
 import '../../../../../utils/extensions/extensions.dart';
 import '../../../../../utils/transations/big.to.small.dart';
@@ -22,30 +20,7 @@ class KDrawerHeader extends ConsumerWidget {
       decoration: BoxDecoration(color: context.theme.canvasColor),
       accountName: Text(user?.name ?? '...'),
       accountEmail: Text(user?.email ?? '...'),
-      currentAccountPicture: Container(
-        padding: const EdgeInsets.all(1.0),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(color: context.theme.primaryColor, width: 2.0),
-        ),
-        child: ClipRRect(
-          borderRadius: borderRadius45,
-          child: user == null || user.imageUrl == null
-              ? Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: SvgPicture.asset(
-                    'assets/svgs/profile.svg',
-                    fit: BoxFit.cover,
-                    colorFilter: context.theme.primaryColor.toColorFilter,
-                  ),
-                )
-              : FadeInImage(
-                  placeholder: const AssetImage('assets/gifs/loading.gif'),
-                  image: NetworkImage(user.imageUrl!),
-                  fit: BoxFit.cover,
-                ),
-        ),
-      ),
+      currentAccountPicture: user?.imageWidget,
       otherAccountsPictures: [
         IconButton(
           icon: RotationTransition(

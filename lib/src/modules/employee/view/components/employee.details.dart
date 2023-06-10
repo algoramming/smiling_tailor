@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
-import '../../../transaction/enum/trx.type.dart';
+import 'package:smiling_tailor/src/shared/clipboard_data/clipboard_data.dart';
 
 import '../../../../config/constants.dart';
 import '../../../../db/isar.dart';
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
 import '../../../../utils/extensions/extensions.dart';
+import '../../../transaction/enum/trx.type.dart';
 import '../../../transaction/model/transaction.dart';
 import '../../add/view/add.employee.popup.dart';
 import '../../add/view/add.trx.employee.popup.dart';
@@ -176,18 +176,21 @@ class _TrxList extends ConsumerWidget {
                 final trx = trxs[i];
                 return Card(
                   child: KListTile(
+                    onLongPress: () async =>
+                        await copyToClipboard(context, trx.id),
                     padding: const EdgeInsets.symmetric(
                         horizontal: 12.0, vertical: 5.0),
                     leading: AnimatedWidgetShower(
                       size: 30.0,
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: SvgPicture.asset(
-                          'assets/svgs/transaction.svg',
-                          colorFilter: context.theme.primaryColor.toColorFilter,
-                          semanticsLabel: 'Employee',
-                        ),
-                      ),
+                      // child: Padding(
+                      //   padding: const EdgeInsets.all(4.0),
+                      //   child: SvgPicture.asset(
+                      //     'assets/svgs/transaction.svg',
+                      //     colorFilter: context.theme.primaryColor.toColorFilter,
+                      //     semanticsLabel: 'Employee',
+                      //   ),
+                      // ),
+                      child: trx.modifiers,
                     ),
                     title: RichText(
                       text: TextSpan(

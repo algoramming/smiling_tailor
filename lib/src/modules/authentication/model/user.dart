@@ -1,6 +1,10 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+
+import '../../../config/constants.dart';
 import '../../../pocketbase/auth.store/helpers.dart';
+import '../../../utils/themes/themes.dart';
 import '../../transaction/enum/trx.type.dart';
 
 part 'user.ext.dart';

@@ -60,4 +60,29 @@ extension VendorExtension on PktbsVendor {
       : null;
 
   GLType get glType => GLType.vendor;
+
+  Widget get modifiers => updator == null
+      ? Tooltip(
+          message: 'Created by ${creator.name} on $createdDate',
+          child: creator.imageWidget,
+        )
+      : Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0.0, 0.0, 6.0, 6.0),
+              child: Tooltip(
+                message: 'Created by ${creator.name} on $createdDate',
+                child: creator.imageWidget,
+              ),
+            ),
+            Positioned(
+              bottom: 0,
+              right: 0,
+              child: Tooltip(
+                message: 'Updated by ${updator!.name} on $updatedDate',
+                child: updator!.imageWidget,
+              ),
+            ),
+          ],
+        );
 }

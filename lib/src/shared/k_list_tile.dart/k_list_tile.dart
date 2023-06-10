@@ -13,6 +13,8 @@ class KListTile extends StatelessWidget {
     this.trailing,
     this.subtitle,
     this.selected,
+    this.onDoubleTap,
+    this.onLongPress,
     this.paddingBetweenTitleAndSubtitle,
   });
 
@@ -23,6 +25,8 @@ class KListTile extends StatelessWidget {
   final Widget? trailing;
   final void Function()? onTap;
   final EdgeInsetsGeometry? padding;
+  final void Function()? onDoubleTap;
+  final void Function()? onLongPress;
   final double? paddingBetweenTitleAndSubtitle;
 
   @override
@@ -33,6 +37,8 @@ class KListTile extends StatelessWidget {
       borderRadius: borderRadius15,
       radius: 30,
       onTap: onTap,
+      onDoubleTap: onDoubleTap,
+      onLongPress: onLongPress,
       child: Container(
         decoration: BoxDecoration(
           color: selected == true

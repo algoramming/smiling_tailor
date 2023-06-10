@@ -50,4 +50,31 @@ extension PktbsUserExtension on PktbsUser {
       : '${baseUrl}api/files/$collectionId/$id/$avatar/';
 
   GLType get glType => GLType.user;
+
+  Widget get imageWidget => Container(
+        padding: const EdgeInsets.all(1.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          shape: BoxShape.circle,
+          border: Border.all(color: kPrimaryColor, width: 1.5),
+        ),
+        child: ClipRRect(
+          borderRadius: borderRadius45,
+          child: imageUrl == null
+              ? Container(
+                  color: kPrimaryColor.withOpacity(0.4),
+                  child: FittedBox(
+                    child: Text(
+                      '${name.split(' ').first.split('').first}${name.split(' ').last.split('').first}',
+                      style: const TextStyle(color: kPrimaryColor),
+                    ),
+                  ),
+                )
+              : FadeInImage(
+                  placeholder: const AssetImage('assets/gifs/loading.gif'),
+                  image: NetworkImage(imageUrl!),
+                  fit: BoxFit.cover,
+                ),
+        ),
+      );
 }

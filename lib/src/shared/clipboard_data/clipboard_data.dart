@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:smiling_tailor/src/shared/show_toast/awesome_snackbar.dart';
 
-Future<void> copyToClipboard(BuildContext context, String text) async =>
-    await Clipboard.setData(ClipboardData(text: text));
+import '../show_toast/show_toast.dart';
+
+Future<void> copyToClipboard(BuildContext context, String text) async {
+  await Clipboard.setData(ClipboardData(text: text)).then((_) =>
+      showAwesomeSnackbar(context, 'Success!',
+          'Transaction id copied to clipboard!', MessageType.success, 1));
+}
