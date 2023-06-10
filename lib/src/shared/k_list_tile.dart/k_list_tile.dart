@@ -13,6 +13,7 @@ class KListTile extends StatelessWidget {
     this.trailing,
     this.subtitle,
     this.selected,
+    this.paddingBetweenTitleAndSubtitle,
   });
 
   final Widget? title;
@@ -22,6 +23,7 @@ class KListTile extends StatelessWidget {
   final Widget? trailing;
   final void Function()? onTap;
   final EdgeInsetsGeometry? padding;
+  final double? paddingBetweenTitleAndSubtitle;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +53,8 @@ class KListTile extends StatelessWidget {
                 crossAxisAlignment: crossStart,
                 children: [
                   title ?? const SizedBox.shrink(),
-                  if (subtitle != null) const SizedBox(height: 5),
+                  if (subtitle != null)
+                    SizedBox(height: paddingBetweenTitleAndSubtitle ?? 2.0),
                   subtitle ?? const SizedBox.shrink(),
                 ],
               ),

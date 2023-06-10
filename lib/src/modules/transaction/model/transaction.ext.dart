@@ -50,8 +50,8 @@ extension TrxExtension on PktbsTrx {
         _Json.id: id,
         _Json.created: created.toIso8601String(),
         _Json.updated: updated?.toIso8601String(),
-        _Json.creator: creator.toJson(),
-        _Json.updator: updator?.toJson(),
+        _Json.creator: creator.id,
+        _Json.updator: updator?.id,
         _Json.collectionId: collectionId,
         _Json.collectionName: collectionName,
         _Json.fromId: fromId,
@@ -66,6 +66,10 @@ extension TrxExtension on PktbsTrx {
         _Json.trxType: trxType.title,
         _Json.description: description,
         _Json.isSystemGenerated: isSystemGenerated,
+        _Json.expand: {
+          _Json.creator: creator.toJson(),
+          _Json.updator: updator?.toJson(),
+        }
       };
 
   String toRawJson() => json.encode(toJson());
@@ -90,17 +94,17 @@ extension TrxExtension on PktbsTrx {
   String get fromName {
     switch (fromType) {
       case GLType.vendor:
-        return PktbsVendor.fromJson(from).name;
+        return '${PktbsVendor.fromJson(from).name} [Vendor]';
       case GLType.inventory:
-        return PktbsInventory.fromJson(from).title;
+        return '${PktbsInventory.fromJson(from).title} [Inventory]';
       case GLType.employee:
-        return PktbsEmployee.fromJson(from).name;
+        return '${PktbsEmployee.fromJson(from).name} [Employee]';
       case GLType.order:
-        return PktbsOrder.fromJson(from).customerName;
+        return '${PktbsOrder.fromJson(from).customerName} [Order]';
       case GLType.user:
-        return PktbsUser.fromJson(from).name;
+        return '${PktbsUser.fromJson(from).name} [User]';
       default:
-        return PktbsUser.fromJson(from).name;
+        return '${PktbsUser.fromJson(from).name} [User]';
     }
   }
 
@@ -124,17 +128,17 @@ extension TrxExtension on PktbsTrx {
   String get toName {
     switch (toType) {
       case GLType.vendor:
-        return PktbsVendor.fromJson(to).name;
+        return '${PktbsVendor.fromJson(to).name} [Vendor]';
       case GLType.inventory:
-        return PktbsInventory.fromJson(to).title;
+        return '${PktbsInventory.fromJson(to).title} [Inventory]';
       case GLType.employee:
-        return PktbsEmployee.fromJson(to).name;
+        return '${PktbsEmployee.fromJson(to).name} [Employee]';
       case GLType.order:
-        return PktbsOrder.fromJson(to).customerName;
+        return '${PktbsOrder.fromJson(to).customerName} [Order]';
       case GLType.user:
-        return PktbsUser.fromJson(to).name;
+        return '${PktbsUser.fromJson(to).name} [User]';
       default:
-        return PktbsUser.fromJson(to).name;
+        return '${PktbsUser.fromJson(to).name} [User]';
     }
   }
 

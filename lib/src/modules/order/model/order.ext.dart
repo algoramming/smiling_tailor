@@ -100,8 +100,8 @@ extension OrderExtension on PktbsOrder {
         _Json.id: id,
         _Json.created: created.toIso8601String(),
         _Json.updated: updated?.toIso8601String(),
-        _Json.creator: creator.toJson(),
-        _Json.updator: updator?.toJson(),
+        _Json.creator: creator.id,
+        _Json.updator: updator?.id,
         _Json.collectionId: collectionId,
         _Json.collectionName: collectionName,
         //
@@ -120,17 +120,17 @@ extension OrderExtension on PktbsOrder {
         _Json.measurementNote: measurementNote,
         _Json.quantity: quantity,
         //
-        _Json.tailorEmployee: tailorEmployee?.toJson(),
+        _Json.tailorEmployee: tailorEmployee?.id,
         // _Json.tailorCharge: tailorCharge,
         _Json.tailorNote: tailorNote,
         //
-        _Json.inventory: inventory?.toJson(),
+        _Json.inventory: inventory?.id,
         _Json.inventoryQuantity: inventoryQuantity,
         _Json.inventoryUnit: inventoryUnit?.name,
         // _Json.inventoryPrice: inventoryPrice,
         _Json.inventoryNote: inventoryNote,
         //
-        _Json.deliveryEmployee: deliveryEmployee?.toJson(),
+        _Json.deliveryEmployee: deliveryEmployee?.id,
         _Json.deliveryAddress: deliveryAddress,
         // _Json.deliveryCharge: deliveryCharge,
         _Json.deliveryNote: deliveryNote,
@@ -142,6 +142,13 @@ extension OrderExtension on PktbsOrder {
         _Json.deliveryTime: deliveryTime.toIso8601String(),
         _Json.description: description,
         _Json.status: status.label,
+        _Json.expand: {
+          _Json.creator: creator.toJson(),
+          if (updator != null) _Json.updator: updator!.toJson(),
+          if (inventory != null) _Json.inventory: inventory!.toJson(),
+          if (tailorEmployee != null) _Json.tailorEmployee: tailorEmployee!.toJson(),
+          if (deliveryEmployee != null) _Json.deliveryEmployee: deliveryEmployee!.toJson(),
+        }
       };
 
   String toRawJson() => json.encode(toJson());

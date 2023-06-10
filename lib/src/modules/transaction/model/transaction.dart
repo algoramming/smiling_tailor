@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:smiling_tailor/src/modules/settings/model/measurement/measurement.dart';
+import '../../settings/model/measurement/measurement.dart';
 
 import '../../../db/isar.dart';
 import '../../../utils/extensions/extensions.dart';

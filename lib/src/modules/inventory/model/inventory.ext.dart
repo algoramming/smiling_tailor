@@ -39,14 +39,19 @@ extension InventoryExtension on PktbsInventory {
         _Json.amount: amount,
         _Json.unit: unit.name,
         _Json.quantity: quantity,
-        _Json.from: from.toJson(),
+        _Json.from: from.id,
         _Json.description: description,
-        _Json.creator: creator.toJson(),
-        _Json.updator: updator?.toJson(),
+        _Json.creator: creator.id,
+        _Json.updator: updator?.id,
         _Json.collectionId: collectionId,
         _Json.collectionName: collectionName,
         _Json.created: created.toUtc().toIso8601String(),
         _Json.updated: updated?.toUtc().toIso8601String(),
+        _Json.expand: {
+          _Json.from: from.toJson(),
+          _Json.creator: creator.toJson(),
+          if (updator != null) _Json.updator: updator!.toJson(),
+        }
       };
 
   String toRawJson() => json.encode(toJson());

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/modules/transaction/enum/trx.type.dart';
+import 'package:flutter_svg/svg.dart';
+import '../../../transaction/enum/trx.type.dart';
 
 import '../../../../config/constants.dart';
 import '../../../../db/isar.dart';
+import '../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../transaction/model/transaction.dart';
@@ -92,8 +94,7 @@ class _TrxTable extends StatelessWidget {
             SliverToBoxAdapter(
               child: TabBar(
                 splashBorderRadius: borderRadius15,
-                isScrollable: true,
-                physics: const BouncingScrollPhysics(),
+                dividerColor: Colors.transparent,
                 labelStyle: context.theme.textTheme.labelLarge,
                 tabs: const [Tab(text: 'Financials'), Tab(text: 'Orders')],
               ),
@@ -175,22 +176,19 @@ class _TrxList extends ConsumerWidget {
                 final trx = trxs[i];
                 return Card(
                   child: KListTile(
-                    leading: Card(
-                      color: Colors.red[100],
-                      shape: roundedRectangleBorder10,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12.0, vertical: 5.0),
+                    leading: AnimatedWidgetShower(
+                      size: 30.0,
                       child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Transform.flip(
-                          flipY: true,
-                          child: const Icon(
-                            Icons.arrow_outward_rounded,
-                            size: 22.0,
-                            color: Colors.red,
-                          ),
+                        padding: const EdgeInsets.all(4.0),
+                        child: SvgPicture.asset(
+                          'assets/svgs/transaction.svg',
+                          colorFilter: context.theme.primaryColor.toColorFilter,
+                          semanticsLabel: 'Employee',
                         ),
                       ),
                     ),
-                    // title: Text(trx.createdDate),
                     title: RichText(
                       text: TextSpan(
                         children: [
@@ -225,8 +223,25 @@ class _TrxList extends ConsumerWidget {
                         ],
                       ),
                     ),
-                    subtitle:
-                        trx.description == null ? null : Text(trx.description!),
+                    subtitle: Column(
+                      crossAxisAlignment: crossStart,
+                      children: [
+                        Text(
+                          trx.createdDate,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: context.text.labelMedium,
+                        ),
+                        if (trx.description != null)
+                          Text(
+                            trx.description!,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            style: context.text.labelSmall!
+                                .copyWith(fontWeight: FontWeight.normal),
+                          ),
+                      ],
+                    ),
                     // trailing: Text(
                     //   noti.trxList[i].amount.formattedCompat,
                     //   style: context.text.labelLarge!.copyWith(
@@ -287,8 +302,13 @@ class _TotalSummary extends ConsumerWidget {
       children: [
         if (!noti.showPrevMonth)
           InkWell(
+            borderRadius: borderRadius45,
             onTap: () => noti.toggleShowPrevMonth(),
-            child: const Icon(Icons.arrow_back_ios),
+            child: Container(
+              padding: const EdgeInsets.fromLTRB(5.0, 15.0, 0.0, 15.0),
+              margin: const EdgeInsets.fromLTRB(5.0, 5.0, 0.0, 5.0),
+              child: const Icon(Icons.arrow_back_ios),
+            ),
           ),
         Expanded(
           child: Card(
@@ -348,8 +368,13 @@ class _TotalSummary extends ConsumerWidget {
         ),
         if (noti.showPrevMonth)
           InkWell(
+            borderRadius: borderRadius45,
             onTap: () => noti.toggleShowPrevMonth(),
-            child: const Icon(Icons.arrow_forward_ios),
+            child: Container(
+              padding: const EdgeInsets.fromLTRB(0.0, 15.0, 5.0, 15.0),
+              margin: const EdgeInsets.fromLTRB(5.0, 5.0, 0.0, 5.0),
+              child: const Icon(Icons.arrow_forward_ios),
+            ),
           ),
       ],
     );

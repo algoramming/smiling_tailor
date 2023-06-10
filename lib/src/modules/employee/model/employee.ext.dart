@@ -41,12 +41,16 @@ extension EmployeeExtension on PktbsEmployee {
         _Json.salary: salary,
         _Json.address: address,
         _Json.description: description,
-        _Json.creator: creator.toJson(),
-        _Json.updator: updator?.toJson(),
+        _Json.creator: creator.id,
+        _Json.updator: updator?.id,
         _Json.collectionId: collectionId,
         _Json.collectionName: collectionName,
         _Json.created: created.toIso8601String(),
         _Json.updated: updated?.toIso8601String(),
+        _Json.expand: {
+          _Json.creator: creator.toJson(),
+          if (updator != null) _Json.updator: updator?.toJson(),
+        }
       };
 
   String toRawJson() => json.encode(toJson());

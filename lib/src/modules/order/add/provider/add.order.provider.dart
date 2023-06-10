@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/modules/order/model/order.dart';
+import '../../model/order.dart';
 
 import '../../../../db/isar.dart';
 import '../../../../utils/extensions/extensions.dart';

@@ -1,4 +1,4 @@
-import 'package:smiling_tailor/src/modules/vendor/model/vendor.dart';
+import '../../vendor/model/vendor.dart';
 
 import '../../authentication/model/user.dart';
 import '../../employee/model/employee.dart';
