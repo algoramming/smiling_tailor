@@ -14,6 +14,7 @@ import 'components/measurement.infos.dart';
 import 'components/others.infos.dart';
 import 'components/payment.infos.dart';
 import 'components/tailor.infos.dart';
+import 'order.slip.download.popup.dart';
 
 class AddOrderPopup extends ConsumerWidget {
   const AddOrderPopup({super.key});
@@ -46,7 +47,11 @@ class AddOrderPopup extends ConsumerWidget {
         ),
         actions: [
           TextButton(
-            onPressed: () => context.pop(),
+            //TODO: Testing
+            onPressed: () async {
+              context.pop();
+              await showOrderSlipDownloadPopup(context, 'A1B2C3D4E5F6G7H8I9J0');
+            },
             child: Text(
               'Cancel',
               style:

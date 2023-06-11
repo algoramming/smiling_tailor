@@ -117,11 +117,6 @@ class AddOrderProvider extends AutoDisposeAsyncNotifier<void> {
     ref.notifyListeners();
   }
 
-  Future<void> submit(BuildContext context) async {
-    if (!formKey.currentState!.validate()) return;
-    await pktbsAddOrder(context, this);
-  }
-
   void reload() => ref.notifyListeners();
 
   void toggleAllocateTailorNow(bool v) {
@@ -155,6 +150,11 @@ class AddOrderProvider extends AutoDisposeAsyncNotifier<void> {
       inventoryNoteCntrlr.clear();
     }
     ref.notifyListeners();
+  }
+
+  Future<void> submit(BuildContext context) async {
+    if (!formKey.currentState!.validate()) return;
+    await pktbsAddOrder(context, this);
   }
 
   void clear() {

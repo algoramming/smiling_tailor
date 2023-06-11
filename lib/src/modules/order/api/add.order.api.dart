@@ -15,6 +15,7 @@ import '../../inventory/model/inventory.dart';
 import '../../transaction/api/add.trx.api.dart';
 import '../../transaction/enum/trx.type.dart';
 import '../add/provider/add.order.provider.dart';
+import '../add/view/order.slip.download.popup.dart';
 import '../enum/order.enum.dart';
 import '../model/order.dart';
 
@@ -88,41 +89,47 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
                   await inventoryAllocateApi(ctx, order, noti).then((_) async {
                     // if delivery needed
                     if (noti.isHomeDeliveryNeeded) {
-                      await deliveryAllocationApi(ctx, order, noti).then((_) {
+                      await deliveryAllocationApi(ctx, order, noti)
+                          .then((_) async {
                         log.wtf(
                             'order added successfully with - 4 - advance, tailor, inventory and delivery allocation!');
                         noti.clear();
                         ctx.pop();
-                        showAwesomeSnackbar(ctx, 'Success!',
-                            'Order added successfully.', MessageType.success);
+                        await showOrderSlipDownloadPopup(ctx, order.id);
+                        // showAwesomeSnackbar(ctx, 'Success!',
+                        //     'Order added successfully.', MessageType.success);
                       });
                     } else {
                       log.wtf(
                           'order added successfully with - 3 - advance, tailor and inventory allocation!');
                       noti.clear();
                       ctx.pop();
-                      showAwesomeSnackbar(ctx, 'Success!',
-                          'Order added successfully.', MessageType.success);
+                      await showOrderSlipDownloadPopup(ctx, order.id);
+                      // showAwesomeSnackbar(ctx, 'Success!',
+                      //     'Order added successfully.', MessageType.success);
                     }
                   });
                 } else {
                   // if delivery needed
                   if (noti.isHomeDeliveryNeeded) {
-                    await deliveryAllocationApi(ctx, order, noti).then((_) {
+                    await deliveryAllocationApi(ctx, order, noti)
+                        .then((_) async {
                       log.wtf(
                           'order added successfully with - 3 - advance, tailor and delivery allocation!');
                       noti.clear();
                       ctx.pop();
-                      showAwesomeSnackbar(ctx, 'Success!',
-                          'Order added successfully.', MessageType.success);
+                      await showOrderSlipDownloadPopup(ctx, order.id);
+                      // showAwesomeSnackbar(ctx, 'Success!',
+                      //     'Order added successfully.', MessageType.success);
                     });
                   } else {
                     log.wtf(
                         'order added successfully with - 2 - advance and tailor allocation!');
                     noti.clear();
                     ctx.pop();
-                    showAwesomeSnackbar(ctx, 'Success!',
-                        'Order added successfully.', MessageType.success);
+                    await showOrderSlipDownloadPopup(ctx, order.id);
+                    // showAwesomeSnackbar(ctx, 'Success!',
+                    //     'Order added successfully.', MessageType.success);
                   }
                 }
               });
@@ -132,40 +139,45 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
                 await inventoryAllocateApi(ctx, order, noti).then((_) async {
                   // if delivery needed
                   if (noti.isHomeDeliveryNeeded) {
-                    await deliveryAllocationApi(ctx, order, noti).then((_) {
+                    await deliveryAllocationApi(ctx, order, noti)
+                        .then((_) async {
                       log.wtf(
                           'order added successfully with - 3 - advance, inventory and delivery allocation!');
                       noti.clear();
                       ctx.pop();
-                      showAwesomeSnackbar(ctx, 'Success!',
-                          'Order added successfully.', MessageType.success);
+                      await showOrderSlipDownloadPopup(ctx, order.id);
+                      // showAwesomeSnackbar(ctx, 'Success!',
+                      //     'Order added successfully.', MessageType.success);
                     });
                   } else {
                     log.wtf(
                         'order added successfully with - 2 - advance and inventory allocation!');
                     noti.clear();
                     ctx.pop();
-                    showAwesomeSnackbar(ctx, 'Success!',
-                        'Order added successfully.', MessageType.success);
+                    await showOrderSlipDownloadPopup(ctx, order.id);
+                    // showAwesomeSnackbar(ctx, 'Success!',
+                    //     'Order added successfully.', MessageType.success);
                   }
                 });
               } else {
                 // if delivery needed
                 if (noti.isHomeDeliveryNeeded) {
-                  await deliveryAllocationApi(ctx, order, noti).then((_) {
+                  await deliveryAllocationApi(ctx, order, noti).then((_) async {
                     log.wtf(
                         'order added successfully with - 2 - advance and delivery allocation!');
                     noti.clear();
                     ctx.pop();
-                    showAwesomeSnackbar(ctx, 'Success!',
-                        'Order added successfully.', MessageType.success);
+                    await showOrderSlipDownloadPopup(ctx, order.id);
+                    // showAwesomeSnackbar(ctx, 'Success!',
+                    //     'Order added successfully.', MessageType.success);
                   });
                 } else {
                   log.wtf('order added successfully with - 1 - advance only!');
                   noti.clear();
                   ctx.pop();
-                  showAwesomeSnackbar(ctx, 'Success!',
-                      'Order added successfully.', MessageType.success);
+                  await showOrderSlipDownloadPopup(ctx, order.id);
+                  // showAwesomeSnackbar(ctx, 'Success!',
+                  //     'Order added successfully.', MessageType.success);
                 }
               }
             }
