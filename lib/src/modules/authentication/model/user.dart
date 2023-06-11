@@ -60,6 +60,15 @@ class PktbsUser {
   @override
   String toString() =>
       'PktbsUser(id: $id, name: $name, email: $email, avatar: $avatar, created: $created, updated: $updated, verified: $verified, username: $username, collectionId: $collectionId, collectionName: $collectionName, emailVisibility: $emailVisibility)';
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is PktbsUser && other.id == id;
+  }
+
+  @override
+  int get hashCode => id.hashCode;
 }
 
 class _Json {

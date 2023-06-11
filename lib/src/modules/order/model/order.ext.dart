@@ -170,23 +170,28 @@ extension OrderExtension on PktbsOrder {
           message: 'Created by ${creator.name} on $createdDate',
           child: creator.imageWidget,
         )
-      : Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0.0, 0.0, 6.0, 6.0),
-              child: Tooltip(
-                message: 'Created by ${creator.name} on $createdDate',
-                child: creator.imageWidget,
-              ),
-            ),
-            Positioned(
-              bottom: 0,
-              right: 0,
-              child: Tooltip(
-                message: 'Updated by ${updator!.name} on $updatedDate',
-                child: updator!.imageWidget,
-              ),
-            ),
-          ],
-        );
+      : creator == updator
+          ? Tooltip(
+              message:
+                  '${creator.name}\nCreated on $createdDate\nUpdated on $updatedDate',
+              child: creator.imageWidget,
+            )
+          : Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 7.0, 7.0),
+                  child: Tooltip(
+                    message: 'Created by ${creator.name} on $createdDate',
+                    child: creator.imageWidget,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(6.0, 6.0, 0.0, 0.0),
+                  child: Tooltip(
+                    message: 'Updated by ${updator!.name} on $updatedDate',
+                    child: updator!.imageWidget,
+                  ),
+                ),
+              ],
+            );
 }

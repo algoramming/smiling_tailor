@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smiling_tailor/src/shared/textfield.suffix.widget/suffix.widget.dart';
+import '../../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 
 import '../../../../../config/constants.dart';
 import '../../../../../utils/extensions/extensions.dart';

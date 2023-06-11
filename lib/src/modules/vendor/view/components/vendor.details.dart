@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../settings/model/settings.model.dart';
-import '../../../transaction/model/transaction.dart';
-import '../../../../utils/extensions/extensions.dart';
 
 import '../../../../config/constants.dart';
 import '../../../../db/isar.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
+import '../../../../utils/extensions/extensions.dart';
+import '../../../settings/model/settings.model.dart';
+import '../../../transaction/model/transaction.dart';
 import '../../add/view/add.vendor.popup.dart';
 import '../../provider/vendor.provider.dart';
 import '../../provider/vendor.trxs.provider.dart';

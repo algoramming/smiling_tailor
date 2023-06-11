@@ -8,10 +8,12 @@ class AnimatedWidgetShower extends StatelessWidget {
     super.key,
     required this.child,
     required this.size,
+    this.padding = 6.0,
   });
 
   final Widget child;
   final double size;
+  final double padding;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class AnimatedWidgetShower extends StatelessWidget {
       shape: roundedRectangleBorder15,
       color: context.theme.primaryColor.withOpacity(0.1),
       child: Padding(
-        padding: const EdgeInsets.all(6.0),
+        padding: EdgeInsets.all(padding),
         child: SizedBox(
           height: size,
           width: size,

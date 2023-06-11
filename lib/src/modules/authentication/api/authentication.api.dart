@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import 'package:pocketbase/pocketbase.dart';
-import 'package:smiling_tailor/src/router/router.dart';
 
 import '../../../config/get.platform.dart';
 import '../../../pocketbase/auth.store/helpers.dart';
 import '../../../pocketbase/error.handle/error.handle.func.dart';
+import '../../../router/router.dart';
 import '../../../shared/show_toast/awesome_snackbar.dart';
 import '../../../shared/show_toast/show_toast.dart';
 import '../../../utils/extensions/extensions.dart';
@@ -180,7 +180,7 @@ Future<void> pktbsUpdate(
 Future<void> pktbsSignout(BuildContext context) async {
   EasyLoading.show(status: 'Signing out...');
   try {
-    await unsubscribeAllCollections().then((_) async {
+    await pb.realtime.unsubscribe().then((_) async {
       pb.authStore.clear();
       EasyLoading.dismiss();
       log.i('User signout and unsubscribed from all registered subscriptions.');

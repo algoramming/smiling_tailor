@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
 import '../../db/isar.dart';
+import '../../utils/extensions/extensions.dart';
 import '../animations_widget/animated_widget_shower.dart';
 
 class KSuffixIcon extends StatelessWidget {

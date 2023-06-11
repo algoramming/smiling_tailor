@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../model/order.dart';
 
 import '../../../../db/isar.dart';
 import '../../../../utils/extensions/extensions.dart';
@@ -13,6 +12,7 @@ import '../../../inventory/provider/inventory.provider.dart';
 import '../../../settings/model/measurement/measurement.dart';
 import '../../api/add.order.api.dart';
 import '../../enum/order.enum.dart';
+import '../../model/order.dart';
 import '../../provider/order.provider.dart';
 
 // final lengthMeasurementsProvider = FutureProvider((_) async {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:smiling_tailor/src/shared/show_toast/awesome_snackbar.dart';
+import '../show_toast/awesome_snackbar.dart';
 
 import '../show_toast/show_toast.dart';
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/shared/clipboard_data/clipboard_data.dart';
 
 import '../../../../config/constants.dart';
 import '../../../../db/isar.dart';
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
+import '../../../../shared/clipboard_data/clipboard_data.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../transaction/enum/trx.type.dart';
@@ -181,7 +181,8 @@ class _TrxList extends ConsumerWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 12.0, vertical: 5.0),
                     leading: AnimatedWidgetShower(
-                      size: 30.0,
+                      padding: 3.0,
+                      size: 35.0,
                       // child: Padding(
                       //   padding: const EdgeInsets.all(4.0),
                       //   child: SvgPicture.asset(

@@ -2,14 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-import '../../settings/model/measurement/measurement.dart';
-
 import '../../../db/isar.dart';
 import '../../../utils/extensions/extensions.dart';
 import '../../authentication/model/user.dart';
 import '../../employee/model/employee.dart';
 import '../../inventory/model/inventory.dart';
 import '../../order/model/order.dart';
+import '../../settings/model/measurement/measurement.dart';
 import '../../settings/model/settings.model.dart';
 import '../../vendor/model/vendor.dart';
 import '../enum/trx.type.dart';
@@ -95,23 +94,6 @@ class PktbsTrx {
         description: json[_Json.description] as String?,
         isSystemGenerated: json[_Json.isSystemGenerated] as bool? ?? false,
       );
-  // id: json[_Json.id],
-  // glId: json[_Json.glId],
-  // collectionId: json[_Json.collectionId],
-  // updated: json[_Json.updated] == null
-  //     ? null
-  //     : DateTime.parse(json[_Json.updated]),
-  // collectionName: json[_Json.collectionName],
-  // type: (json[_Json.type] as String).glType,
-  // gl: json[_Json.gl] as Map<String, dynamic>,
-  // created: DateTime.parse(json[_Json.created]),
-  // description: json[_Json.description] as String?,
-  // amount: json[_Json.amount].toString().toDouble ?? 0.0,
-  // creator: PktbsUser.fromJson(json[_Json.expand][_Json.creator]),
-  // updator: json[_Json.updator] == null || json[_Json.updator] == ''
-  //     ? null
-  //     : PktbsUser.fromJson(json[_Json.expand][_Json.updator]),
-  // );
 
   factory PktbsTrx.fromRawJson(String str) =>
       PktbsTrx.fromJson(json.decode(str) as Map<String, dynamic>);

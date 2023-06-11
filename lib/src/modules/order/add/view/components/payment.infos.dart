@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smiling_tailor/src/db/isar.dart';
 
 import '../../../../../config/constants.dart';
+import '../../../../../db/isar.dart';
 import '../../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../../utils/extensions/extensions.dart';
 import '../../../enum/order.enum.dart';

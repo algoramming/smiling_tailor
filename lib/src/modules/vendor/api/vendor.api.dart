@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pocketbase/pocketbase.dart';
-import '../../transaction/enum/trx.type.dart';
 
 import '../../../pocketbase/auth.store/helpers.dart';
 import '../../../pocketbase/error.handle/error.handle.func.dart';
@@ -12,6 +11,7 @@ import '../../../shared/show_toast/show_toast.dart';
 import '../../../utils/extensions/extensions.dart';
 import '../../../utils/logger/logger_helper.dart';
 import '../../transaction/api/add.trx.api.dart';
+import '../../transaction/enum/trx.type.dart';
 import '../add/provider/add.vendor.provider.dart';
 import '../model/vendor.dart';
 
