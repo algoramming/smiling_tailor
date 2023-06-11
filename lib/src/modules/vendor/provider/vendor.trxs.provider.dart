@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../inventory/provider/inventory.provider.dart';
 
 import '../../../pocketbase/auth.store/helpers.dart';
 import '../../../utils/logger/logger_helper.dart';
-import '../../inventory/provider/inventory.provider.dart';
 import '../../transaction/model/transaction.dart';
 import '../model/vendor.dart';
 
@@ -18,7 +18,6 @@ class VendorTrxsProvider
     extends AutoDisposeFamilyAsyncNotifier<List<PktbsTrx>, PktbsVendor> {
   TextEditingController searchCntrlr = TextEditingController();
   late List<PktbsTrx> _trxs;
-  // late List<PktbsInventory> _inventories;
   double _totalPurchase = 0.0;
   @override
   FutureOr<List<PktbsTrx>> build(PktbsVendor arg) async {
@@ -27,7 +26,10 @@ class VendorTrxsProvider
     _stream();
     _trxs = await pb
         .collection(transactions)
-        .getFullList(filter: 'gl_id = "${arg.id}"', expand: pktbsTrxExpand)
+        .getFullList(
+          filter: 'from_id = "${arg.id}" || to_id = "${arg.id}"',
+          expand: pktbsTrxExpand,
+        )
         .then((v) {
       log.i('Vendors Trxs: $v');
       return v.map((e) => PktbsTrx.fromJson(e.toJson())).toList();
@@ -44,7 +46,8 @@ class VendorTrxsProvider
     // Implement Stream needs pocketbase update to add filter and expand options then the autodispose had to remove
     pb.collection(transactions).subscribe('*', (s) async {
       log.i('Stream $s');
-      if (s.record?.getStringValue('gl_id') != arg.id) return;
+      if (s.record?.getStringValue('from_id') != arg.id &&
+          s.record?.getStringValue('to_id') != arg.id) return;
       await pb
           .collection(transactions)
           .getOne(s.record!.toJson()['id'], expand: pktbsTrxExpand)

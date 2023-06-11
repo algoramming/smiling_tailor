@@ -22,23 +22,25 @@ class VendorView extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: Consumer(builder: (_, ref, __) {
-        ref.watch(vendorProvider);
-        final notifier = ref.watch(vendorProvider.notifier).selectedVendor;
-        return BigToSmallTransition(
-          child: notifier != null
-              ? const SizedBox.shrink()
-              : FloatingActionButton.small(
-                  tooltip: 'Add Employee',
-                  onPressed: () async => await showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (context) => const AddVendorPopup(),
+      floatingActionButton: Consumer(
+        builder: (_, ref, __) {
+          ref.watch(vendorProvider);
+          final notifier = ref.watch(vendorProvider.notifier).selectedVendor;
+          return BigToSmallTransition(
+            child: notifier != null
+                ? const SizedBox.shrink()
+                : FloatingActionButton.small(
+                    tooltip: 'Add Employee',
+                    onPressed: () async => await showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (context) => const AddVendorPopup(),
+                    ),
+                    child: const Icon(Icons.add),
                   ),
-                  child: const Icon(Icons.add),
-                ),
-        );
-      }),
+          );
+        },
+      ),
     );
   }
 }

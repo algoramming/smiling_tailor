@@ -32,7 +32,7 @@ class SignoutTile extends StatelessWidget {
       onTap: () async => await showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (context) => const SignoutPopup(),
+        builder: (_) => const SignoutPopup(),
       ),
     );
   }
@@ -51,10 +51,14 @@ class SignoutPopup extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
+            child: Text(
+              'Cancel',
+              style:
+                  TextStyle(color: context.theme.dividerColor.withOpacity(0.8)),
+            ),
           ),
           TextButton(
-            onPressed: () async =>  await pktbsSignout(context),
+            onPressed: () async => await pktbsSignout(context),
             child: const Text('Confirm', style: TextStyle(color: Colors.red)),
           ),
         ],
