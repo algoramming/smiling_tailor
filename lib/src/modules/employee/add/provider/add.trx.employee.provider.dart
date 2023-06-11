@@ -19,12 +19,18 @@ class AddTrxEmployeeProvider
     extends AutoDisposeFamilyNotifier<void, PktbsEmployee> {
   final amountCntrlr = TextEditingController(text: '0.0');
   final descriptionCntrlr = TextEditingController();
+  bool isPaybale = true;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   void build(PktbsEmployee arg) {}
 
   PktbsEmployee get employee => arg;
+
+  void toggleIsPayable() {
+    isPaybale = !isPaybale;
+    ref.notifyListeners();
+  }
 
   Future<void> submit(BuildContext context) async {
     if (!formKey.currentState!.validate()) return;
@@ -37,7 +43,7 @@ class AddTrxEmployeeProvider
       toJson: employee.toJson(),
       toType: employee.glType,
       amount: double.parse(amountCntrlr.text),
-      trxType: TrxType.credit,
+      trxType: isPaybale ? TrxType.credit : TrxType.debit,
       description: descriptionCntrlr.text,
     ).then((r) {
       if (r != null) {

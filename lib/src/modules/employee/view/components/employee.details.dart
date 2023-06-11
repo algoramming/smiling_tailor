@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../../../config/constants.dart';
-import '../../../../db/isar.dart';
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../shared/clipboard_data/clipboard_data.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
@@ -183,14 +183,6 @@ class _TrxList extends ConsumerWidget {
                     leading: AnimatedWidgetShower(
                       padding: 3.0,
                       size: 35.0,
-                      // child: Padding(
-                      //   padding: const EdgeInsets.all(4.0),
-                      //   child: SvgPicture.asset(
-                      //     'assets/svgs/transaction.svg',
-                      //     colorFilter: context.theme.primaryColor.toColorFilter,
-                      //     semanticsLabel: 'Employee',
-                      //   ),
-                      // ),
                       child: trx.modifiers,
                     ),
                     title: RichText(
@@ -206,17 +198,13 @@ class _TrxList extends ConsumerWidget {
                                   const EdgeInsets.symmetric(horizontal: 3.0),
                               child: RotatedBox(
                                 quarterTurns: trx.trxType.isDebit ? 0 : 1,
-                                // turns: AlwaysStoppedAnimation(
-                                //   // trx.isTransfer
-                                //   //   ? 45 / 360 :
-                                //     trx.trxType.isDebit
-                                //         ? 1
-                                //         : 90 / 360),
-                                child: Icon(Icons.arrow_outward_rounded,
-                                    size: 16,
-                                    color: trx.trxType.isDebit
-                                        ? Colors.green
-                                        : Colors.red),
+                                child: Icon(
+                                  Icons.arrow_outward_rounded,
+                                  size: 16,
+                                  color: trx.trxType.isDebit
+                                      ? Colors.green
+                                      : Colors.red,
+                                ),
                               ),
                             ),
                           ),
@@ -264,7 +252,9 @@ class _TrxList extends ConsumerWidget {
                           child: Text(
                             x.formattedCompat,
                             style: context.text.labelLarge!.copyWith(
-                              color: Colors.red,
+                              color: trx.trxType.isDebit
+                                  ? Colors.green
+                                  : Colors.red,
                             ),
                           ),
                         );
@@ -302,6 +292,13 @@ class _TotalSummary extends ConsumerWidget {
                     : DateTime.now().month))
             .fold<double>(0.0, (p, c) => p + c.amount);
     final due = salary - taken;
+    final Color kColor = isOrder
+        ? taken.isNegative
+            ? Colors.red
+            : Colors.green
+        : due.isNegative
+            ? Colors.green
+            : Colors.red;
     return Row(
       children: [
         if (!noti.showPrevMonth)
@@ -318,17 +315,15 @@ class _TotalSummary extends ConsumerWidget {
           child: Card(
             color: context.theme.dividerColor.withOpacity(0.2),
             child: ListTile(
-              leading: Card(
-                color: due.isNegative ? Colors.green[100] : Colors.red[100],
-                shape: roundedRectangleBorder10,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 5.0, horizontal: 10.0),
-                  child: Text(
-                    appCurrency.symbol,
-                    style: context.text.labelLarge!.copyWith(
-                      color: due.isNegative ? Colors.green : Colors.red,
-                    ),
+              leading: AnimatedWidgetShower(
+                padding: 3.0,
+                size: 35.0,
+                child: Card(
+                  color: kColor.withOpacity(0.2),
+                  shape: roundedRectangleBorder10,
+                  child: SvgPicture.asset(
+                    'assets/svgs/performance-overlay.svg',
+                    colorFilter: kColor.toColorFilter,
                   ),
                 ),
               ),
@@ -339,18 +334,6 @@ class _TotalSummary extends ConsumerWidget {
                       'Total Order: ${trxs.length} pcs & Earned: ${taken.formattedFloat}')
                   : Text(
                       'Salary: ${salary.formattedFloat} & Taken: ${taken.formattedFloat}'),
-              // trailing: Text(due.formattedCompat,
-              //   style: context.text.labelLarge!.copyWith(
-              //     color: noti.trxList.isEmpty
-              //         ? Colors.black
-              //         : noti.trxList
-              //                     .map((e) => e.isReceiveable ? e.amount : -e.amount)
-              //                     .reduce((value, element) => value + element) >=
-              //                 0
-              //             ? Colors.green
-              //             : Colors.red,
-              //   ),
-              // ),
               trailing: TweenAnimationBuilder(
                 curve: Curves.easeOut,
                 duration: kAnimationDuration(0.5),
@@ -361,7 +344,7 @@ class _TotalSummary extends ConsumerWidget {
                     child: Text(
                       x.formattedCompat,
                       style: context.text.labelLarge!.copyWith(
-                        color: x.isNegative ? Colors.green : Colors.red,
+                        color: kColor,
                       ),
                     ),
                   );

@@ -57,27 +57,52 @@ class AddTrxEmployeePopup extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: 10),
-                TextFormField(
-                  controller: notifier.amountCntrlr,
-                  decoration: const InputDecoration(
-                    labelText: 'Amount',
-                    hintText: 'Enter employee\'s amount...',
-                    suffixIcon: KSuffixIcon(),
-                  ),
-                  onFieldSubmitted: (_) async => notifier.submit(context),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.number,
-                  validator: (v) {
-                    if (v!.isEmpty) {
-                      return 'Amount is required';
-                    }
-                    if (!v.isNumeric) {
-                      return 'Invalid amount';
-                    }
-                    return null;
-                  },
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        controller: notifier.amountCntrlr,
+                        decoration: const InputDecoration(
+                          labelText: 'Amount',
+                          hintText: 'Enter employee\'s amount...',
+                          suffixIcon: KSuffixIcon(),
+                        ),
+                        onFieldSubmitted: (_) async => notifier.submit(context),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.number,
+                        validator: (v) {
+                          if (v!.isEmpty) {
+                            return 'Amount is required';
+                          }
+                          if (!v.isNumeric) {
+                            return 'Invalid amount';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 5.0),
+                    Switch.adaptive(
+                      value: notifier.isPaybale,
+                      onChanged: (_) => notifier.toggleIsPayable(),
+                    )
+                  ],
                 ),
+                const SizedBox(height: 3),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    notifier.isPaybale
+                        ? '• This Employee owe from you. (Accounts Payable)'
+                        : '• You\'re owe to this Employee. (Accounts Receivable))',
+                    style: context.text.bodySmall!.copyWith(
+                      color: context.theme.primaryColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
                 const SizedBox(height: 10),
                 TextFormField(
                   controller: notifier.descriptionCntrlr,
