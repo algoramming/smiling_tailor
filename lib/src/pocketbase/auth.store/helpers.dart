@@ -47,3 +47,12 @@ const vendors = 'vendors';
 const employees = 'employees';
 const inventories = 'inventories';
 const transactions = 'transactions';
+
+Future<void> unsubscribeAllCollections() async {
+  await pb.collection(users).unsubscribe('*');
+  await pb.collection(orders).unsubscribe('*');
+  await pb.collection(vendors).unsubscribe('*');
+  await pb.collection(employees).unsubscribe('*');
+  await pb.collection(inventories).unsubscribe('*');
+  await pb.collection(transactions).unsubscribe('*');
+}

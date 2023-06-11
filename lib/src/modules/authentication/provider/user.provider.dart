@@ -5,11 +5,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../pocketbase/auth.store/helpers.dart';
 import '../model/user.dart';
 
-typedef UserNotifier = AsyncNotifierProvider<UserProvider, List<PktbsUser>>;
+typedef UserNotifier = AutoDisposeAsyncNotifierProvider<UserProvider, List<PktbsUser>>;
 
 final userProvider = UserNotifier(UserProvider.new);
 
-class UserProvider extends AsyncNotifier<List<PktbsUser>> {
+final pbStream = StreamProvider((_) => pb.authStore.onChange);
+
+class UserProvider extends AutoDisposeAsyncNotifier<List<PktbsUser>> {
   late List<PktbsUser> userList;
 
   @override
@@ -29,6 +31,4 @@ class UserProvider extends AsyncNotifier<List<PktbsUser>> {
       ref.notifyListeners();
     });
   }
-
-  Future<void> streamUnsubscribe() async => await pb.collection(users).unsubscribe();
 }

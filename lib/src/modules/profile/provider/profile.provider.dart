@@ -5,11 +5,11 @@ import '../../authentication/api/authentication.api.dart';
 import '../../authentication/model/user.dart';
 import '../../authentication/provider/user.provider.dart';
 
-typedef ProfileNotifier = NotifierProvider<ProfileProvider, PktbsUser?>;
+typedef ProfileNotifier = AutoDisposeNotifierProvider<ProfileProvider, PktbsUser?>;
 
 final profileProvider = ProfileNotifier(ProfileProvider.new);
 
-class ProfileProvider extends Notifier<PktbsUser?> {
+class ProfileProvider extends AutoDisposeNotifier<PktbsUser?> {
   late TextEditingController usernameCntrlr;
   late TextEditingController emailCntrlr;
   late TextEditingController nameCntrlr;

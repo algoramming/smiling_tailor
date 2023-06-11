@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import 'package:pocketbase/pocketbase.dart';
+import 'package:smiling_tailor/src/router/router.dart';
 
 import '../../../config/get.platform.dart';
 import '../../../pocketbase/auth.store/helpers.dart';
@@ -15,7 +16,6 @@ import '../../../utils/logger/logger_helper.dart';
 import '../../home/view/home.view.dart';
 import '../../profile/provider/profile.provider.dart';
 import '../provider/authentication.provider.dart';
-import '../view/authentication.dart';
 
 Future<void> pktbsSignup(BuildContext context, AuthProvider notifier,
     [bool autoSignin = true]) async {
@@ -85,24 +85,6 @@ Future<void> pktbsSignin(BuildContext context, AuthProvider notifier) async {
     return;
   } on ClientException catch (e) {
     log.e('User signin: $e');
-    showAwesomeSnackbar(
-        context, 'Failed!', getErrorMessage(e), MessageType.failure);
-    return;
-  }
-}
-
-Future<void> pktbsSignout(BuildContext context) async {
-  EasyLoading.show(status: 'Signing out...');
-  try {
-    pb.authStore.clear();
-    EasyLoading.dismiss();
-    await context.pushNamedRemoveUntil(AuthenticationView.name);
-    return;
-  } on SocketException catch (e) {
-    EasyLoading.showError('No Internet Connection. $e');
-    return;
-  } on ClientException catch (e) {
-    log.e('User signout: $e');
     showAwesomeSnackbar(
         context, 'Failed!', getErrorMessage(e), MessageType.failure);
     return;
@@ -189,6 +171,27 @@ Future<void> pktbsUpdate(
     return;
   } on ClientException catch (e) {
     log.e('User Update: $e');
+    showAwesomeSnackbar(
+        context, 'Failed!', getErrorMessage(e), MessageType.failure);
+    return;
+  }
+}
+
+Future<void> pktbsSignout(BuildContext context) async {
+  EasyLoading.show(status: 'Signing out...');
+  try {
+    await unsubscribeAllCollections().then((_) async {
+      pb.authStore.clear();
+      EasyLoading.dismiss();
+      log.i('User signout and unsubscribed from all registered subscriptions.');
+      await context.pushNamedRemoveUntil(AppRouter.name);
+      return;
+    });
+  } on SocketException catch (e) {
+    EasyLoading.showError('No Internet Connection. $e');
+    return;
+  } on ClientException catch (e) {
+    log.e('User signout: $e');
     showAwesomeSnackbar(
         context, 'Failed!', getErrorMessage(e), MessageType.failure);
     return;
