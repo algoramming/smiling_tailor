@@ -22,23 +22,26 @@ class EmployeeView extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: Consumer(builder: (_, ref, __) {
-        ref.watch(employeeProvider);
-        final notifier = ref.watch(employeeProvider.notifier).selectedEmployee;
-        return BigToSmallTransition(
-          child: notifier != null
-              ? const SizedBox.shrink()
-              : FloatingActionButton.small(
-                  tooltip: 'Add Employee',
-                  onPressed: () async => await showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (context) => const AddEmployeePopup(),
+      floatingActionButton: Consumer(
+        builder: (_, ref, __) {
+          ref.watch(employeeProvider);
+          final notifier =
+              ref.watch(employeeProvider.notifier).selectedEmployee;
+          return BigToSmallTransition(
+            child: notifier != null
+                ? const SizedBox.shrink()
+                : FloatingActionButton.small(
+                    tooltip: 'Add Employee',
+                    onPressed: () async => await showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (context) => const AddEmployeePopup(),
+                    ),
+                    child: const Icon(Icons.add),
                   ),
-                  child: const Icon(Icons.add),
-                ),
-        );
-      }),
+          );
+        },
+      ),
     );
   }
 }
