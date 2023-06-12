@@ -32,7 +32,7 @@ class VendorList extends ConsumerWidget {
               ? const Center(child: Text('No vendor found!'))
               : ListView.builder(
                   itemCount: notifier.vendorList.length,
-                  itemBuilder: ((_, idx) {
+                  itemBuilder: (_, idx) {
                     final vendor = notifier.vendorList[idx];
                     return Card(
                       child: KListTile(
@@ -57,7 +57,7 @@ class VendorList extends ConsumerWidget {
                         trailing: const Icon(Icons.arrow_circle_right_outlined),
                       ),
                     );
-                  }),
+                  },
                 ),
         )
       ],

@@ -95,6 +95,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
                             'order added successfully with - 4 - advance, tailor, inventory and delivery allocation!');
                         noti.clear();
                         ctx.pop();
+                        EasyLoading.dismiss();
                         await showOrderSlipDownloadPopup(ctx, order.id);
                         // showAwesomeSnackbar(ctx, 'Success!',
                         //     'Order added successfully.', MessageType.success);
@@ -104,6 +105,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
                           'order added successfully with - 3 - advance, tailor and inventory allocation!');
                       noti.clear();
                       ctx.pop();
+                      EasyLoading.dismiss();
                       await showOrderSlipDownloadPopup(ctx, order.id);
                       // showAwesomeSnackbar(ctx, 'Success!',
                       //     'Order added successfully.', MessageType.success);
@@ -118,6 +120,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
                           'order added successfully with - 3 - advance, tailor and delivery allocation!');
                       noti.clear();
                       ctx.pop();
+                      EasyLoading.dismiss();
                       await showOrderSlipDownloadPopup(ctx, order.id);
                       // showAwesomeSnackbar(ctx, 'Success!',
                       //     'Order added successfully.', MessageType.success);
@@ -127,6 +130,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
                         'order added successfully with - 2 - advance and tailor allocation!');
                     noti.clear();
                     ctx.pop();
+                    EasyLoading.dismiss();
                     await showOrderSlipDownloadPopup(ctx, order.id);
                     // showAwesomeSnackbar(ctx, 'Success!',
                     //     'Order added successfully.', MessageType.success);
@@ -145,6 +149,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
                           'order added successfully with - 3 - advance, inventory and delivery allocation!');
                       noti.clear();
                       ctx.pop();
+                      EasyLoading.dismiss();
                       await showOrderSlipDownloadPopup(ctx, order.id);
                       // showAwesomeSnackbar(ctx, 'Success!',
                       //     'Order added successfully.', MessageType.success);
@@ -154,6 +159,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
                         'order added successfully with - 2 - advance and inventory allocation!');
                     noti.clear();
                     ctx.pop();
+                    EasyLoading.dismiss();
                     await showOrderSlipDownloadPopup(ctx, order.id);
                     // showAwesomeSnackbar(ctx, 'Success!',
                     //     'Order added successfully.', MessageType.success);
@@ -167,6 +173,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
                         'order added successfully with - 2 - advance and delivery allocation!');
                     noti.clear();
                     ctx.pop();
+                    EasyLoading.dismiss();
                     await showOrderSlipDownloadPopup(ctx, order.id);
                     // showAwesomeSnackbar(ctx, 'Success!',
                     //     'Order added successfully.', MessageType.success);
@@ -175,6 +182,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
                   log.wtf('order added successfully with - 1 - advance only!');
                   noti.clear();
                   ctx.pop();
+                  EasyLoading.dismiss();
                   await showOrderSlipDownloadPopup(ctx, order.id);
                   // showAwesomeSnackbar(ctx, 'Success!',
                   //     'Order added successfully.', MessageType.success);
@@ -245,12 +253,12 @@ Future<RecordModel?> inventoryAllocateApi(
   log.i('Need Trx for inventory purchaseallocation');
   return pktbsAddTrx(
     context,
-    fromId: order.inventory!.id,
-    fromJson: order.inventory!.toJson(),
-    fromType: order.inventory!.glType,
-    toId: order.id,
-    toJson: order.toJson(),
-    toType: order.glType,
+    fromId: order.id,
+    fromJson: order.toJson(),
+    fromType: order.glType,
+    toId: order.inventory!.id,
+    toJson: order.inventory!.toJson(),
+    toType: order.inventory!.glType,
     trxType: TrxType.credit,
     amount: order.inventoryQuantity!.toString().toDouble ?? 0.0,
     unit: order.inventoryUnit!.name,
@@ -260,13 +268,13 @@ Future<RecordModel?> inventoryAllocateApi(
   ).then(
     (_) async => await pktbsAddTrx(
       context,
-      fromId: order.inventory!.id,
-      fromJson: order.inventory!.toJson(),
-      fromType: order.inventory!.glType,
-      toId: order.id,
-      toJson: order.toJson(),
-      toType: order.glType,
-      trxType: TrxType.credit,
+      fromId: order.id,
+      fromJson: order.toJson(),
+      fromType: order.glType,
+      toId: order.inventory!.id,
+      toJson: order.inventory!.toJson(),
+      toType: order.inventory!.glType,
+      trxType: TrxType.debit,
       amount: notifier.inventoryPriceCntrlr.text.toDouble ?? 0.0,
       isSystemGenerated: true,
       description:

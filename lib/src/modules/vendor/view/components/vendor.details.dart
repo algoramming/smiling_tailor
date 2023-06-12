@@ -56,6 +56,7 @@ class VendorDetails extends ConsumerWidget {
                   const SizedBox(width: 6.0),
                   OutlinedButton.icon(
                     onPressed: () async {
+                      // TODO: Add Trx
                       // await showDialog(
                       //   context: context,
                       //   barrierDismissible: false,
@@ -130,11 +131,7 @@ class _FinancialsTab extends StatelessWidget {
       children: [
         _TrxList(notifier, condition: (t) => t.isGoods == false),
         const SizedBox(height: 10),
-        _TotalSummary(
-          notifier,
-          (t) => t.isGoods == false,
-          isInventory: false,
-        ),
+        _TotalSummaryFinanacials(notifier, (t) => t.isGoods == false),
       ],
     );
   }
@@ -151,11 +148,7 @@ class _InventoriesTab extends StatelessWidget {
       children: [
         _TrxList(notifier, condition: (t) => t.isGoods == true),
         const SizedBox(height: 10),
-        _TotalSummary(
-          notifier,
-          (t) => t.fromType == GLType.order,
-          isInventory: true,
-        ),
+        _TotalSummaryInVentory(notifier, (t) => t.isGoods == true),
       ],
     );
   }
@@ -181,6 +174,7 @@ class _TrxList extends ConsumerWidget {
               itemCount: trxs.length,
               itemBuilder: (_, i) {
                 final trx = trxs[i];
+                final kColor = trx.trxType.isCredit ? Colors.red : Colors.green;
                 return Card(
                   child: KListTile(
                     onLongPress: () async =>
@@ -211,9 +205,7 @@ class _TrxList extends ConsumerWidget {
                                 child: Icon(
                                   Icons.arrow_outward_rounded,
                                   size: 16,
-                                  color: trx.trxType.isDebit
-                                      ? Colors.green
-                                      : Colors.red,
+                                  color: kColor,
                                 ),
                               ),
                             ),
@@ -247,14 +239,6 @@ class _TrxList extends ConsumerWidget {
                           ),
                       ],
                     ),
-                    // trailing: Text(
-                    //   noti.trxList[i].amount.formattedCompat,
-                    //   style: context.text.labelLarge!.copyWith(
-                    //     color: noti.trxList[i].isReceiveable
-                    //         ? Colors.green
-                    //         : Colors.red,
-                    //   ),
-                    // ),
                     trailing: TweenAnimationBuilder(
                       curve: Curves.easeOut,
                       duration: kAnimationDuration(0.5),
@@ -266,11 +250,8 @@ class _TrxList extends ConsumerWidget {
                             !trx.isGoods
                                 ? x.formattedCompat
                                 : '${x.toInt()} ${trx.unit?.symbol ?? '??'}',
-                            style: context.text.labelLarge!.copyWith(
-                              color: trx.trxType.isDebit
-                                  ? Colors.green
-                                  : Colors.red,
-                            ),
+                            style: context.text.labelLarge!
+                                .copyWith(color: kColor),
                           ),
                         );
                       },
@@ -283,13 +264,11 @@ class _TrxList extends ConsumerWidget {
   }
 }
 
-class _TotalSummary extends ConsumerWidget {
-  const _TotalSummary(this.notifier, this.condition,
-      {this.isInventory = false});
+class _TotalSummaryFinanacials extends ConsumerWidget {
+  const _TotalSummaryFinanacials(this.notifier, this.condition);
 
   final VendorProvider notifier;
   final bool Function(PktbsTrx trx) condition;
-  final bool isInventory;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -297,6 +276,7 @@ class _TotalSummary extends ConsumerWidget {
     final noti =
         ref.watch(vendorTrxsProvider(notifier.selectedVendor!).notifier);
     final trxs = noti.rawTrxs.where(condition).toList();
+    final total = noti.inventories.fold<double>(0.0, (p, c) => p + c.amount);
     final adjusted = trxs.isEmpty
         ? 0.0
         : trxs.fold<double>(
@@ -305,14 +285,8 @@ class _TotalSummary extends ConsumerWidget {
                 p +
                 (c.trxType.isCredit ? c.amount : 0.0) -
                 (c.trxType.isDebit ? c.amount : 0.0));
-    final due = noti.totalPurchase - adjusted;
-    final totalQuantity =
-        noti.inventories.fold<double>(0.0, (p, c) => p + c.quantity);
-    final Color kColor = isInventory
-        ? Colors.green
-        : due.isNegative
-            ? Colors.green
-            : Colors.red;
+    final due = total - adjusted;
+    final kColor = due.isNegative ? Colors.green : Colors.red;
     return Card(
       color: context.theme.dividerColor.withOpacity(0.2),
       child: ListTile(
@@ -328,26 +302,79 @@ class _TotalSummary extends ConsumerWidget {
             ),
           ),
         ),
-        title: Text(isInventory
-            ? 'Total summary till now ${appSettings.getDateTimeFormat.format(DateTime.now())}'
-            : 'Total due till now ${appSettings.getDateTimeFormat.format(DateTime.now())}'),
-        subtitle: Text(isInventory
-            ? 'Total Purchase: ${noti.totalPurchase.formattedFloat} and Total Order: ${noti.inventories.length}'
-            : 'Total Purchase: ${noti.totalPurchase.formattedFloat} and Adjusted: ${adjusted.formattedFloat}'),
+        title: Text(
+          'Total due till now ${appSettings.getDateTimeFormat.format(DateTime.now())}',
+        ),
+        subtitle: Text(
+          'Total Purchase: ${total.formattedFloat} and Adjusted: ${adjusted.formattedFloat}',
+        ),
         trailing: TweenAnimationBuilder(
           curve: Curves.easeOut,
           duration: kAnimationDuration(0.5),
-          tween:
-              Tween<double>(begin: 0, end: isInventory ? totalQuantity : due),
+          tween: Tween<double>(begin: 0, end: due),
           builder: (_, double x, __) {
             return Tooltip(
-              message: isInventory ? '' : x.formattedFloat,
+              message: x.formattedFloat,
               child: Text(
-                isInventory ? '${x.toInt()} pc' : x.formattedCompat,
-                style: context.text.labelLarge!.copyWith(
-                  color: kColor,
-                ),
+                x.formattedCompat,
+                style: context.text.labelLarge!.copyWith(color: kColor),
               ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class _TotalSummaryInVentory extends ConsumerWidget {
+  const _TotalSummaryInVentory(this.notifier, this.condition);
+
+  final VendorProvider notifier;
+  final bool Function(PktbsTrx trx) condition;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(vendorTrxsProvider(notifier.selectedVendor!));
+    final noti =
+        ref.watch(vendorTrxsProvider(notifier.selectedVendor!).notifier);
+    final trxs = noti.rawTrxs.where(condition).toList();
+    final total = noti.inventories.fold<double>(0.0, (p, c) => p + c.quantity);
+    final sold = trxs.fold<double>(
+        0.0, (p, c) => p + (c.trxType.isDebit ? c.amount : 0.0));
+    final returned = trxs.fold<double>(
+        0.0, (p, c) => p + (c.trxType.isCredit ? c.amount : 0.0));
+    final due = sold - returned;
+    final kColor = due.isNegative ? Colors.red : Colors.green;
+    return Card(
+      color: context.theme.dividerColor.withOpacity(0.2),
+      child: ListTile(
+        leading: AnimatedWidgetShower(
+          padding: 3.0,
+          size: 35.0,
+          child: Card(
+            color: kColor.withOpacity(0.2),
+            shape: roundedRectangleBorder10,
+            child: SvgPicture.asset(
+              'assets/svgs/performance-overlay.svg',
+              colorFilter: kColor.toColorFilter,
+            ),
+          ),
+        ),
+        title: Text(
+          'Total summary till now ${appSettings.getDateTimeFormat.format(DateTime.now())}',
+        ),
+        subtitle: Text(
+          'Total Purchase: ${total.toInt()} pc, Return: ${returned.toInt()} pc and Total Order Placed: ${noti.inventories.length} times',
+        ),
+        trailing: TweenAnimationBuilder(
+          curve: Curves.easeOut,
+          duration: kAnimationDuration(0.5),
+          tween: Tween<double>(begin: 0, end: due),
+          builder: (_, double x, __) {
+            return Text(
+              '${x.toInt()} pc',
+              style: context.text.labelLarge!.copyWith(color: kColor),
             );
           },
         ),

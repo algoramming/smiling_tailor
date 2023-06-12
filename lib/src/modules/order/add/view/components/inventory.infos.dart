@@ -42,9 +42,8 @@ class InventoryInfos extends StatelessWidget {
             ),
             child: Text(
               notifier.isInventoryNeeded ? 'Yes' : 'No',
-              style: context.text.labelMedium!.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+              style: context.text.labelMedium!
+                  .copyWith(fontWeight: FontWeight.bold),
             ),
           ),
           onExpansionChanged: notifier.toggleInventoryNeeded,

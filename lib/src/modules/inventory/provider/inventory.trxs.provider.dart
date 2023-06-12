@@ -6,22 +6,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../pocketbase/auth.store/helpers.dart';
 import '../../../utils/logger/logger_helper.dart';
 import '../../inventory/model/inventory.dart';
-import '../../inventory/provider/inventory.provider.dart';
 import '../../transaction/model/transaction.dart';
-import '../model/vendor.dart';
 
-typedef VendorTrxsNotifier = AutoDisposeAsyncNotifierProviderFamily<
-    VendorTrxsProvider, List<PktbsTrx>, PktbsVendor>;
+typedef InventoryTrxsNotifier = AutoDisposeAsyncNotifierProviderFamily<
+    InventoryTrxsProvider, List<PktbsTrx>, PktbsInventory>;
 
-final vendorTrxsProvider = VendorTrxsNotifier(VendorTrxsProvider.new);
+final inventoryTrxsProvider = InventoryTrxsNotifier(InventoryTrxsProvider.new);
 
-class VendorTrxsProvider
-    extends AutoDisposeFamilyAsyncNotifier<List<PktbsTrx>, PktbsVendor> {
+class InventoryTrxsProvider
+    extends AutoDisposeFamilyAsyncNotifier<List<PktbsTrx>, PktbsInventory> {
   TextEditingController searchCntrlr = TextEditingController();
   late List<PktbsTrx> _trxs;
-  List<PktbsInventory> _inventories = [];
   @override
-  FutureOr<List<PktbsTrx>> build(PktbsVendor arg) async {
+  FutureOr<List<PktbsTrx>> build(PktbsInventory arg) async {
     _trxs = [];
     _listener();
     _stream();
@@ -32,12 +29,9 @@ class VendorTrxsProvider
           expand: pktbsTrxExpand,
         )
         .then((v) {
-      log.i('Vendors Trxs: $v');
+      log.i('Inventories Trxs: $v');
       return v.map((e) => PktbsTrx.fromJson(e.toJson())).toList();
     });
-    _inventories = (await ref.watch(inventoryProvider.future))
-        .where((e) => e.from == arg)
-        .toList();
     return _trxs;
   }
 
@@ -68,8 +62,6 @@ class VendorTrxsProvider
   }
 
   List<PktbsTrx> get rawTrxs => _trxs;
-
-  List<PktbsInventory> get inventories => _inventories;
 
   List<PktbsTrx> get trxList {
     _trxs.sort((a, b) => b.created.toLocal().compareTo(a.created.toLocal()));

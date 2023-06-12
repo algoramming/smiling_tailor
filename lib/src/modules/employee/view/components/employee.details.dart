@@ -147,11 +147,11 @@ class _OrdersTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _TrxList(notifier, condition: (t) => t.fromType == GLType.order),
+        _TrxList(notifier, condition: (t) => t.fromType != GLType.user),
         const SizedBox(height: 10),
         _TotalSummary(
           notifier,
-          (t) => t.fromType == GLType.order,
+          (t) => t.fromType != GLType.user,
           isOrder: true,
         ),
       ],
@@ -173,12 +173,12 @@ class _TrxList extends ConsumerWidget {
     final trxs = noti.trxList.where(condition).toList();
     return Expanded(
       child: trxs.isEmpty
-          ? const Center(
-              child: Text('No Transaction Found!', textAlign: TextAlign.center))
+          ? const Center(child: Text('No Transaction Found!'))
           : ListView.builder(
               itemCount: trxs.length,
               itemBuilder: (_, i) {
                 final trx = trxs[i];
+                final kColor = trx.trxType.isCredit ? Colors.red : Colors.green;
                 return Card(
                   child: KListTile(
                     onLongPress: () async =>
@@ -209,9 +209,7 @@ class _TrxList extends ConsumerWidget {
                                 child: Icon(
                                   Icons.arrow_outward_rounded,
                                   size: 16,
-                                  color: trx.trxType.isDebit
-                                      ? Colors.green
-                                      : Colors.red,
+                                  color: kColor,
                                 ),
                               ),
                             ),
@@ -245,14 +243,6 @@ class _TrxList extends ConsumerWidget {
                           ),
                       ],
                     ),
-                    // trailing: Text(
-                    //   noti.trxList[i].amount.formattedCompat,
-                    //   style: context.text.labelLarge!.copyWith(
-                    //     color: noti.trxList[i].isReceiveable
-                    //         ? Colors.green
-                    //         : Colors.red,
-                    //   ),
-                    // ),
                     trailing: TweenAnimationBuilder(
                       curve: Curves.easeOut,
                       duration: kAnimationDuration(0.5),
@@ -262,11 +252,8 @@ class _TrxList extends ConsumerWidget {
                           message: x.formattedFloat,
                           child: Text(
                             x.formattedCompat,
-                            style: context.text.labelLarge!.copyWith(
-                              color: trx.trxType.isDebit
-                                  ? Colors.green
-                                  : Colors.red,
-                            ),
+                            style: context.text.labelLarge!
+                                .copyWith(color: kColor),
                           ),
                         );
                       },
@@ -293,7 +280,7 @@ class _TotalSummary extends ConsumerWidget {
         ref.watch(employeeTrxsProvider(notifier.selectedEmployee!).notifier);
     final salary = notifier.selectedEmployee!.salary;
     final trxs = noti.rawTrxs.where(condition).toList();
-    final taken = trxs.isEmpty
+    final adjusted = trxs.isEmpty
         ? 0.0
         : trxs
             .where((e) =>
@@ -301,10 +288,15 @@ class _TotalSummary extends ConsumerWidget {
                 (noti.showPrevMonth
                     ? DateTime.now().previousMonth.month
                     : DateTime.now().month))
-            .fold<double>(0.0, (p, c) => p + c.amount);
-    final due = salary - taken;
+            .fold<double>(
+                0.0,
+                (p, c) =>
+                    p +
+                    (c.trxType.isCredit ? c.amount : 0.0) -
+                    (c.trxType.isDebit ? c.amount : 0.0));
+    final due = salary - adjusted;
     final Color kColor = isOrder
-        ? taken.isNegative
+        ? adjusted.isNegative
             ? Colors.red
             : Colors.green
         : due.isNegative
@@ -339,16 +331,16 @@ class _TotalSummary extends ConsumerWidget {
                 ),
               ),
               title: Text(
-                  '${isOrder ? 'Total completed orders' : 'Total owe'} for Month (${(noti.showPrevMonth ? DateTime.now().previousMonth : DateTime.now()).monthName})'),
-              subtitle: isOrder
+                  '${!isOrder ? 'Total owe' : 'Total completed orders'} for Month (${(noti.showPrevMonth ? DateTime.now().previousMonth : DateTime.now()).monthName})'),
+              subtitle: !isOrder
                   ? Text(
-                      'Total Order: ${trxs.length} pcs & Earned: ${taken.formattedFloat}')
+                      'Salary: ${salary.formattedFloat} & Taken: ${adjusted.formattedFloat}')
                   : Text(
-                      'Salary: ${salary.formattedFloat} & Taken: ${taken.formattedFloat}'),
+                      'Total Order: ${trxs.length} pcs & Earn: ${adjusted.formattedFloat}'),
               trailing: TweenAnimationBuilder(
                 curve: Curves.easeOut,
                 duration: kAnimationDuration(0.5),
-                tween: Tween<double>(begin: 0, end: isOrder ? taken : due),
+                tween: Tween<double>(begin: 0, end: isOrder ? adjusted : due),
                 builder: (_, double x, __) {
                   return Tooltip(
                     message: x.formattedFloat,

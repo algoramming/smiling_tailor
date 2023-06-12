@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../utils/transations/big.to.small.dart';
 import '../add/view/add.inventory.popup.dart';
+import '../provider/inventory.provider.dart';
 import 'components/inventory.details.dart';
 import 'components/inventory.list.dart';
 
@@ -19,14 +22,25 @@ class InventoryView extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton.small(
-        tooltip: 'Add Inventory',
-        onPressed: () async => await showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) => const AddInventoryPopup(),
-        ),
-        child: const Icon(Icons.add),
+      floatingActionButton: Consumer(
+        builder: (_, ref, __) {
+          ref.watch(inventoryProvider);
+          final notifier =
+              ref.watch(inventoryProvider.notifier).selectedInventory;
+          return BigToSmallTransition(
+            child: notifier != null
+                ? const SizedBox.shrink()
+                : FloatingActionButton.small(
+                    tooltip: 'Add Inventory',
+                    onPressed: () async => await showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (context) => const AddInventoryPopup(),
+                    ),
+                    child: const Icon(Icons.add),
+                  ),
+          );
+        },
       ),
     );
   }

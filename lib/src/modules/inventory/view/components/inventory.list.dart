@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../../config/constants.dart';
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../shared/clipboard_data/clipboard_data.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
@@ -54,7 +55,24 @@ class InventoryList extends ConsumerWidget {
                         ),
                         title: Text(inventory.title),
                         subtitle: Text(inventory.description ?? ''),
-                        trailing: const Icon(Icons.arrow_circle_right_outlined),
+                        // trailing: const Icon(Icons.arrow_circle_right_outlined),
+                        trailing: Column(
+                          crossAxisAlignment: crossEnd,
+                          children: [
+                            Text(
+                              inventory.amount.formattedCompat,
+                              style: context.text.labelLarge!.copyWith(
+                                color: context.theme.primaryColor,
+                              ),
+                            ),
+                            Text(
+                              '${inventory.quantity} ${inventory.unit.symbol}',
+                              style: context.text.bodySmall!.copyWith(
+                                color: context.theme.primaryColor,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },
