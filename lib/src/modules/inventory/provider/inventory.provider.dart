@@ -62,6 +62,7 @@ class InventoryProvider extends AsyncNotifier<List<PktbsInventory>> {
     final vs = _inventories;
     return vs
         .where((e) =>
+            e.id.toLowerCase().contains(searchCntrlr.text.toLowerCase()) ||
             e.title.toLowerCase().contains(searchCntrlr.text.toLowerCase()) ||
             e.from.name
                 .toLowerCase()
@@ -69,6 +70,13 @@ class InventoryProvider extends AsyncNotifier<List<PktbsInventory>> {
             e.from.phone
                 .toLowerCase()
                 .contains(searchCntrlr.text.toLowerCase()) ||
+            e.creator.id
+                .toLowerCase()
+                .contains(searchCntrlr.text.toLowerCase()) ||
+            (e.updator?.id
+                    .toLowerCase()
+                    .contains(searchCntrlr.text.toLowerCase()) ??
+                false) ||
             (e.description
                     ?.toLowerCase()
                     .contains(searchCntrlr.text.toLowerCase()) ??

@@ -76,10 +76,20 @@ class EmployeeTrxsProvider
     final vs = _trxs;
     return vs
         .where((e) =>
-            e.description
-                ?.toLowerCase()
-                .contains(searchCntrlr.text.toLowerCase()) ??
-            false)
+            e.id.toLowerCase().contains(searchCntrlr.text.toLowerCase()) ||
+            e.fromId.toLowerCase().contains(searchCntrlr.text.toLowerCase()) ||
+            e.toId.toLowerCase().contains(searchCntrlr.text.toLowerCase()) ||
+            e.creator.id
+                .toLowerCase()
+                .contains(searchCntrlr.text.toLowerCase()) ||
+            (e.updator?.id
+                    .toLowerCase()
+                    .contains(searchCntrlr.text.toLowerCase()) ??
+                false) ||
+            (e.description
+                    ?.toLowerCase()
+                    .contains(searchCntrlr.text.toLowerCase()) ??
+                false))
         .toList();
   }
 }

@@ -60,21 +60,46 @@ class OrderProvider extends AsyncNotifier<List<PktbsOrder>> {
     final vs = _orders;
     return vs
         .where((e) =>
+            e.id.toLowerCase().contains(searchCntrlr.text.toLowerCase()) ||
             e.customerName
                 .toLowerCase()
                 .contains(searchCntrlr.text.toLowerCase()) ||
             e.customerPhone
                 .toLowerCase()
                 .contains(searchCntrlr.text.toLowerCase()) ||
-            e.id.toLowerCase().contains(searchCntrlr.text.toLowerCase()) ||
-            (e.customerEmail
+            e.creator.id
+                .toLowerCase()
+                .contains(searchCntrlr.text.toLowerCase()) ||
+            (e.updator?.id.toLowerCase().contains(searchCntrlr.text.toLowerCase()) ??
+                false) ||
+            (e.tailorEmployee?.id
+                    .toLowerCase()
+                    .contains(searchCntrlr.text.toLowerCase()) ??
+                false) ||
+            (e.tailorNote?.toLowerCase().contains(searchCntrlr.text.toLowerCase()) ??
+                false) ||
+            (e.inventory?.id.toLowerCase().contains(searchCntrlr.text.toLowerCase()) ??
+                false) ||
+            (e.inventory?.title.toLowerCase().contains(searchCntrlr.text.toLowerCase()) ??
+                false) ||
+            (e.inventory?.description
                     ?.toLowerCase()
                     .contains(searchCntrlr.text.toLowerCase()) ??
                 false) ||
-            (e.customerAddress
-                    ?.toLowerCase()
+            (e.inventoryNote?.toLowerCase().contains(searchCntrlr.text.toLowerCase()) ??
+                false) ||
+            (e.deliveryEmployee?.id
+                    .toLowerCase()
                     .contains(searchCntrlr.text.toLowerCase()) ??
-                false))
+                false) ||
+            (e.deliveryNote?.toLowerCase().contains(searchCntrlr.text.toLowerCase()) ??
+                false) ||
+            (e.deliveryAddress?.toLowerCase().contains(searchCntrlr.text.toLowerCase()) ??
+                false) ||
+            (e.customerEmail?.toLowerCase().contains(searchCntrlr.text.toLowerCase()) ??
+                false) ||
+            (e.customerAddress?.toLowerCase().contains(searchCntrlr.text.toLowerCase()) ?? false) ||
+            (e.description?.toLowerCase().contains(searchCntrlr.text.toLowerCase()) ?? false))
         .toList();
   }
 

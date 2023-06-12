@@ -61,15 +61,22 @@ class VendorProvider extends AsyncNotifier<List<PktbsVendor>> {
     final vs = _vendors;
     return vs
         .where((e) =>
+            e.id.toLowerCase().contains(searchCntrlr.text.toLowerCase()) ||
             e.name.toLowerCase().contains(searchCntrlr.text.toLowerCase()) ||
             e.address.toLowerCase().contains(searchCntrlr.text.toLowerCase()) ||
             e.phone.toLowerCase().contains(searchCntrlr.text.toLowerCase()) ||
+            e.creator.id
+                .toLowerCase()
+                .contains(searchCntrlr.text.toLowerCase()) ||
+            (e.updator?.id
+                    .toLowerCase()
+                    .contains(searchCntrlr.text.toLowerCase()) ??
+                false) ||
             (e.email?.toLowerCase().contains(searchCntrlr.text.toLowerCase()) ??
                 false))
         .toList();
   }
 
-  
   void selectVendor(PktbsVendor vendor) {
     selectedVendor = vendor;
     ref.notifyListeners();
