@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
+import '../../../../shared/clipboard_data/clipboard_data.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../provider/inventory.provider.dart';
@@ -34,6 +35,8 @@ class InventoryList extends ConsumerWidget {
                       child: KListTile(
                         selected: notifier.selectedInventory == inventory,
                         onTap: () => notifier.selectInventory(inventory),
+                        onLongPress: () async =>
+                            await copyToClipboard(context, inventory.id),
                         leading: AnimatedWidgetShower(
                           size: 30.0,
                           child: Padding(

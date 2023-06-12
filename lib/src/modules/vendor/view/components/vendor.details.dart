@@ -123,7 +123,8 @@ class _FinancialsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _TrxList(notifier, condition: (t) => t.fromType == GLType.user),
+        // _TrxList(notifier, condition: (t) => true),
+        _TrxList(notifier, condition: (t) => t.isGoods == false),
         const SizedBox(height: 10),
         _TotalSummary(
           notifier,
@@ -144,7 +145,7 @@ class _InventoriesTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _TrxList(notifier, condition: (t) => t.fromType == GLType.order),
+        _TrxList(notifier, condition: (t) => t.isGoods == true),
         const SizedBox(height: 10),
         _TotalSummary(
           notifier,

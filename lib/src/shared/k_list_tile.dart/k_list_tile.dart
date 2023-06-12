@@ -54,17 +54,20 @@ class KListTile extends StatelessWidget {
             children: [
               leading ?? const SizedBox.shrink(),
               const SizedBox(width: 10),
-              Column(
-                mainAxisSize: mainMin,
-                crossAxisAlignment: crossStart,
-                children: [
-                  title ?? const SizedBox.shrink(),
-                  if (subtitle != null)
-                    SizedBox(height: paddingBetweenTitleAndSubtitle ?? 2.0),
-                  subtitle ?? const SizedBox.shrink(),
-                ],
+              Expanded(
+                flex: 9,
+                child: Column(
+                  mainAxisSize: mainMin,
+                  crossAxisAlignment: crossStart,
+                  children: [
+                    title ?? const SizedBox.shrink(),
+                    if (subtitle != null)
+                      SizedBox(height: paddingBetweenTitleAndSubtitle ?? 2.0),
+                    subtitle ?? const SizedBox.shrink(),
+                  ],
+                ),
               ),
-              const Spacer(),
+              const Expanded(child: SizedBox.shrink()),
               trailing ?? const SizedBox.shrink(),
             ],
           ),

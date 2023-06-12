@@ -36,6 +36,7 @@ Future<void> pktbsAddInventory(
             .then((i) async {
           final inven = PktbsInventory.fromJson(i.toJson());
           log.i('Need Goods Trx for ${inven.title} of ${inven.from.name}');
+          // trx for entry the inventories to the system
           await pktbsAddTrx(
             context,
             fromId: inven.from.id,
@@ -55,24 +56,41 @@ Future<void> pktbsAddInventory(
             if (notifier.advanceCntrlr.text.isNotNullOrEmpty() &&
                 notifier.advanceCntrlr.text.toDouble != 0.0) {
               final advanceBalance = notifier.advanceCntrlr.text.toDouble;
-              log.i('Need Another Trx for ${inven.title} of $advanceBalance}');
+              log.i(
+                  'Need Another 2 Trx for ${inven.title} of $advanceBalance} to ${inven.from.name}');
+              // trx of advance amount from user to vendor
               await pktbsAddTrx(
                 context,
                 fromId: pb.authStore.model?.id,
                 fromJson: pb.authStore.model?.toJson(),
                 fromType: GLType.user,
-                toId: inven.id,
-                toJson: inven.toJson(),
-                toType: inven.glType,
+                toId: inven.from.id,
+                toJson: inven.from.toJson(),
+                toType: inven.from.glType,
                 trxType: TrxType.credit,
                 amount: advanceBalance,
                 description:
-                    'System Generated: advance amount! of ${inven.title}',
-              ).then((_) {
-                notifier.clear();
-                context.pop();
-                showAwesomeSnackbar(context, 'Success!',
-                    'Inventory added successfully.', MessageType.success);
+                    'System Generated: advance amount! of ${inven.title} from ${pb.authStore.model?.toJson()['name']} to ${inven.from.name}',
+              ).then((_) async {
+                // trx of advance amount from user to inventory
+                await pktbsAddTrx(
+                  context,
+                  fromId: pb.authStore.model?.id,
+                  fromJson: pb.authStore.model?.toJson(),
+                  fromType: GLType.user,
+                  toId: inven.id,
+                  toJson: inven.toJson(),
+                  toType: inven.glType,
+                  trxType: TrxType.credit,
+                  amount: advanceBalance,
+                  description:
+                      'System Generated: advance amount! of ${inven.title} from ${pb.authStore.model?.toJson()['name']} to ${inven.title}',
+                ).then((_) {
+                  notifier.clear();
+                  context.pop();
+                  showAwesomeSnackbar(context, 'Success!',
+                      'Inventory added successfully.', MessageType.success);
+                });
               });
             } else {
               log.i('No Trx needed!');
