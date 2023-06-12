@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
@@ -191,6 +192,9 @@ class _TrxList extends ConsumerWidget {
                           TextSpan(
                             text: trx.fromName,
                             style: context.text.titleSmall,
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () async =>
+                                  await copyToClipboard(context, trx.fromId),
                           ),
                           WidgetSpan(
                             child: Padding(
@@ -211,6 +215,9 @@ class _TrxList extends ConsumerWidget {
                           TextSpan(
                             text: trx.toName,
                             style: context.text.titleSmall,
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () async =>
+                                  await copyToClipboard(context, trx.toId),
                           ),
                         ],
                       ),

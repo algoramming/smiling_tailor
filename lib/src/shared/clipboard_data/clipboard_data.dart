@@ -6,6 +6,6 @@ import '../show_toast/show_toast.dart';
 
 Future<void> copyToClipboard(BuildContext context, String text) async {
   await Clipboard.setData(ClipboardData(text: text)).then((_) =>
-      showAwesomeSnackbar(
-          context, 'Success!', 'Copied to clipboard!', MessageType.success, 1));
+      showAwesomeSnackbar(context, 'Success!', 'Copied to clipboard! [$text]',
+          MessageType.success, 1));
 }
