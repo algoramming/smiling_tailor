@@ -111,7 +111,7 @@ class MeasurementInfos extends StatelessWidget {
           decoration: const InputDecoration(
             labelText: 'Quantity',
             hintText: 'Enter quantity of this measurement...',
-            suffixIcon: KSuffixIcon(text: 'pc'),
+            suffixIcon: CurrencySuffixIcon(text: 'pc'),
           ),
           onFieldSubmitted: (_) async => notifier.submit(context),
           autovalidateMode: AutovalidateMode.onUserInteraction,

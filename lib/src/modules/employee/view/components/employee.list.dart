@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../shared/clipboard_data/clipboard_data.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
+import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../provider/employee.provider.dart';
 
@@ -19,9 +20,11 @@ class EmployeeList extends ConsumerWidget {
       children: [
         TextFormField(
           controller: notifier.searchCntrlr,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             hintText: 'Search...',
-            prefixIcon: Icon(Icons.search),
+            prefixIcon: ClearPreffixIcon(() => notifier.searchCntrlr.clear()),
+            suffixIcon: PasteSuffixIcon(() async =>
+                notifier.searchCntrlr.text = await getCliboardData()),
           ),
         ),
         Flexible(

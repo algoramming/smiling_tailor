@@ -88,8 +88,8 @@ class AddInventoryPopup extends ConsumerWidget {
                         decoration: InputDecoration(
                           labelText: 'Quantity',
                           hintText: 'Enter inventory\'s quantity...',
-                          suffixIcon:
-                              KSuffixIcon(text: notifier.unit?.symbol ?? '??'),
+                          suffixIcon: CurrencySuffixIcon(
+                              text: notifier.unit?.symbol ?? '??'),
                         ),
                         onFieldSubmitted: (_) async => notifier.submit(context),
                         autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -141,7 +141,7 @@ class AddInventoryPopup extends ConsumerWidget {
                   decoration: const InputDecoration(
                     labelText: 'Total Amount',
                     hintText: 'Enter inventory\'s amount...',
-                    suffixIcon: KSuffixIcon(),
+                    suffixIcon: CurrencySuffixIcon(),
                   ),
                   onFieldSubmitted: (_) async => notifier.submit(context),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -163,7 +163,7 @@ class AddInventoryPopup extends ConsumerWidget {
                   decoration: const InputDecoration(
                     labelText: 'Advance Payment',
                     hintText: 'Enter inventory\'s advance payment...',
-                    suffixIcon: KSuffixIcon(),
+                    suffixIcon: CurrencySuffixIcon(),
                   ),
                   onFieldSubmitted: (_) async => notifier.submit(context),
                   autovalidateMode: AutovalidateMode.onUserInteraction,

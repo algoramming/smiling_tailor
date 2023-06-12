@@ -74,7 +74,7 @@ class TailorInfos extends StatelessWidget {
               decoration: const InputDecoration(
                 labelText: 'Tailoring Charge',
                 hintText: 'Enter tailoring charge...',
-                suffixIcon: KSuffixIcon(),
+                suffixIcon: CurrencySuffixIcon(),
               ),
               onFieldSubmitted: (_) async => notifier.submit(context),
               onChanged: (_) => notifier.reload(),

@@ -86,7 +86,7 @@ class AddEmployeePopup extends ConsumerWidget {
                   decoration: const InputDecoration(
                     labelText: 'Salary',
                     hintText: 'Enter employee\'s salary...',
-                    suffixIcon: KSuffixIcon(),
+                    suffixIcon: CurrencySuffixIcon(),
                   ),
                   onFieldSubmitted: (_) async => notifier.submit(context),
                   autovalidateMode: AutovalidateMode.onUserInteraction,

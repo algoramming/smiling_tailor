@@ -65,7 +65,7 @@ class AddTrxEmployeePopup extends ConsumerWidget {
                         decoration: const InputDecoration(
                           labelText: 'Amount',
                           hintText: 'Enter employee\'s amount...',
-                          suffixIcon: KSuffixIcon(),
+                          suffixIcon: CurrencySuffixIcon(),
                         ),
                         onFieldSubmitted: (_) async => notifier.submit(context),
                         autovalidateMode: AutovalidateMode.onUserInteraction,

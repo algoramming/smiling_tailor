@@ -7,6 +7,7 @@ import '../../../../config/constants.dart';
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../shared/clipboard_data/clipboard_data.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
+import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../transaction/enum/trx.type.dart';
 import '../../../transaction/model/transaction.dart';
@@ -42,9 +43,12 @@ class EmployeeDetails extends ConsumerWidget {
                     return Expanded(
                       child: TextFormField(
                         controller: noti.searchCntrlr,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           hintText: 'Search...',
-                          prefixIcon: Icon(Icons.search),
+                          prefixIcon:
+                              ClearPreffixIcon(() => noti.searchCntrlr.clear()),
+                          suffixIcon: PasteSuffixIcon(() async =>
+                              noti.searchCntrlr.text = await getCliboardData()),
                         ),
                       ),
                     );

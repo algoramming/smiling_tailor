@@ -43,7 +43,7 @@ class PaymentInfos extends StatelessWidget {
           decoration: const InputDecoration(
             labelText: 'Advance Amount',
             hintText: 'Enter advance amount...',
-            suffixIcon: KSuffixIcon(),
+            suffixIcon: CurrencySuffixIcon(),
           ),
           onFieldSubmitted: (_) async => notifier.submit(context),
           onChanged: (_) => notifier.reload(),

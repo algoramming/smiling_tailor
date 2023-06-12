@@ -89,7 +89,7 @@ class AddVendorPopup extends ConsumerWidget {
                         decoration: const InputDecoration(
                           labelText: 'Opening Balance',
                           hintText: 'Enter vendor\'s opening balance...',
-                          suffixIcon: KSuffixIcon(),
+                          suffixIcon: CurrencySuffixIcon(),
                         ),
                         onFieldSubmitted: (_) async => notifier.submit(context),
                         autovalidateMode: AutovalidateMode.onUserInteraction,

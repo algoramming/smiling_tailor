@@ -74,8 +74,8 @@ class InventoryInfos extends StatelessWidget {
               decoration: InputDecoration(
                 labelText: 'Inventory Quantity',
                 hintText: 'Enter inventory\'s quantity...',
-                suffixIcon:
-                    KSuffixIcon(text: notifier.inventoryUnit?.symbol ?? '??'),
+                suffixIcon: CurrencySuffixIcon(
+                    text: notifier.inventoryUnit?.symbol ?? '??'),
               ),
               onFieldSubmitted: (_) async => notifier.submit(context),
               autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -100,7 +100,7 @@ class InventoryInfos extends StatelessWidget {
               decoration: const InputDecoration(
                 labelText: 'Inventory Charge',
                 hintText: 'Enter inventory charge...',
-                suffixIcon: KSuffixIcon(),
+                suffixIcon: CurrencySuffixIcon(),
               ),
               onFieldSubmitted: (_) async => notifier.submit(context),
               onChanged: (_) => notifier.reload(),

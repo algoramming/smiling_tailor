@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:smiling_tailor/src/config/constants.dart';
 
 import '../../db/isar.dart';
 import '../../utils/extensions/extensions.dart';
 import '../animations_widget/animated_widget_shower.dart';
 
-class KSuffixIcon extends StatelessWidget {
-  const KSuffixIcon({this.text, super.key});
+class CurrencySuffixIcon extends StatelessWidget {
+  const CurrencySuffixIcon({this.text, super.key});
 
   final String? text;
 
@@ -21,6 +22,43 @@ class KSuffixIcon extends StatelessWidget {
             style: context.text.labelLarge,
           ),
         ),
+      ),
+    );
+  }
+}
+
+class PasteSuffixIcon extends StatelessWidget {
+  const PasteSuffixIcon(this.onTap, {super.key});
+  final void Function()? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedWidgetShower(
+      size: 28.0,
+      child: InkWell(
+        borderRadius: borderRadius10,
+        onTap: onTap,
+        child: const Icon(
+          Icons.content_paste_go_outlined,
+          size: 20.0,
+        ),
+      ),
+    );
+  }
+}
+
+class ClearPreffixIcon extends StatelessWidget {
+  const ClearPreffixIcon(this.onTap, {super.key});
+  final void Function()? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedWidgetShower(
+      size: 28.0,
+      child: InkWell(
+        borderRadius: borderRadius10,
+        onTap: onTap,
+        child: const Icon(Icons.manage_search_sharp),
       ),
     );
   }

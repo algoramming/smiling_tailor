@@ -9,3 +9,8 @@ Future<void> copyToClipboard(BuildContext context, String text) async {
       showAwesomeSnackbar(context, 'Success!', 'Copied to clipboard! [$text]',
           MessageType.success, 1));
 }
+
+Future<String> getCliboardData() async {
+  final data = await Clipboard.getData(Clipboard.kTextPlain);
+  return data?.text ?? '';
+}

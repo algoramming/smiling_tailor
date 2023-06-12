@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:smiling_tailor/src/shared/textfield.suffix.widget/suffix.widget.dart';
 
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../shared/clipboard_data/clipboard_data.dart';
@@ -19,9 +20,11 @@ class VendorList extends ConsumerWidget {
       children: [
         TextFormField(
           controller: notifier.searchCntrlr,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             hintText: 'Search...',
-            prefixIcon: Icon(Icons.search),
+            prefixIcon: ClearPreffixIcon(() => notifier.searchCntrlr.clear()),
+            suffixIcon: PasteSuffixIcon(() async =>
+                notifier.searchCntrlr.text = await getCliboardData()),
           ),
         ),
         Flexible(

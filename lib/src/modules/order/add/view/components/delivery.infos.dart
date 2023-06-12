@@ -91,7 +91,7 @@ class DeliveryInfos extends StatelessWidget {
               decoration: const InputDecoration(
                 labelText: 'Delivery Charge',
                 hintText: 'Enter delivery charge...',
-                suffixIcon: KSuffixIcon(),
+                suffixIcon: CurrencySuffixIcon(),
               ),
               onFieldSubmitted: (_) async => notifier.submit(context),
               onChanged: (_) => notifier.reload(),
