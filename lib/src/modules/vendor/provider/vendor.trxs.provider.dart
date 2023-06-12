@@ -2,10 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../inventory/provider/inventory.provider.dart';
 
 import '../../../pocketbase/auth.store/helpers.dart';
 import '../../../utils/logger/logger_helper.dart';
+import '../../inventory/model/inventory.dart';
+import '../../inventory/provider/inventory.provider.dart';
 import '../../transaction/model/transaction.dart';
 import '../model/vendor.dart';
 
@@ -18,7 +19,7 @@ class VendorTrxsProvider
     extends AutoDisposeFamilyAsyncNotifier<List<PktbsTrx>, PktbsVendor> {
   TextEditingController searchCntrlr = TextEditingController();
   late List<PktbsTrx> _trxs;
-  double _totalPurchase = 0.0;
+  List<PktbsInventory> _inventories = [];
   @override
   FutureOr<List<PktbsTrx>> build(PktbsVendor arg) async {
     _trxs = [];
@@ -34,9 +35,9 @@ class VendorTrxsProvider
       log.i('Vendors Trxs: $v');
       return v.map((e) => PktbsTrx.fromJson(e.toJson())).toList();
     });
-    _totalPurchase = (ref.watch(inventoryProvider).value ?? [])
+    _inventories = (ref.watch(inventoryProvider).value ?? [])
         .where((e) => e.from == arg)
-        .fold(0.0, (p, e) => p + e.amount);
+        .toList();
     return _trxs;
   }
 
@@ -68,7 +69,9 @@ class VendorTrxsProvider
 
   List<PktbsTrx> get rawTrxs => _trxs;
 
-  double get totalPurchase => _totalPurchase;
+  List<PktbsInventory> get inventories => _inventories;
+
+  double get totalPurchase => _inventories.fold(0.0, (p, e) => p + e.amount);
 
   List<PktbsTrx> get trxList {
     _trxs.sort((a, b) => b.created.toLocal().compareTo(a.created.toLocal()));

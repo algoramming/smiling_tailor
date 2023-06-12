@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 
 import '../../../../../config/constants.dart';
+import '../../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../../utils/extensions/extensions.dart';
 import '../../provider/add.order.provider.dart';
 

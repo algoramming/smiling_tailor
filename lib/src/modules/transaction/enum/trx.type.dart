@@ -1,9 +1,8 @@
-import '../../vendor/model/vendor.dart';
-
 import '../../authentication/model/user.dart';
 import '../../employee/model/employee.dart';
 import '../../inventory/model/inventory.dart';
 import '../../order/model/order.dart';
+import '../../vendor/model/vendor.dart';
 
 enum GLType { vendor, inventory, employee, order, user }
 

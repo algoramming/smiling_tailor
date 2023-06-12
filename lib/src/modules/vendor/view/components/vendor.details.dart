@@ -123,13 +123,12 @@ class _FinancialsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // _TrxList(notifier, condition: (t) => true),
         _TrxList(notifier, condition: (t) => t.isGoods == false),
         const SizedBox(height: 10),
         _TotalSummary(
           notifier,
-          (t) => t.fromType == GLType.user,
-          isOrder: false,
+          (t) => t.isGoods == false,
+          isInventory: false,
         ),
       ],
     );
@@ -150,7 +149,7 @@ class _InventoriesTab extends StatelessWidget {
         _TotalSummary(
           notifier,
           (t) => t.fromType == GLType.order,
-          isOrder: true,
+          isInventory: true,
         ),
       ],
     );
@@ -251,9 +250,11 @@ class _TrxList extends ConsumerWidget {
                       tween: Tween<double>(begin: 0, end: trx.amount),
                       builder: (_, double x, __) {
                         return Tooltip(
-                          message: x.formattedFloat,
+                          message: trx.isGoods ? '' : x.formattedFloat,
                           child: Text(
-                            x.formattedCompat,
+                            !trx.isGoods
+                                ? x.formattedCompat
+                                : '${x.toInt()} ${trx.unit?.symbol ?? '??'}',
                             style: context.text.labelLarge!.copyWith(
                               color: trx.trxType.isDebit
                                   ? Colors.green
@@ -272,11 +273,12 @@ class _TrxList extends ConsumerWidget {
 }
 
 class _TotalSummary extends ConsumerWidget {
-  const _TotalSummary(this.notifier, this.condition, {this.isOrder = false});
+  const _TotalSummary(this.notifier, this.condition,
+      {this.isInventory = false});
 
   final VendorProvider notifier;
   final bool Function(PktbsTrx trx) condition;
-  final bool isOrder;
+  final bool isInventory;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -284,13 +286,19 @@ class _TotalSummary extends ConsumerWidget {
     final noti =
         ref.watch(vendorTrxsProvider(notifier.selectedVendor!).notifier);
     final trxs = noti.rawTrxs.where(condition).toList();
-    final given =
-        trxs.isEmpty ? 0.0 : trxs.fold<double>(0.0, (p, c) => p + c.amount);
-    final due = noti.totalPurchase - given;
-    final Color kColor = isOrder
-        ? due.isNegative
-            ? Colors.red
-            : Colors.green
+    final adjusted = trxs.isEmpty
+        ? 0.0
+        : trxs.fold<double>(
+            0.0,
+            (p, c) =>
+                p +
+                (c.trxType.isCredit ? c.amount : 0.0) -
+                (c.trxType.isDebit ? c.amount : 0.0));
+    final due = noti.totalPurchase - adjusted;
+    final totalQuantity =
+        noti.inventories.fold<double>(0.0, (p, c) => p + c.quantity);
+    final Color kColor = isInventory
+        ? Colors.green
         : due.isNegative
             ? Colors.green
             : Colors.red;
@@ -309,19 +317,22 @@ class _TotalSummary extends ConsumerWidget {
             ),
           ),
         ),
-        title: Text(
-            'Total Due till now ${appSettings.getDateTimeFormat.format(DateTime.now())}'),
-        subtitle: Text(
-            'Total Purchase: ${noti.totalPurchase.formattedCompat} & Given: ${given.formattedCompat}'),
+        title: Text(isInventory
+            ? 'Total summary till now ${appSettings.getDateTimeFormat.format(DateTime.now())}'
+            : 'Total due till now ${appSettings.getDateTimeFormat.format(DateTime.now())}'),
+        subtitle: Text(isInventory
+            ? 'Total Purchase: ${noti.totalPurchase.formattedFloat} and Total Order: ${noti.inventories.length}'
+            : 'Total Purchase: ${noti.totalPurchase.formattedFloat} and Adjusted: ${adjusted.formattedFloat}'),
         trailing: TweenAnimationBuilder(
           curve: Curves.easeOut,
           duration: kAnimationDuration(0.5),
-          tween: Tween<double>(begin: 0, end: due),
+          tween:
+              Tween<double>(begin: 0, end: isInventory ? totalQuantity : due),
           builder: (_, double x, __) {
             return Tooltip(
-              message: x.formattedFloat,
+              message: isInventory ? '' : x.formattedFloat,
               child: Text(
-                x.formattedCompat,
+                isInventory ? '${x.toInt()} pc' : x.formattedCompat,
                 style: context.text.labelLarge!.copyWith(
                   color: kColor,
                 ),
