@@ -56,41 +56,25 @@ Future<void> pktbsAddInventory(
             if (notifier.advanceCntrlr.text.isNotNullOrEmpty() &&
                 notifier.advanceCntrlr.text.toDouble != 0.0) {
               final advanceBalance = notifier.advanceCntrlr.text.toDouble;
-              log.i(
-                  'Need Another 2 Trx for ${inven.title} of $advanceBalance} to ${inven.from.name}');
-              // trx of advance amount from user to vendor
+              log.i('Need Another Trx for ${inven.title} of $advanceBalance}');
+              // trx of advance amount
               await pktbsAddTrx(
                 context,
-                fromId: pb.authStore.model?.id,
-                fromJson: pb.authStore.model?.toJson(),
-                fromType: GLType.user,
-                toId: inven.from.id,
-                toJson: inven.from.toJson(),
-                toType: inven.from.glType,
+                fromId: inven.from.id,
+                fromJson: inven.from.toJson(),
+                fromType: inven.from.glType,
+                toId: inven.id,
+                toJson: inven.toJson(),
+                toType: inven.glType,
                 trxType: TrxType.credit,
                 amount: advanceBalance,
                 description:
-                    'System Generated: advance amount! of ${inven.title} from ${pb.authStore.model?.toJson()['name']} to ${inven.from.name}',
-              ).then((_) async {
-                // trx of advance amount from user to inventory
-                await pktbsAddTrx(
-                  context,
-                  fromId: pb.authStore.model?.id,
-                  fromJson: pb.authStore.model?.toJson(),
-                  fromType: GLType.user,
-                  toId: inven.id,
-                  toJson: inven.toJson(),
-                  toType: inven.glType,
-                  trxType: TrxType.credit,
-                  amount: advanceBalance,
-                  description:
-                      'System Generated: advance amount! of ${inven.title} from ${pb.authStore.model?.toJson()['name']} to ${inven.title}',
-                ).then((_) {
-                  notifier.clear();
-                  context.pop();
-                  showAwesomeSnackbar(context, 'Success!',
-                      'Inventory added successfully.', MessageType.success);
-                });
+                    'System Generated: advance amount! of ${inven.title}',
+              ).then((_) {
+                notifier.clear();
+                context.pop();
+                showAwesomeSnackbar(context, 'Success!',
+                    'Inventory added successfully.', MessageType.success);
               });
             } else {
               log.i('No Trx needed!');
