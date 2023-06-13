@@ -58,6 +58,7 @@ class InventoryList extends ConsumerWidget {
                         // trailing: const Icon(Icons.arrow_circle_right_outlined),
                         trailing: Column(
                           crossAxisAlignment: crossEnd,
+                          mainAxisAlignment: mainCenter,
                           children: [
                             Text(
                               inventory.amount.formattedCompat,

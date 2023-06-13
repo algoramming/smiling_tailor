@@ -126,13 +126,11 @@ class _FinancialsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _TrxList(notifier, condition: (t) => t.fromType == GLType.user),
+        _TrxList(notifier,
+            condition: (t) => t.fromType.isUser || t.toType.isUser),
         const SizedBox(height: 10),
-        _TotalSummary(
-          notifier,
-          (t) => t.fromType == GLType.user,
-          isOrder: false,
-        ),
+        _TotalSummaryFinancials(
+            notifier, (t) => t.fromType.isUser || t.toType.isUser),
       ],
     );
   }
@@ -147,13 +145,11 @@ class _OrdersTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _TrxList(notifier, condition: (t) => t.fromType != GLType.user),
+        _TrxList(notifier,
+            condition: (t) => t.fromType.isOrder || t.toType.isOrder),
         const SizedBox(height: 10),
-        _TotalSummary(
-          notifier,
-          (t) => t.fromType != GLType.user,
-          isOrder: true,
-        ),
+        _TotalSummaryOrders(
+            notifier, (t) => t.fromType.isOrder || t.toType.isOrder),
       ],
     );
   }
@@ -247,16 +243,14 @@ class _TrxList extends ConsumerWidget {
                       curve: Curves.easeOut,
                       duration: kAnimationDuration(0.5),
                       tween: Tween<double>(begin: 0, end: trx.amount),
-                      builder: (_, double x, __) {
-                        return Tooltip(
-                          message: x.formattedFloat,
-                          child: Text(
-                            x.formattedCompat,
-                            style: context.text.labelLarge!
-                                .copyWith(color: kColor),
-                          ),
-                        );
-                      },
+                      builder: (_, double x, __) => Tooltip(
+                        message: x.formattedFloat,
+                        child: Text(
+                          x.formattedCompat,
+                          style:
+                              context.text.labelLarge!.copyWith(color: kColor),
+                        ),
+                      ),
                     ),
                   ),
                 );
@@ -266,12 +260,11 @@ class _TrxList extends ConsumerWidget {
   }
 }
 
-class _TotalSummary extends ConsumerWidget {
-  const _TotalSummary(this.notifier, this.condition, {this.isOrder = false});
+class _TotalSummaryFinancials extends ConsumerWidget {
+  const _TotalSummaryFinancials(this.notifier, this.condition);
 
   final EmployeeProvider notifier;
   final bool Function(PktbsTrx trx) condition;
-  final bool isOrder;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -295,13 +288,7 @@ class _TotalSummary extends ConsumerWidget {
                     (c.trxType.isCredit ? c.amount : 0.0) -
                     (c.trxType.isDebit ? c.amount : 0.0));
     final due = salary - adjusted;
-    final Color kColor = isOrder
-        ? adjusted.isNegative
-            ? Colors.red
-            : Colors.green
-        : due.isNegative
-            ? Colors.green
-            : Colors.red;
+    final kColor = due.isNegative ? Colors.green : Colors.red;
     return Row(
       children: [
         if (!noti.showPrevMonth)
@@ -331,16 +318,13 @@ class _TotalSummary extends ConsumerWidget {
                 ),
               ),
               title: Text(
-                  '${!isOrder ? 'Total owe' : 'Total completed orders'} for Month (${(noti.showPrevMonth ? DateTime.now().previousMonth : DateTime.now()).monthName})'),
-              subtitle: !isOrder
-                  ? Text(
-                      'Salary: ${salary.formattedFloat} & Taken: ${adjusted.formattedFloat}')
-                  : Text(
-                      'Total Order: ${trxs.length} pcs & Earn: ${adjusted.formattedFloat}'),
+                  'Total owe for Month (${(noti.showPrevMonth ? DateTime.now().previousMonth : DateTime.now()).monthName})'),
+              subtitle: Text(
+                  'Salary: ${salary.formattedFloat} & Taken: ${adjusted.formattedFloat}'),
               trailing: TweenAnimationBuilder(
                 curve: Curves.easeOut,
                 duration: kAnimationDuration(0.5),
-                tween: Tween<double>(begin: 0, end: isOrder ? adjusted : due),
+                tween: Tween<double>(begin: 0, end: due),
                 builder: (_, double x, __) {
                   return Tooltip(
                     message: x.formattedFloat,
@@ -350,6 +334,121 @@ class _TotalSummary extends ConsumerWidget {
                         color: kColor,
                       ),
                     ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ),
+        if (noti.showPrevMonth)
+          InkWell(
+            borderRadius: borderRadius45,
+            onTap: () => noti.toggleShowPrevMonth(),
+            child: Container(
+              padding: const EdgeInsets.fromLTRB(0.0, 15.0, 5.0, 15.0),
+              margin: const EdgeInsets.fromLTRB(5.0, 5.0, 0.0, 5.0),
+              child: const Icon(Icons.arrow_forward_ios),
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+class _TotalSummaryOrders extends ConsumerWidget {
+  const _TotalSummaryOrders(this.notifier, this.condition);
+
+  final EmployeeProvider notifier;
+  final bool Function(PktbsTrx trx) condition;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(employeeTrxsProvider(notifier.selectedEmployee!));
+    final noti =
+        ref.watch(employeeTrxsProvider(notifier.selectedEmployee!).notifier);
+    final salary = notifier.selectedEmployee!.salary;
+    final trxs = noti.rawTrxs.where(condition).toList();
+    final adjusted = trxs.isEmpty
+        ? 0.0
+        : trxs
+            .where((e) =>
+                e.created.toLocal().month ==
+                (noti.showPrevMonth
+                    ? DateTime.now().previousMonth.month
+                    : DateTime.now().month))
+            .fold<double>(
+                0.0,
+                (p, c) =>
+                    p -
+                    (c.trxType.isCredit ? c.amount : 0.0) +
+                    (c.trxType.isDebit ? c.amount : 0.0));
+    final due = salary - adjusted;
+    final kColor = due.isNegative ? Colors.green : Colors.red;
+    return Row(
+      children: [
+        if (!noti.showPrevMonth)
+          InkWell(
+            borderRadius: borderRadius45,
+            onTap: () => noti.toggleShowPrevMonth(),
+            child: Container(
+              padding: const EdgeInsets.fromLTRB(5.0, 15.0, 0.0, 15.0),
+              margin: const EdgeInsets.fromLTRB(5.0, 5.0, 0.0, 5.0),
+              child: const Icon(Icons.arrow_back_ios),
+            ),
+          ),
+        Expanded(
+          child: Card(
+            color: context.theme.dividerColor.withOpacity(0.2),
+            child: ListTile(
+              leading: AnimatedWidgetShower(
+                padding: 3.0,
+                size: 35.0,
+                child: Card(
+                  color: kColor.withOpacity(0.2),
+                  shape: roundedRectangleBorder10,
+                  child: SvgPicture.asset(
+                    'assets/svgs/performance-overlay.svg',
+                    colorFilter: kColor.toColorFilter,
+                  ),
+                ),
+              ),
+              title: Text(
+                  'Total orders summary for Month (${(noti.showPrevMonth ? DateTime.now().previousMonth : DateTime.now()).monthName})'),
+              subtitle: Text(
+                  'Salary: ${salary.formattedFloat} & Completed Orders: ${trxs.length} pc'),
+              trailing: TweenAnimationBuilder(
+                curve: Curves.easeOut,
+                duration: kAnimationDuration(0.5),
+                tween: Tween<double>(begin: 0, end: adjusted),
+                builder: (_, double x, __) {
+                  return Column(
+                    crossAxisAlignment: crossEnd,
+                    mainAxisAlignment: mainCenter,
+                    children: [
+                      Tooltip(
+                        message: x.formattedFloat,
+                        child: Text(
+                          x.formattedCompat,
+                          style: context.text.labelLarge!.copyWith(
+                            color: kColor,
+                          ),
+                        ),
+                      ),
+                      Tooltip(
+                        message: !due.isNegative
+                            ? 'Loss: ${due.mod.formattedFloat}'
+                            : 'Profit: ${due.mod.formattedFloat}',
+                        child: Text(
+                          !due.isNegative
+                              ? 'Loss: ${due.formattedCompat}'
+                              : 'Profit: ${due.mod.formattedCompat}',
+                          style: context.text.bodySmall!.copyWith(
+                            color: kColor.withOpacity(0.8),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
                   );
                 },
               ),
