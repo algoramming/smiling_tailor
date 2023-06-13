@@ -20,6 +20,9 @@ extension DoubleExt on double {
 
   /// 3 digits
   double get toPrecise => double.parse(toStringAsFixed(3));
+
+  double get mod => isNegative ? this*-1 : this;
+
 }
 
 extension ListDoubleExt on List<double> {

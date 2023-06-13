@@ -21,6 +21,7 @@ extension TrxExtension on PktbsTrx {
     bool? isGoods,
     TrxType? trxType,
     String? description,
+    String? voucher,
     bool? isSystemGenerated,
   }) {
     return PktbsTrx(
@@ -42,6 +43,7 @@ extension TrxExtension on PktbsTrx {
       isGoods: isGoods ?? this.isGoods,
       trxType: trxType ?? this.trxType,
       description: description ?? this.description,
+      voucher: voucher ?? this.voucher,
       isSystemGenerated: isSystemGenerated ?? this.isSystemGenerated,
     );
   }
@@ -65,6 +67,7 @@ extension TrxExtension on PktbsTrx {
         _Json.isGoods: isGoods,
         _Json.trxType: trxType.title,
         _Json.description: description,
+        _Json.voucher: voucher,
         _Json.isSystemGenerated: isSystemGenerated,
         _Json.expand: {
           _Json.creator: creator.toJson(),

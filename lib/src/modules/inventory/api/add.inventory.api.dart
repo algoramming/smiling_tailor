@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pocketbase/pocketbase.dart';
 
+import '../../../db/isar.dart';
 import '../../../pocketbase/auth.store/helpers.dart';
 import '../../../pocketbase/error.handle/error.handle.func.dart';
 import '../../../shared/show_toast/awesome_snackbar.dart';
@@ -47,7 +48,8 @@ Future<void> pktbsAddInventory(
             toType: inven.glType,
             trxType: TrxType.debit,
             amount: inven.quantity.toString().toDouble,
-            description: 'System Generated: goods! of ${inven.title}',
+            description:
+                'System Generated: Transaction for Goods Entry! ${inven.title} [${inven.id}] - ${appCurrency.symbol}${inven.amount} has been added to the system through ${inven.from.name} [${inven.from.id}].',
             isGoods: true,
             isSystemGenerated: true,
             unit: inven.unit.name,
@@ -67,9 +69,10 @@ Future<void> pktbsAddInventory(
                 toJson: inven.toJson(),
                 toType: inven.glType,
                 trxType: TrxType.credit,
+                isSystemGenerated: true,
                 amount: advanceBalance,
                 description:
-                    'System Generated: advance amount! of ${inven.title}',
+                    'System Generated: Transaction for Advance Amount! ${inven.title} [${inven.id}] - ${inven.quantity}${inven.unit.symbol} has been added to the system through ${inven.from.name} [${inven.from.id}].',
               ).then((_) {
                 notifier.clear();
                 context.pop();

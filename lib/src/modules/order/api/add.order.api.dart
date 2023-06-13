@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pocketbase/pocketbase.dart';
+import 'package:smiling_tailor/src/db/isar.dart';
 
 import '../../../pocketbase/auth.store/helpers.dart';
 import '../../../pocketbase/error.handle/error.handle.func.dart';
@@ -78,7 +79,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
             amount: noti.advanceAmountCntrlr.text.toDouble ?? 0.0,
             trxType: TrxType.debit,
             description:
-                'System Generated: Advance payment of order #${order.id}',
+                'System Generated: Transaction for advance amount of order ${order.id}',
             isSystemGenerated: true,
           ).then((_) async {
             // if tailor needed
@@ -203,27 +204,6 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
   }
 }
 
-Future<RecordModel?> deliveryAllocationApi(
-  BuildContext context,
-  PktbsOrder order,
-  AddOrderProvider notifier,
-) {
-  log.i('Need Trx for home delivery allocation');
-  return pktbsAddTrx(
-    context,
-    fromId: order.id,
-    fromJson: order.toJson(),
-    fromType: order.glType,
-    toId: order.deliveryEmployee!.id,
-    toJson: order.deliveryEmployee!.toJson(),
-    toType: order.deliveryEmployee!.glType,
-    amount: notifier.deliveryChargeCntrlr.text.toDouble ?? 0.0,
-    trxType: TrxType.debit,
-    description: 'System Generated: Delivery charge of order #${order.id}',
-    isSystemGenerated: true,
-  );
-}
-
 Future<RecordModel?> tailorAllocateApi(
   BuildContext context,
   PktbsOrder order,
@@ -241,7 +221,9 @@ Future<RecordModel?> tailorAllocateApi(
     trxType: TrxType.debit,
     amount: notifier.tailorChargeCntrlr.text.toDouble ?? 0.0,
     isSystemGenerated: true,
-    description: 'System Generated: Tailor charge of order #${order.id}',
+    voucher: 'Tailor Charge',
+    description:
+        'System Generated: Transaction for Tailor Charge of order #${order.id} allocated to ${order.tailorEmployee!.name} [${order.tailorEmployee!.id}]',
   );
 }
 
@@ -250,21 +232,23 @@ Future<RecordModel?> inventoryAllocateApi(
   PktbsOrder order,
   AddOrderProvider notifier,
 ) {
-  log.i('Need Trx for inventory purchaseallocation');
+  log.i('Need Trx for inventory purchase allocation');
   return pktbsAddTrx(
     context,
-    fromId: order.id,
-    fromJson: order.toJson(),
-    fromType: order.glType,
-    toId: order.inventory!.id,
-    toJson: order.inventory!.toJson(),
-    toType: order.inventory!.glType,
+    fromId: order.inventory!.id,
+    fromJson: order.inventory!.toJson(),
+    fromType: order.inventory!.glType,
+    toId: order.id,
+    toJson: order.toJson(),
+    toType: order.glType,
     trxType: TrxType.credit,
     amount: order.inventoryQuantity!.toString().toDouble ?? 0.0,
     unit: order.inventoryUnit!.name,
     isSystemGenerated: true,
+    voucher: 'Inventory Allocation',
     isGoods: true,
-    description: 'System Generated: Inventory Allocation of order #${order.id}',
+    description:
+        'System Generated: Transaction for Inventory Purchase of order #${order.id} allocated to ${order.inventory!.title} [${order.inventory!.id}] by ${appCurrency.symbol}${notifier.inventoryPriceCntrlr.text.toDouble}}',
   ).then(
     (_) async => await pktbsAddTrx(
       context,
@@ -277,8 +261,31 @@ Future<RecordModel?> inventoryAllocateApi(
       trxType: TrxType.debit,
       amount: notifier.inventoryPriceCntrlr.text.toDouble ?? 0.0,
       isSystemGenerated: true,
+      voucher: 'Inventory Purchase',
       description:
-          'System Generated: Inventory money trx of order #${order.id}',
+          'System Generated: Transaction for Inventory Purchase of order #${order.id} allocated to ${order.inventory!.title} [${order.inventory!.id}] of ${order.inventoryQuantity}${order.inventoryUnit!.symbol}',
     ),
+  );
+}
+
+Future<RecordModel?> deliveryAllocationApi(
+  BuildContext context,
+  PktbsOrder order,
+  AddOrderProvider notifier,
+) {
+  log.i('Need Trx for home delivery allocation');
+  return pktbsAddTrx(
+    context,
+    fromId: order.id,
+    fromJson: order.toJson(),
+    fromType: order.glType,
+    toId: order.deliveryEmployee!.id,
+    toJson: order.deliveryEmployee!.toJson(),
+    toType: order.deliveryEmployee!.glType,
+    amount: notifier.deliveryChargeCntrlr.text.toDouble ?? 0.0,
+    trxType: TrxType.debit,
+    isSystemGenerated: true,
+    voucher: 'Delivery Charge',
+    description: 'System Generated: Transaction for Delivery Charge of order #${order.id} allocated to ${order.deliveryEmployee!.name} [${order.deliveryEmployee!.id}]',
   );
 }
