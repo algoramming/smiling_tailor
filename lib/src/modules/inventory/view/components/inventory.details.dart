@@ -97,7 +97,7 @@ class _TrxTable extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: DefaultTabController(
-        length: 2,
+        length: 3,
         child: NestedScrollView(
           floatHeaderSlivers: true,
           headerSliverBuilder: (_, __) => [
@@ -106,7 +106,11 @@ class _TrxTable extends StatelessWidget {
                 splashBorderRadius: borderRadius15,
                 dividerColor: Colors.transparent,
                 labelStyle: context.theme.textTheme.labelLarge,
-                tabs: const [Tab(text: 'Financials'), Tab(text: 'Orders')],
+                tabs: const [
+                  Tab(text: 'Financials'),
+                  Tab(text: 'Orders'),
+                  Tab(text: 'Inventories')
+                ],
               ),
             ),
           ],
@@ -114,6 +118,7 @@ class _TrxTable extends StatelessWidget {
             children: [
               _FinancialsTab(notifier),
               _OrdersTab(notifier),
+              _InventoriesTab(notifier),
             ],
           ),
         ),
@@ -145,6 +150,27 @@ class _FinancialsTab extends StatelessWidget {
 
 class _OrdersTab extends StatelessWidget {
   const _OrdersTab(this.notifier);
+
+  final InventoryProvider notifier;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _TrxList(notifier, condition: (t) => t.isGoods == true),
+        const SizedBox(height: 10),
+        _TotalSummary(
+          notifier,
+          (t) => t.isGoods == true,
+          isOrder: true,
+        ),
+      ],
+    );
+  }
+}
+
+class _InventoriesTab extends StatelessWidget {
+  const _InventoriesTab(this.notifier);
 
   final InventoryProvider notifier;
 

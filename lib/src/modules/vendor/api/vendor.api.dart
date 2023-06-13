@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pocketbase/pocketbase.dart';
 
+import '../../../db/isar.dart';
 import '../../../pocketbase/auth.store/helpers.dart';
 import '../../../pocketbase/error.handle/error.handle.func.dart';
 import '../../../shared/show_toast/awesome_snackbar.dart';
@@ -47,10 +48,11 @@ Future<void> pktbsAddVendor(
             toId: ven.id,
             toJson: ven.toJson(),
             toType: ven.glType,
-            trxType: notifier.isPaybale ? TrxType.credit : TrxType.debit,
+            trxType: notifier.isPaybale ? TrxType.debit : TrxType.credit,
             isSystemGenerated: true,
             amount: openingBalance,
-            description: 'System Generated: Opening Balance of ${ven.name}',
+            description:
+                'System Generated: Transaction for Opening Balance. ${ven.name} [${ven.id}] is ${!notifier.isPaybale ? 'Payable' : 'Receivable'} of ${appCurrency.symbol}$openingBalance. Liability ${notifier.isPaybale ? 'Credit/Increase' : 'Debit/Decrease'}.',
           ).then((value) {
             notifier.clear();
             context.pop();
