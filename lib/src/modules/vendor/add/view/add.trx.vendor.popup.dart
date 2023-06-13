@@ -3,22 +3,21 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../db/isar.dart';
 import '../../../../shared/animations_widget/animated_popup.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
-import '../../model/employee.dart';
-import '../provider/add.trx.employee.provider.dart';
+import '../../model/vendor.dart';
+import '../provider/add.trx.vendor.provider.dart';
 
-class AddTrxEmployeePopup extends ConsumerWidget {
-  const AddTrxEmployeePopup(this.employee, {super.key});
+class AddTrxVendorPopup extends ConsumerWidget {
+  const AddTrxVendorPopup(this.vendor, {super.key});
 
-  final PktbsEmployee employee;
+  final PktbsVendor vendor;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(addTrxEmployeeProvider(employee));
-    final notifier = ref.read(addTrxEmployeeProvider(employee).notifier);
+    ref.watch(addTrxVendorProvider(vendor));
+    final notifier = ref.read(addTrxVendorProvider(vendor).notifier);
     return AnimatedPopup(
       child: AlertDialog(
         title: const Text('Add Transaction'),
@@ -32,31 +31,22 @@ class AddTrxEmployeePopup extends ConsumerWidget {
                 RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
-                    text: 'The amount will be deducted from ',
+                    text: 'The amount will be added in ',
                     style: context.text.labelLarge,
                     children: [
                       TextSpan(
-                        text: '${employee.name}\'s',
+                        text: '${vendor.name}\'s',
                         style: context.text.labelLarge!
                             .copyWith(color: context.theme.primaryColor),
                       ),
                       TextSpan(
-                        text: ' salary. [ Total Salary: ',
-                        style: context.text.labelLarge,
-                      ),
-                      TextSpan(
-                        text: employee.salary.toString(),
-                        style: context.text.labelLarge!
-                            .copyWith(color: context.theme.primaryColor),
-                      ),
-                      TextSpan(
-                        text: '${appCurrency.symbol} ]',
+                        text: ' statement.',
                         style: context.text.labelLarge,
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -94,8 +84,8 @@ class AddTrxEmployeePopup extends ConsumerWidget {
                   alignment: Alignment.centerRight,
                   child: Text(
                     notifier.isPaybale
-                        ? '• This Employee owe from you. (Accounts Payable)'
-                        : '• You\'re owe to this Employee. (Accounts Receivable)',
+                        ? '• This amount will be deducted from this vendor. (Accounts Payable)'
+                        : '• This amount will be added to this vendor. (Accounts Receivable)',
                     style: context.text.bodySmall!.copyWith(
                       color: context.theme.primaryColor,
                       fontWeight: FontWeight.bold,

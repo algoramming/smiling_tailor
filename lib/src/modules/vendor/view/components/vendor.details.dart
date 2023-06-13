@@ -13,6 +13,7 @@ import '../../../../utils/extensions/extensions.dart';
 import '../../../settings/model/settings.model.dart';
 import '../../../transaction/enum/trx.type.dart';
 import '../../../transaction/model/transaction.dart';
+import '../../add/view/add.trx.vendor.popup.dart';
 import '../../add/view/add.vendor.popup.dart';
 import '../../provider/vendor.provider.dart';
 import '../../provider/vendor.trxs.provider.dart';
@@ -55,15 +56,12 @@ class VendorDetails extends ConsumerWidget {
                   }),
                   const SizedBox(width: 6.0),
                   OutlinedButton.icon(
-                    onPressed: () async {
-                      // TODO: Add Trx
-                      // await showDialog(
-                      //   context: context,
-                      //   barrierDismissible: false,
-                      //   builder: (context) =>
-                      //       AddTrxEmployeePopup(notifier.selectedEmployee!),
-                      // );
-                    },
+                    onPressed: () async => await showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (_) =>
+                          AddTrxVendorPopup(notifier.selectedVendor!),
+                    ),
                     icon: const Icon(Icons.add),
                     label: const Text('Transaction'),
                   ),
