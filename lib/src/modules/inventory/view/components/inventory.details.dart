@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:smiling_tailor/src/modules/inventory/provider/inventory.provider.dart';
 import 'package:smiling_tailor/src/modules/inventory/provider/inventory.trxs.provider.dart';
@@ -12,6 +13,7 @@ import '../../../../shared/clipboard_data/clipboard_data.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
+import '../../../../utils/logger/logger_helper.dart';
 import '../../../settings/model/settings.model.dart';
 import '../../../transaction/enum/trx.type.dart';
 import '../../../transaction/model/transaction.dart';
@@ -204,97 +206,102 @@ class _TrxList extends ConsumerWidget {
       child: trxs.isEmpty
           ? const Center(
               child: Text('No Transaction Found!', textAlign: TextAlign.center))
-          : ListView.builder(
-              itemCount: trxs.length,
-              itemBuilder: (_, i) {
-                final trx = trxs[i];
-                final kColor = trx.trxType.isCredit ? Colors.red : Colors.green;
-                return Card(
-                  child: KListTile(
-                    onLongPress: () async =>
-                        await copyToClipboard(context, trx.id),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12.0, vertical: 5.0),
-                    leading: AnimatedWidgetShower(
-                      padding: 3.0,
-                      size: 35.0,
-                      child: trx.modifiers,
-                    ),
-                    title: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: trx.fromName,
-                            style: context.text.titleSmall,
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () async =>
-                                  await copyToClipboard(context, trx.fromId),
-                          ),
-                          WidgetSpan(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 6.0),
-                              child: RotatedBox(
-                                quarterTurns: trx.trxType.isDebit ? 0 : 1,
-                                child: Icon(
-                                  Icons.arrow_outward_rounded,
-                                  size: 16,
-                                  color: kColor,
+          : SlidableAutoCloseBehavior(
+            child: ListView.builder(
+                itemCount: trxs.length,
+                itemBuilder: (_, i) {
+                  final trx = trxs[i];
+                  final kColor = trx.trxType.isCredit ? Colors.red : Colors.green;
+                  return Card(
+                    child: KListTile(
+                      key: ValueKey(trx.id),
+                      swipeLeft: () => log.i('swipe left'),
+                      swipeRight: () => log.i('swipe right'),
+                      onLongPress: () async =>
+                          await copyToClipboard(context, trx.id),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0, vertical: 5.0),
+                      leading: AnimatedWidgetShower(
+                        padding: 3.0,
+                        size: 35.0,
+                        child: trx.modifiers,
+                      ),
+                      title: RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: trx.fromName,
+                              style: context.text.titleSmall,
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () async =>
+                                    await copyToClipboard(context, trx.fromId),
+                            ),
+                            WidgetSpan(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 6.0),
+                                child: RotatedBox(
+                                  quarterTurns: trx.trxType.isDebit ? 0 : 1,
+                                  child: Icon(
+                                    Icons.arrow_outward_rounded,
+                                    size: 16,
+                                    color: kColor,
+                                  ),
                                 ),
                               ),
                             ),
+                            TextSpan(
+                              text: trx.toName,
+                              style: context.text.titleSmall,
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () async =>
+                                    await copyToClipboard(context, trx.toId),
+                            ),
+                          ],
+                        ),
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: crossStart,
+                        children: [
+                          Text(
+                            trx.createdDate,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: context.text.labelMedium,
                           ),
-                          TextSpan(
-                            text: trx.toName,
-                            style: context.text.titleSmall,
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () async =>
-                                  await copyToClipboard(context, trx.toId),
-                          ),
+                          if (trx.description != null)
+                            Text(
+                              trx.description!,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              style: context.text.labelSmall!
+                                  .copyWith(fontWeight: FontWeight.normal),
+                            ),
                         ],
                       ),
-                    ),
-                    subtitle: Column(
-                      crossAxisAlignment: crossStart,
-                      children: [
-                        Text(
-                          trx.createdDate,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: context.text.labelMedium,
-                        ),
-                        if (trx.description != null)
-                          Text(
-                            trx.description!,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                            style: context.text.labelSmall!
-                                .copyWith(fontWeight: FontWeight.normal),
-                          ),
-                      ],
-                    ),
-                    trailing: TweenAnimationBuilder(
-                      curve: Curves.easeOut,
-                      duration: kAnimationDuration(0.5),
-                      tween: Tween<double>(begin: 0, end: trx.amount),
-                      builder: (_, double x, __) {
-                        return Tooltip(
-                          message: trx.isGoods ? '' : x.formattedFloat,
-                          child: Text(
-                            !trx.isGoods
-                                ? x.formattedCompat
-                                : '${x.toInt()} ${trx.unit?.symbol ?? '??'}',
-                            style: context.text.labelLarge!.copyWith(
-                              color: kColor,
+                      trailing: TweenAnimationBuilder(
+                        curve: Curves.easeOut,
+                        duration: kAnimationDuration(0.5),
+                        tween: Tween<double>(begin: 0, end: trx.amount),
+                        builder: (_, double x, __) {
+                          return Tooltip(
+                            message: trx.isGoods ? '' : x.formattedFloat,
+                            child: Text(
+                              !trx.isGoods
+                                  ? x.formattedCompat
+                                  : '${x.toInt()} ${trx.unit?.symbol ?? '??'}',
+                              style: context.text.labelLarge!.copyWith(
+                                color: kColor,
+                              ),
                             ),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                );
-              },
-            ),
+                  );
+                },
+              ),
+          ),
     );
   }
 }

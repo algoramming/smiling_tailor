@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../../config/constants.dart';
 import '../../utils/extensions/extensions.dart';
+import '../../utils/themes/themes.dart';
 
 class KListTile extends StatelessWidget {
   const KListTile({
-    super.key,
+    Key? key,
     this.onTap,
     this.title,
     this.leading,
@@ -13,10 +15,12 @@ class KListTile extends StatelessWidget {
     this.trailing,
     this.subtitle,
     this.selected,
+    this.swipeLeft,
+    this.swipeRight,
     this.onDoubleTap,
     this.onLongPress,
     this.paddingBetweenTitleAndSubtitle,
-  });
+  }) : super(key: key);
 
   final Widget? title;
   final bool? selected;
@@ -24,6 +28,8 @@ class KListTile extends StatelessWidget {
   final Widget? subtitle;
   final Widget? trailing;
   final void Function()? onTap;
+  final void Function()? swipeLeft;
+  final void Function()? swipeRight;
   final EdgeInsetsGeometry? padding;
   final void Function()? onDoubleTap;
   final void Function()? onLongPress;
@@ -39,38 +45,184 @@ class KListTile extends StatelessWidget {
       onTap: onTap,
       onDoubleTap: onDoubleTap,
       onLongPress: onLongPress,
-      child: Container(
-        decoration: BoxDecoration(
-          color: selected == true
-              ? context.theme.primaryColor.withOpacity(0.2)
-              : null,
-          borderRadius: borderRadius15,
-        ),
-        child: Padding(
-          padding: padding ??
-              const EdgeInsets.symmetric(horizontal: 12.0, vertical: 3.0),
-          child: Row(
-            mainAxisAlignment: mainCenter,
-            children: [
-              leading ?? const SizedBox.shrink(),
-              const SizedBox(width: 10),
-              Expanded(
-                flex: 9,
-                child: Column(
-                  mainAxisSize: mainMin,
-                  crossAxisAlignment: crossStart,
-                  children: [
-                    title ?? const SizedBox.shrink(),
-                    if (subtitle != null)
-                      SizedBox(height: paddingBetweenTitleAndSubtitle ?? 2.0),
-                    subtitle ?? const SizedBox.shrink(),
-                  ],
-                ),
+      child: key == null
+          ? _Tile(
+              selected: selected,
+              padding: padding,
+              leading: leading,
+              title: title,
+              subtitle: subtitle,
+              paddingBetweenTitleAndSubtitle: paddingBetweenTitleAndSubtitle,
+              trailing: trailing,
+            )
+          : Slidable(
+              key: key!,
+              startActionPane: ActionPane(
+                motion: const StretchMotion(),
+                extentRatio: 0.3,
+                children: [
+                  Theme(
+                    data: context.theme.copyWith(
+                      iconTheme: context.theme.iconTheme.copyWith(size: 20.0),
+                    ),
+                    child: SlidableAction(
+                      borderRadius: borderRadius15,
+                      onPressed: (_) => swipeLeft?.call(),
+                      backgroundColor: Colors.grey[600]!,
+                      foregroundColor: white,
+                      icon: Icons.edit,
+                      label: 'Edit',
+                      padding: EdgeInsets.zero,
+                      autoClose: true,
+                    ),
+                  ),
+                  Theme(
+                    data: context.theme.copyWith(
+                      iconTheme: context.theme.iconTheme.copyWith(size: 20.0),
+                    ),
+                    child: SlidableAction(
+                      borderRadius: borderRadius15,
+                      onPressed: (_) => swipeRight?.call(),
+                      backgroundColor: Colors.red[400]!,
+                      foregroundColor: white,
+                      icon: Icons.delete,
+                      label: 'Delete',
+                      padding: EdgeInsets.zero,
+                      autoClose: true,
+                    ),
+                  ),
+                ],
               ),
-              const Expanded(child: SizedBox.shrink()),
-              trailing ?? const SizedBox.shrink(),
-            ],
-          ),
+              endActionPane: ActionPane(
+                motion: const StretchMotion(),
+                extentRatio: 0.3,
+                children: [
+                  Theme(
+                    data: context.theme.copyWith(
+                      iconTheme: context.theme.iconTheme.copyWith(size: 20.0),
+                    ),
+                    child: SlidableAction(
+                      borderRadius: borderRadius15,
+                      onPressed: (_) => swipeLeft?.call(),
+                      backgroundColor: Colors.grey[600]!,
+                      foregroundColor: white,
+                      icon: Icons.edit,
+                      label: 'Edit',
+                      padding: EdgeInsets.zero,
+                      autoClose: true,
+                    ),
+                  ),
+                  Theme(
+                    data: context.theme.copyWith(
+                      iconTheme: context.theme.iconTheme.copyWith(size: 20.0),
+                    ),
+                    child: SlidableAction(
+                      borderRadius: borderRadius15,
+                      onPressed: (_) => swipeRight?.call(),
+                      backgroundColor: Colors.red[400]!,
+                      foregroundColor: white,
+                      icon: Icons.delete,
+                      label: 'Delete',
+                      padding: EdgeInsets.zero,
+                      autoClose: true,
+                    ),
+                  ),
+                ],
+              ),
+
+              // background: Container(
+              //   alignment: Alignment.centerLeft,
+              //   padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              //   decoration: BoxDecoration(
+              //     color: context.theme.dividerColor.withOpacity(0.4),
+              //     borderRadius: borderRadius15,
+              //   ),
+              //   child: const Icon(Icons.edit),
+              // ),
+              // secondaryBackground: Container(
+              //   alignment: Alignment.centerRight,
+              //   padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              //   decoration: BoxDecoration(
+              //     color: context.theme.colorScheme.error,
+              //     borderRadius: borderRadius15,
+              //   ),
+              //   child: const Icon(Icons.delete),
+              // ),
+              // confirmDismiss: (d) async {
+              //   if (d == DismissDirection.startToEnd) {
+              //     swipeLeft?.call();
+              //   }
+              //   if (d == DismissDirection.endToStart) {
+              //     swipeRight?.call();
+              //   }
+              //   return false;
+              // },
+              child: _Tile(
+                selected: selected,
+                padding: padding,
+                leading: leading,
+                title: title,
+                subtitle: subtitle,
+                paddingBetweenTitleAndSubtitle: paddingBetweenTitleAndSubtitle,
+                trailing: trailing,
+              ),
+            ),
+    );
+  }
+}
+
+class _Tile extends StatelessWidget {
+  const _Tile({
+    required this.selected,
+    required this.padding,
+    required this.leading,
+    required this.title,
+    required this.subtitle,
+    required this.paddingBetweenTitleAndSubtitle,
+    required this.trailing,
+  });
+
+  final bool? selected;
+  final EdgeInsetsGeometry? padding;
+  final Widget? leading;
+  final Widget? title;
+  final Widget? subtitle;
+  final double? paddingBetweenTitleAndSubtitle;
+  final Widget? trailing;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: selected == true
+            ? context.theme.primaryColor.withOpacity(0.2)
+            : null,
+        borderRadius: borderRadius15,
+      ),
+      child: Padding(
+        padding: padding ??
+            const EdgeInsets.symmetric(horizontal: 12.0, vertical: 3.0),
+        child: Row(
+          mainAxisAlignment: mainCenter,
+          children: [
+            leading ?? const SizedBox.shrink(),
+            const SizedBox(width: 10),
+            Expanded(
+              flex: 9,
+              child: Column(
+                mainAxisSize: mainMin,
+                crossAxisAlignment: crossStart,
+                children: [
+                  title ?? const SizedBox.shrink(),
+                  if (subtitle != null)
+                    SizedBox(height: paddingBetweenTitleAndSubtitle ?? 2.0),
+                  subtitle ?? const SizedBox.shrink(),
+                ],
+              ),
+            ),
+            const Expanded(child: SizedBox.shrink()),
+            trailing ?? const SizedBox.shrink(),
+          ],
         ),
       ),
     );

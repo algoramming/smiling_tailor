@@ -17,6 +17,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_riverpod: ^2.3.6
+  flutter_slidable: ^3.0.0
   flutter_svg: ^2.0.6
   google_fonts: ^4.0.4
   http: ^0.13.6

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:smiling_tailor/src/utils/logger/logger_helper.dart';
 
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../shared/clipboard_data/clipboard_data.dart';
@@ -30,35 +32,40 @@ class EmployeeList extends ConsumerWidget {
         Flexible(
           child: notifier.employeeList.isEmpty
               ? const Center(child: Text('No employee found!'))
-              : ListView.builder(
-                  itemCount: notifier.employeeList.length,
-                  itemBuilder: (_, idx) {
-                    final employee = notifier.employeeList[idx];
-                    return Card(
-                      child: KListTile(
-                        selected: notifier.selectedEmployee == employee,
-                        onTap: () => notifier.selectEmployee(employee),
-                        onLongPress: () async =>
-                            await copyToClipboard(context, employee.id),
-                        leading: AnimatedWidgetShower(
-                          size: 30.0,
-                          child: Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: SvgPicture.asset(
-                              'assets/svgs/employee.svg',
-                              colorFilter:
-                                  context.theme.primaryColor.toColorFilter,
-                              semanticsLabel: 'Employee',
+              : SlidableAutoCloseBehavior(
+                child: ListView.builder(
+                    itemCount: notifier.employeeList.length,
+                    itemBuilder: (_, idx) {
+                      final employee = notifier.employeeList[idx];
+                      return Card(
+                        child: KListTile(
+                          key: ValueKey(employee.id),
+                          swipeLeft: ()=> log.i('swipe left'),
+                          swipeRight: ()=> log.i('swipe right'),
+                          selected: notifier.selectedEmployee == employee,
+                          onTap: () => notifier.selectEmployee(employee),
+                          onLongPress: () async =>
+                              await copyToClipboard(context, employee.id),
+                          leading: AnimatedWidgetShower(
+                            size: 30.0,
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: SvgPicture.asset(
+                                'assets/svgs/employee.svg',
+                                colorFilter:
+                                    context.theme.primaryColor.toColorFilter,
+                                semanticsLabel: 'Employee',
+                              ),
                             ),
                           ),
+                          title: Text(employee.name),
+                          subtitle: Text(employee.address),
+                          trailing: const Icon(Icons.arrow_circle_right_outlined),
                         ),
-                        title: Text(employee.name),
-                        subtitle: Text(employee.address),
-                        trailing: const Icon(Icons.arrow_circle_right_outlined),
-                      ),
-                    );
-                  },
-                ),
+                      );
+                    },
+                  ),
+              ),
         ),
       ],
     );
