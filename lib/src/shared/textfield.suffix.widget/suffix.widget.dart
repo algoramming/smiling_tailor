@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smiling_tailor/src/config/constants.dart';
+import '../../config/constants.dart';
 
 import '../../db/isar.dart';
 import '../../utils/extensions/extensions.dart';

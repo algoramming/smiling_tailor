@@ -11,6 +11,7 @@ import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/logger/logger_helper.dart';
 import '../../../../utils/themes/themes.dart';
+import '../../add/view/order.slip.download.popup.dart';
 import '../../provider/order.provider.dart';
 
 class OrderList extends ConsumerWidget {
@@ -51,7 +52,9 @@ class OrderList extends ConsumerWidget {
                             ),
                             child: SlidableAction(
                               borderRadius: borderRadius15,
-                              onPressed: (_) => log.i('On Print Tap'),
+                              onPressed: (_) async =>
+                                  await showOrderSlipDownloadPopup(
+                                      context, order.id),
                               backgroundColor: context.theme.primaryColor,
                               foregroundColor: white,
                               icon: Icons.print_outlined,

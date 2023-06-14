@@ -1,7 +1,10 @@
 import 'dart:math';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
 import '../../../../shared/animations_widget/animated_popup.dart';
+import '../../../../shared/clipboard_data/clipboard_data.dart';
 import '../../../../utils/extensions/extensions.dart';
 
 Future<void> showOrderSlipDownloadPopup(
@@ -26,8 +29,28 @@ class OrderSlipDownloadPopup extends StatelessWidget {
         title: const Text('Order Slip'),
         content: SizedBox(
           width: min(400, context.width),
-          child: Text(
-              'Your order #$orderId has been successfully added. Do you want to download the order slip?'),
+          child: RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              text: 'Your order ',
+              style: context.text.labelLarge,
+              children: [
+                TextSpan(
+                  text: '#$orderId',
+                  style: context.text.labelLarge!
+                      .copyWith(color: context.theme.primaryColor),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap =
+                        () async => await copyToClipboard(context, orderId),
+                ),
+                TextSpan(
+                  text:
+                      ' has been successfully added. Do you want to download the order slip?',
+                  style: context.text.labelLarge,
+                ),
+              ],
+            ),
+          ),
         ),
         actions: [
           TextButton(

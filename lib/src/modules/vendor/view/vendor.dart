@@ -30,11 +30,11 @@ class VendorView extends StatelessWidget {
             child: notifier != null
                 ? const SizedBox.shrink()
                 : FloatingActionButton.small(
-                    tooltip: 'Add Employee',
+                    tooltip: 'Add Vendor',
                     onPressed: () async => await showDialog(
                       context: context,
                       barrierDismissible: false,
-                      builder: (context) => const AddVendorPopup(),
+                      builder: (_) => const AddVendorPopup(),
                     ),
                     child: const Icon(Icons.add),
                   ),

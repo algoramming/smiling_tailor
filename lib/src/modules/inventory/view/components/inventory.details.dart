@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:smiling_tailor/src/modules/inventory/provider/inventory.provider.dart';
-import 'package:smiling_tailor/src/modules/inventory/provider/inventory.trxs.provider.dart';
+import '../../provider/inventory.provider.dart';
+import '../../provider/inventory.trxs.provider.dart';
 
 import '../../../../config/constants.dart';
 import '../../../../db/isar.dart';

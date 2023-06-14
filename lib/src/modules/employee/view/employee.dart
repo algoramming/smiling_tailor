@@ -35,7 +35,7 @@ class EmployeeView extends StatelessWidget {
                     onPressed: () async => await showDialog(
                       context: context,
                       barrierDismissible: false,
-                      builder: (context) => const AddEmployeePopup(),
+                      builder: (_) => const AddEmployeePopup(),
                     ),
                     child: const Icon(Icons.add),
                   ),

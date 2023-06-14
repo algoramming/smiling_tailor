@@ -35,7 +35,7 @@ class InventoryView extends StatelessWidget {
                     onPressed: () async => await showDialog(
                       context: context,
                       barrierDismissible: false,
-                      builder: (context) => const AddInventoryPopup(),
+                      builder: (_) => const AddInventoryPopup(),
                     ),
                     child: const Icon(Icons.add),
                   ),
