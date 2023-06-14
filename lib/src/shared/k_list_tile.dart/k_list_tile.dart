@@ -20,9 +20,11 @@ class KListTile extends StatelessWidget {
     this.onDoubleTap,
     this.onLongPress,
     this.slidableAction,
+    this.canEdit = true,
     this.paddingBetweenTitleAndSubtitle,
   }) : super(key: key);
 
+  final bool canEdit;
   final Widget? title;
   final bool? selected;
   final Widget? leading;
@@ -61,24 +63,31 @@ class KListTile extends StatelessWidget {
               key: key!,
               startActionPane: ActionPane(
                 motion: const StretchMotion(),
-                extentRatio: slidableAction != null ? 0.45 : 0.3,
+                extentRatio: slidableAction != null
+                    ? canEdit
+                        ? 0.45
+                        : 0.3
+                    : canEdit
+                        ? 0.3
+                        : 0.15,
                 children: [
                   if (slidableAction != null) slidableAction!,
-                  Theme(
-                    data: context.theme.copyWith(
-                      iconTheme: context.theme.iconTheme.copyWith(size: 20.0),
+                  if (canEdit)
+                    Theme(
+                      data: context.theme.copyWith(
+                        iconTheme: context.theme.iconTheme.copyWith(size: 20.0),
+                      ),
+                      child: SlidableAction(
+                        borderRadius: borderRadius15,
+                        onPressed: (_) => onEditTap?.call(),
+                        backgroundColor: Colors.grey[600]!,
+                        foregroundColor: white,
+                        icon: Icons.edit_outlined,
+                        label: 'Edit',
+                        padding: EdgeInsets.zero,
+                        autoClose: true,
+                      ),
                     ),
-                    child: SlidableAction(
-                      borderRadius: borderRadius15,
-                      onPressed: (_) => onEditTap?.call(),
-                      backgroundColor: Colors.grey[600]!,
-                      foregroundColor: white,
-                      icon: Icons.edit_outlined,
-                      label: 'Edit',
-                      padding: EdgeInsets.zero,
-                      autoClose: true,
-                    ),
-                  ),
                   Theme(
                     data: context.theme.copyWith(
                       iconTheme: context.theme.iconTheme.copyWith(size: 20.0),
@@ -98,7 +107,13 @@ class KListTile extends StatelessWidget {
               ),
               endActionPane: ActionPane(
                 motion: const StretchMotion(),
-                extentRatio: slidableAction != null ? 0.45 : 0.3,
+                extentRatio: slidableAction != null
+                    ? canEdit
+                        ? 0.45
+                        : 0.3
+                    : canEdit
+                        ? 0.3
+                        : 0.15,
                 children: [
                   Theme(
                     data: context.theme.copyWith(
@@ -115,52 +130,25 @@ class KListTile extends StatelessWidget {
                       autoClose: true,
                     ),
                   ),
-                  Theme(
-                    data: context.theme.copyWith(
-                      iconTheme: context.theme.iconTheme.copyWith(size: 20.0),
+                  if (canEdit)
+                    Theme(
+                      data: context.theme.copyWith(
+                        iconTheme: context.theme.iconTheme.copyWith(size: 20.0),
+                      ),
+                      child: SlidableAction(
+                        borderRadius: borderRadius15,
+                        onPressed: (_) => onEditTap?.call(),
+                        backgroundColor: Colors.grey[600]!,
+                        foregroundColor: white,
+                        icon: Icons.edit_outlined,
+                        label: 'Edit',
+                        padding: EdgeInsets.zero,
+                        autoClose: true,
+                      ),
                     ),
-                    child: SlidableAction(
-                      borderRadius: borderRadius15,
-                      onPressed: (_) => onEditTap?.call(),
-                      backgroundColor: Colors.grey[600]!,
-                      foregroundColor: white,
-                      icon: Icons.edit_outlined,
-                      label: 'Edit',
-                      padding: EdgeInsets.zero,
-                      autoClose: true,
-                    ),
-                  ),
                   if (slidableAction != null) slidableAction!,
                 ],
               ),
-
-              // background: Container(
-              //   alignment: Alignment.centerLeft,
-              //   padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              //   decoration: BoxDecoration(
-              //     color: context.theme.dividerColor.withOpacity(0.4),
-              //     borderRadius: borderRadius15,
-              //   ),
-              //   child: const Icon(Icons.edit),
-              // ),
-              // secondaryBackground: Container(
-              //   alignment: Alignment.centerRight,
-              //   padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              //   decoration: BoxDecoration(
-              //     color: context.theme.colorScheme.error,
-              //     borderRadius: borderRadius15,
-              //   ),
-              //   child: const Icon(Icons.delete),
-              // ),
-              // confirmDismiss: (d) async {
-              //   if (d == DismissDirection.startToEnd) {
-              //     swipeLeft?.call();
-              //   }
-              //   if (d == DismissDirection.endToStart) {
-              //     swipeRight?.call();
-              //   }
-              //   return false;
-              // },
               child: _Tile(
                 selected: selected,
                 padding: padding,

@@ -215,7 +215,7 @@ class _TrxList extends ConsumerWidget {
                   return Card(
                     child: KListTile(
                       key: ValueKey(trx.id),
-                      onEditTap: () => log.i('On Edit Tap'),
+                      canEdit: false,
                       onDeleteTap: () => log.i('On Delete Tap'),
                       onLongPress: () async =>
                           await copyToClipboard(context, trx.id),
