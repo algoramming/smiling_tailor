@@ -4,16 +4,16 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../../../config/constants.dart';
-import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
-import '../../../../utils/themes/themes.dart';
 
+import '../../../../config/constants.dart';
 import '../../../../shared/animations_widget/animated_popup.dart';
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../shared/clipboard_data/clipboard_data.dart';
 import '../../../../shared/error_widget/error_widget.dart';
+import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
 import '../../../../shared/loading_widget/loading_widget.dart';
 import '../../../../utils/extensions/extensions.dart';
+import '../../../../utils/themes/themes.dart';
 import '../../model/order.dart';
 import '../provider/order.slip.download.provider.dart';
 

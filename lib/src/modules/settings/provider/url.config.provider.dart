@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../model/settings.model.dart';
-import 'settings.provider.dart';
 
 import '../../../db/isar.dart';
 import '../../../pocketbase/auth.store/helpers.dart';
+import '../model/settings.model.dart';
+import 'settings.provider.dart';
 
 typedef UrlConfigNotifier
     = AutoDisposeNotifierProvider<UrlConfigProvider, void>;

@@ -46,7 +46,7 @@ apps](https://flutter.dev/docs/development/accessibility-and-localization/intern
         logo_path: D:\Algoramming\Flutter-Projects\smiling_tailor\assets\icons\app-icon-1024x1024.png
 ```
 
-- Run this command: `flutter pub run msix:create`
+- Run this command: `dart run msix:create`
 - msix file will be generate in the `build/windows/runner/Release/` folder.
 - Now you can share this msix file to any pc to install the app.
 
@@ -85,13 +85,13 @@ apps](https://flutter.dev/docs/development/accessibility-and-localization/intern
         logo_path: D:\Algoramming\Flutter-Projects\smiling_tailor\assets\icons\app-icon-1024x1024.png
 ```
 
-- Run this command: `flutter pub run msix:publish`
-- msix files `[all versions of msix file, accounting.appinstaller, index.html]` will be generate in the `publish` folder.
+- Run this command: `dart run msix:publish`
+- msix files `[all versions of msix file, smilingtailor.appinstaller, index.html]` will be generate in the `publish` folder.
 - Go to `publish\index.html` file and at the bottom you will find a javascript function named `function download()`
-- Just simply change the 2nd line of the function from `a.href = '/accounting.appinstaller';` to `a.href = 'accounting.appinstaller';`
-- Go to `publish` folder and run this command: `python -m http.server 8000`
-- Now go to your router ip address with port 8000. For example: `192.168.10.101:8000`
-- Through this url `http://192.168.10.101:8000/` you can download the msix appinstaller file and also share this url to any pc to install the app under same network.
+- Just simply change the 2nd line of the function from `a.href = '/smilingtailor.appinstaller';` to `a.href = 'smilingtailor.appinstaller';`
+- Go to `publish` folder by `cd publish` and run this command: `python -m http.server 1010`
+- Now go to your router ip address with port 8000. For example: `192.168.10.101:1010`. For my case: `http://103.113.227.244:1010/`
+- Through this url `http://192.168.10.101:1010/` you can download the msix appinstaller file and also share this url to any pc to install the app under same network.
 
 
 ## msix install instructions
