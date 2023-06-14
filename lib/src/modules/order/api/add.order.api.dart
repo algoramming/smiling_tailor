@@ -77,7 +77,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
             toJson: pb.authStore.model?.toJson(),
             toType: GLType.user,
             amount: noti.advanceAmountCntrlr.text.toDouble ?? 0.0,
-            voucher: 'Order Advance Amount Transaction',
+            voucher: advanceAmountOrderVoucher,
             trxType: TrxType.debit,
             description:
                 'System Generated: Transaction for advance amount of order ${order.id}',
@@ -98,7 +98,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
                         noti.clear();
                         ctx.pop();
                         EasyLoading.dismiss();
-                        await showOrderSlipDownloadPopup(ctx, order.id);
+                        await showOrderSlipDownloadPopup(ctx, order);
                         // showAwesomeSnackbar(ctx, 'Success!',
                         //     'Order added successfully.', MessageType.success);
                       });
@@ -108,7 +108,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
                       noti.clear();
                       ctx.pop();
                       EasyLoading.dismiss();
-                      await showOrderSlipDownloadPopup(ctx, order.id);
+                      await showOrderSlipDownloadPopup(ctx, order);
                       // showAwesomeSnackbar(ctx, 'Success!',
                       //     'Order added successfully.', MessageType.success);
                     }
@@ -123,7 +123,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
                       noti.clear();
                       ctx.pop();
                       EasyLoading.dismiss();
-                      await showOrderSlipDownloadPopup(ctx, order.id);
+                      await showOrderSlipDownloadPopup(ctx, order);
                       // showAwesomeSnackbar(ctx, 'Success!',
                       //     'Order added successfully.', MessageType.success);
                     });
@@ -133,7 +133,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
                     noti.clear();
                     ctx.pop();
                     EasyLoading.dismiss();
-                    await showOrderSlipDownloadPopup(ctx, order.id);
+                    await showOrderSlipDownloadPopup(ctx, order);
                     // showAwesomeSnackbar(ctx, 'Success!',
                     //     'Order added successfully.', MessageType.success);
                   }
@@ -152,7 +152,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
                       noti.clear();
                       ctx.pop();
                       EasyLoading.dismiss();
-                      await showOrderSlipDownloadPopup(ctx, order.id);
+                      await showOrderSlipDownloadPopup(ctx, order);
                       // showAwesomeSnackbar(ctx, 'Success!',
                       //     'Order added successfully.', MessageType.success);
                     });
@@ -162,7 +162,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
                     noti.clear();
                     ctx.pop();
                     EasyLoading.dismiss();
-                    await showOrderSlipDownloadPopup(ctx, order.id);
+                    await showOrderSlipDownloadPopup(ctx, order);
                     // showAwesomeSnackbar(ctx, 'Success!',
                     //     'Order added successfully.', MessageType.success);
                   }
@@ -176,7 +176,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
                     noti.clear();
                     ctx.pop();
                     EasyLoading.dismiss();
-                    await showOrderSlipDownloadPopup(ctx, order.id);
+                    await showOrderSlipDownloadPopup(ctx, order);
                     // showAwesomeSnackbar(ctx, 'Success!',
                     //     'Order added successfully.', MessageType.success);
                   });
@@ -185,7 +185,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
                   noti.clear();
                   ctx.pop();
                   EasyLoading.dismiss();
-                  await showOrderSlipDownloadPopup(ctx, order.id);
+                  await showOrderSlipDownloadPopup(ctx, order);
                   // showAwesomeSnackbar(ctx, 'Success!',
                   //     'Order added successfully.', MessageType.success);
                 }
@@ -222,7 +222,7 @@ Future<RecordModel?> tailorAllocateApi(
     trxType: TrxType.debit,
     amount: notifier.tailorChargeCntrlr.text.toDouble ?? 0.0,
     isSystemGenerated: true,
-    voucher: 'Order Tailor Charge Transaction',
+    voucher: tailorChargeOrderVoucher,
     description:
         'System Generated: Transaction for Tailor Charge of order #${order.id} allocated to ${order.tailorEmployee!.name} [${order.tailorEmployee!.id}]',
   );
@@ -246,7 +246,7 @@ Future<RecordModel?> inventoryAllocateApi(
     amount: order.inventoryQuantity!.toString().toDouble ?? 0.0,
     unit: order.inventoryUnit!.name,
     isSystemGenerated: true,
-    voucher: 'Order Inventory Allocation Transaction',
+    voucher: inventoryAllocationOrderVoucher,
     isGoods: true,
     description:
         'System Generated: Transaction for Inventory Purchase of order #${order.id} allocated to ${order.inventory!.title} [${order.inventory!.id}] by ${appCurrency.symbol}${notifier.inventoryPriceCntrlr.text.toDouble}}',
@@ -262,7 +262,7 @@ Future<RecordModel?> inventoryAllocateApi(
       trxType: TrxType.debit,
       amount: notifier.inventoryPriceCntrlr.text.toDouble ?? 0.0,
       isSystemGenerated: true,
-      voucher: 'Order Inventory Purchase Transaction',
+      voucher: inventoryPurchaseOrderVoucher,
       description:
           'System Generated: Transaction for Inventory Purchase of order #${order.id} allocated to ${order.inventory!.title} [${order.inventory!.id}] of ${order.inventoryQuantity}${order.inventoryUnit!.symbol}',
     ),
@@ -286,7 +286,7 @@ Future<RecordModel?> deliveryAllocationApi(
     amount: notifier.deliveryChargeCntrlr.text.toDouble ?? 0.0,
     trxType: TrxType.debit,
     isSystemGenerated: true,
-    voucher: 'Delivery Charge',
+    voucher: deliveryOrderVoucher,
     description:
         'System Generated: Transaction for Delivery Charge of order #${order.id} allocated to ${order.deliveryEmployee!.name} [${order.deliveryEmployee!.id}]',
   );

@@ -2,14 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart' show SvgPicture;
-import 'package:smiling_tailor/src/shared/show_toast/awesome_snackbar.dart';
-import 'package:smiling_tailor/src/shared/show_toast/show_toast.dart';
-import 'package:smiling_tailor/src/utils/themes/themes.dart';
 
 import '../../config/constants.dart';
 import '../../config/get.platform.dart';
 import '../../modules/settings/view/advance/url.config.tile.dart';
 import '../../utils/extensions/extensions.dart';
+import '../../utils/themes/themes.dart';
+import '../show_toast/awesome_snackbar.dart';
+import '../show_toast/show_toast.dart';
 
 class KPageNotFound extends StatelessWidget {
   const KPageNotFound({

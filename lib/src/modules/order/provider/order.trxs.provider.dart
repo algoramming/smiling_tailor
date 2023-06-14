@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../model/order.dart';
 
 import '../../../pocketbase/auth.store/helpers.dart';
 import '../../../utils/logger/logger_helper.dart';
 import '../../transaction/model/transaction.dart';
+import '../model/order.dart';
 
 typedef OrderTrxsNotifier = AutoDisposeAsyncNotifierProviderFamily<
     OrderTrxsProvider, List<PktbsTrx>, PktbsOrder>;

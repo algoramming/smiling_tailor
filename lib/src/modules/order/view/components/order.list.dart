@@ -54,7 +54,7 @@ class OrderList extends ConsumerWidget {
                               borderRadius: borderRadius15,
                               onPressed: (_) async =>
                                   await showOrderSlipDownloadPopup(
-                                      context, order.id),
+                                      context, order),
                               backgroundColor: context.theme.primaryColor,
                               foregroundColor: white,
                               icon: Icons.print_outlined,

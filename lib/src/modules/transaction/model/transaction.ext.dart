@@ -151,6 +151,16 @@ extension TrxExtension on PktbsTrx {
       ? appSettings.getDateTimeFormat.format(updated!.toLocal())
       : null;
 
+  bool get isOrderAdvanceAmount => voucher == advanceAmountOrderVoucher;
+
+  bool get isOrderTailorCharge => voucher == tailorChargeOrderVoucher;
+
+  bool get isOrderInventoryAllocation => voucher == inventoryAllocationOrderVoucher;
+
+  bool get isOrderInventoryPurchase => voucher == inventoryPurchaseOrderVoucher;
+  
+  bool get isOrderDeliveryCharge => voucher == deliveryOrderVoucher;
+
   Widget get modifiers => updator == null
       ? Tooltip(
           message: 'Created by ${creator.name} on $createdDate',

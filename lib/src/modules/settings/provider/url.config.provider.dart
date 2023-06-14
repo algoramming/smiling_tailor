@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/modules/settings/model/settings.model.dart';
-import 'package:smiling_tailor/src/modules/settings/provider/settings.provider.dart';
+import '../model/settings.model.dart';
+import 'settings.provider.dart';
 
 import '../../../db/isar.dart';
 import '../../../pocketbase/auth.store/helpers.dart';

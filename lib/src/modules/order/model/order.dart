@@ -17,6 +17,12 @@ part 'order.ext.dart';
 const pktbsOrderExpand =
     'creator, updator, tailorEmployee, tailorEmployee.creator, tailorEmployee.updator, inventory, inventory.creator, inventory.updator, inventory.from, inventory.from.creator, inventory.from.updator, deliveryEmployee, deliveryEmployee.creator, deliveryEmployee.updator';
 
+const advanceAmountOrderVoucher = 'Order Advance Amount Transaction';
+const tailorChargeOrderVoucher = 'Order Tailor Charge Transaction';
+const inventoryAllocationOrderVoucher = 'Order Inventory Allocation Transaction';
+const inventoryPurchaseOrderVoucher = 'Order Inventory Purchase Transaction';
+const deliveryOrderVoucher = 'Order Delivery Charge Transaction';
+
 class PktbsOrder {
   int quantity;
   double amount;
