@@ -15,13 +15,6 @@ import '../../enum/order.enum.dart';
 import '../../model/order.dart';
 import '../../provider/order.provider.dart';
 
-// final lengthMeasurementsProvider = FutureProvider((_) async {
-//   final ms =
-//       await db.measurements.where().filter().unitOfEqualTo('Length').findAll();
-//   ms.removeWhere((element) => element.name == 'Mile');
-//   return ms;
-// });
-
 typedef AddOrderNotifier
     = AutoDisposeAsyncNotifierProvider<AddOrderProvider, void>;
 

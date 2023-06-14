@@ -4,7 +4,7 @@ description: A new Flutter project.
 # Prevent accidental publishing to pub.dev.
 publish_to: "none"
 
-version: 1.0.0+0
+version: 0.0.1+1
 
 environment:
   sdk: ">=3.0.3 <4.0.0"
@@ -27,12 +27,14 @@ dependencies:
   isar: ^3.1.0+1
   isar_flutter_libs: ^3.1.0+1
   logger: ^1.3.0
+  msix: ^3.14.2
   package_info_plus: ^4.0.1
   path: ^1.8.3
   path_provider: ^2.0.15
   pocketbase: ^0.10.0
   rive: ^0.11.2
   shared_preferences: ^2.1.1
+  toggle_switch: ^2.1.0
   url_launcher: ^6.1.11
 
 dev_dependencies:
@@ -43,6 +45,20 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   isar_generator: ^3.1.0+1
+
+msix_config:
+  display_name: Smiling Tailor
+  app_installer: #<-- app installer configuration
+    publish_folder_path: D:\Algoramming\Flutter-Projects\smiling_tailor\publish
+    hours_between_update_checks: 0
+    automatic_background_task: true
+    update_blocks_activation: true
+    show_prompt: true
+    force_update_from_any_version: false
+  publisher_display_name: Algoramming
+  identity_name: com.algoramming.smiling_tailor
+  msix_version: 0.0.0.1
+  logo_path: D:\Algoramming\Flutter-Projects\smiling_tailor\assets\icons\app-icon-1024x1024.png
 
 flutter_launcher_icons:
   ios: true

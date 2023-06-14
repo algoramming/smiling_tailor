@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
-import '../../../../db/isar.dart';
 import '../../../../localization/loalization.dart';
-import '../../../../pocketbase/auth.store/helpers.dart';
 import '../../../../shared/animations_widget/animated_popup.dart';
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
 import '../../../../utils/extensions/extensions.dart';
-import '../../model/settings.model.dart';
-import '../../provider/settings.provider.dart';
+import '../../provider/url.config.provider.dart';
 
 class URLConfigTile extends StatelessWidget {
   const URLConfigTile({super.key});
@@ -45,7 +43,8 @@ class URLConfigPopup extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     void pop() => Navigator.pop(context);
-    ref.watch(settingsStreamProvider);
+    ref.watch(urlConfigProvider);
+    final notifier = ref.watch(urlConfigProvider.notifier);
     return AnimatedPopup(
       child: AlertDialog(
         scrollable: true,
@@ -64,28 +63,26 @@ class URLConfigPopup extends ConsumerWidget {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SwitchListTile.adaptive(
-              dense: true,
-              title: const Text('Live'),
-              value: appSettings.baseUrl.contains('pockethost'),
-              onChanged: (live) async {
-                appSettings.baseUrl = live ? globalBaseUrl : localBaseUrl;
-                await appSettings.save();
-              },
+            ToggleSwitch(
+              initialLabelIndex: notifier.currUrlIndex,
+              totalSwitches: notifier.urls.length,
+              labels: notifier.urlHeaders,
+              onToggle: notifier.toggleUrl,
             ),
-            const SizedBox(height: 8.0),
+            const SizedBox(height: 10.0),
             SwitchListTile.adaptive(
               dense: true,
               title: const Text('Secure Protocol'),
-              value: appSettings.useSecureProtocol,
-              onChanged: (secure) async {
-                appSettings.useSecureProtocol = secure;
-                await appSettings.save();
-              },
+              value: notifier.currSettings.useSecureProtocol,
+              onChanged: notifier.toggleSecureProtocol,
             ),
             const SizedBox(height: 12.0),
             TextFormField(
-              controller: TextEditingController(text: httpProtocol),
+              controller: TextEditingController(
+                  text: notifier.currSettings.useSecureProtocol
+                      ? 'https'
+                      : 'http'),
+              enabled: false,
               decoration: const InputDecoration(
                 labelStyle: TextStyle(fontSize: 10.0),
                 labelText: 'HTTP Protocol',
@@ -93,8 +90,7 @@ class URLConfigPopup extends ConsumerWidget {
             ),
             const SizedBox(height: 10.0),
             TextFormField(
-              onChanged: (url) => appSettings.baseUrl = url,
-              controller: TextEditingController(text: appSettings.baseUrl),
+              controller: notifier.urlCntrlr,
               decoration: const InputDecoration(
                 labelStyle: TextStyle(fontSize: 10.0),
                 labelText: 'Base URL',
@@ -104,8 +100,9 @@ class URLConfigPopup extends ConsumerWidget {
         ),
         actions: [
           TextButton(
-            child: const Text('Done'),
-            onPressed: () async => await appSettings.save().then((_) => pop()),
+            child: Text('Done',
+                style: TextStyle(color: context.theme.primaryColor)),
+            onPressed: () async => await notifier.submit().then((_) => pop()),
           ),
         ],
       ),
