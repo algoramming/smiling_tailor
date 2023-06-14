@@ -30,20 +30,20 @@ Future<RecordModel?> pktbsAddTrx(
   try {
     return await pb.collection(transactions).create(
       body: {
-        'from_id': fromId,
-        'from': fromJson,
-        'fromType': fromType.title,
-        'to_id': toId,
         'to': toJson,
+        'unit': unit,
+        'to_id': toId,
+        'from': fromJson,
+        'from_id': fromId,
+        'voucher': voucher,
+        'isGoods': isGoods,
         'toType': toType.title,
         'amount': amount ?? 0.0,
-        'unit': unit,
-        'isGoods': isGoods,
         'trxType': trxType.title,
-        'voucher': voucher,
         'description': description,
-        'isSystemGenerated': isSystemGenerated,
+        'fromType': fromType.title,
         'creator': pb.authStore.model?.id,
+        'isSystemGenerated': isSystemGenerated,
       },
     );
   } on SocketException catch (e) {

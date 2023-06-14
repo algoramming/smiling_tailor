@@ -23,13 +23,13 @@ Future<void> pktbsAddInventory(
     EasyLoading.show(status: 'Creating inventory...');
     await pb.collection(inventories).create(
       body: {
+        'from': notifier.from?.id,
+        'unit': notifier.unit?.name,
+        'creator': pb.authStore.model?.id,
         'title': notifier.titleCntrlr.text,
+        'amount': notifier.amountCntrlr.text.toDouble,
         'description': notifier.descriptionCntrlr.text,
         'quantity': notifier.quantityCntrlr.text.toInt,
-        'unit': notifier.unit?.name,
-        'amount': notifier.amountCntrlr.text.toDouble,
-        'creator': pb.authStore.model?.id,
-        'from': notifier.from?.id,
       },
     ).then((r) async => await pb
             .collection(inventories)

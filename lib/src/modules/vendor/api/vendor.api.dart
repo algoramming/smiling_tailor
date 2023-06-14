@@ -23,11 +23,11 @@ Future<void> pktbsAddVendor(
     await pb.collection(vendors).create(
       body: {
         'name': notifier.nameCntrlr.text,
-        'address': notifier.addressCntrlr.text,
-        'description': notifier.descriptionCntrlr.text,
+        'creator': pb.authStore.model!.id,
         'email': notifier.emailCntrlr.text,
         'phone': notifier.phoneCntrlr.text,
-        'creator': pb.authStore.model!.id,
+        'address': notifier.addressCntrlr.text,
+        'description': notifier.descriptionCntrlr.text,
       },
     ).then((r) async {
       // check trx nedded or not

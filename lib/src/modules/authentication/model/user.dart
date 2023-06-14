@@ -45,12 +45,12 @@ class PktbsUser {
       verified: json[_Json.verified],
       username: json[_Json.username],
       collectionId: json[_Json.collectionId],
-      collectionName: json[_Json.collectionName],
-      emailVisibility: json[_Json.emailVisibility],
-      created: DateTime.parse(json[_Json.created]),
       updated: json[_Json.updated] == null
           ? null
           : DateTime.parse(json[_Json.updated]),
+      collectionName: json[_Json.collectionName],
+      emailVisibility: json[_Json.emailVisibility],
+      created: DateTime.parse(json[_Json.created]),
     );
   }
 

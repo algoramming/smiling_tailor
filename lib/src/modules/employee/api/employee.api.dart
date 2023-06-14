@@ -19,11 +19,11 @@ Future<void> pktbsAddEmployee(
     await pb.collection(employees).create(
       body: {
         'name': notifier.nameCntrlr.text,
-        'address': notifier.addressCntrlr.text,
-        'description': notifier.descriptionCntrlr.text,
+        'creator': pb.authStore.model!.id,
         'email': notifier.emailCntrlr.text,
         'phone': notifier.phoneCntrlr.text,
-        'creator': pb.authStore.model!.id,
+        'address': notifier.addressCntrlr.text,
+        'description': notifier.descriptionCntrlr.text,
         'salary': notifier.salaryCntrlr.text.toDouble ?? 0.0,
       },
     ).then((_) async {

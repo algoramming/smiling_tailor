@@ -18,160 +18,129 @@ const pktbsOrderExpand =
     'creator, updator, tailorEmployee, tailorEmployee.creator, tailorEmployee.updator, inventory, inventory.creator, inventory.updator, inventory.from, inventory.from.creator, inventory.from.updator, deliveryEmployee, deliveryEmployee.creator, deliveryEmployee.updator';
 
 class PktbsOrder {
-  //
+  int quantity;
+  double amount;
+  String? plate;
+  String? colar;
+  String? sleeve;
+  String? pocket;
+  String? button;
   final String id;
   DateTime created;
   DateTime? updated;
   PktbsUser creator;
-  PktbsUser? updator;
-  String collectionId;
-  String collectionName;
-  //
-  String customerName;
-  String? customerEmail;
-  String customerPhone;
-  String? customerAddress;
-  String? customerNote;
-  //
-  String? measurement;
-  String? plate;
-  String? sleeve;
-  String? colar;
-  String? pocket;
-  String? button;
-  String? measurementNote;
-  int quantity;
-  //
-  PktbsEmployee? tailorEmployee;
-  // double tailorCharge;
-  String? tailorNote;
-  //
-  PktbsInventory? inventory;
-  int? inventoryQuantity;
-  Measurement? inventoryUnit;
-  // double? inventoryPrice;
-  String? inventoryNote;
-  //
-  PktbsEmployee? deliveryEmployee;
-  String? deliveryAddress;
-  // double? deliveryCharge;
-  String? deliveryNote;
-  //
-  PaymentMethod paymentMethod;
-  String? paymentNote;
-  double amount;
-  //
-  DateTime deliveryTime;
-  String? description;
   OrderStatus status;
+  String? tailorNote;
+  PktbsUser? updator;
+  String? description;
+  String collectionId;
+  String? measurement;
+  String customerName;
+  String? paymentNote;
+  String? deliveryNote;
+  String? customerNote;
+  String customerPhone;
+  DateTime deliveryTime;
+  String? customerEmail;
+  String collectionName;
+  String? inventoryNote;
+  int? inventoryQuantity;
+  String? customerAddress;
+  String? measurementNote;
+  String? deliveryAddress;
+  PktbsInventory? inventory;
+  Measurement? inventoryUnit;
+  PaymentMethod paymentMethod;
+  PktbsEmployee? tailorEmployee;
+  PktbsEmployee? deliveryEmployee;
 
   PktbsOrder({
-    required this.id,
-    required this.created,
-    this.updated,
-    required this.creator,
-    this.updator,
-    required this.collectionId,
-    required this.collectionName,
-    //
-    required this.customerName,
-    this.customerEmail,
-    required this.customerPhone,
-    this.customerAddress,
-    this.customerNote,
-    //
-    this.measurement,
     this.plate,
     this.sleeve,
     this.colar,
     this.pocket,
     this.button,
-    this.measurementNote,
-    required this.quantity,
-    //
-    this.tailorEmployee,
-    // required this.tailorCharge,
-    this.tailorNote,
-    //
+    this.updated,
+    this.updator,
     this.inventory,
-    this.inventoryQuantity,
-    this.inventoryUnit,
-    // this.inventoryPrice,
-    this.inventoryNote,
-    //
-    this.deliveryEmployee,
-    this.deliveryAddress,
-    // this.deliveryCharge,
-    this.deliveryNote,
-    //
-    required this.paymentMethod,
+    this.tailorNote,
     this.paymentNote,
-    required this.amount,
-    //
-    required this.deliveryTime,
     this.description,
+    required this.id,
+    this.measurement,
+    this.customerNote,
+    this.deliveryNote,
+    this.customerEmail,
+    this.inventoryUnit,
+    this.inventoryNote,
+    this.tailorEmployee,
     required this.status,
+    this.deliveryAddress,
+    this.customerAddress,
+    this.measurementNote,
+    required this.amount,
+    required this.created,
+    required this.creator,
+    this.deliveryEmployee,
+    required this.quantity,
+    this.inventoryQuantity,
+    required this.deliveryTime,
+    required this.collectionId,
+    required this.customerName,
+    required this.paymentMethod,
+    required this.customerPhone,
+    required this.collectionName,
   });
 
   factory PktbsOrder.fromJson(Map<String, dynamic> json) {
     return PktbsOrder(
       id: json[_Json.id],
+      colar: json[_Json.colar],
+      plate: json[_Json.plate],
+      sleeve: json[_Json.sleeve],
+      pocket: json[_Json.pocket],
+      button: json[_Json.button],
+      tailorNote: json[_Json.tailorNote],
+      description: json[_Json.description],
+      paymentNote: json[_Json.paymentNote],
+      measurement: json[_Json.measurement],
+      deliveryNote: json[_Json.deliveryNote],
+      collectionId: json[_Json.collectionId],
+      customerName: json[_Json.customerName],
+      customerNote: json[_Json.customerNote],
+      inventoryNote: json[_Json.inventoryNote],
+      customerEmail: json[_Json.customerEmail],
+      customerPhone: json[_Json.customerPhone],
+      collectionName: json[_Json.collectionName],
+      customerAddress: json[_Json.customerAddress],
+      measurementNote: json[_Json.measurementNote],
+      deliveryAddress: json[_Json.deliveryAddress],
+      status: (json[_Json.status] as String).toOrderStatus,
+      quantity: json[_Json.quantity].toString().toInt ?? 0,
+      amount: json[_Json.amount].toString().toDouble ?? 0.0,
       created: DateTime.parse(json[_Json.created]).toLocal(),
-      updated: json[_Json.updated] == null || json[_Json.updated] == ''
-          ? null
-          : DateTime.parse(json[_Json.updated]).toLocal(),
       creator: PktbsUser.fromJson(json[_Json.expand][_Json.creator]),
+      deliveryTime: DateTime.parse(json[_Json.deliveryTime]).toLocal(),
+      inventoryQuantity: json[_Json.inventoryQuantity].toString().toInt,
       updator: json[_Json.updator] == null || json[_Json.updator] == ''
           ? null
           : PktbsUser.fromJson(json[_Json.expand][_Json.updator]),
-      collectionId: json[_Json.collectionId],
-      collectionName: json[_Json.collectionName],
-      //
-      customerName: json[_Json.customerName],
-      customerEmail: json[_Json.customerEmail],
-      customerPhone: json[_Json.customerPhone],
-      customerAddress: json[_Json.customerAddress],
-      customerNote: json[_Json.customerNote],
-      //
-      measurement: json[_Json.measurement],
-      plate: json[_Json.plate],
-      sleeve: json[_Json.sleeve],
-      colar: json[_Json.colar],
-      pocket: json[_Json.pocket],
-      button: json[_Json.button],
-      measurementNote: json[_Json.measurementNote],
-      quantity: json[_Json.quantity].toString().toInt ?? 0,
-      //
+      paymentMethod: (json[_Json.paymentMethod] as String).toPaymentMethod,
+      updated: json[_Json.updated] == null || json[_Json.updated] == ''
+          ? null
+          : DateTime.parse(json[_Json.updated]).toLocal(),
       tailorEmployee: json[_Json.tailorEmployee] == null ||
               json[_Json.tailorEmployee] == ''
           ? null
           : PktbsEmployee.fromJson(json[_Json.expand][_Json.tailorEmployee]),
-      // tailorCharge: json[_Json.tailorCharge].toString().toDouble ?? 0.0,
-      tailorNote: json[_Json.tailorNote],
-      //
+      inventoryUnit: (json[_Json.inventoryUnit] as String?)?.getMeasurement,
       inventory: json[_Json.inventory] == null || json[_Json.inventory] == ''
           ? null
           : PktbsInventory.fromJson(json[_Json.expand][_Json.inventory]),
-      inventoryQuantity: json[_Json.inventoryQuantity].toString().toInt,
-      inventoryUnit: (json[_Json.inventoryUnit] as String?)?.getMeasurement,
-      // inventoryPrice: json[_Json.inventoryPrice].toString().toDouble,
-      inventoryNote: json[_Json.inventoryNote],
-      //
       deliveryEmployee: json[_Json.deliveryEmployee] == null ||
               json[_Json.deliveryEmployee] == ''
           ? null
           : PktbsEmployee.fromJson(json[_Json.expand][_Json.deliveryEmployee]),
-      deliveryAddress: json[_Json.deliveryAddress],
-      // deliveryCharge: json[_Json.deliveryCharge].toString().toDouble,
-      deliveryNote: json[_Json.deliveryNote],
-      //
-      paymentMethod: (json[_Json.paymentMethod] as String).toPaymentMethod,
-      paymentNote: json[_Json.paymentNote],
-      amount: json[_Json.amount].toString().toDouble ?? 0.0,
-      //
-      deliveryTime: DateTime.parse(json[_Json.deliveryTime]).toLocal(),
-      description: json[_Json.description],
-      status: (json[_Json.status] as String).toOrderStatus,
     );
   }
 
@@ -194,49 +163,39 @@ class PktbsOrder {
 
 class _Json {
   static const id = 'id';
+  static const colar = 'colar';
+  static const plate = 'plate';
+  static const status = 'status';
+  static const expand = 'expand';
+  static const sleeve = 'sleeve';
+  static const pocket = 'pocket';
+  static const button = 'button';
+  static const amount = 'amount';
   static const created = 'created';
   static const updated = 'updated';
   static const creator = 'creator';
   static const updator = 'updator';
-  static const expand = 'expand';
-  static const collectionId = 'collectionId';
-  static const collectionName = 'collectionName';
-  //
+  static const quantity = 'quantity';
+  static const inventory = 'inventory';
+  static const tailorNote = 'tailorNote';
+  static const paymentNote = 'paymentNote';
+  static const measurement = 'measurement';
+  static const description = 'description';
+  static const deliveryNote = 'deliveryNote';
   static const customerName = 'customerName';
+  static const collectionId = 'collectionId';
+  static const customerNote = 'customerNote';
+  static const deliveryTime = 'deliveryTime';
+  static const paymentMethod = 'paymentMethod';
+  static const inventoryUnit = 'inventoryUnit';
+  static const inventoryNote = 'inventoryNote';
   static const customerEmail = 'customerEmail';
   static const customerPhone = 'customerPhone';
-  static const customerAddress = 'customerAddress';
-  static const customerNote = 'customerNote';
-  //
-  static const measurement = 'measurement';
-  static const plate = 'plate';
-  static const sleeve = 'sleeve';
-  static const colar = 'colar';
-  static const pocket = 'pocket';
-  static const button = 'button';
-  static const measurementNote = 'measurementNote';
-  static const quantity = 'quantity';
-  //
   static const tailorEmployee = 'tailorEmployee';
-  // static const tailorCharge = 'tailorCharge';
-  static const tailorNote = 'tailorNote';
-  //
-  static const inventory = 'inventory';
-  static const inventoryQuantity = 'inventoryQuantity';
-  static const inventoryUnit = 'inventoryUnit';
-  // static const inventoryPrice = 'inventoryPrice';
-  static const inventoryNote = 'inventoryNote';
-  //
-  static const deliveryEmployee = 'deliveryEmployee';
+  static const collectionName = 'collectionName';
+  static const customerAddress = 'customerAddress';
+  static const measurementNote = 'measurementNote';
   static const deliveryAddress = 'deliveryAddress';
-  // static const deliveryCharge = 'deliveryCharge';
-  static const deliveryNote = 'deliveryNote';
-  //
-  static const paymentMethod = 'paymentMethod';
-  static const paymentNote = 'paymentNote';
-  static const amount = 'amount';
-  //
-  static const deliveryTime = 'deliveryTime';
-  static const description = 'description';
-  static const status = 'status';
+  static const deliveryEmployee = 'deliveryEmployee';
+  static const inventoryQuantity = 'inventoryQuantity';
 }

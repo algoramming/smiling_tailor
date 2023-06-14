@@ -23,11 +23,11 @@ Future<void> pktbsSignup(BuildContext context, AuthProvider notifier,
   try {
     await pb.collection(users).create(
       body: {
+        'emailVisibility': true,
         'name': notifier.nameCntrlr.text,
         'email': notifier.emailCntrlr.text,
         'password': notifier.pwdCntrlr.text,
         'username': notifier.usernameCntrlr.text,
-        'emailVisibility': true,
         'passwordConfirm': notifier.pwdConfirmCntrlr.text,
       },
       files: notifier.image == null

@@ -58,12 +58,12 @@ class PktbsInventory {
       created: DateTime.parse(json[_Json.created]).toLocal(),
       from: PktbsVendor.fromJson(json[_Json.expand][_Json.from]),
       creator: PktbsUser.fromJson(json[_Json.expand][_Json.creator]),
-      updator: json[_Json.updator] == null || json[_Json.updator] == ''
-          ? null
-          : PktbsUser.fromJson(json[_Json.expand][_Json.updator]),
       updated: json[_Json.updated] == null || json[_Json.updated] == ''
           ? null
           : DateTime.parse(json[_Json.updated]).toLocal(),
+      updator: json[_Json.updator] == null || json[_Json.updator] == ''
+          ? null
+          : PktbsUser.fromJson(json[_Json.expand][_Json.updator]),
     );
   }
 
