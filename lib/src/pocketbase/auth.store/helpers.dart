@@ -6,6 +6,7 @@ import '../../utils/logger/logger_helper.dart';
 import 'custom.auth.store.dart';
 
 late PocketBase pb;
+late bool isServerRunning;
 
 String get httpProtocol => appSettings.useSecureProtocol ? 'https' : 'http';
 String get baseUrl => '$httpProtocol://${appSettings.baseUrl}/';
@@ -19,24 +20,24 @@ Future<void> initPocketbase() async {
   pb = PocketBase(baseUrl, authStore: CustomAuthStore(sprefs));
   log.i('Pocketbase initialized. AuthStore isValid: ${pb.authStore.isValid}');
   log.i('AuthStore Model: ${pb.authStore.model}');
-  // await pktbsHealthCheck();
+  await pktbsHealthCheck();
   // await pktbsServerStatus();
 }
 
-// Future<void> pktbsHealthCheck() async {
-//   try {
-//     final health = await pb.health.check();
-//     if (health.code == 200) {
-//       isServerRunning = true;
-//     } else {
-//       log.e('Server is not running. $health');
-//       isServerRunning = false;
-//     }
-//   } catch (e) {
-//     log.e('Server is not running. $e');
-//     isServerRunning = false;
-//   }
-// }
+Future<void> pktbsHealthCheck() async {
+  try {
+    final health = await pb.health.check();
+    if (health.code == 200) {
+      isServerRunning = true;
+    } else {
+      log.e('Server is not running. $health');
+      isServerRunning = false;
+    }
+  } catch (e) {
+    log.e('Server is not running. $e');
+    isServerRunning = false;
+  }
+}
 
 ///
 /// COllections name

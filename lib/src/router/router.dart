@@ -9,6 +9,7 @@ import '../modules/home/view/home.view.dart';
 import '../pocketbase/auth.store/helpers.dart';
 import '../shared/error_widget/error_widget.dart';
 import '../shared/loading_widget/loading_widget.dart';
+import '../shared/page_not_found/page_not_found.dart';
 import '../utils/extensions/extensions.dart';
 import '../utils/logger/logger_helper.dart';
 import 'provider/data_load_provider.dart';
@@ -22,6 +23,7 @@ class AppRouter extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    if(!isServerRunning) return const KServerNotRunning();
     if (!pb.authStore.isValid) return const AuthenticationView();
     if (isUnderMinSize(context.mq.size)) return const ScreenEnlargeWarning();
     return ref.watch(initialDataLoadProvider).when(
