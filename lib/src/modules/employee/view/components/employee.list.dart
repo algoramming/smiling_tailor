@@ -40,8 +40,8 @@ class EmployeeList extends ConsumerWidget {
                       return Card(
                         child: KListTile(
                           key: ValueKey(employee.id),
-                          swipeLeft: ()=> log.i('swipe left'),
-                          swipeRight: ()=> log.i('swipe right'),
+                          onEditTap: () => log.i('On Edit Tap'),
+                          onDeleteTap: () => log.i('On Delete Tap'),
                           selected: notifier.selectedEmployee == employee,
                           onTap: () => notifier.selectEmployee(employee),
                           onLongPress: () async =>

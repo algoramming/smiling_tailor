@@ -15,10 +15,11 @@ class KListTile extends StatelessWidget {
     this.trailing,
     this.subtitle,
     this.selected,
-    this.swipeLeft,
-    this.swipeRight,
+    this.onEditTap,
+    this.onDeleteTap,
     this.onDoubleTap,
     this.onLongPress,
+    this.slidableAction,
     this.paddingBetweenTitleAndSubtitle,
   }) : super(key: key);
 
@@ -27,10 +28,11 @@ class KListTile extends StatelessWidget {
   final Widget? leading;
   final Widget? subtitle;
   final Widget? trailing;
+  final Widget? slidableAction;
   final void Function()? onTap;
-  final void Function()? swipeLeft;
-  final void Function()? swipeRight;
+  final void Function()? onEditTap;
   final EdgeInsetsGeometry? padding;
+  final void Function()? onDeleteTap;
   final void Function()? onDoubleTap;
   final void Function()? onLongPress;
   final double? paddingBetweenTitleAndSubtitle;
@@ -59,18 +61,19 @@ class KListTile extends StatelessWidget {
               key: key!,
               startActionPane: ActionPane(
                 motion: const StretchMotion(),
-                extentRatio: 0.3,
+                extentRatio: slidableAction != null ? 0.45 : 0.3,
                 children: [
+                  if (slidableAction != null) slidableAction!,
                   Theme(
                     data: context.theme.copyWith(
                       iconTheme: context.theme.iconTheme.copyWith(size: 20.0),
                     ),
                     child: SlidableAction(
                       borderRadius: borderRadius15,
-                      onPressed: (_) => swipeLeft?.call(),
+                      onPressed: (_) => onEditTap?.call(),
                       backgroundColor: Colors.grey[600]!,
                       foregroundColor: white,
-                      icon: Icons.edit,
+                      icon: Icons.edit_outlined,
                       label: 'Edit',
                       padding: EdgeInsets.zero,
                       autoClose: true,
@@ -82,7 +85,7 @@ class KListTile extends StatelessWidget {
                     ),
                     child: SlidableAction(
                       borderRadius: borderRadius15,
-                      onPressed: (_) => swipeRight?.call(),
+                      onPressed: (_) => onDeleteTap?.call(),
                       backgroundColor: Colors.red[400]!,
                       foregroundColor: white,
                       icon: Icons.delete,
@@ -95,7 +98,7 @@ class KListTile extends StatelessWidget {
               ),
               endActionPane: ActionPane(
                 motion: const StretchMotion(),
-                extentRatio: 0.3,
+                extentRatio: slidableAction != null ? 0.45 : 0.3,
                 children: [
                   Theme(
                     data: context.theme.copyWith(
@@ -103,22 +106,7 @@ class KListTile extends StatelessWidget {
                     ),
                     child: SlidableAction(
                       borderRadius: borderRadius15,
-                      onPressed: (_) => swipeLeft?.call(),
-                      backgroundColor: Colors.grey[600]!,
-                      foregroundColor: white,
-                      icon: Icons.edit,
-                      label: 'Edit',
-                      padding: EdgeInsets.zero,
-                      autoClose: true,
-                    ),
-                  ),
-                  Theme(
-                    data: context.theme.copyWith(
-                      iconTheme: context.theme.iconTheme.copyWith(size: 20.0),
-                    ),
-                    child: SlidableAction(
-                      borderRadius: borderRadius15,
-                      onPressed: (_) => swipeRight?.call(),
+                      onPressed: (_) => onDeleteTap?.call(),
                       backgroundColor: Colors.red[400]!,
                       foregroundColor: white,
                       icon: Icons.delete,
@@ -127,6 +115,22 @@ class KListTile extends StatelessWidget {
                       autoClose: true,
                     ),
                   ),
+                  Theme(
+                    data: context.theme.copyWith(
+                      iconTheme: context.theme.iconTheme.copyWith(size: 20.0),
+                    ),
+                    child: SlidableAction(
+                      borderRadius: borderRadius15,
+                      onPressed: (_) => onEditTap?.call(),
+                      backgroundColor: Colors.grey[600]!,
+                      foregroundColor: white,
+                      icon: Icons.edit_outlined,
+                      label: 'Edit',
+                      padding: EdgeInsets.zero,
+                      autoClose: true,
+                    ),
+                  ),
+                  if (slidableAction != null) slidableAction!,
                 ],
               ),
 

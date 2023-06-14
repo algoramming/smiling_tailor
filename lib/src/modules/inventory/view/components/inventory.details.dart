@@ -215,8 +215,8 @@ class _TrxList extends ConsumerWidget {
                   return Card(
                     child: KListTile(
                       key: ValueKey(trx.id),
-                      swipeLeft: () => log.i('swipe left'),
-                      swipeRight: () => log.i('swipe right'),
+                      onEditTap: () => log.i('On Edit Tap'),
+                      onDeleteTap: () => log.i('On Delete Tap'),
                       onLongPress: () async =>
                           await copyToClipboard(context, trx.id),
                       padding: const EdgeInsets.symmetric(

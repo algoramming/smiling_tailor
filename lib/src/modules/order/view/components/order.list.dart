@@ -3,12 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../../config/constants.dart';
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../shared/clipboard_data/clipboard_data.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/logger/logger_helper.dart';
+import '../../../../utils/themes/themes.dart';
 import '../../provider/order.provider.dart';
 
 class OrderList extends ConsumerWidget {
@@ -33,15 +35,31 @@ class OrderList extends ConsumerWidget {
           child: notifier.orderList.isEmpty
               ? const Center(child: Text('No order found!'))
               : SlidableAutoCloseBehavior(
-                child: ListView.builder(
+                  child: ListView.builder(
                     itemCount: notifier.orderList.length,
                     itemBuilder: (_, idx) {
                       final order = notifier.orderList[idx];
                       return Card(
                         child: KListTile(
                           key: ValueKey(order.id),
-                          swipeLeft: () => log.i('swipe left'),
-                          swipeRight: () => log.i('swipe right'),
+                          onEditTap: () => log.i('On Edit Tap'),
+                          onDeleteTap: () => log.i('On Delete Tap'),
+                          slidableAction: Theme(
+                            data: context.theme.copyWith(
+                              iconTheme:
+                                  context.theme.iconTheme.copyWith(size: 20.0),
+                            ),
+                            child: SlidableAction(
+                              borderRadius: borderRadius15,
+                              onPressed: (_) => log.i('On Print Tap'),
+                              backgroundColor: context.theme.primaryColor,
+                              foregroundColor: white,
+                              icon: Icons.print_outlined,
+                              label: 'Print',
+                              padding: EdgeInsets.zero,
+                              autoClose: true,
+                            ),
+                          ),
                           selected: notifier.selectedOrder == order,
                           onTap: () => notifier.selectOrder(order),
                           onLongPress: () async =>
@@ -60,12 +78,13 @@ class OrderList extends ConsumerWidget {
                           ),
                           title: Text(order.customerName),
                           subtitle: Text(order.customerPhone),
-                          trailing: const Icon(Icons.arrow_circle_right_outlined),
+                          trailing:
+                              const Icon(Icons.arrow_circle_right_outlined),
                         ),
                       );
                     },
                   ),
-              ),
+                ),
         ),
       ],
     );

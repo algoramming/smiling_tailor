@@ -40,8 +40,8 @@ class VendorList extends ConsumerWidget {
                       return Card(
                         child: KListTile(
                           key: ValueKey(vendor.id),
-                          swipeLeft: () => log.i('swipe left'),
-                          swipeRight: () => log.i('swipe right'),
+                          onEditTap: () => log.i('On Edit Tap'),
+                          onDeleteTap: () => log.i('On Delete Tap'),
                           selected: notifier.selectedVendor == vendor,
                           onTap: () => notifier.selectVendor(vendor),
                           onLongPress: () async =>

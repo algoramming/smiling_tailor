@@ -41,8 +41,8 @@ class InventoryList extends ConsumerWidget {
                       return Card(
                         child: KListTile(
                           key: ValueKey(inventory.id),
-                          swipeLeft: () => log.i('swipe left'),
-                          swipeRight: () => log.i('swipe right'),
+                          onEditTap: () => log.i('On Edit Tap'),
+                          onDeleteTap: () => log.i('On Delete Tap'),
                           selected: notifier.selectedInventory == inventory,
                           onTap: () => notifier.selectInventory(inventory),
                           onLongPress: () async =>
