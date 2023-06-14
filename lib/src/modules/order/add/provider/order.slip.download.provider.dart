@@ -7,6 +7,7 @@ import '../../../../utils/logger/logger_helper.dart';
 import '../../../transaction/enum/trx.type.dart';
 import '../../../transaction/model/transaction.dart';
 import '../../model/order.dart';
+import '../../pdf/sample.pdf.dart';
 
 typedef OrderSlipNotifier = AutoDisposeAsyncNotifierProviderFamily<
     OrderSlipProvider, void, PktbsOrder>;
@@ -142,5 +143,10 @@ class OrderSlipProvider
     log.i('Order Slip Download Options: $downloadOptions');
     log.i('Order Slip Selected Download Options: $selectedDownloadOptions');
     log.i('Order Slip Submit===========================');
+    await PdfInvoiceApi.generate().then((file) {
+      log.i('Order Slip Submit===========================');
+      log.i('PDF File Location: ${file.path}');
+      log.i('Order Slip Submit===========================');
+    });
   }
 }
