@@ -44,6 +44,7 @@ class AddTrxVendorProvider
       amount: double.parse(amountCntrlr.text),
       trxType: isPaybale ? TrxType.credit : TrxType.debit,
       description: descriptionCntrlr.text,
+      voucher: 'Vendor Transaction',
     ).then((r) {
       if (r != null) {
         clear();

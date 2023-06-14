@@ -43,6 +43,7 @@ class AddTrxOrderProvider extends AutoDisposeFamilyNotifier<void, PktbsOrder> {
       amount: double.parse(amountCntrlr.text),
       trxType: isPaybale ? TrxType.debit : TrxType.credit,
       description: descriptionCntrlr.text,
+      voucher: 'Order Transaction',
     ).then((r) {
       if (r != null) {
         clear();

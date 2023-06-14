@@ -38,7 +38,7 @@ class PktbsTrx {
   Measurement? unit;
   bool isGoods;
   TrxType trxType;
-  String? voucher;
+  String voucher;
   String? description;
   bool isSystemGenerated;
 
@@ -63,7 +63,7 @@ class PktbsTrx {
     this.unit,
     this.isGoods = false,
     required this.trxType,
-    this.voucher,
+    required this.voucher,
     this.description,
     this.isSystemGenerated = false,
   });
@@ -93,7 +93,7 @@ class PktbsTrx {
         unit: (json[_Json.unit] as String?)?.getMeasurement,
         isGoods: json[_Json.isGoods] as bool? ?? false,
         trxType: (json[_Json.trxType] as String).trxType,
-        voucher: json[_Json.voucher] as String?,
+        voucher: json[_Json.voucher] as String,
         description: json[_Json.description] as String?,
         isSystemGenerated: json[_Json.isSystemGenerated] as bool? ?? false,
       );

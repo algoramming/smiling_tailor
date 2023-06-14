@@ -31,10 +31,12 @@ class OrderSlipDownloadPopup extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedPopup(
       child: AlertDialog(
+        scrollable: true,
         title: const Text('Order Slip'),
         content: SizedBox(
           width: min(400, context.width),
           child: Column(
+            mainAxisSize: mainMin,
             children: [
               RichText(
                 textAlign: TextAlign.center,

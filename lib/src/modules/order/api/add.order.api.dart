@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pocketbase/pocketbase.dart';
-import '../../../db/isar.dart';
 
+import '../../../db/isar.dart';
 import '../../../pocketbase/auth.store/helpers.dart';
 import '../../../pocketbase/error.handle/error.handle.func.dart';
 import '../../../shared/show_toast/awesome_snackbar.dart';
@@ -77,6 +77,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
             toJson: pb.authStore.model?.toJson(),
             toType: GLType.user,
             amount: noti.advanceAmountCntrlr.text.toDouble ?? 0.0,
+            voucher: 'Order Advance Amount Transaction',
             trxType: TrxType.debit,
             description:
                 'System Generated: Transaction for advance amount of order ${order.id}',
@@ -221,7 +222,7 @@ Future<RecordModel?> tailorAllocateApi(
     trxType: TrxType.debit,
     amount: notifier.tailorChargeCntrlr.text.toDouble ?? 0.0,
     isSystemGenerated: true,
-    voucher: 'Tailor Charge',
+    voucher: 'Order Tailor Charge Transaction',
     description:
         'System Generated: Transaction for Tailor Charge of order #${order.id} allocated to ${order.tailorEmployee!.name} [${order.tailorEmployee!.id}]',
   );
@@ -245,7 +246,7 @@ Future<RecordModel?> inventoryAllocateApi(
     amount: order.inventoryQuantity!.toString().toDouble ?? 0.0,
     unit: order.inventoryUnit!.name,
     isSystemGenerated: true,
-    voucher: 'Inventory Allocation',
+    voucher: 'Order Inventory Allocation Transaction',
     isGoods: true,
     description:
         'System Generated: Transaction for Inventory Purchase of order #${order.id} allocated to ${order.inventory!.title} [${order.inventory!.id}] by ${appCurrency.symbol}${notifier.inventoryPriceCntrlr.text.toDouble}}',
@@ -261,7 +262,7 @@ Future<RecordModel?> inventoryAllocateApi(
       trxType: TrxType.debit,
       amount: notifier.inventoryPriceCntrlr.text.toDouble ?? 0.0,
       isSystemGenerated: true,
-      voucher: 'Inventory Purchase',
+      voucher: 'Order Inventory Purchase Transaction',
       description:
           'System Generated: Transaction for Inventory Purchase of order #${order.id} allocated to ${order.inventory!.title} [${order.inventory!.id}] of ${order.inventoryQuantity}${order.inventoryUnit!.symbol}',
     ),
@@ -286,6 +287,7 @@ Future<RecordModel?> deliveryAllocationApi(
     trxType: TrxType.debit,
     isSystemGenerated: true,
     voucher: 'Delivery Charge',
-    description: 'System Generated: Transaction for Delivery Charge of order #${order.id} allocated to ${order.deliveryEmployee!.name} [${order.deliveryEmployee!.id}]',
+    description:
+        'System Generated: Transaction for Delivery Charge of order #${order.id} allocated to ${order.deliveryEmployee!.name} [${order.deliveryEmployee!.id}]',
   );
 }

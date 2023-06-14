@@ -44,6 +44,7 @@ class AddTrxEmployeeProvider
       toType: employee.glType,
       amount: double.parse(amountCntrlr.text),
       trxType: isPaybale ? TrxType.credit : TrxType.debit,
+      voucher: 'Employee Transaction',
       description: descriptionCntrlr.text,
     ).then((r) {
       if (r != null) {

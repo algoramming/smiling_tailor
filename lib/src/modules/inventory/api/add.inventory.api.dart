@@ -51,6 +51,7 @@ Future<void> pktbsAddInventory(
             description:
                 'System Generated: Transaction for Goods Entry! ${inven.title} [${inven.id}] - ${appCurrency.symbol}${inven.amount} has been added to the system through ${inven.from.name} [${inven.from.id}].',
             isGoods: true,
+            voucher: 'Inventory Entry Transaction',
             isSystemGenerated: true,
             unit: inven.unit.name,
           ).then((_) async {
@@ -71,6 +72,7 @@ Future<void> pktbsAddInventory(
                 trxType: TrxType.credit,
                 isSystemGenerated: true,
                 amount: advanceBalance,
+                voucher: 'Inventory Advance Amount Transaction',
                 description:
                     'System Generated: Transaction for Advance Amount! ${inven.title} [${inven.id}] - ${inven.quantity}${inven.unit.symbol} has been added to the system through ${inven.from.name} [${inven.from.id}].',
               ).then((_) {

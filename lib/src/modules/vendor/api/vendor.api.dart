@@ -51,6 +51,7 @@ Future<void> pktbsAddVendor(
             trxType: notifier.isPaybale ? TrxType.debit : TrxType.credit,
             isSystemGenerated: true,
             amount: openingBalance,
+            voucher: 'Vendor Opening Balance Transaction',
             description:
                 'System Generated: Transaction for Opening Balance. ${ven.name} [${ven.id}] is ${!notifier.isPaybale ? 'Payable' : 'Receivable'} of ${appCurrency.symbol}$openingBalance. Liability ${notifier.isPaybale ? 'Credit/Increase' : 'Debit/Decrease'}.',
           ).then((value) {
