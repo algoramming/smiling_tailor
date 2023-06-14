@@ -22,15 +22,6 @@ class OrderView extends StatelessWidget {
           ],
         ),
       ),
-      // floatingActionButton: FloatingActionButton.small(
-      //   tooltip: 'Add Order',
-      //   onPressed: () async => await showDialog(
-      //     context: context,
-      //     barrierDismissible: false,
-      //     builder: (context) => const AddOrderPopup(),
-      //   ),
-      //   child: const Icon(Icons.add),
-      // ),
       floatingActionButton: Consumer(
         builder: (_, ref, __) {
           ref.watch(orderProvider);
