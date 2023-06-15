@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:path/path.dart';
 
 import '../../../../pocketbase/auth.store/helpers.dart';
 import '../../../../shared/show_toast/timer.snackbar/show.timer.snackbar.dart';
@@ -147,13 +148,14 @@ class OrderSlipProvider
     log.i('Order Slip Download Options: $downloadOptions');
     log.i('Order Slip Selected Download Options: $selectedDownloadOptions');
     log.i('Order Slip Submit===========================');
-    await PdfInvoiceApi.generate().then((file) async {
+    final pdfInvoice = PdfInvoice(arg);
+    await pdfInvoice.samplePdf().then((file) async {
       context.pop();
       showTimerSnackbar(
         context,
-        contentText: '${file.path.split('\\').last} generated)',
+        contentText: '${basename(file.path)} generated)',
         buttonLabel: 'View',
-        onTap: () async => await FileHandleApi.openFile(file),
+        onTap: () async => await FileHandle.openDocument(file),
       );
       log.i('Order Slip Submit===========================');
       log.i('PDF File Location: ${file.path}');

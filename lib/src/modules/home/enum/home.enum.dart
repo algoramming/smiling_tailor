@@ -4,6 +4,7 @@ import '../../authentication/view/authentication.dart';
 import '../../dashboard/dashboard.dart';
 import '../../employee/view/employee.dart';
 import '../../inventory/view/inventory.dart';
+import '../../invoices/view/invoice.dart';
 import '../../order/view/order.dart';
 import '../../profile/view/profile.dart';
 import '../../settings/view/setting.view.dart';
@@ -16,6 +17,7 @@ enum KDrawer {
   inventory,
   employee,
   order,
+  invoice,
   addManager,
   settings
 }
@@ -35,6 +37,8 @@ extension KDrawerExtension on KDrawer {
         return 'assets/svgs/employee.svg';
       case KDrawer.order:
         return 'assets/svgs/order.svg';
+      case KDrawer.invoice:
+        return 'assets/svgs/invoice.svg';
       case KDrawer.addManager:
         return 'assets/svgs/url-config.svg';
       case KDrawer.settings:
@@ -58,6 +62,8 @@ extension KDrawerExtension on KDrawer {
         return 'Employees';
       case KDrawer.order:
         return 'Orders';
+      case KDrawer.invoice:
+        return 'Invoices';
       case KDrawer.addManager:
         return 'Add Manager';
       case KDrawer.settings:
@@ -81,6 +87,8 @@ extension KDrawerExtension on KDrawer {
         return const EmployeeView();
       case KDrawer.order:
         return const OrderView();
+      case KDrawer.invoice:
+        return const InvoiceView();
       case KDrawer.addManager:
         return const AuthenticationView(isSignup: true);
       case KDrawer.settings:

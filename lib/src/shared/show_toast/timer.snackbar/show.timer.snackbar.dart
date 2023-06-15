@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+
 import 'timer.snackbar.dart';
 
 void showTimerSnackbar(
@@ -16,8 +17,8 @@ void showTimerSnackbar(
   /// This method will execute after time finish. The default time is 4 seconds.
   required void Function() onTap,
 
-  /// default time set 4 seconds.
-  int second = 4,
+  /// default time set 2 seconds.
+  int second = 2,
 
   /// default backgorund color [Colors.grey[850]]
   Color? backgroundColor,

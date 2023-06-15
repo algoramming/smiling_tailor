@@ -1,5 +1,11 @@
 name: smiling_tailor
-description: Introducing our tailor-focused ERP management system - a powerful, user-friendly application designed to streamline your tailoring business. Add managers, vendors, inventory, and employees effortlessly. Seamlessly process orders and track transaction history in real-time. Stay organized, efficient, and in control with our comprehensive software solution. Proudly developed as an in-house product of Algoramming, ensuring quality and reliability in every aspect.
+description: Introducing our tailor-focused ERP management system - a powerful,
+  user-friendly application designed to streamline your tailoring business. Add
+  managers, vendors, inventory, and employees effortlessly. Seamlessly process
+  orders and track transaction history in real-time. Stay organized, efficient,
+  and in control with our comprehensive software solution. Proudly developed as
+  an in-house product of Algoramming, ensuring quality and reliability in every
+  aspect.
 
 # Prevent accidental publishing to pub.dev.
 publish_to: "none"
@@ -34,6 +40,7 @@ dependencies:
   pdf: ^3.10.4
   pocketbase: ^0.10.1
   rive: ^0.11.3
+  share_plus: ^7.0.2
   shared_preferences: ^2.1.2
   toggle_switch: ^2.1.0
   url_launcher: ^6.1.11

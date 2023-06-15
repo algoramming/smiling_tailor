@@ -4,10 +4,15 @@ import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+import '../model/order.dart';
 import 'file.handle.dart';
 
-class PdfInvoiceApi {
-  static Future<File> generate() async {
+class PdfInvoice {
+  final PktbsOrder order;
+
+  PdfInvoice(this.order);
+
+  Future<File> samplePdf() async {
     final pdf = pw.Document();
 
     final iconImage =
@@ -288,8 +293,8 @@ class PdfInvoiceApi {
       ),
     );
 
-    return FileHandleApi.saveDocument(
-      name: 'invoice-${DateTime.now().millisecondsSinceEpoch}.pdf',
+    return FileHandle.saveDocument(
+      name: '${order.id}-sample-${DateTime.now().millisecondsSinceEpoch}',
       pdf: pdf,
     );
   }

@@ -7,6 +7,7 @@ import '../../../../config/constants.dart';
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../shared/clipboard_data/clipboard_data.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
+import '../../../../shared/page_not_found/page_not_found.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/logger/logger_helper.dart';
@@ -34,7 +35,7 @@ class OrderList extends ConsumerWidget {
         ),
         Flexible(
           child: notifier.orderList.isEmpty
-              ? const Center(child: Text('No order found!'))
+              ? const KDataNotFound(msg: 'No Order Found!')
               : SlidableAutoCloseBehavior(
                   child: ListView.builder(
                     itemCount: notifier.orderList.length,

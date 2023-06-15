@@ -8,6 +8,7 @@ import '../../../../config/constants.dart';
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../shared/clipboard_data/clipboard_data.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
+import '../../../../shared/page_not_found/page_not_found.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/logger/logger_helper.dart';
@@ -171,13 +172,14 @@ class _TrxList extends ConsumerWidget {
     final trxs = noti.trxList.where(condition).toList();
     return Expanded(
       child: trxs.isEmpty
-          ? const Center(child: Text('No Transaction Found!'))
+          ? const KDataNotFound(msg: 'No Transaction Found!')
           : SlidableAutoCloseBehavior(
-            child: ListView.builder(
+              child: ListView.builder(
                 itemCount: trxs.length,
                 itemBuilder: (_, i) {
                   final trx = trxs[i];
-                  final kColor = trx.trxType.isCredit ? Colors.red : Colors.green;
+                  final kColor =
+                      trx.trxType.isCredit ? Colors.red : Colors.green;
                   return Card(
                     child: KListTile(
                       key: ValueKey(trx.id),
@@ -253,8 +255,8 @@ class _TrxList extends ConsumerWidget {
                           message: x.formattedFloat,
                           child: Text(
                             x.formattedCompat,
-                            style:
-                                context.text.labelLarge!.copyWith(color: kColor),
+                            style: context.text.labelLarge!
+                                .copyWith(color: kColor),
                           ),
                         ),
                       ),
@@ -262,7 +264,7 @@ class _TrxList extends ConsumerWidget {
                   );
                 },
               ),
-          ),
+            ),
     );
   }
 }

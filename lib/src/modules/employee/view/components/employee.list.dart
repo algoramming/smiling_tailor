@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../shared/clipboard_data/clipboard_data.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
+import '../../../../shared/page_not_found/page_not_found.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/logger/logger_helper.dart';
@@ -31,9 +32,9 @@ class EmployeeList extends ConsumerWidget {
         ),
         Flexible(
           child: notifier.employeeList.isEmpty
-              ? const Center(child: Text('No employee found!'))
+              ? const KDataNotFound(msg: 'No Employee Found!')
               : SlidableAutoCloseBehavior(
-                child: ListView.builder(
+                  child: ListView.builder(
                     itemCount: notifier.employeeList.length,
                     itemBuilder: (_, idx) {
                       final employee = notifier.employeeList[idx];
@@ -60,12 +61,13 @@ class EmployeeList extends ConsumerWidget {
                           ),
                           title: Text(employee.name),
                           subtitle: Text(employee.address),
-                          trailing: const Icon(Icons.arrow_circle_right_outlined),
+                          trailing:
+                              const Icon(Icons.arrow_circle_right_outlined),
                         ),
                       );
                     },
                   ),
-              ),
+                ),
         ),
       ],
     );

@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../shared/clipboard_data/clipboard_data.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
+import '../../../../shared/page_not_found/page_not_found.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/logger/logger_helper.dart';
@@ -31,7 +32,7 @@ class VendorList extends ConsumerWidget {
         ),
         Flexible(
           child: notifier.vendorList.isEmpty
-              ? const Center(child: Text('No vendor found!'))
+              ? const KDataNotFound(msg: 'No Vendor Found!')
               : SlidableAutoCloseBehavior(
                   child: ListView.builder(
                     itemCount: notifier.vendorList.length,

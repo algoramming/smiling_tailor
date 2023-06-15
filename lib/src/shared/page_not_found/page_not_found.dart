@@ -114,3 +114,36 @@ class KServerNotRunning extends StatelessWidget {
     );
   }
 }
+
+class KDataNotFound extends StatelessWidget {
+  const KDataNotFound({Key? key, this.msg}) : super(key: key);
+
+  final String? msg;
+
+  @override
+  Widget build(BuildContext context) {
+    // printUrlHistory(context);
+    return Scaffold(
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: mainMin,
+            mainAxisAlignment: mainCenter,
+            children: [
+              SvgPicture.asset(
+                'assets/svgs/no-data.svg',
+                height: context.width * 0.15,
+                width: context.width * 0.15,
+              ),
+              Text(
+                msg ?? 'No data found!',
+                textAlign: TextAlign.center,
+                style: context.text.labelLarge,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
