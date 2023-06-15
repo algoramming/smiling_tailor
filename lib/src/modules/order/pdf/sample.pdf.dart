@@ -12,7 +12,7 @@ class PdfInvoice {
 
   PdfInvoice(this.order);
 
-  Future<File> samplePdf() async {
+  Future<File> samplePdf(String name) async {
     final pdf = pw.Document();
 
     final iconImage =
@@ -294,7 +294,7 @@ class PdfInvoice {
     );
 
     return FileHandle.saveDocument(
-      name: '${order.id}-sample-${DateTime.now().millisecondsSinceEpoch}',
+      name: '${order.id}-$name-${DateTime.now().millisecondsSinceEpoch}',
       pdf: pdf,
     );
   }

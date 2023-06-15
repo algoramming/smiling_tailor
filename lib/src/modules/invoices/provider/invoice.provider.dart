@@ -90,10 +90,13 @@ class InvoiceProvider extends AutoDisposeAsyncNotifier<List<File>> {
   }
 
   Future<void> openSelectedFiles() async {
-    for (final e in selectedFiles) {
-      await FileHandle.openDocument(e);
+    try {
+      for (final e in selectedFiles) {
+        await FileHandle.openDocument(e);
+      }
+    } catch (e) {
+      EasyLoading.showError('$e');
     }
-    ref.notifyListeners();
   }
 
   Future<void> deleteSelectedFiles() async {

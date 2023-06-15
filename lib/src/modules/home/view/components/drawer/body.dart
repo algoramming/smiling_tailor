@@ -42,7 +42,10 @@ class KDrawerBody extends ConsumerWidget {
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               subtitle: KDrawer.values[index] == KDrawer.settings
-                  ? Text('Version ${info?.version}$bn')
+                  ? Text(
+                      'Version ${info?.version}$bn',
+                      style: context.text.labelSmall,
+                    )
                   : null,
               onTap: () => notifier.changeDrawer(KDrawer.values[index]),
             ),

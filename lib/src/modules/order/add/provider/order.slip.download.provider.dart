@@ -2,16 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:path/path.dart';
 
 import '../../../../pocketbase/auth.store/helpers.dart';
-import '../../../../shared/show_toast/timer.snackbar/show.timer.snackbar.dart';
+import '../../../../shared/show_toast/awsome.snackbar/awesome.snackbar.dart';
+import '../../../../shared/show_toast/awsome.snackbar/show.awesome.snackbar.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/logger/logger_helper.dart';
 import '../../../transaction/enum/trx.type.dart';
 import '../../../transaction/model/transaction.dart';
 import '../../model/order.dart';
-import '../../pdf/file.handle.dart';
 import '../../pdf/sample.pdf.dart';
 
 typedef OrderSlipNotifier = AutoDisposeAsyncNotifierProviderFamily<
@@ -143,23 +142,44 @@ class OrderSlipProvider
     log.i('Order Slip Inventory Allocation Trx: $inventoryAllocationTrx');
     log.i('Order Slip Inventory Purchase Trx: $inventoryPurchaseTrx');
     log.i('Order Slip Delivery Trx: $deliveryTrx');
-    log.i('Order Slip Slip Options: $slipOptions');
+    log.i('Order Slip Options: $slipOptions');
     log.i('Order Slip Selected Slip Options: $selectedSlipOptions');
     log.i('Order Slip Download Options: $downloadOptions');
     log.i('Order Slip Selected Download Options: $selectedDownloadOptions');
     log.i('Order Slip Submit===========================');
-    final pdfInvoice = PdfInvoice(arg);
-    await pdfInvoice.samplePdf().then((file) async {
+
+    await _print().then((p) async {
       context.pop();
-      showTimerSnackbar(
+      showAwesomeSnackbar(
         context,
-        contentText: '${basename(file.path)} generated)',
-        buttonLabel: 'View',
-        onTap: () async => await FileHandle.openDocument(file),
+        'Success!',
+        'Total $p ${p > 1 ? ' files' : ' file'} created!',
+        MessageType.success,
       );
-      log.i('Order Slip Submit===========================');
-      log.i('PDF File Location: ${file.path}');
+      // showTimerSnackbar(
+      //   context,
+      //   contentText: '${basename(file.path)} generated)',
+      //   buttonLabel: 'View',
+      //   onTap: () async => await FileHandle.openDocument(file),
+      // );
       log.i('Order Slip Submit===========================');
     });
+  }
+
+  Future<int> _print() async {
+    final pdfInvoice = PdfInvoice(arg);
+
+    if (selectedDownloadOptions[0]) {
+      if (selectedSlipOptions[0]) await pdfInvoice.samplePdf('customer-pdf');
+      if (selectedSlipOptions[1]) await pdfInvoice.samplePdf('cashier-pdf');
+      if (selectedSlipOptions[2]) await pdfInvoice.samplePdf('tailor-pdf');
+    }
+    if (selectedDownloadOptions[1]) {
+      if (selectedSlipOptions[0]) await pdfInvoice.samplePdf('customer-slip');
+      if (selectedSlipOptions[1]) await pdfInvoice.samplePdf('cashier-slip');
+      if (selectedSlipOptions[2]) await pdfInvoice.samplePdf('tailor-slip');
+    }
+    return selectedDownloadOptions.where((e) => e).length *
+        selectedSlipOptions.where((e) => e).length;
   }
 }

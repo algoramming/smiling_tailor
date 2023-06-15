@@ -27,28 +27,15 @@ class InvoiceView extends StatelessWidget {
           children: [
             Consumer(builder: (_, ref, __) {
               final notifier = ref.watch(invoiceProvider.notifier);
-              return Column(
-                crossAxisAlignment: crossEnd,
-                children: [
-                  TextFormField(
-                    controller: notifier.searchCntrlr,
-                    decoration: InputDecoration(
-                      hintText: 'Search...',
-                      prefixIcon:
-                          ClearPreffixIcon(() => notifier.searchCntrlr.clear()),
-                      suffixIcon: PasteSuffixIcon(() async =>
-                          notifier.searchCntrlr.text = await getCliboardData()),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0.0, 3.0, 5.0, 0.0),
-                    child: Text(
-                      '... total ${notifier.rawFiles.length} files',
-                      style: context.text.labelMedium!
-                          .copyWith(color: context.theme.primaryColor),
-                    ),
-                  ),
-                ],
+              return TextFormField(
+                controller: notifier.searchCntrlr,
+                decoration: InputDecoration(
+                  hintText: 'Search...',
+                  prefixIcon:
+                      ClearPreffixIcon(() => notifier.searchCntrlr.clear()),
+                  suffixIcon: PasteSuffixIcon(() async =>
+                      notifier.searchCntrlr.text = await getCliboardData()),
+                ),
               );
             }),
             const Expanded(child: _Body()),
@@ -134,6 +121,17 @@ class _Body extends ConsumerWidget {
                             ],
                           ),
                         ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0.0, 3.0, 5.0, 0.0),
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            '... total ${notifier.rawFiles.length} files',
+                            style: context.text.labelMedium!
+                                .copyWith(color: context.theme.primaryColor),
+                          ),
+                        ),
+                      ),
                       const SizedBox(height: 10),
                       Flexible(
                         child: Align(
