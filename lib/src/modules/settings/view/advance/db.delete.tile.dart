@@ -29,6 +29,7 @@ class DBDeleteTile extends StatelessWidget {
       ),
       title: Text(
         t.deleteDatabase,
+        textAlign: TextAlign.justify,
         style: const TextStyle(fontWeight: FontWeight.bold),
       ),
       onTap: () async => await showDialog(

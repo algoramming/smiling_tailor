@@ -1,4 +1,4 @@
-package com.algoramming.smiling_tailor;
+package com.algoramming.smilingtailor;
 
 import io.flutter.embedding.android.FlutterActivity;
 

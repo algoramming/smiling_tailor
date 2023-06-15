@@ -41,7 +41,7 @@ apps](https://flutter.dev/docs/development/accessibility-and-localization/intern
     msix_config:
         display_name: Smiling Tailor
         publisher_display_name: Alogoramming
-        identity_name: com.algoramming.smiling_tailor
+        identity_name: com.algoramming.smilingtailor
         msix_version: 1.0.0.0
         logo_path: D:\Algoramming\Flutter-Projects\smiling_tailor\assets\icons\app-icon-1024x1024.png
 ```
@@ -80,7 +80,7 @@ apps](https://flutter.dev/docs/development/accessibility-and-localization/intern
             show_prompt: true
             force_update_from_any_version: false
         publisher_display_name: Alogoramming
-        identity_name: com.algoramming.smiling_tailor
+        identity_name: com.algoramming.smilingtailor
         msix_version: 1.0.0.0
         logo_path: D:\Algoramming\Flutter-Projects\smiling_tailor\assets\icons\app-icon-1024x1024.png
 ```

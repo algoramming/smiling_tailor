@@ -13,7 +13,7 @@
 		<key>CFBundleInfoDictionaryVersion</key>
 		<string>6.0</string>
 		<key>CFBundleName</key>
-		<string>smiling_tailor</string>
+		<string>Smiling Tailor</string>
 		<key>CFBundlePackageType</key>
 		<string>APPL</string>
 		<key>CFBundleShortVersionString</key>
@@ -49,5 +49,16 @@
 		<true/>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<key>LSApplicationQueriesSchemes</key>
+		<!-- url_launcher config -->
+		<array>
+			<string>sms</string>
+			<string>tel</string>
+		</array>
+		<!-- image_picker config -->
+		<key>NSCameraUsageDescription</key>
+		<string>Needs permission about photo library for uploading new picture picture.</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>Needs camera access permission for taking instant picture for uploading new profile picture.</string>
 	</dict>
 </plist>

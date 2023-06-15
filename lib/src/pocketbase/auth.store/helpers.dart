@@ -1,5 +1,6 @@
 import 'package:pocketbase/pocketbase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smiling_tailor/src/db/paths.dart';
 
 import '../../db/isar.dart';
 import '../../utils/logger/logger_helper.dart';
@@ -11,12 +12,13 @@ late bool isServerRunning;
 String get httpProtocol => appSettings.useSecureProtocol ? 'https' : 'http';
 String get baseUrl => '$httpProtocol://${appSettings.baseUrl}/';
 
-const globalBaseUrl = 'smiling-tailor.pockethost.io';
+const globalBaseUrl = 'smilingtailor.pockethost.io';
 const devBaseUrl = '103.113.227.244:4200';
 const localBaseUrl = '127.0.0.1:8090';
 
 Future<void> initPocketbase() async {
   final sprefs = await SharedPreferences.getInstance();
+  appDir.sprefs = sprefs;
   pb = PocketBase(baseUrl, authStore: CustomAuthStore(sprefs));
   log.i('Pocketbase initialized. AuthStore isValid: ${pb.authStore.isValid}');
   log.i('AuthStore Model: ${pb.authStore.model}');
