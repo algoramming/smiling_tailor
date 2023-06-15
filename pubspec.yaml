@@ -65,7 +65,7 @@ msix_config:
     force_update_from_any_version: false
   publisher_display_name: Algoramming
   identity_name: com.algoramming.smilingtailor
-  msix_version: 0.0.0.2
+  msix_version: 0.0.2.0
   logo_path: D:\Algoramming\Flutter-Projects\smiling_tailor\assets\icons\app-icon-1024x1024.png
 
 flutter_launcher_icons:
