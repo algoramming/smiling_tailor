@@ -83,7 +83,7 @@ class OrderSlipDownloadPopup extends StatelessWidget {
             builder: (_, ref, __) => TextButton(
               onPressed: () async {
                 final notifier = ref.watch(orderSlipProvider(order).notifier);
-                await notifier.submit().then((_) => context.pop());
+                await notifier.submit(context);
               },
               child: Text(
                 'Proceed',

@@ -23,7 +23,6 @@ import 'package:smiling_tailor/src/modules/settings/model/locale/locale.model.da
 import 'package:smiling_tailor/src/modules/settings/model/theme/theme.model.dart';
 import 'package:smiling_tailor/src/router/router.dart';
 import 'package:smiling_tailor/src/router/routes.dart';
-import 'package:smiling_tailor/src/shared/show_toast/show_toast.dart';
 import 'package:smiling_tailor/src/utils/logger/logger_helper.dart';
 
 import 'config/constants.dart' show appName;
@@ -51,7 +50,7 @@ class App extends ConsumerWidget {
       navigatorKey: navigatorKey,
       onGenerateRoute: onGenerateRoute,
       onGenerateTitle: onGenerateTitle,
-      scaffoldMessengerKey: snackbarKey,
+      // scaffoldMessengerKey: snackbarKey,
       debugShowCheckedModeBanner: false,
       restorationScopeId: appName.toCamelWord,
       locale: ref.watch(localeProvider).locale,

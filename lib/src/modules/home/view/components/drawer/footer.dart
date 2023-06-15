@@ -24,11 +24,12 @@ class KDrawerFooter extends StatelessWidget {
                 style: context.text.labelSmall,
               ),
               InkWell(
-                onTap: () async => await canLaunchUrl(
-                        Uri.parse('https://algoramming.github.io/'))
-                    ? await launchUrl(
-                        Uri.parse('https://algoramming.github.io/'))
-                    : throw 'Could not launch the url',
+                onTap: () async {
+                  final url = Uri.parse('https://algoramming.github.io/');
+                  if (!await launchUrl(url)) {
+                    throw Exception('Could not launch $url');
+                  }
+                },
                 child: Text(
                   'Algoramming',
                   style: context.text.labelSmall!.copyWith(

@@ -1,9 +1,33 @@
-# smiling_tailor
+# Smiling Tailor
 
-A new Flutter project.
+Introducing our tailor-focused ERP management system - a powerful, user-friendly application designed to streamline your tailoring business. Add managers, vendors, inventory, and employees effortlessly. Seamlessly process orders and track transaction history in real-time. Stay organized, efficient, and in control with our comprehensive software solution. Proudly developed as an in-house product of Algoramming, ensuring quality and reliability in every aspect.
 
+
+- `pocketbase update`
+
+- `pocketbase --version`
 
 - `pocketbase serve --http="0.0.0.0:4200"`
+
+- `pocketbase serve`
+
+- `pocketbase serve --debug`
+
+- `smtp.gmail.com`
+
+- `587`
+
+- `algoramming`
+
+- `livaxjtklqzksmid`
+
+- `Set-Location -Path 'C:\src\pocketbase'; .\pocketbase serve --http="0.0.0.0:4200"` - for windows powershell
+
+- `Set-Location -Path 'C:\src\pocketbase'; .\pocketbase serve` - for windows powershell
+
+- `cd C:\src\pocketbase && pocketbase serve --http="0.0.0.0:4200"` - for windows cmd
+
+- `cd C:\src\pocketbase && pocketbase serve` - for windows cmd
 
 ## Getting Started
 

@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
-import 'awesome_snackbar.dart';
-import 'timer_snackbar.dart';
+import 'awesome.snackbar.dart';
 
-final snackbarKey = GlobalKey<ScaffoldMessengerState>();
-
-void showTimerSnackbar(BuildContext context, String message,
-        [int second = 3]) =>
-    timerSnackbar(context, contentText: message, second: second);
+// final snackbarKey = GlobalKey<ScaffoldMessengerState>();
 
 void showAwesomeSnackbar(
     BuildContext context, String title, String message, MessageType messageType,
@@ -19,7 +14,7 @@ void showAwesomeSnackbar(
     behavior: SnackBarBehavior.floating,
     backgroundColor: Colors.transparent,
     duration: Duration(
-        seconds: second ?? (messageType == MessageType.failure ? 5 : 3)),
+        seconds: second ?? (messageType == MessageType.failure ? 4 : 2)),
     content: AwesomeSnackbarContent(
       title: title,
       message: message,

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../pocketbase/auth.store/helpers.dart';
-import '../../../../shared/show_toast/awesome_snackbar.dart';
-import '../../../../shared/show_toast/show_toast.dart';
+import '../../../../shared/show_toast/awsome.snackbar/awesome.snackbar.dart';
+import '../../../../shared/show_toast/awsome.snackbar/show.awesome.snackbar.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../transaction/api/add.trx.api.dart';
 import '../../../transaction/enum/trx.type.dart';

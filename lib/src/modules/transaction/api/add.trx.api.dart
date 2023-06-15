@@ -6,8 +6,8 @@ import 'package:pocketbase/pocketbase.dart';
 
 import '../../../pocketbase/auth.store/helpers.dart';
 import '../../../pocketbase/error.handle/error.handle.func.dart';
-import '../../../shared/show_toast/awesome_snackbar.dart';
-import '../../../shared/show_toast/show_toast.dart';
+import '../../../shared/show_toast/awsome.snackbar/awesome.snackbar.dart';
+import '../../../shared/show_toast/awsome.snackbar/show.awesome.snackbar.dart';
 import '../../../utils/logger/logger_helper.dart';
 import '../enum/trx.type.dart';
 

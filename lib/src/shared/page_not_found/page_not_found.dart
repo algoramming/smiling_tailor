@@ -8,8 +8,8 @@ import '../../config/get.platform.dart';
 import '../../modules/settings/view/advance/url.config.tile.dart';
 import '../../utils/extensions/extensions.dart';
 import '../../utils/themes/themes.dart';
-import '../show_toast/awesome_snackbar.dart';
-import '../show_toast/show_toast.dart';
+import '../show_toast/awsome.snackbar/awesome.snackbar.dart';
+import '../show_toast/awsome.snackbar/show.awesome.snackbar.dart';
 
 class KPageNotFound extends StatelessWidget {
   const KPageNotFound({

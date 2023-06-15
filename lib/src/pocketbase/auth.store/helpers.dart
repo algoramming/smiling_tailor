@@ -1,8 +1,8 @@
 import 'package:pocketbase/pocketbase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smiling_tailor/src/db/paths.dart';
 
 import '../../db/isar.dart';
+import '../../db/paths.dart';
 import '../../utils/logger/logger_helper.dart';
 import 'custom.auth.store.dart';
 

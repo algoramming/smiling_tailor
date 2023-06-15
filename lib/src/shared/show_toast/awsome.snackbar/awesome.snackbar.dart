@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../utils/extensions/extensions.dart';
+import '../../../utils/extensions/extensions.dart';
 
 // class AssetsPath {
 //   static const String help = 'assets/types/help.svg';
@@ -26,6 +26,7 @@ class DefaultColors {
   /// warning
   static const Color warningYellow = Color(0xffFCA652);
 }
+
 /// to handle failure, success, help and warning `ContentType` class is being used
 class MessageType {
   /// message is `required` parameter
@@ -38,8 +39,10 @@ class MessageType {
 
   static MessageType help = MessageType('help', DefaultColors.helpBlue);
   static MessageType failure = MessageType('failure', DefaultColors.failureRed);
-  static MessageType success = MessageType('success', DefaultColors.successGreen);
-  static MessageType warning = MessageType('warning', DefaultColors.warningYellow);
+  static MessageType success =
+      MessageType('success', DefaultColors.successGreen);
+  static MessageType warning =
+      MessageType('warning', DefaultColors.warningYellow);
 }
 
 class AwesomeSnackbarContent extends StatelessWidget {
@@ -80,7 +83,7 @@ class AwesomeSnackbarContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
 
     // screen dimensions
     bool isMobile = size.width <= 768;
@@ -246,4 +249,3 @@ class AwesomeSnackbarContent extends StatelessWidget {
     }
   }
 }
-

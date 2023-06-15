@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../provider/inventory.provider.dart';
-import '../../provider/inventory.trxs.provider.dart';
 
 import '../../../../config/constants.dart';
 import '../../../../db/isar.dart';
@@ -18,6 +16,8 @@ import '../../../settings/model/settings.model.dart';
 import '../../../transaction/enum/trx.type.dart';
 import '../../../transaction/model/transaction.dart';
 import '../../add/view/add.inventory.popup.dart';
+import '../../provider/inventory.provider.dart';
+import '../../provider/inventory.trxs.provider.dart';
 
 class InventoryDetails extends ConsumerWidget {
   const InventoryDetails({super.key});

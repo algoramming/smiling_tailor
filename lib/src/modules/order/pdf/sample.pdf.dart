@@ -288,6 +288,9 @@ class PdfInvoiceApi {
       ),
     );
 
-    return FileHandleApi.saveDocument(name: 'my_invoice.pdf', pdf: pdf);
+    return FileHandleApi.saveDocument(
+      name: 'invoice-${DateTime.now().millisecondsSinceEpoch}.pdf',
+      pdf: pdf,
+    );
   }
 }
