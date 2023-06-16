@@ -1,9 +1,11 @@
 import 'package:hive/hive.dart' show Box, Hive;
-import '../../modules/settings/model/currency/currency.model.dart';
 
-import '../../modules/settings/model/aaa.hive.new/locale/locale.model.dart';
-import '../../modules/settings/model/aaa.hive.new/measurement/measurement.dart';
-import '../../modules/settings/model/aaa.hive.new/settings.model.dart';
+import '../modules/settings/model/currency/currency.model.dart';
+import '../modules/settings/model/locale/locale.model.dart';
+import '../modules/settings/model/measurement/measurement.dart';
+import '../modules/settings/model/settings.model.dart';
+import '../modules/settings/model/theme/theme.model.dart';
+
 
 class Boxes {
   static Box<CurrencyProfile> currencyProfile =  Hive.box<CurrencyProfile>(BoxNames.currencyProfile);

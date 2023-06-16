@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../db/isar.dart';
+import '../../../db/db.dart';
 import '../../../pocketbase/auth.store/helpers.dart';
 import '../model/settings.model.dart';
 import 'settings.provider.dart';

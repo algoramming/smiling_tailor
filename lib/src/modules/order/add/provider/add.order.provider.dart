@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../db/isar.dart';
+import '../../../../db/db.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../employee/model/employee.dart';
 import '../../../employee/provider/employee.provider.dart';

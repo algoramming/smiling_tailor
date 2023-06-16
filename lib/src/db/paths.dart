@@ -5,6 +5,7 @@ import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart'
     show getApplicationDocumentsDirectory;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smiling_tailor/src/config/get.platform.dart';
 
 import '../config/constants.dart' show appName;
 import '../utils/extensions/extensions.dart';
@@ -13,9 +14,11 @@ import '../utils/logger/logger_helper.dart';
 final appDir = AppDir();
 
 Future<void> initDir() async {
+  if (pt.isWeb) return;
   WidgetsFlutterBinding.ensureInitialized();
   final dir = await getApplicationDocumentsDirectory();
   appDir.root = Directory(join(dir.path, '.${appName.toCamelWord}'));
+
   appDir.db = Directory(join(appDir.root.path, 'db'));
   appDir.files = Directory(join(appDir.root.path, 'files'));
   appDir.backup = Directory(join(appDir.root.path, 'backup'));

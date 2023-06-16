@@ -1,43 +1,42 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:flutter/services.dart';
-import 'package:isar/isar.dart' show Isar, QueryExecute;
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:smiling_tailor/src/config/get.platform.dart';
+import 'package:smiling_tailor/src/db/db.functions.dart';
+import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
+import '../config/constants.dart';
 import '../modules/settings/model/currency/currency.model.dart';
 import '../modules/settings/model/measurement/measurement.dart';
 import '../modules/settings/model/settings.model.dart';
 import '../utils/logger/logger_helper.dart';
-import 'paths.dart' show AppDir, appDir, initDir;
+import 'hive.dart';
+import 'paths.dart' show appDir, initDir;
 
-late final Isar db;
 late AppSettings appSettings;
 late CurrencyProfile appCurrency;
 late List<Measurement> appMeasurements;
 
-const _schema = [AppSettingsSchema, CurrencyProfileSchema, MeasurementSchema];
-
 Future<void> openDB() async {
   await initDir();
-  db = await Isar.open(
-    _schema,
-    inspector: !kReleaseMode,
-    directory: appDir.db.path,
-  );
+  await initHiveDB();
 }
 
-void openDBSync(AppDir dir) => db =
-    Isar.openSync(_schema, inspector: !kReleaseMode, directory: dir.db.path);
+Future<void> initHiveDB() async {
+  await Hive.initFlutter(pt.isWeb ? null : appDir.db.path);
+  HiveFuntions.registerHiveAdepters();
+  await HiveFuntions.openAllBoxes();
+}
 
 Future<void> initAppDatum() async {
-  if (await db.currencyProfiles.where().count() == 0) await currencyInit();
-  if (await db.measurements.where().count() == 0) await measurementInit();
-  appSettings = await db.appSettings.get(0) ?? AppSettings();
-  appCurrency = (await db.currencyProfiles
-      .where()
-      .shortFormEqualTo(appSettings.currency)
-      .findFirst())!;
-  appMeasurements = await db.measurements.where().findAll();
+  if (Boxes.currencyProfile.isEmpty) await currencyInit();
+  if (Boxes.measurement.isEmpty) await measurementInit();
+  appSettings = Boxes.appSettings.get(appName.toCamelWord) ?? AppSettings();
+  appCurrency = Boxes.currencyProfile.values
+      .toList()
+      .firstWhere((e) => e.shortForm == appSettings.currency);
+  appMeasurements = Boxes.measurement.values.toList();
   log.i(
       'App Initiated with currency: ${appCurrency.shortForm} and measurements: ${appMeasurements.length} units');
   listenForAppConfig();
@@ -56,6 +55,7 @@ Future<void> currencyInit() async {
   await currencies.saveAll();
 }
 
+
 Future<void> measurementInit() async {
   List<Measurement> measurements = [];
   final measurementsJson =
@@ -69,11 +69,11 @@ Future<void> measurementInit() async {
   await measurements.saveAll();
 }
 
-void listenForAppConfig() =>
-    db.appSettings.watchObjectLazy(0).listen((_) async {
-      appSettings = await db.appSettings.get(0) ?? AppSettings();
-      appCurrency = (await db.currencyProfiles
-          .where()
-          .shortFormEqualTo(appSettings.currency)
-          .findFirst())!;
-    });
+void listenForAppConfig() {
+  Boxes.appSettings.watch(key: appName.toCamelWord).listen((_) {
+    appSettings = Boxes.appSettings.get(appName.toCamelWord) ?? AppSettings();
+    appCurrency = Boxes.currencyProfile.values
+        .toList()
+        .firstWhere((e) => e.shortForm == appSettings.currency);
+  });
+}

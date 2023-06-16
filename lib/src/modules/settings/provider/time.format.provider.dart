@@ -1,8 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
-import '../../../db/isar.dart';
-import '../../../db/paths.dart';
+import '../../../config/constants.dart';
+import '../../../db/hive.dart';
 import '../model/settings.model.dart';
 import 'settings.provider.dart';
 
@@ -23,20 +23,25 @@ class TimeFormatProvider extends Notifier<String> {
   @override
   String build() => ref.watch(settingsProvider.select((v) => v.timeFormat));
 
-  Future<void> changeTimeFormat(String timeFormat) async =>
-      await compute(_changeTimeFormat, _Data(ref.read(settingsProvider), timeFormat));
+  Future<void> changeTimeFormat(String timeFormat) async {
+    // await compute(_changeTimeFormat, _Data(ref.read(settingsProvider), timeFormat));
+    await Boxes.appSettings.put(
+        appName.toCamelWord,
+        (Boxes.appSettings.get(appName.toCamelWord) ?? AppSettings())
+            .copyWith(timeFormat: timeFormat));
+  }
 }
 
-void _changeTimeFormat(_Data data) {
-  openDBSync(data.dir);
-  data.setting.timeFormat = data.timeFormat;
-  db.writeTxnSync(() => db.appSettings.putSync(data.setting));
-}
+// void _changeTimeFormat(_Data data) {
+//   openDBSync(data.dir);
+//   data.setting.timeFormat = data.timeFormat;
+//   db.writeTxnSync(() => db.appSettings.putSync(data.setting));
+// }
 
-class _Data {
-  _Data(this.setting, this.timeFormat);
+// class _Data {
+//   _Data(this.setting, this.timeFormat);
 
-  final AppDir dir = appDir;
-  final String timeFormat;
-  final AppSettings setting;
-}
+//   final AppDir dir = appDir;
+//   final String timeFormat;
+//   final AppSettings setting;
+// }

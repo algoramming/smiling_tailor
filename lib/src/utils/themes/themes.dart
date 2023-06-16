@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show SystemUiOverlayStyle;
-import 'package:google_fonts/google_fonts.dart';
+import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
-import '../../db/isar.dart';
+import '../../config/constants.dart';
+import '../../db/hive.dart';
 import '../../modules/settings/model/settings.model.dart';
 import '../../modules/settings/model/theme/theme.model.dart';
 
-final fontFamily =
-    db.appSettings.getSync(0)?.fontFamily ?? GoogleFonts.nunito().fontFamily;
+String get fontFamily =>
+    Boxes.appSettings.get(appName, defaultValue: AppSettings())!.fontFamily;
 
-final themeType = db.appSettings.getSync(0)?.theme ?? ThemeProfile.light;
+ThemeProfile get themeType => Boxes.appSettings
+    .get(appName.toCamelWord, defaultValue: AppSettings())!
+    .theme;
 
 SystemUiOverlayStyle get uiConfig => themeType.uiConfig;
 

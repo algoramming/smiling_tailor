@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:smiling_tailor/src/modules/settings/model/currency/currency.model.dart';
 
-import '../../db/isar.dart';
-import '../../modules/settings/model/currency/currency.model.dart';
+import '../../db/db.dart';
 
 part 'src/color.dart';
 part 'src/context.dart';

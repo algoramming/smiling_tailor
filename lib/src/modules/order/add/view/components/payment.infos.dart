@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../config/constants.dart';
-import '../../../../../db/isar.dart';
+import '../../../../../db/db.dart';
 import '../../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../../utils/extensions/extensions.dart';
 import '../../../enum/order.enum.dart';

@@ -1,8 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
-import '../../../db/isar.dart';
-import '../../../db/paths.dart';
+import '../../../config/constants.dart';
+import '../../../db/hive.dart';
 import '../model/settings.model.dart';
 import 'settings.provider.dart';
 
@@ -29,20 +29,24 @@ class DateFormatProvider extends Notifier<String> {
   @override
   String build() => ref.watch(settingsProvider.select((v) => v.dateFormat));
 
-  Future<void> changeDateFormat(String dateFormat) async =>
-      await compute(_changeDateFormat, _Data(ref.read(settingsProvider), dateFormat));
+  Future<void> changeDateFormat(String dateFormat) async {
+    // await compute(_changeDateFormat, _Data(ref.read(settingsProvider), dateFormat));
+    await Boxes.appSettings.put(
+        appName.toCamelWord,
+        (Boxes.appSettings.get(appName.toCamelWord) ?? AppSettings())
+            .copyWith(dateFormat: dateFormat));
+  }
 }
 
-void _changeDateFormat(_Data data) {
-  openDBSync(data.dir);
-  data.setting.dateFormat = data.dateFormat;
-  db.writeTxnSync(() => db.appSettings.putSync(data.setting));
-}
+// class _Data {
+//   _Data(this.setting, this.dateFormat);
 
-class _Data {
-  _Data(this.setting, this.dateFormat);
+//   final String dateFormat;
+//   final AppSettings setting;
+// }
 
-  final AppDir dir = appDir;
-  final String dateFormat;
-  final AppSettings setting;
-}
+// Future<void> _changeDateFormat(_Data data) async {
+//   await initHiveDB();
+//   data.setting.dateFormat = data.dateFormat;
+//   await Boxes.appSettings.put(appName, data.setting);
+// }

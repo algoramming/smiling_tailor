@@ -1,44 +1,53 @@
-import 'dart:convert' show json;
+import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-
-import '../../../pocketbase/auth.store/helpers.dart';
-import '../provider/date.format.provider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
-import 'package:isar/isar.dart';
+import 'package:smiling_tailor/src/modules/settings/model/theme/theme.model.dart';
+import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
-import '../../../db/isar.dart';
+import '../../../config/constants.dart';
+import '../../../db/hive.dart';
+import '../../../pocketbase/auth.store/helpers.dart';
 import '../provider/currency.format.provider.dart';
+import '../provider/date.format.provider.dart';
 import '../provider/time.format.provider.dart';
 import 'locale/locale.model.dart';
-import 'theme/theme.model.dart';
 
 part 'settings.model.crud.ext.dart';
 part 'settings.model.ext.dart';
 part 'settings.model.g.dart';
 
-@Collection()
-class AppSettings {
+@HiveType(typeId: HiveTypes.appSettings)
+class AppSettings extends HiveObject {
   AppSettings();
 
-  final Id id = 0;
-
+  @HiveField(0)
   bool firstRun = true;
+  @HiveField(1)
   String currency = 'BDT';
+  @HiveField(2)
   bool useSecureProtocol = kReleaseMode;
+  @HiveField(3)
   bool performanceOverlayEnable = false;
+  @HiveField(4)
   String dateFormat = dateFormates.first;
+  @HiveField(5)
   String timeFormat = timeFormates.first;
-  DateTime firstRunDateTime = DateTime.now().toUtc();
-  String fontFamily = GoogleFonts.nunito().fontFamily!;
-  String currencyFormat = currencyFormates.first['format']!;
-  String baseUrl = kReleaseMode ? globalBaseUrl : localBaseUrl;
-
-  @Enumerated(EnumType.name)
+  @HiveField(6)
   ThemeProfile theme = ThemeProfile.light;
-  @Enumerated(EnumType.name)
+  @HiveField(7)
   LocaleProfile locale = LocaleProfile.english;
+  @HiveField(8)
+  DateTime firstRunDateTime = DateTime.now().toUtc();
+  @HiveField(9)
+  String fontFamily = GoogleFonts.nunito().fontFamily!;
+  @HiveField(10)
+  String currencyFormat = currencyFormates.first['format']!;
+  @HiveField(11)
+  String baseUrl = kReleaseMode ? globalBaseUrl : localBaseUrl;
+  
 
   String toRawJson() => json.encode(toJson());
 
@@ -55,7 +64,6 @@ class AppSettings {
         'currency': currency,
         'theme': theme.name,
         'baseUrl': baseUrl,
-        'id': id,
       };
 
   factory AppSettings.fromJson(String source) =>
@@ -85,10 +93,9 @@ class AppSettings {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is AppSettings && other.id == id;
+    return other is AppSettings && other.firstRunDateTime == firstRunDateTime;
   }
 
-  @Ignore()
   @override
-  int get hashCode => id.hashCode;
+  int get hashCode => firstRunDateTime.hashCode;
 }

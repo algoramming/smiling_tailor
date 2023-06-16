@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-import '../../../db/isar.dart';
+import '../../../db/db.dart';
 import '../../../utils/extensions/extensions.dart';
 import '../../authentication/model/user.dart';
 import '../../employee/model/employee.dart';

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pocketbase/pocketbase.dart';
 
-import '../../../db/isar.dart';
+import '../../../db/db.dart';
 import '../../../pocketbase/auth.store/helpers.dart';
 import '../../../pocketbase/error.handle/error.handle.func.dart';
 import '../../../shared/show_toast/awsome.snackbar/awesome.snackbar.dart';

@@ -1,42 +1,45 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:isar/isar.dart';
+import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
-import '../../../db/isar.dart';
-import '../../../db/paths.dart';
+import '../../../config/constants.dart';
+import '../../../db/hive.dart';
 import '../model/currency/currency.model.dart';
 import '../model/settings.model.dart';
 import 'settings.provider.dart';
 
-typedef CurrencyNotifier = AsyncNotifierProvider<CurrencyProvider, String>;
+typedef CurrencyNotifier = NotifierProvider<CurrencyProvider, String>;
 
 final currencyProvider = CurrencyNotifier(CurrencyProvider.new);
 
-class CurrencyProvider extends AsyncNotifier<String> {
+class CurrencyProvider extends Notifier<String> {
   late List<CurrencyProfile> currencies;
 
   @override
-  FutureOr<String> build() async {
-    currencies = await db.currencyProfiles.where().findAll();
+  String build() {
+    currencies = Boxes.currencyProfile.values.toList();
     return ref.watch(settingsProvider.select((v) => v.currency));
   }
 
-  Future<void> changeCurrency(String currency) async => await compute(
-      _changeCurrency, _Data(ref.read(settingsProvider), currency));
+  Future<void> changeCurrency(String currency) async {
+    // await compute(_changeCurrency, _Data(ref.read(settingsProvider), currency));
+    await Boxes.appSettings.put(
+        appName.toCamelWord,
+        (Boxes.appSettings.get(appName.toCamelWord) ?? AppSettings())
+            .copyWith(currency: currency));
+  }
 }
 
-void _changeCurrency(_Data data) {
-  openDBSync(data.dir);
-  data.setting.currency = data.currency;
-  db.writeTxnSync(() => db.appSettings.putSync(data.setting));
-}
+// class _Data {
+//   _Data(this.setting, this.currency);
 
-class _Data {
-  _Data(this.setting, this.currency);
+//   final String currency;
+//   final AppSettings setting;
+// }
 
-  final AppDir dir = appDir;
-  final String currency;
-  final AppSettings setting;
-}
+// Future<void> _changeCurrency(_Data data) async {
+//   await initHiveDB();
+//   data.setting.currency = data.currency;
+//   await Boxes.appSettings.put(appName, data.setting);
+// }

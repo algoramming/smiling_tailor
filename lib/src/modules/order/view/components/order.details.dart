@@ -5,7 +5,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../config/constants.dart';
-import '../../../../db/isar.dart';
+import '../../../../db/db.dart';
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../shared/clipboard_data/clipboard_data.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';

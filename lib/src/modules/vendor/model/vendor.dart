@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:smiling_tailor/src/modules/settings/model/settings.model.dart';
 
-import '../../../db/isar.dart';
+import '../../../db/db.dart';
 import '../../authentication/model/user.dart';
-import '../../settings/model/settings.model.dart';
 import '../../transaction/enum/trx.type.dart';
 
 part 'vendor.ext.dart';

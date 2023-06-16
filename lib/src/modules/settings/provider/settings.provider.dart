@@ -1,12 +1,14 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
-import '../../../db/isar.dart';
-import '../../../db/paths.dart';
+import '../../../config/constants.dart';
+import '../../../db/hive.dart';
 import '../../../utils/logger/logger_helper.dart';
 import '../model/settings.model.dart';
 
-final _settingsStream = db.appSettings.watchObject(0, fireImmediately: true);
+final _settingsStream = Boxes.appSettings
+    .watch(key: appName.toCamelWord)
+    .map((event) => event.value as AppSettings);
 
 final settingsStreamProvider = StreamProvider((_) => _settingsStream);
 
@@ -21,20 +23,19 @@ class SettingProvider extends Notifier<AppSettings> {
 
   Future<bool> changeInitSetting(AppSettings setting) async {
     log.i('First Time Run. Initializing...');
-    await compute(_changeInit, _Data(setting));
+    await Boxes.appSettings.put(appName.toCamelWord, setting);
     state = setting;
     return true;
   }
 }
 
-class _Data {
-  _Data(this.setting);
+// class _Data {
+//   _Data(this.setting);
 
-  final AppDir dir = appDir;
-  final AppSettings setting;
-}
+//   final AppSettings setting;
+// }
 
-void _changeInit(_Data data) {
-  openDBSync(data.dir);
-  db.writeTxnSync(() => db.appSettings.putSync(data.setting));
-}
+// Future<void> _changeInit(_Data data) async {
+//   await initHiveDB();
+//   await Boxes.appSettings.put(appName, data.setting);
+// }
