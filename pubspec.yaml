@@ -26,6 +26,8 @@ dependencies:
   flutter_slidable: ^3.0.0
   flutter_svg: ^2.0.7
   google_fonts: ^4.0.4
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
   http: ^0.13.6
   image_cropper: ^4.0.1
   image_picker: ^0.8.9
@@ -53,6 +55,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   isar_generator: ^3.1.0+1
+  hive_generator: ^2.0.0
 
 msix_config:
   display_name: Smiling Tailor
@@ -86,6 +89,7 @@ flutter_launcher_icons:
     generate: true
     image_path: "assets/icons/app-icon-1024x1024.png"
   # command: dart run flutter_launcher_icons:main
+  
 flutter_native_splash:
   color: "#ffffff"
   image: "assets/icons/splash-icon-384x384.png"

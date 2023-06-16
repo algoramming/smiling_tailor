@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../utils/extensions/extensions.dart';
 
 import '../../config/constants.dart';
 import '../../shared/dash.flutter.muscot/dash.flutter.muscot.dart';
+import '../../utils/extensions/extensions.dart';
 
 class DashboardView extends StatelessWidget {
   const DashboardView({super.key});
