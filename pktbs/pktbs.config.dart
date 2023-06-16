@@ -14,7 +14,7 @@
 //   String? avatar;
 // }
 
-// class PktbsEmployee {
+// class PktbsVendor {
 //   //
 //   final String id;
 //   final DateTime created;
@@ -25,11 +25,10 @@
 //   final String collectionName;
 //   //
 //   String name;
+//   String phone;
 //   String? email;
 //   String address;
-//   String phone;
 //   String description;
-//   double salary;
 // }
 
 // class PktbsInventory {
@@ -43,12 +42,37 @@
 //   final String collectionName;
 //   //
 //   String title;
-//   String? description;
 //   int quantity;
-//   String unit;
+//   Measurement unit;
 //   double amount;
-//   double advance;
 //   PktbsVendor from;
+//   String? description;
+// }
+
+// class Measurement {
+//   //
+//   final String name;
+//   final String symbol;
+//   final String unitOf;
+//   final String system;
+// }
+
+// class PktbsEmployee {
+//   //
+//   final String id;
+//   final DateTime created;
+//   DateTime? updated;
+//   final PktbsUser creator;
+//   PktbsUser? updator;
+//   final String collectionId;
+//   final String collectionName;
+//   //
+//   String name;
+//   String phone;
+//   String? email;
+//   double salary;
+//   String address;
+//   String description;
 // }
 
 // class PktbsOrder {
@@ -77,46 +101,27 @@
 //   int quantity;
 //   //
 //   PktbsEmployee tailorEmployee;
-//   double tailorCharge;
+//   // double tailorCharge;  -> only add a column in trx table for tailor.
 //   String? tailorNote;
 //   //
 //   PktbsInventory? inventory;
 //   int? inventoryQuantity;
 //   String? inventoryUnit;
-//   double? inventoryPrice;
+//   // double? inventoryPrice; -> only add a column in trx table for inventory.
 //   String? inventoryNote;
 //   //
-//   bool isHomeDeliveryNeeded;
 //   PktbsEmployee? deliveryEmployee;
 //   String? deliveryAddress;
-//   double? deliveryCharge;
+//   // double? deliveryCharge; -> only add a column in trx table for delivery.
 //   String? deliveryNote;
 //   //
 //   PaymentMethod paymentMethod; // enum PaymentMethod { cash, mfs, card, cheque, others }
 //   String? paymentNote;
-//   double advanceAmount;
+//   double amount; // total amount = tailorCharge + inventoryPrice + deliveryCharge
 //   //
 //   DateTime deliveryTime;
 //   String? description;
 //   OrderStatus status; // enum OrderStatus { pending, processing, ready, shipping, completed, cancelled }
-// }
-
-// class PktbsVendor {
-//   //
-//   final String id;
-//   final DateTime created;
-//   DateTime? updated;
-//   final PktbsUser creator;
-//   PktbsUser? updator;
-//   final String collectionId;
-//   final String collectionName;
-//   //
-//   String name;
-//   String? email;
-//   String address;
-//   String phone;
-//   String description;
-//   double openingBalance;
 // }
 
 // class PktbsTrx {
@@ -129,11 +134,21 @@
 //   final String collectionId;
 //   final String collectionName;
 //   //
-//   String glId;
-//   Map<String, dynamic> gl;
-//   GLType type; // enum GLType {vendor, employee, inventory, unknown}
+//   String fromId;
+//   GLType fromType; // enum GLType { vendor, inventory, employee, order, user }
+//   Map<String, dynamic> from;
+//   //
+//   String toId;
+//   GLType toType; // enum GLType { vendor, inventory, employee, order, user }
+//   Map<String, dynamic> to;
+//   //
 //   double amount;
-//   double due;
+//   Measurement? unit;
+//   bool isGoods;
+//   TrxType trxType; // enum TrxType { debit, credit }
+//   //
+//   String voucher;
+//   bool isSystemGenerated;
 //   String? description;
 // }
 
@@ -141,4 +156,6 @@
 
 // enum OrderStatus { pending, processing, ready, shipping, completed, cancelled }
 
-// enum GLType { vendor, employee, inventory, unknown }
+// enum GLType { vendor, inventory, employee, order, user }
+
+// enum TrxType { debit, credit }

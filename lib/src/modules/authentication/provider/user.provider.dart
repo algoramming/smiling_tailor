@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../pocketbase/auth.store/helpers.dart';
+import '../../../utils/logger/logger_helper.dart';
 import '../model/user.dart';
 
-typedef UserNotifier = AutoDisposeAsyncNotifierProvider<UserProvider, List<PktbsUser>>;
+typedef UserNotifier
+    = AutoDisposeAsyncNotifierProvider<UserProvider, List<PktbsUser>>;
 
 final userProvider = UserNotifier(UserProvider.new);
 
@@ -17,11 +19,16 @@ class UserProvider extends AutoDisposeAsyncNotifier<List<PktbsUser>> {
   @override
   FutureOr<List<PktbsUser>> build() async {
     final id = PktbsUser.fromJson(pb.authStore.model!.toJson()).id;
-    _stream(id);
-    await pb
-        .collection(users)
-        .getOne(id)
-        .then((r) => userList = [PktbsUser.fromJson(r.toJson())]);
+    try {
+      _stream(id);
+      await pb
+          .collection(users)
+          .getOne(id)
+          .then((r) => userList = [PktbsUser.fromJson(r.toJson())]);
+    } catch (e) {
+      log.e('User Provider Error: $e');
+      userList = [];
+    }
     return userList;
   }
 

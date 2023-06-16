@@ -19,8 +19,8 @@ const pktbsTrxExpand = 'creator, updator';
 
 class PktbsTrx {
   String toId;
-  String fromId;
   bool isGoods;
+  String fromId;
   GLType toType;
   double amount;
   String voucher;
