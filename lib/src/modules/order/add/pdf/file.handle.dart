@@ -1,16 +1,14 @@
-// ignore_for_file: avoid_web_libraries_in_flutter
-
-import 'dart:html' as html;
 import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:path/path.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:share_plus/share_plus.dart';
-import 'package:smiling_tailor/src/config/get.platform.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../config/get.platform.dart';
 import '../../../../db/paths.dart';
+import 'web.empty.download.dart' if (dart.library.html) 'web.download.dart';
 
 class FileHandle {
   // save pdf file function
@@ -24,6 +22,26 @@ class FileHandle {
     } else {
       return await saveDocumentNonWeb(name: name, pdf: pdf);
     }
+  }
+
+  // save pdf file function for non web
+  static Future<File> saveDocumentNonWeb({
+    required String name,
+    required pw.Document pdf,
+  }) async {
+    final bytes = await pdf.save();
+    final file = File(join(appDir.invoice.path, '$name.pdf'));
+    await file.writeAsBytes(bytes);
+    return file;
+  }
+
+  // save pdf file function for web
+  static Future<void> saveDocumentWeb({
+    required String name,
+    required pw.Document pdf,
+  }) async {
+    Uint8List pdfInBytes = await pdf.save();
+    webDownload(pdfInBytes, '$name.pdf');
   }
 
   // open pdf file function
@@ -47,32 +65,5 @@ class FileHandle {
       subject: subject,
       text: text,
     );
-  }
-
-  // save pdf file function for non web
-  static Future<File> saveDocumentNonWeb({
-    required String name,
-    required pw.Document pdf,
-  }) async {
-    final bytes = await pdf.save();
-    final file = File(join(appDir.invoice.path, '$name.pdf'));
-    await file.writeAsBytes(bytes);
-    return file;
-  }
-
-  // save pdf file function for web
-  static Future<void> saveDocumentWeb({
-    required String name,
-    required pw.Document pdf,
-  }) async {
-    Uint8List pdfInBytes = await pdf.save();
-    final blob = html.Blob([pdfInBytes], 'application/pdf');
-    final url = html.Url.createObjectUrlFromBlob(blob);
-    final anchor = html.document.createElement('a') as html.AnchorElement
-      ..href = url
-      ..style.display = 'none'
-      ..download = '$name.pdf';
-    html.document.body?.children.add(anchor);
-    anchor.click();
   }
 }

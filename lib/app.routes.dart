@@ -4,7 +4,7 @@ class AppRoutes {
   static const isMaintenanceBreak = false;
 
   ///
-  static const String homeRoute = '/';
+  static const String homeRoute = '/home';
   static const String signinRoute = '/signin';
   static const String maintenanceBreakRoute = '/maintenance-break';
   static const String serverDisconnectedRoute = '/server-disconnected';

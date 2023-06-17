@@ -39,9 +39,9 @@ class DBDeleteTile extends StatelessWidget {
         if (pt.isWeb) {
           showAwesomeSnackbar(
             context,
-            'Sorry!',
+            'Message',
             'You can\'t delete database in web.',
-            MessageType.warning,
+            MessageType.help,
           );
           return;
         }

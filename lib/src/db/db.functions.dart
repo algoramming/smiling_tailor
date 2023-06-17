@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+
 import '../modules/settings/model/currency/currency.model.dart';
 import '../modules/settings/model/locale/locale.model.dart';
 import '../modules/settings/model/measurement/measurement.dart';

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../../settings/model/settings.model.dart';
 
 import '../../../../config/constants.dart';
 import '../../../../db/db.dart';
@@ -14,6 +13,7 @@ import '../../../../shared/page_not_found/page_not_found.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/logger/logger_helper.dart';
+import '../../../settings/model/settings.model.dart';
 import '../../../transaction/enum/trx.type.dart';
 import '../../../transaction/model/transaction.dart';
 import '../../add/view/add.trx.vendor.popup.dart';

@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'sample.data.dart';
 
 import '../../model/order.dart';
 import 'file.handle.dart';
+import 'sample.data.dart';
 
 class PdfInvoice {
   final PktbsOrder order;

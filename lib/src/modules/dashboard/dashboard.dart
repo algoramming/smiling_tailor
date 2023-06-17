@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../config/constants.dart';
-import '../../shared/dash.flutter.muscot/dash.flutter.muscot.dart';
 import '../../utils/extensions/extensions.dart';
 
 class DashboardView extends StatelessWidget {
@@ -32,7 +31,6 @@ class DashboardView extends StatelessWidget {
                         mainAxisSize: mainMin,
                         mainAxisAlignment: mainCenter,
                         children: [
-                          DashFlutterMuscot(),
                           Text(
                             '$appName - Dashboard',
                             textAlign: TextAlign.center,
@@ -57,7 +55,6 @@ class DashboardView extends StatelessWidget {
                         mainAxisSize: mainMin,
                         mainAxisAlignment: mainCenter,
                         children: [
-                          DashFlutterMuscot(),
                           Text(
                             '$appName - Dashboard',
                             textAlign: TextAlign.center,
@@ -85,7 +82,6 @@ class DashboardView extends StatelessWidget {
                 mainAxisSize: mainMin,
                 mainAxisAlignment: mainCenter,
                 children: [
-                  DashFlutterMuscot(),
                   Text(
                     '$appName - Dashboard',
                     textAlign: TextAlign.center,

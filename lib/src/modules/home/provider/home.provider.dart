@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../config/get.platform.dart';
 import '../../../shared/show_toast/awsome.snackbar/awesome.snackbar.dart';
 import '../../../shared/show_toast/awsome.snackbar/show.awesome.snackbar.dart';
-
 import '../enum/home.enum.dart';
 
 typedef HomeNotifier = AutoDisposeNotifierProvider<HomeProvider, void>;
@@ -23,9 +23,9 @@ class HomeProvider extends AutoDisposeNotifier {
     if (drawer.isInvoice && pt.isWeb) {
       showAwesomeSnackbar(
         context,
-        'Sorry!',
+        'Message',
         'You can\'t see invoices in web.',
-        MessageType.warning,
+        MessageType.help,
       );
       return;
     }

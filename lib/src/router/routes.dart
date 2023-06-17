@@ -35,7 +35,4 @@
 //       },
 //     );
 
-// changeWebTitle(String label) {
-//   SystemChrome.setApplicationSwitcherDescription(ApplicationSwitcherDescription(
-//       label: label, primaryColor: kPrimaryColor.value));
-// }
+

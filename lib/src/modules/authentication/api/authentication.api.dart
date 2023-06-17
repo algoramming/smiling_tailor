@@ -77,7 +77,7 @@ Future<void> pktbsSignin(BuildContext context, AuthProvider notifier) async {
       notifier.clear();
     });
     EasyLoading.dismiss();
-    beam.update();
+    beam.beamUpdate();
     return;
   } on SocketException catch (e) {
     EasyLoading.showError('No Internet Connection. $e');
