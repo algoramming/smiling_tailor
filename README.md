@@ -29,6 +29,11 @@ Introducing our tailor-focused ERP management system - a powerful, user-friendly
 
 - `cd C:\src\pocketbase && pocketbase serve` - for windows cmd
 
+
+## Github Token
+
+- `SmilingTailor` - `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`
+
 ## Getting Started
 
 This project is a starting point for a Flutter application that follows the
