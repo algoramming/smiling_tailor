@@ -9,7 +9,6 @@ import 'package:flutter/widgets.dart' show ValueKey;
 import 'package:smiling_tailor/src/config/constants.dart';
 import 'package:smiling_tailor/src/modules/authentication/view/authentication.dart';
 import 'package:smiling_tailor/src/modules/maintenance.break/maintenance.break.dart';
-import 'package:smiling_tailor/src/modules/settings/view/setting.view.dart';
 import 'package:smiling_tailor/src/pocketbase/auth.store/helpers.dart';
 import 'package:smiling_tailor/src/shared/page_not_found/page_not_found.dart';
 
@@ -38,14 +37,6 @@ final routerDelegate = BeamerDelegate(
           title: '$appName - Signin',
           type: BeamPageType.fadeTransition,
           child: AuthenticationView(),
-        );
-      },
-      AppRoutes.settingsRoute: (_, __, ___) {
-        return const BeamPage(
-          key: ValueKey(AppRoutes.settingsRoute),
-          title: '$appName - Settings',
-          type: BeamPageType.fadeTransition,
-          child: SettingsView(),
         );
       },
       AppRoutes.maintenanceBreakRoute: (_, __, ___) {
