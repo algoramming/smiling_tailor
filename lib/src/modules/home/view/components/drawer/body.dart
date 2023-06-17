@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../../../config/get.platform.dart';
 import '../../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../../shared/k_list_tile.dart/k_list_tile.dart';
 import '../../../../../utils/extensions/extensions.dart';
@@ -25,6 +26,8 @@ class KDrawerBody extends ConsumerWidget {
           (index) => Padding(
             padding: const EdgeInsets.all(1.0),
             child: KListTile(
+              onTap: () =>
+                  notifier.changeDrawer(context, KDrawer.values[index]),
               selected: notifier.drawer == KDrawer.values[index],
               leading: AnimatedWidgetShower(
                 size: 30.0,
@@ -47,7 +50,16 @@ class KDrawerBody extends ConsumerWidget {
                       style: context.text.labelSmall,
                     )
                   : null,
-              onTap: () => notifier.changeDrawer(KDrawer.values[index]),
+              trailing: KDrawer.values[index].isInvoice && pt.isWeb
+                  ? Tooltip(
+                      message: 'You can\'t see invoices in web.',
+                      child: Icon(
+                        Icons.warning_amber_rounded,
+                        size: 20.0,
+                        color: context.theme.colorScheme.error,
+                      ),
+                    )
+                  : null,
             ),
           ),
         ),

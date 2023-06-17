@@ -97,4 +97,40 @@ extension KDrawerExtension on KDrawer {
         return const DashboardView();
     }
   }
+
+  bool get isDashboard => this == KDrawer.dashboard;
+
+  bool get isProfile => this == KDrawer.profile;
+
+  bool get isVendor => this == KDrawer.vendor;
+
+  bool get isInventory => this == KDrawer.inventory;
+
+  bool get isEmployee => this == KDrawer.employee;
+
+  bool get isOrder => this == KDrawer.order;
+
+  bool get isInvoice => this == KDrawer.invoice;
+
+  bool get isAddManager => this == KDrawer.addManager;
+
+  bool get isSettings => this == KDrawer.settings;
+
+  bool get isNotDashboard => this != KDrawer.dashboard;
+
+  bool get isNotProfile => this != KDrawer.profile;
+
+  bool get isNotVendor => this != KDrawer.vendor;
+
+  bool get isNotInventory => this != KDrawer.inventory;
+
+  bool get isNotEmployee => this != KDrawer.employee;
+
+  bool get isNotOrder => this != KDrawer.order;
+
+  bool get isNotInvoice => this != KDrawer.invoice;
+
+  bool get isNotAddManager => this != KDrawer.addManager;
+
+  bool get isNotSettings => this != KDrawer.settings;
 }

@@ -4,10 +4,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:share_plus/share_plus.dart';
 
 import '../../../db/paths.dart';
-import '../../order/pdf/file.handle.dart';
+import '../../order/add/pdf/file.handle.dart';
 import '../function/load.files.dart';
 
 typedef InvoiceNotifier
@@ -111,11 +110,7 @@ class InvoiceProvider extends AutoDisposeAsyncNotifier<List<File>> {
 
   Future<void> shareSelectedFiles() async {
     try {
-      await Share.shareXFiles(
-        selectedFiles.map((e) => XFile(e.path)).toList(),
-        text: 'Smiling Tailor\'s orders invoices',
-        subject: 'Smiling Tailor',
-      );
+      await FileHandle.shareDocuments(selectedFiles);
     } catch (e) {
       EasyLoading.showError('$e');
     }

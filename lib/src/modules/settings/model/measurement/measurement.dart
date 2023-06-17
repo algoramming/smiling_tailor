@@ -3,8 +3,8 @@ import 'dart:math';
 
 import 'package:hive/hive.dart';
 
-import '../../../../db/hive.dart';
 import '../../../../db/db.dart';
+import '../../../../db/hive.dart';
 
 part 'measurement.ext.dart';
 part 'measurement.g.dart';

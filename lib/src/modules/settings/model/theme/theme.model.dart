@@ -6,7 +6,6 @@ import '../../../../db/hive.dart';
 import '../../../../utils/themes/dark/dark.theme.dart';
 import '../../../../utils/themes/light/light.theme.dart';
 
-
 part 'theme.model.ext.dart';
 
 @HiveType(typeId: HiveTypes.themeProfile)

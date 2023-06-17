@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../config/get.platform.dart';
 import '../../../../pocketbase/auth.store/helpers.dart';
 import '../../../../shared/show_toast/awsome.snackbar/awesome.snackbar.dart';
 import '../../../../shared/show_toast/awsome.snackbar/show.awesome.snackbar.dart';
@@ -11,7 +14,8 @@ import '../../../../utils/logger/logger_helper.dart';
 import '../../../transaction/enum/trx.type.dart';
 import '../../../transaction/model/transaction.dart';
 import '../../model/order.dart';
-import '../../pdf/sample.pdf.dart';
+import '../pdf/sample.pdf.dart';
+import '../view/order.slip.share.popup.dart';
 
 typedef OrderSlipNotifier = AutoDisposeAsyncNotifierProviderFamily<
     OrderSlipProvider, void, PktbsOrder>;
@@ -150,36 +154,48 @@ class OrderSlipProvider
 
     await _print().then((p) async {
       context.pop();
-      showAwesomeSnackbar(
-        context,
-        'Success!',
-        'Total $p ${p > 1 ? ' files' : ' file'} created!',
-        MessageType.success,
-      );
-      // showTimerSnackbar(
-      //   context,
-      //   contentText: '${basename(file.path)} generated)',
-      //   buttonLabel: 'View',
-      //   onTap: () async => await FileHandle.openDocument(file),
-      // );
+      if (pt.isNotWeb) {
+        await showOrderSlipSharePopup(context, p);
+      } else {
+        showAwesomeSnackbar(
+          context,
+          'Success!',
+          'Total ${p.length} ${p.length > 1 ? ' files' : ' file'} downloaded!',
+          MessageType.success,
+        );
+      }
       log.i('Order Slip Submit===========================');
     });
   }
 
-  Future<int> _print() async {
+  Future<List<File>> _print() async {
+    EasyLoading.show(status: 'Please wait...');
+    List<File> files = [];
     final pdfInvoice = PdfInvoice(arg);
 
     if (selectedDownloadOptions[0]) {
-      if (selectedSlipOptions[0]) await pdfInvoice.samplePdf('customer-pdf');
-      if (selectedSlipOptions[1]) await pdfInvoice.samplePdf('cashier-pdf');
-      if (selectedSlipOptions[2]) await pdfInvoice.samplePdf('tailor-pdf');
+      if (selectedSlipOptions[0]) {
+        files.add(await pdfInvoice.samplePdf('customer-pdf'));
+      }
+      if (selectedSlipOptions[1]) {
+        files.add(await pdfInvoice.samplePdf('cashier-pdf'));
+      }
+      if (selectedSlipOptions[2]) {
+        files.add(await pdfInvoice.samplePdf('tailor-pdf'));
+      }
     }
     if (selectedDownloadOptions[1]) {
-      if (selectedSlipOptions[0]) await pdfInvoice.samplePdf('customer-slip');
-      if (selectedSlipOptions[1]) await pdfInvoice.samplePdf('cashier-slip');
-      if (selectedSlipOptions[2]) await pdfInvoice.samplePdf('tailor-slip');
+      if (selectedSlipOptions[0]) {
+        files.add(await pdfInvoice.samplePdf('customer-slip'));
+      }
+      if (selectedSlipOptions[1]) {
+        files.add(await pdfInvoice.samplePdf('cashier-slip'));
+      }
+      if (selectedSlipOptions[2]) {
+        files.add(await pdfInvoice.samplePdf('tailor-slip'));
+      }
     }
-    return selectedDownloadOptions.where((e) => e).length *
-        selectedSlipOptions.where((e) => e).length;
+    EasyLoading.dismiss();
+    return files;
   }
 }

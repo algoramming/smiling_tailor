@@ -2,15 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:smiling_tailor/src/config/get.platform.dart';
-import 'package:smiling_tailor/src/db/db.functions.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
 import '../config/constants.dart';
+import '../config/get.platform.dart';
 import '../modules/settings/model/currency/currency.model.dart';
 import '../modules/settings/model/measurement/measurement.dart';
 import '../modules/settings/model/settings.model.dart';
+import '../utils/extensions/extensions.dart';
 import '../utils/logger/logger_helper.dart';
+import 'db.functions.dart';
 import 'hive.dart';
 import 'paths.dart' show appDir, initDir;
 

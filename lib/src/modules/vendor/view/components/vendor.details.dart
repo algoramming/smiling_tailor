@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:smiling_tailor/src/modules/settings/model/settings.model.dart';
+import '../../../settings/model/settings.model.dart';
 
 import '../../../../config/constants.dart';
 import '../../../../db/db.dart';

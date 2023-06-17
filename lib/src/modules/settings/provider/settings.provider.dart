@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/db/db.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
 import '../../../config/constants.dart';
+import '../../../db/db.dart';
 import '../../../db/hive.dart';
+import '../../../utils/extensions/extensions.dart';
 import '../model/settings.model.dart';
 
 final _settingsStream = Boxes.appSettings

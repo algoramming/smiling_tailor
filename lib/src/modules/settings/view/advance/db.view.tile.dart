@@ -3,12 +3,12 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hive_ui/boxes_view.dart';
-import 'package:smiling_tailor/src/config/get.platform.dart';
-import 'package:smiling_tailor/src/shared/animations_widget/animated_popup.dart';
 
 import '../../../../config/custom.routes.dart';
+import '../../../../config/get.platform.dart';
 import '../../../../db/hive.dart';
 import '../../../../localization/loalization.dart';
+import '../../../../shared/animations_widget/animated_popup.dart';
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
 import '../../../../utils/extensions/extensions.dart';

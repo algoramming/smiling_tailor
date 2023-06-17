@@ -4,16 +4,16 @@ import 'package:flutter/foundation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
-import 'package:smiling_tailor/src/modules/settings/model/theme/theme.model.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
 import '../../../config/constants.dart';
 import '../../../db/hive.dart';
 import '../../../pocketbase/auth.store/helpers.dart';
+import '../../../utils/extensions/extensions.dart';
 import '../provider/currency.format.provider.dart';
 import '../provider/date.format.provider.dart';
 import '../provider/time.format.provider.dart';
 import 'locale/locale.model.dart';
+import 'theme/theme.model.dart';
 
 part 'settings.model.crud.ext.dart';
 part 'settings.model.ext.dart';

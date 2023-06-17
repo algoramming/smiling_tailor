@@ -1,7 +1,7 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:smiling_tailor/src/modules/settings/model/currency/currency.model.dart';
+import '../../modules/settings/model/currency/currency.model.dart';
 
 import '../../db/db.dart';
 import '../logger/logger_helper.dart';

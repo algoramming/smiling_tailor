@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:smiling_tailor/src/modules/settings/model/settings.model.dart';
 
 import '../../../db/db.dart';
 import '../../../utils/extensions/extensions.dart';
@@ -10,6 +9,7 @@ import '../../employee/model/employee.dart';
 import '../../inventory/model/inventory.dart';
 import '../../order/model/order.dart';
 import '../../settings/model/measurement/measurement.dart';
+import '../../settings/model/settings.model.dart';
 import '../../vendor/model/vendor.dart';
 import '../enum/trx.type.dart';
 

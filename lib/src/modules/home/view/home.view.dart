@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
 import '../../../config/is.under.min.size.dart';
 import '../../../config/screen_enlarge_warning.dart';
 import '../../../pocketbase/auth.store/helpers.dart';
 import '../../../shared/page_not_found/page_not_found.dart';
+import '../../../utils/extensions/extensions.dart';
 import '../../authentication/view/authentication.dart';
 import 'components/body.dart';
 

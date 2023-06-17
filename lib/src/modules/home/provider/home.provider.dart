@@ -1,4 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../config/get.platform.dart';
+import '../../../shared/show_toast/awsome.snackbar/awesome.snackbar.dart';
+import '../../../shared/show_toast/awsome.snackbar/show.awesome.snackbar.dart';
 
 import '../enum/home.enum.dart';
 
@@ -14,7 +18,17 @@ class HomeProvider extends AutoDisposeNotifier {
 
   KDrawer get drawer => _drawer;
 
-  void changeDrawer(KDrawer drawer) {
+  void changeDrawer(BuildContext context, KDrawer drawer) {
+    if (drawer == _drawer) return;
+    if (drawer.isInvoice && pt.isWeb) {
+      showAwesomeSnackbar(
+        context,
+        'Sorry!',
+        'You can\'t see invoices in web.',
+        MessageType.warning,
+      );
+      return;
+    }
     _drawer = drawer;
     ref.notifyListeners();
   }

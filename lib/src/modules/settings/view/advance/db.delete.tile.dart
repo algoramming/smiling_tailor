@@ -2,14 +2,14 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:smiling_tailor/src/config/get.platform.dart';
-import 'package:smiling_tailor/src/shared/show_toast/awsome.snackbar/awesome.snackbar.dart';
-import 'package:smiling_tailor/src/shared/show_toast/awsome.snackbar/show.awesome.snackbar.dart';
 
+import '../../../../config/get.platform.dart';
 import '../../../../localization/loalization.dart';
 import '../../../../shared/animations_widget/animated_popup.dart';
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
+import '../../../../shared/show_toast/awsome.snackbar/awesome.snackbar.dart';
+import '../../../../shared/show_toast/awsome.snackbar/show.awesome.snackbar.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../functions/delete.db.dart';
 
