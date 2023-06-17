@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../config/constants.dart';
-import '../../../../shared/web_title/change.web.title.dart';
 import '../../../../utils/transations/big.to.small.dart';
 import '../../enum/home.enum.dart';
 import '../../provider/home.provider.dart';
@@ -13,7 +11,6 @@ class HomeBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    changeWebTitle(appName);
     return const SafeArea(
       child: Row(
         children: [

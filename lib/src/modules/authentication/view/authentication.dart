@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../config/constants.dart';
-import '../../../shared/web_title/change.web.title.dart';
 import '../../../utils/extensions/extensions.dart';
 import '../../settings/view/advance/url.config.tile.dart';
 import '../provider/authentication.provider.dart';
@@ -19,7 +18,6 @@ class AuthenticationView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (!isSignup) changeWebTitle('$appName - Signin');
     ref.watch(authProvider(isSignup));
     final notifier = ref.read(authProvider(isSignup).notifier);
     return Scaffold(

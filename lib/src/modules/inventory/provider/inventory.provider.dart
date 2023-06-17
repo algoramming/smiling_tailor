@@ -13,7 +13,7 @@ typedef InventoryNotifier
 final inventoryProvider = InventoryNotifier(InventoryProvider.new);
 
 class InventoryProvider extends AsyncNotifier<List<PktbsInventory>> {
-  TextEditingController searchCntrlr = TextEditingController();
+  final searchCntrlr = TextEditingController();
   PktbsInventory? selectedInventory;
   late List<PktbsInventory> _inventories;
   @override

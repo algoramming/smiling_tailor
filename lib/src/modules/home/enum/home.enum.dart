@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../authentication/view/authentication.dart';
-import '../../dashboard/dashboard.dart';
+import '../../dashboard/view/dashboard.dart';
 import '../../employee/view/employee.dart';
 import '../../inventory/view/inventory.dart';
 import '../../invoices/view/invoice.dart';
