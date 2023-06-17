@@ -10,7 +10,7 @@ jobs:
     name: Android, iOS, Web Build
 
     env:
-      my_repo: "smiling_tailor/algoramming.github.io.git"
+      my_repo: "algoramming/smiling_tailor.git"
       my_secret: "${{secrets.SmilingTailor}}"
       my_email: "sabikrahat72428@gmail.com"
       my_name: "Md. Sabik Alam Rahat"
