@@ -1,16 +1,16 @@
 part of 'measurement.dart';
 
 extension MeasurementTrxExt on Measurement {
-  Future<void> save() async => await Boxes.measurement.put(id, this);
+  Future<void> saveData() async => await Boxes.measurement.put(id, this);
 
-  Future<void> delete() async => await Boxes.measurement.delete(id);
+  Future<void> deleteData() async => await Boxes.measurement.delete(id);
 }
 
 extension ListMeasurementTrxExt on List<Measurement> {
-  Future<void> saveAll() async => await Boxes.measurement
+  Future<void> saveAllData() async => await Boxes.measurement
       .putAll(Map.fromEntries(map((e) => MapEntry(e.id, e))));
 
-  Future<void> deleteAll() async =>
+  Future<void> deleteAllData() async =>
       await Boxes.measurement.deleteAll(map((e) => e.id).toList());
 }
 

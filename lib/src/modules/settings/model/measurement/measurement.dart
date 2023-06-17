@@ -24,6 +24,15 @@ class Measurement extends HiveObject {
   @HiveField(4)
   late final String system;
 
+  factory Measurement.fromRawJson(String source) =>
+      Measurement.fromJson(json.decode(source));
+
+  factory Measurement.fromJson(Map<String, dynamic> map) => Measurement()
+    ..name = map[_Json.name]
+    ..symbol = map[_Json.symbol]
+    ..unitOf = map[_Json.unitOf]
+    ..system = map[_Json.system];
+  
   String toRawJson() => json.encode(toJson());
 
   Map<String, dynamic> toJson() => {
@@ -33,15 +42,6 @@ class Measurement extends HiveObject {
         _Json.unitOf: unitOf,
         _Json.system: system,
       };
-
-  factory Measurement.fromRawJson(String source) =>
-      Measurement.fromJson(json.decode(source));
-
-  factory Measurement.fromJson(Map<String, dynamic> map) => Measurement()
-    ..name = map[_Json.name]
-    ..symbol = map[_Json.symbol]
-    ..unitOf = map[_Json.unitOf]
-    ..system = map[_Json.system];
 
   @override
   String toString() =>

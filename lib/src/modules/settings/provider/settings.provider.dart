@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smiling_tailor/src/db/db.dart';
 import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
 import '../../../config/constants.dart';
 import '../../../db/hive.dart';
-import '../../../utils/logger/logger_helper.dart';
 import '../model/settings.model.dart';
 
 final _settingsStream = Boxes.appSettings
@@ -18,15 +18,14 @@ final settingsProvider = AppSettingsNotifier(SettingProvider.new);
 
 class SettingProvider extends Notifier<AppSettings> {
   @override
-  AppSettings build() =>
-      ref.watch(settingsStreamProvider).value ?? AppSettings();
+  AppSettings build() => ref.watch(settingsStreamProvider).value ?? appSettings;
 
-  Future<bool> changeInitSetting(AppSettings setting) async {
-    log.i('First Time Run. Initializing...');
-    await Boxes.appSettings.put(appName.toCamelWord, setting);
-    state = setting;
-    return true;
-  }
+  // Future<bool> changeInitSetting(AppSettings setting) async {
+  //   log.i('First Time Run. Initializing...');
+  //   await Boxes.appSettings.put(appName.toCamelWord, setting);
+  //   state = setting;
+  //   return true;
+  // }
 }
 
 // class _Data {

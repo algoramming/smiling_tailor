@@ -31,6 +31,15 @@ class CurrencyProfile {
         ..symbol = json[_JSON.symbol] as String
         ..shortForm = json[_JSON.shortForm] as String;
 
+  String toRawJson() => json.encode(toJson());
+
+  Map<String, dynamic> toJson() => {
+        _JSON.id: id,
+        _JSON.name: name,
+        _JSON.symbol: symbol,
+        _JSON.shortForm: shortForm,
+      };
+
   @override
   bool operator ==(Object other) => other is CurrencyProfile && id == other.id;
 

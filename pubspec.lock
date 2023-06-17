@@ -49,6 +49,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.4"
+  beamer:
+    dependency: "direct main"
+    description:
+      name: beamer
+      sha256: "8bbf46ca033999591b7535228edeaa0bb00b4c5315e03143b0e2250a3b66d650"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.5.5"
   bidi:
     dependency: transitive
     description:
@@ -453,6 +461,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  hive_ui:
+    dependency: "direct main"
+    description:
+      name: hive_ui
+      sha256: a2f4919c84dce6a36642ab3289fb5524b058788f74064ba99fbda976d3bcc2cd
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.14"
   html:
     dependency: transitive
     description:
@@ -621,14 +637,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
-  localstorage:
-    dependency: "direct main"
-    description:
-      name: localstorage
-      sha256: "1b5304491c85250b90807e0e2b3a6217d2739caea4871b820d42782572f880f4"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.1+2"
   logger:
     dependency: "direct main"
     description:
@@ -1083,7 +1091,7 @@ packages:
     source: hosted
     version: "1.3.2"
   universal_io:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: universal_io
       sha256: "1722b2dcc462b4b2f3ee7d188dad008b6eb4c40bbd03a3de451d82c78bba9aad"

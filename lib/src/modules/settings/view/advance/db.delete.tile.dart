@@ -2,6 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:smiling_tailor/src/config/get.platform.dart';
+import 'package:smiling_tailor/src/shared/show_toast/awsome.snackbar/awesome.snackbar.dart';
+import 'package:smiling_tailor/src/shared/show_toast/awsome.snackbar/show.awesome.snackbar.dart';
 
 import '../../../../localization/loalization.dart';
 import '../../../../shared/animations_widget/animated_popup.dart';
@@ -32,13 +35,24 @@ class DBDeleteTile extends StatelessWidget {
         textAlign: TextAlign.justify,
         style: const TextStyle(fontWeight: FontWeight.bold),
       ),
-      onTap: () async => await showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => DeleteDatabaseWarningPopup(
-          onPressed: () async => await deleteDB(),
-        ),
-      ),
+      onTap: () async {
+        if (pt.isWeb) {
+          showAwesomeSnackbar(
+            context,
+            'Sorry!',
+            'You can\'t delete database in web.',
+            MessageType.warning,
+          );
+          return;
+        }
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) => DeleteDatabaseWarningPopup(
+            onPressed: () async => await deleteDB(),
+          ),
+        );
+      },
     );
   }
 }

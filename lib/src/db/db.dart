@@ -30,6 +30,7 @@ Future<void> initHiveDB() async {
 }
 
 Future<void> initAppDatum() async {
+  if (Boxes.appSettings.isEmpty) await appSettingsInit();
   if (Boxes.currencyProfile.isEmpty) await currencyInit();
   if (Boxes.measurement.isEmpty) await measurementInit();
   appSettings = Boxes.appSettings.get(appName.toCamelWord) ?? AppSettings();
@@ -38,8 +39,15 @@ Future<void> initAppDatum() async {
       .firstWhere((e) => e.shortForm == appSettings.currency);
   appMeasurements = Boxes.measurement.values.toList();
   log.i(
-      'App Initiated with currency: ${appCurrency.shortForm} and measurements: ${appMeasurements.length} units');
+      'App Initiated with appSettings: ${appSettings.firstRunDateTime}, currency: ${appCurrency.shortForm} and measurements: ${appMeasurements.length} units');
   listenForAppConfig();
+}
+
+Future<void> appSettingsInit() async {
+  final appSettings = AppSettings();
+  log.i(
+      'First time App Settings Initiated with ${appSettings.firstRunDateTime}');
+  await appSettings.saveData();
 }
 
 Future<void> currencyInit() async {
@@ -52,9 +60,8 @@ Future<void> currencyInit() async {
     currencies.add(curr);
   }
   log.i('First time Currency Initiated with ${currencies.length} currencies');
-  await currencies.saveAll();
+  await currencies.saveAllData();
 }
-
 
 Future<void> measurementInit() async {
   List<Measurement> measurements = [];
@@ -66,7 +73,7 @@ Future<void> measurementInit() async {
     measurements.add(curr);
   }
   log.i('First time Measurement Initiated with ${measurements.length} units');
-  await measurements.saveAll();
+  await measurements.saveAllData();
 }
 
 void listenForAppConfig() {

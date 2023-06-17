@@ -10,13 +10,4 @@ extension CurrencyProfileExtension on CurrencyProfile {
         ..name = name ?? this.name
         ..symbol = symbol ?? this.symbol
         ..shortForm = shortForm ?? this.shortForm;
-
-  String toRawJson() => json.encode(toJson());
-
-  Map<String, dynamic> toJson() => {
-        _JSON.id: id,
-        _JSON.name: name,
-        _JSON.symbol: symbol,
-        _JSON.shortForm: shortForm,
-      };
 }

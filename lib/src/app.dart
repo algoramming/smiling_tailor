@@ -1,3 +1,4 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart'
     show
         BouncingScrollPhysics,
@@ -21,10 +22,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerWidget, WidgetRef;
 import 'package:smiling_tailor/src/modules/settings/model/locale/locale.model.dart';
 import 'package:smiling_tailor/src/modules/settings/model/theme/theme.model.dart';
-import 'package:smiling_tailor/src/router/router.dart';
-import 'package:smiling_tailor/src/router/routes.dart';
 import 'package:smiling_tailor/src/utils/logger/logger_helper.dart';
 
+import '../beamer.routes.dart';
 import 'config/constants.dart' show appName;
 import 'config/get.platform.dart';
 import 'config/is.under.min.size.dart';
@@ -44,33 +44,36 @@ class App extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return MaterialApp(
-      title: appName,
-      theme: _themeData(ref),
-      navigatorKey: navigatorKey,
-      onGenerateRoute: onGenerateRoute,
-      onGenerateTitle: onGenerateTitle,
-      // scaffoldMessengerKey: snackbarKey,
-      debugShowCheckedModeBanner: false,
-      restorationScopeId: appName.toCamelWord,
-      locale: ref.watch(localeProvider).locale,
-      navigatorObservers: [AppRouteObserver()],
-      localizationsDelegates: localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      scrollBehavior: _scrollBehavior.copyWith(scrollbars: false),
-      showPerformanceOverlay: ref.watch(performanceOverlayProvider),
-      builder: EasyLoading.init(builder: (ctx, child) {
-        t = AppLocalizations.of(ctx)!;
-        topBarSize = ctx.mq.viewPadding.top;
-        bottomViewPadding = ctx.mq.viewPadding.bottom;
-        log.i('App build. Height: ${ctx.height} px, Width: ${ctx.width} px');
-        return MediaQuery(
-          data: ctx.mq.copyWith(textScaleFactor: 1.0, devicePixelRatio: 1.0),
-          child: isUnderMinSize(ctx.mq.size)
-              ? const ScreenEnlargeWarning()
-              : child ?? const HomeView(),
-        );
-      }),
+    return BeamerProvider(
+      routerDelegate: routerDelegate,
+      child: MaterialApp.router(
+        title: appName,
+        theme: _themeData(ref),
+        routerDelegate: routerDelegate,
+        onGenerateTitle: onGenerateTitle,
+        debugShowCheckedModeBanner: false,
+        // scaffoldMessengerKey: snackbarKey,
+        routeInformationParser: BeamerParser(),
+        restorationScopeId: appName.toCamelWord,
+        locale: ref.watch(localeProvider).locale,
+        localizationsDelegates: localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        scrollBehavior: _scrollBehavior.copyWith(scrollbars: false),
+        showPerformanceOverlay: ref.watch(performanceOverlayProvider),
+        backButtonDispatcher: BeamerBackButtonDispatcher(delegate: routerDelegate),
+        builder: EasyLoading.init(builder: (ctx, child) {
+          t = AppLocalizations.of(ctx)!;
+          topBarSize = ctx.mq.viewPadding.top;
+          bottomViewPadding = ctx.mq.viewPadding.bottom;
+          log.i('App build. Height: ${ctx.height} px, Width: ${ctx.width} px');
+          return MediaQuery(
+            data: ctx.mq.copyWith(textScaleFactor: 1.0, devicePixelRatio: 1.0),
+            child: isUnderMinSize(ctx.mq.size)
+                ? const ScreenEnlargeWarning()
+                : child ?? const HomeView(),
+          );
+        }),
+      ),
     );
   }
 }

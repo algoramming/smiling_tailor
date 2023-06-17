@@ -1,3 +1,4 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart' show runApp;
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -16,6 +17,7 @@ void main() async {
 }
 
 Future<void> _init() async {
+  Beamer.setPathUrlStrategy();
   pt = PlatformInfo.getCurrentPlatformType();
   await openDB();
   configLoading();

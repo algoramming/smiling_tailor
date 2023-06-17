@@ -22,7 +22,7 @@ class ThemeProvider extends Notifier<ThemeProfile> {
     await Boxes.appSettings.put(
         appName.toCamelWord,
         (Boxes.appSettings.get(appName.toCamelWord) ?? AppSettings())
-            .copyWith(theme: theme));
+            .copyWith(theme: theme.toggled));
   }
 }
 

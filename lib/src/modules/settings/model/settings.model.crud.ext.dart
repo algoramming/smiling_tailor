@@ -6,5 +6,5 @@ extension AppSettingsDBExt on AppSettings {
 
   // Future<void> delete() async => await db.writeTxn(() async => await db.appSettings.delete(id));
 
-  Future<void> save() async => await Boxes.appSettings.put(appName.toCamelWord, this);
+  Future<void> saveData() async => await Boxes.appSettings.put(appName.toCamelWord, this);
 }

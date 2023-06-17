@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
@@ -8,12 +9,10 @@ import 'package:pocketbase/pocketbase.dart';
 import '../../../config/get.platform.dart';
 import '../../../pocketbase/auth.store/helpers.dart';
 import '../../../pocketbase/error.handle/error.handle.func.dart';
-import '../../../router/router.dart';
 import '../../../shared/show_toast/awsome.snackbar/awesome.snackbar.dart';
 import '../../../shared/show_toast/awsome.snackbar/show.awesome.snackbar.dart';
 import '../../../utils/extensions/extensions.dart';
 import '../../../utils/logger/logger_helper.dart';
-import '../../home/view/home.view.dart';
 import '../../profile/provider/profile.provider.dart';
 import '../provider/authentication.provider.dart';
 
@@ -68,7 +67,7 @@ Future<void> pktbsSignup(BuildContext context, AuthProvider notifier,
 
 Future<void> pktbsSignin(BuildContext context, AuthProvider notifier) async {
   EasyLoading.show(status: 'Matching Credentials...');
-  final nav = Navigator.of(context);
+  final beam = Beamer.of(context);
   try {
     await pb
         .collection(users)
@@ -78,7 +77,7 @@ Future<void> pktbsSignin(BuildContext context, AuthProvider notifier) async {
       notifier.clear();
     });
     EasyLoading.dismiss();
-    await nav.pushNamedRemoveUntil(HomeView.name);
+    beam.update();
     return;
   } on SocketException catch (e) {
     EasyLoading.showError('No Internet Connection. $e');
@@ -184,7 +183,8 @@ Future<void> pktbsSignout(BuildContext context) async {
       pb.authStore.clear();
       EasyLoading.dismiss();
       log.i('User signout and unsubscribed from all registered subscriptions.');
-      await context.pushNamedRemoveUntil(AppRouter.name);
+      // await context.pushNamedRemoveUntil(AppRouter.name);
+      context.beamUpdate();
       return;
     });
   } on SocketException catch (e) {
