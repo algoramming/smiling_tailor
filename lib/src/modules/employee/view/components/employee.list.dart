@@ -59,8 +59,19 @@ class EmployeeList extends ConsumerWidget {
                               ),
                             ),
                           ),
-                          title: Text(employee.name),
-                          subtitle: Text(employee.address),
+                          title: Text(
+                            employee.name,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: context.text.titleSmall,
+                          ),
+                          subtitle: Text(
+                            employee.address,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            style: context.text.labelSmall!
+                                .copyWith(fontWeight: FontWeight.normal),
+                          ),
                           trailing:
                               const Icon(Icons.arrow_circle_right_outlined),
                         ),

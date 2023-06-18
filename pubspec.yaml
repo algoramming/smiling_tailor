@@ -10,13 +10,14 @@ description: Introducing our tailor-focused ERP management system - a powerful,
 # Prevent accidental publishing to pub.dev.
 publish_to: "none"
 
-version: 0.0.3+3
+version: 0.0.4+4
 
 environment:
   sdk: ">=3.0.5 <4.0.0"
 
 dependencies:
   beamer: ^1.5.5
+  fetch_client: ^1.0.0
   file_picker: ^5.3.2
   flutter:
     sdk: flutter
@@ -66,7 +67,7 @@ msix_config:
     force_update_from_any_version: false
   publisher_display_name: Algoramming
   identity_name: com.algoramming.smilingtailor
-  msix_version: 0.0.3.0
+  msix_version: 0.0.4.0
   logo_path: D:\Algoramming\Flutter-Projects\smiling_tailor\assets\icons\app-icon-1024x1024.png
 
 flutter_launcher_icons:

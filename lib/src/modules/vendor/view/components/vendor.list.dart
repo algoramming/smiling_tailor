@@ -59,8 +59,19 @@ class VendorList extends ConsumerWidget {
                               ),
                             ),
                           ),
-                          title: Text(vendor.name),
-                          subtitle: Text(vendor.address),
+                          title: Text(
+                            vendor.name,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: context.text.titleSmall,
+                          ),
+                          subtitle: Text(
+                            vendor.address,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            style: context.text.labelSmall!
+                                .copyWith(fontWeight: FontWeight.normal),
+                          ),
                           trailing:
                               const Icon(Icons.arrow_circle_right_outlined),
                         ),

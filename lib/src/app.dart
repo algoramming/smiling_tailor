@@ -60,14 +60,17 @@ class App extends ConsumerWidget {
         supportedLocales: AppLocalizations.supportedLocales,
         scrollBehavior: _scrollBehavior.copyWith(scrollbars: false),
         showPerformanceOverlay: ref.watch(performanceOverlayProvider),
-        backButtonDispatcher: BeamerBackButtonDispatcher(delegate: routerDelegate),
+        backButtonDispatcher:
+            BeamerBackButtonDispatcher(delegate: routerDelegate),
         builder: EasyLoading.init(builder: (ctx, child) {
           t = AppLocalizations.of(ctx)!;
           topBarSize = ctx.mq.viewPadding.top;
           bottomViewPadding = ctx.mq.viewPadding.bottom;
           log.i('App build. Height: ${ctx.height} px, Width: ${ctx.width} px');
           return MediaQuery(
-            data: ctx.mq.copyWith(textScaleFactor: 1.0, devicePixelRatio: 1.0),
+            data: pt.isWeb
+                ? ctx.mq
+                : ctx.mq.copyWith(textScaleFactor: 1.0, devicePixelRatio: 1.0),
             child: isUnderMinSize(ctx.mq.size)
                 ? const ScreenEnlargeWarning()
                 : child ?? const HomeView(),

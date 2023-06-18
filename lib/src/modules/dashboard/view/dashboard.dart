@@ -1,10 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../authentication/model/user.dart';
-import '../provider/all.users.provider.dart';
-import '../../transaction/enum/trx.type.dart';
-import '../../transaction/model/transaction.dart';
 
 import '../../../config/constants.dart';
 import '../../../shared/animations_widget/animated_widget_shower.dart';
@@ -14,6 +10,10 @@ import '../../../shared/page_not_found/page_not_found.dart';
 import '../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../utils/extensions/extensions.dart';
 import '../../../utils/logger/logger_helper.dart';
+import '../../authentication/model/user.dart';
+import '../../transaction/enum/trx.type.dart';
+import '../../transaction/model/transaction.dart';
+import '../provider/all.users.provider.dart';
 
 class DashboardView extends StatelessWidget {
   const DashboardView({super.key});

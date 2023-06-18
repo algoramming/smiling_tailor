@@ -60,9 +60,19 @@ class InventoryList extends ConsumerWidget {
                               ),
                             ),
                           ),
-                          title: Text(inventory.title),
-                          subtitle: Text(inventory.description ?? ''),
-                          // trailing: const Icon(Icons.arrow_circle_right_outlined),
+                          title: Text(
+                            inventory.title,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: context.text.titleSmall,
+                          ),
+                          subtitle: Text(
+                            inventory.description ?? '',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            style: context.text.labelSmall!
+                                .copyWith(fontWeight: FontWeight.normal),
+                          ),
                           trailing: Column(
                             crossAxisAlignment: crossEnd,
                             mainAxisAlignment: mainCenter,
