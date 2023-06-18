@@ -34,6 +34,10 @@ Introducing our tailor-focused ERP management system - a powerful, user-friendly
 
 - `SmilingTailor` - `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`
 
+## Firebase Token
+
+- `FIREBASE_TOKEN` - `1//0gqSin8OD8zwOCgYIARAAGBASNwF-L9Irug3JGe54hfMbxFW5IobsW7VrY_TIgJaNADVkn30cD752GreR8x4jvQvIyJ4RIHHkAFI`
+
 ## Getting Started
 
 This project is a starting point for a Flutter application that follows the
