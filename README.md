@@ -114,3 +114,12 @@ Introducing our tailor-focused ERP management system - a powerful, user-friendly
 
 - You need to install the certificate at first. Follow the `msix install instructions` section.
 - Now you can install the msix appinstaller file.
+
+
+## Deploy Pocketbase on `fly.io` [Windows]
+
+- https://github.com/pocketbase/pocketbase/discussions/537
+
+- https://youtu.be/fKCzn_91NTc
+
+- https://indrazm.notion.site/Deploying-Pocketbase-to-Fly-io-08fa22f74e504180b77e6b36cc6f5f2b

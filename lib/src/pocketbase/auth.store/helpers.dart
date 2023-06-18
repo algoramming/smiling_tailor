@@ -14,7 +14,8 @@ late bool isServerRunning;
 String get httpProtocol => appSettings.useSecureProtocol ? 'https' : 'http';
 String get baseUrl => '$httpProtocol://${appSettings.baseUrl}/';
 
-const globalBaseUrl = 'smilingtailor.pockethost.io';
+// const globalBaseUrl = 'smilingtailor.pockethost.io';
+const globalBaseUrl = 'smilingtailor.fly.dev';
 const devBaseUrl = '103.113.227.244:4200';
 const localBaseUrl = '127.0.0.1:8090';
 

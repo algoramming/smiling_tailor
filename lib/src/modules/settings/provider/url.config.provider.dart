@@ -13,7 +13,7 @@ final urlConfigProvider = UrlConfigNotifier(UrlConfigProvider.new);
 
 class UrlConfigProvider extends AutoDisposeNotifier {
   late AppSettings _currSettings;
-  late final TextEditingController urlCntrlr;
+  late TextEditingController urlCntrlr;
   late List<String> _urls;
   late List<String> _urlHeaders;
   late int _currUrlIndex;
