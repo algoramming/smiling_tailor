@@ -28,6 +28,8 @@
 //   String phone;
 //   String? email;
 //   String address;
+//   // double openingBalance; -> only add a column in trx table for vendor.
+//   // TrxType openingBalanceTrxType; // enum TrxType { debit, credit }
 //   String description;
 // }
 
@@ -45,6 +47,7 @@
 //   int quantity;
 //   Measurement unit;
 //   double amount;
+//   // double advanceAmount; -> only add a column in trx table for inventory.
 //   PktbsVendor from;
 //   String? description;
 // }
