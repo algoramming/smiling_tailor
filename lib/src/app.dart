@@ -64,8 +64,8 @@ class App extends ConsumerWidget {
             BeamerBackButtonDispatcher(delegate: routerDelegate),
         builder: EasyLoading.init(builder: (ctx, child) {
           t = AppLocalizations.of(ctx)!;
-          topBarSize = ctx.mq.viewPadding.top;
-          bottomViewPadding = ctx.mq.viewPadding.bottom;
+          topBarSize = ctx.padding.top;
+          bottomViewPadding = ctx.padding.bottom;
           log.i('App build. Height: ${ctx.height} px, Width: ${ctx.width} px');
           return MediaQuery(
             data: pt.isWeb

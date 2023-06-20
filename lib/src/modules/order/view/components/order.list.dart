@@ -51,26 +51,29 @@ class OrderList extends ConsumerWidget {
                   color: context.theme.primaryColor,
                 ),
               ),
-              itemBuilder: (_) =>
-                  ['All', ...OrderStatus.values.map((e) => e.label).toList()]
-                      .map(
-                        (e) => PopupMenuItem(
-                          value: e,
-                          child: Text(
-                            e,
-                            style: context.text.labelMedium!.copyWith(
-                              color: notifier.selectedStatus == e
-                                  ? context.theme.primaryColor
-                                  : null,
-                            ),
-                          ),
+              itemBuilder: (_) => [
+                orderTypeAll,
+                orderDeliveryDateToday,
+                ...OrderStatus.values.map((e) => e.label).toList()
+              ]
+                  .map(
+                    (e) => PopupMenuItem(
+                      value: e,
+                      child: Text(
+                        e,
+                        style: context.text.labelMedium!.copyWith(
+                          color: notifier.selectedStatus == e
+                              ? context.theme.primaryColor
+                              : null,
                         ),
-                      )
-                      .toList(),
+                      ),
+                    ),
+                  )
+                  .toList(),
             ),
           ],
         ),
-        if (notifier.selectedStatus != 'All')
+        if (notifier.selectedStatus != orderTypeAll)
           Align(
             alignment: Alignment.centerRight,
             child: Padding(

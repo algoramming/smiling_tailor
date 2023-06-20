@@ -3,10 +3,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smiling_tailor/src/modules/order/enum/order.enum.dart';
+import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
 import '../../../pocketbase/auth.store/helpers.dart';
 import '../../../utils/logger/logger_helper.dart';
 import '../model/order.dart';
+
+const orderTypeAll = 'All';
+const orderDeliveryDateToday = 'Delivery Date Today';
 
 typedef OrderNotifier = AsyncNotifierProvider<OrderProvider, List<PktbsOrder>>;
 
@@ -16,7 +20,7 @@ class OrderProvider extends AsyncNotifier<List<PktbsOrder>> {
   final searchCntrlr = TextEditingController();
   PktbsOrder? selectedOrder;
   late List<PktbsOrder> _orders;
-  String _selectedStatus = 'All';
+  String _selectedStatus = orderTypeAll;
   @override
   FutureOr<List<PktbsOrder>> build() async {
     _orders = [];
@@ -60,17 +64,19 @@ class OrderProvider extends AsyncNotifier<List<PktbsOrder>> {
   String get selectedStatus => _selectedStatus;
 
   void changeStatus(String? status) {
-    _selectedStatus = status ?? 'All';
+    _selectedStatus = status ?? orderTypeAll;
     ref.notifyListeners();
   }
 
   List<PktbsOrder> get orderList {
     _orders.sort((a, b) => b.created.toLocal().compareTo(a.created.toLocal()));
-    final vs = _selectedStatus == 'All'
+    final vs = _selectedStatus == orderTypeAll
         ? _orders
-        : _orders
-            .where((e) => e.status == _selectedStatus.toOrderStatus)
-            .toList();
+        : _selectedStatus == orderDeliveryDateToday
+            ? _orders.where((e) => e.deliveryTime.isToday).toList()
+            : _orders
+                .where((e) => e.status == _selectedStatus.toOrderStatus)
+                .toList();
     return vs
         .where((e) =>
             e.id.toLowerCase().contains(searchCntrlr.text.toLowerCase()) ||

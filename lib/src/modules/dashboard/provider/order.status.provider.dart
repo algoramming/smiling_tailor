@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smiling_tailor/src/modules/order/provider/order.provider.dart';
+import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
 import '../../home/enum/home.enum.dart';
 import '../../home/provider/home.provider.dart';
@@ -14,6 +15,7 @@ final orderStatusProvider = OrderStatusNotifier(OrderStatusProvider.new);
 
 class OrderStatusProvider extends AsyncNotifier {
   late List<PktbsOrder> _orders;
+  int _summaryRadio = 0;
   @override
   FutureOr build() async {
     ref.watch(orderProvider);
@@ -21,13 +23,30 @@ class OrderStatusProvider extends AsyncNotifier {
     _orders = await ref.watch(orderProvider.future);
   }
 
-  List<PktbsOrder> get orders => _orders;
+  int get summaryRadio => _summaryRadio;
 
-  List<PktbsOrder> getCustomOrders(OrderStatus status) =>
-      _orders.where((e) => e.status == status).toList();
+  void changeSummaryRadio() {
+    _summaryRadio = _summaryRadio == 0 ? 1 : 0;
+    ref.notifyListeners();
+  }
 
-  void goToOrderTab(OrderStatus status) {
+  List<PktbsOrder> get todayDeliveriableOrders => _orders
+      .where((e) =>
+          e.deliveryTime.isToday &&
+          (e.status.isNotCompleted || e.status.isNotCompleted))
+      .toList();
+
+  List<PktbsOrder> get rawOrders => _orders;
+
+  List<PktbsOrder> get orders => _summaryRadio == 0
+      ? _orders
+      : _orders.where((e) => e.created.isToday).toList();
+
+  List<PktbsOrder> getCustomOrders(String status) =>
+      orders.where((e) => e.status == status.toOrderStatus).toList();
+
+  void goToOrderTab(String status) {
     ref.read(homeProvider.notifier).changeDrawer(null, KDrawer.order);
-    ref.read(orderProvider.notifier).changeStatus(status.label);
+    ref.read(orderProvider.notifier).changeStatus(status);
   }
 }

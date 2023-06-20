@@ -6,7 +6,8 @@ extension BuildContextExtension on BuildContext {
   MediaQueryData get mq => MediaQuery.of(this);
   ThemeData get theme => Theme.of(this);
 
-  Size get size => mq.size;
+  Size get size => MediaQuery.sizeOf(this);
+  EdgeInsets get padding => MediaQuery.viewPaddingOf(this);
   double get height => size.height;
   double get width => size.width;
 
