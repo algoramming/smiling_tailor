@@ -18,11 +18,11 @@ class HomeProvider extends AutoDisposeNotifier {
 
   KDrawer get drawer => _drawer;
 
-  void changeDrawer(BuildContext context, KDrawer drawer) {
+  void changeDrawer(BuildContext? context, KDrawer drawer) {
     if (drawer == _drawer) return;
     if (drawer.isInvoice && pt.isWeb) {
       showAwesomeSnackbar(
-        context,
+        context!,
         'Message',
         'You can\'t see invoices in web.',
         MessageType.help,

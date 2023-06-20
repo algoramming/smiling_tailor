@@ -19,6 +19,30 @@ extension OrderStatusExtension on OrderStatus {
         return 'Pending';
     }
   }
+
+  bool get isPending => this == OrderStatus.pending;
+
+  bool get isUnderProcessing => this == OrderStatus.processing;
+
+  bool get isReadyForDelivery => this == OrderStatus.ready;
+
+  bool get isOutForDelivery => this == OrderStatus.shipping;
+
+  bool get isCompleted => this == OrderStatus.completed;
+
+  bool get isCancelled => this == OrderStatus.cancelled;
+
+  bool get isNotPending => this != OrderStatus.pending;
+
+  bool get isNotUnderProcessing => this != OrderStatus.processing;
+
+  bool get isNotReadyForDelivery => this != OrderStatus.ready;
+
+  bool get isNotOutForDelivery => this != OrderStatus.shipping;
+
+  bool get isNotCompleted => this != OrderStatus.completed;
+
+  bool get isNotCancelled => this != OrderStatus.cancelled;
 }
 
 extension StringOrderStatusExtension on String {

@@ -13,6 +13,7 @@ import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/logger/logger_helper.dart';
 import '../../../../utils/themes/themes.dart';
 import '../../add/view/order.slip.download.popup.dart';
+import '../../enum/order.enum.dart';
 import '../../provider/order.provider.dart';
 
 class OrderList extends ConsumerWidget {
@@ -24,15 +25,73 @@ class OrderList extends ConsumerWidget {
     final notifier = ref.watch(orderProvider.notifier);
     return Column(
       children: [
-        TextFormField(
-          controller: notifier.searchCntrlr,
-          decoration: InputDecoration(
-            hintText: 'Search...',
-            prefixIcon: ClearPreffixIcon(() => notifier.searchCntrlr.clear()),
-            suffixIcon: PasteSuffixIcon(() async =>
-                notifier.searchCntrlr.text = await getCliboardData()),
-          ),
+        Row(
+          children: [
+            Expanded(
+              child: TextFormField(
+                controller: notifier.searchCntrlr,
+                decoration: InputDecoration(
+                  hintText: 'Search...',
+                  prefixIcon:
+                      ClearPreffixIcon(() => notifier.searchCntrlr.clear()),
+                  suffixIcon: PasteSuffixIcon(() async =>
+                      notifier.searchCntrlr.text = await getCliboardData()),
+                ),
+              ),
+            ),
+            PopupMenuButton<String>(
+              padding: EdgeInsets.zero,
+              onSelected: notifier.changeStatus,
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 2.0, vertical: 8.0),
+                decoration: BoxDecoration(borderRadius: borderRadius25),
+                child: Icon(
+                  Icons.more_vert,
+                  color: context.theme.primaryColor,
+                ),
+              ),
+              itemBuilder: (_) =>
+                  ['All', ...OrderStatus.values.map((e) => e.label).toList()]
+                      .map(
+                        (e) => PopupMenuItem(
+                          value: e,
+                          child: Text(
+                            e,
+                            style: context.text.labelMedium!.copyWith(
+                              color: notifier.selectedStatus == e
+                                  ? context.theme.primaryColor
+                                  : null,
+                            ),
+                          ),
+                        ),
+                      )
+                      .toList(),
+            ),
+          ],
         ),
+        if (notifier.selectedStatus != 'All')
+          Align(
+            alignment: Alignment.centerRight,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 3.0),
+              child: RichText(
+                text: TextSpan(
+                  text: 'Oder list is filtered by',
+                  style: context.text.labelMedium,
+                  children: [
+                    TextSpan(
+                      text: ' ${notifier.selectedStatus} ',
+                      style: context.text.labelMedium!.copyWith(
+                        color: context.theme.primaryColor,
+                      ),
+                    ),
+                    TextSpan(text: 'status.', style: context.text.labelMedium),
+                  ],
+                ),
+              ),
+            ),
+          ),
         Flexible(
           child: notifier.orderList.isEmpty
               ? const KDataNotFound(msg: 'No Order Found!')
@@ -80,12 +139,14 @@ class OrderList extends ConsumerWidget {
                               ),
                             ),
                           ),
-                          title: Text(order.customerName,
+                          title: Text(
+                            order.customerName,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                             style: context.text.titleSmall,
                           ),
-                          subtitle: Text(order.customerPhone,
+                          subtitle: Text(
+                            order.customerPhone,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
                             style: context.text.labelSmall!
