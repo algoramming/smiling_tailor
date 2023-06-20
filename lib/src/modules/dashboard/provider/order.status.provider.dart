@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/modules/order/provider/order.provider.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
+import '../../../utils/extensions/extensions.dart';
 import '../../home/enum/home.enum.dart';
 import '../../home/provider/home.provider.dart';
 import '../../order/enum/order.enum.dart';
 import '../../order/model/order.dart';
+import '../../order/provider/order.provider.dart';
 
 typedef OrderStatusNotifier = AsyncNotifierProvider<OrderStatusProvider, void>;
 

@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/modules/order/enum/order.enum.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
 import '../../../pocketbase/auth.store/helpers.dart';
+import '../../../utils/extensions/extensions.dart';
 import '../../../utils/logger/logger_helper.dart';
+import '../enum/order.enum.dart';
 import '../model/order.dart';
 
 const orderTypeAll = 'All';

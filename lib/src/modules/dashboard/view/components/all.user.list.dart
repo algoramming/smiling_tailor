@@ -1,9 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/modules/transaction/enum/trx.type.dart';
-import 'package:smiling_tailor/src/modules/transaction/model/transaction.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
 import '../../../../config/constants.dart';
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
@@ -11,8 +8,11 @@ import '../../../../shared/clipboard_data/clipboard_data.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
 import '../../../../shared/page_not_found/page_not_found.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
+import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/logger/logger_helper.dart';
 import '../../../authentication/model/user.dart';
+import '../../../transaction/enum/trx.type.dart';
+import '../../../transaction/model/transaction.dart';
 import '../../provider/all.users.provider.dart';
 
 class AllUsersList extends ConsumerWidget {
@@ -93,7 +93,7 @@ class _UserTrxList extends ConsumerWidget {
         const SizedBox(height: 5.0),
         Flexible(
           child: notifier.trxList.isEmpty
-              ? const KDataNotFound(msg: 'No User Found!')
+              ? const KDataNotFound(msg: 'No Transaction Found!')
               : ListView.builder(
                   shrinkWrap: true,
                   itemCount: notifier.trxList.length,

@@ -20,6 +20,25 @@ extension OrderStatusExtension on OrderStatus {
     }
   }
 
+  String get imgPath {
+    switch (this) {
+      case OrderStatus.pending:
+        return 'assets/svgs/pending-delivery.svg';
+      case OrderStatus.processing:
+        return 'assets/svgs/under-processing.svg';
+      case OrderStatus.ready:
+        return 'assets/svgs/ready-for-delivery.svg';
+      case OrderStatus.shipping:
+        return 'assets/svgs/out-for-delivery.svg';
+      case OrderStatus.completed:
+        return 'assets/svgs/completed.svg';
+      case OrderStatus.cancelled:
+        return 'assets/svgs/invoice.svg';
+      default:
+        return 'assets/svgs/pending-delivery.svg';
+    }
+  }
+
   bool get isPending => this == OrderStatus.pending;
 
   bool get isUnderProcessing => this == OrderStatus.processing;

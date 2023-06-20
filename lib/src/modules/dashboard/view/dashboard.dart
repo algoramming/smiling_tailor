@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../config/constants.dart';
 
 import 'components/all.user.list.dart';
 import 'components/graph.summary.dart';
@@ -11,14 +12,17 @@ class DashboardView extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center(
       child: Row(
+        crossAxisAlignment: crossStart,
         children: [
           Expanded(
             flex: 3,
-            child: Column(
-              children: [
-                OrderStatusSummary(),
-                Expanded(child: GraphSummary()),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  OrderStatusSummary(),
+                  GraphSummary(),
+                ],
+              ),
             ),
           ),
           Expanded(flex: 2, child: AllUsersList()),

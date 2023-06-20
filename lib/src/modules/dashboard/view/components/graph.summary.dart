@@ -1,31 +1,60 @@
 import 'package:flutter/material.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
 import '../../../../config/constants.dart';
+import '../../../../shared/text.size/text.size.dart';
+import '../../../../utils/extensions/extensions.dart';
 
 class GraphSummary extends StatelessWidget {
   const GraphSummary({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: double.infinity,
-      width: double.infinity,
-      margin: const EdgeInsets.all(5.0),
-      decoration: BoxDecoration(
-        borderRadius: borderRadius12,
-        border: Border.all(
-          color: context.theme.dividerColor,
-          width: 1,
-        ),
-      ),
-      child: const Column(
-        mainAxisSize: mainMin,
-        mainAxisAlignment: mainCenter,
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: Column(
         children: [
-          Text(
-            '$appName - Dashboard',
-            textAlign: TextAlign.center,
+          Builder(builder: (_) {
+            final width = calculateTextSize('Transaction Summary',
+                    style: context.text.titleLarge)
+                .width;
+            return Row(
+              mainAxisAlignment: mainCenter,
+              children: [
+                Column(
+                  children: [
+                    Text(
+                      'Transaction Summary',
+                      style: context.text.titleLarge,
+                    ),
+                    const SizedBox(height: 2.0),
+                    Container(
+                      height: 1.8,
+                      width: width,
+                      color: context.theme.primaryColor.withOpacity(0.5),
+                    ),
+                    const SizedBox(height: 2.0),
+                    Container(
+                      height: 1.8,
+                      width: width,
+                      color: context.theme.primaryColor.withOpacity(0.7),
+                    ),
+                  ],
+                ),
+                const Spacer(),
+                Switch.adaptive(
+                  value: false,
+                  onChanged: (_) {},
+                ),
+              ],
+            );
+          }),
+          const SizedBox(height: 10.0),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 80.0),
+            child: Text(
+              'No Transaction Yet. In developement phase...',
+              style: context.text.labelLarge,
+            ),
           ),
         ],
       ),
