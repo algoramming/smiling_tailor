@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../utils/extensions/extensions.dart';
 
 class ScreenEnlargeWarning extends StatelessWidget {

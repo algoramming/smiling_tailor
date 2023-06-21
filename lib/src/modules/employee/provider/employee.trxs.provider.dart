@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/modules/transaction/provider/all.trxs.provider.dart';
 
 import '../../transaction/model/transaction.dart';
+import '../../transaction/provider/all.trxs.provider.dart';
 import '../model/employee.dart';
 
 typedef EmployeeTrxsNotifier = AutoDisposeAsyncNotifierProviderFamily<
@@ -32,7 +32,8 @@ class EmployeeTrxsProvider
     //   log.i('Employees Trxs: $v');
     //   return v.map((e) => PktbsTrx.fromJson(e.toJson())).toList();
     // });
-    ref.watch(allTrxsProvider);
+    ref.watch(allTrxsProvider.select(
+        (v) => v.value?.any((e) => e.fromId == arg.id || e.toId == arg.id)));
     _trxs = (await ref.watch(allTrxsProvider.future))
         .where((trx) => trx.fromId == arg.id || trx.toId == arg.id)
         .toList();
