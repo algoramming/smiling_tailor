@@ -16,6 +16,7 @@ class HomeView extends StatelessWidget {
     if (!isServerRunning) return const KServerNotRunning();
     if (!pb.authStore.isValid) return const AuthenticationView();
     if (isUnderMinSize(context.mq.size)) return const ScreenEnlargeWarning();
+    // if (isNeedZoomAdjust(context)) return const ZoomLevelAdjustWarning();
     return const Scaffold(
       body: HomeBody(),
     );

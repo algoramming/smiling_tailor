@@ -10,6 +10,7 @@ import '../../../../shared/page_not_found/page_not_found.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/logger/logger_helper.dart';
+import '../../../../utils/transations/fade.switcher.dart';
 import '../../provider/employee.provider.dart';
 
 class EmployeeList extends ConsumerWidget {
@@ -31,54 +32,56 @@ class EmployeeList extends ConsumerWidget {
           ),
         ),
         Flexible(
-          child: notifier.employeeList.isEmpty
-              ? const KDataNotFound(msg: 'No Employee Found!')
-              : SlidableAutoCloseBehavior(
-                  child: ListView.builder(
-                    itemCount: notifier.employeeList.length,
-                    itemBuilder: (_, idx) {
-                      final employee = notifier.employeeList[idx];
-                      return Card(
-                        child: KListTile(
-                          key: ValueKey(employee.id),
-                          onEditTap: () => log.i('On Edit Tap'),
-                          onDeleteTap: () => log.i('On Delete Tap'),
-                          selected: notifier.selectedEmployee == employee,
-                          onTap: () => notifier.selectEmployee(employee),
-                          onLongPress: () async =>
-                              await copyToClipboard(context, employee.id),
-                          leading: AnimatedWidgetShower(
-                            size: 30.0,
-                            child: Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: SvgPicture.asset(
-                                'assets/svgs/employee.svg',
-                                colorFilter:
-                                    context.theme.primaryColor.toColorFilter,
-                                semanticsLabel: 'Employee',
+          child: FadeSwitcherTransition(
+            child: notifier.employeeList.isEmpty
+                ? const KDataNotFound(msg: 'No Employee Found!')
+                : SlidableAutoCloseBehavior(
+                    child: ListView.builder(
+                      itemCount: notifier.employeeList.length,
+                      itemBuilder: (_, idx) {
+                        final employee = notifier.employeeList[idx];
+                        return Card(
+                          child: KListTile(
+                            key: ValueKey(employee.id),
+                            onEditTap: () => log.i('On Edit Tap'),
+                            onDeleteTap: () => log.i('On Delete Tap'),
+                            selected: notifier.selectedEmployee == employee,
+                            onTap: () => notifier.selectEmployee(employee),
+                            onLongPress: () async =>
+                                await copyToClipboard(context, employee.id),
+                            leading: AnimatedWidgetShower(
+                              size: 30.0,
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: SvgPicture.asset(
+                                  'assets/svgs/employee.svg',
+                                  colorFilter:
+                                      context.theme.primaryColor.toColorFilter,
+                                  semanticsLabel: 'Employee',
+                                ),
                               ),
                             ),
+                            title: Text(
+                              employee.name,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              style: context.text.titleSmall,
+                            ),
+                            subtitle: Text(
+                              employee.address,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              style: context.text.labelSmall!
+                                  .copyWith(fontWeight: FontWeight.normal),
+                            ),
+                            trailing:
+                                const Icon(Icons.arrow_circle_right_outlined),
                           ),
-                          title: Text(
-                            employee.name,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                            style: context.text.titleSmall,
-                          ),
-                          subtitle: Text(
-                            employee.address,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                            style: context.text.labelSmall!
-                                .copyWith(fontWeight: FontWeight.normal),
-                          ),
-                          trailing:
-                              const Icon(Icons.arrow_circle_right_outlined),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
-                ),
+          ),
         ),
       ],
     );

@@ -12,6 +12,7 @@ import '../../../../shared/page_not_found/page_not_found.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/logger/logger_helper.dart';
+import '../../../../utils/transations/fade.switcher.dart';
 import '../../../transaction/enum/trx.type.dart';
 import '../../../transaction/model/transaction.dart';
 import '../../add/view/add.employee.popup.dart';
@@ -26,63 +27,66 @@ class EmployeeDetails extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(employeeProvider);
     final notifier = ref.watch(employeeProvider.notifier);
-    return notifier.selectedEmployee == null
-        ? const Center(
-            child: Text(
-              'No Employee Selected!\n Please select an employee see full information.',
-              textAlign: TextAlign.center,
-            ),
-          )
-        : Column(
-            children: [
-              Row(
-                mainAxisAlignment: mainEnd,
-                children: [
-                  Consumer(builder: (_, ref, __) {
-                    ref.watch(employeeTrxsProvider(notifier.selectedEmployee!));
-                    final noti = ref.watch(
-                        employeeTrxsProvider(notifier.selectedEmployee!)
-                            .notifier);
-                    return Expanded(
-                      child: TextFormField(
-                        controller: noti.searchCntrlr,
-                        decoration: InputDecoration(
-                          hintText: 'Search...',
-                          prefixIcon:
-                              ClearPreffixIcon(() => noti.searchCntrlr.clear()),
-                          suffixIcon: PasteSuffixIcon(() async =>
-                              noti.searchCntrlr.text = await getCliboardData()),
-                        ),
-                      ),
-                    );
-                  }),
-                  const SizedBox(width: 6.0),
-                  OutlinedButton.icon(
-                    onPressed: () async => await showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (context) =>
-                          AddTrxEmployeePopup(notifier.selectedEmployee!),
-                    ),
-                    icon: const Icon(Icons.add),
-                    label: const Text('Transaction'),
-                  ),
-                  const SizedBox(width: 6.0),
-                  OutlinedButton.icon(
-                    onPressed: () async => await showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (context) => const AddEmployeePopup(),
-                    ),
-                    icon: const Icon(Icons.add),
-                    label: const Text('Employee'),
-                  ),
-                ],
+    return FadeSwitcherTransition(
+      child: notifier.selectedEmployee == null
+          ? const Center(
+              child: Text(
+                'No Employee Selected!\n Please select an employee see full information.',
+                textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 10),
-              _TrxTable(notifier),
-            ],
-          );
+            )
+          : Column(
+              children: [
+                Row(
+                  mainAxisAlignment: mainEnd,
+                  children: [
+                    Consumer(builder: (_, ref, __) {
+                      ref.watch(
+                          employeeTrxsProvider(notifier.selectedEmployee!));
+                      final noti = ref.watch(
+                          employeeTrxsProvider(notifier.selectedEmployee!)
+                              .notifier);
+                      return Expanded(
+                        child: TextFormField(
+                          controller: noti.searchCntrlr,
+                          decoration: InputDecoration(
+                            hintText: 'Search...',
+                            prefixIcon: ClearPreffixIcon(
+                                () => noti.searchCntrlr.clear()),
+                            suffixIcon: PasteSuffixIcon(() async => noti
+                                .searchCntrlr.text = await getCliboardData()),
+                          ),
+                        ),
+                      );
+                    }),
+                    const SizedBox(width: 6.0),
+                    OutlinedButton.icon(
+                      onPressed: () async => await showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (context) =>
+                            AddTrxEmployeePopup(notifier.selectedEmployee!),
+                      ),
+                      icon: const Icon(Icons.add),
+                      label: const Text('Transaction'),
+                    ),
+                    const SizedBox(width: 6.0),
+                    OutlinedButton.icon(
+                      onPressed: () async => await showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (context) => const AddEmployeePopup(),
+                      ),
+                      icon: const Icon(Icons.add),
+                      label: const Text('Employee'),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                _TrxTable(notifier),
+              ],
+            ),
+    );
   }
 }
 

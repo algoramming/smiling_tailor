@@ -13,6 +13,7 @@ import '../../../../shared/page_not_found/page_not_found.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/logger/logger_helper.dart';
+import '../../../../utils/transations/fade.switcher.dart';
 import '../../../settings/model/settings.model.dart';
 import '../../../transaction/enum/trx.type.dart';
 import '../../../transaction/model/transaction.dart';
@@ -28,62 +29,64 @@ class VendorDetails extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(vendorProvider);
     final notifier = ref.watch(vendorProvider.notifier);
-    return notifier.selectedVendor == null
-        ? const Center(
-            child: Text(
-              'No Vendor Selected!\n Please select a vendor see full information.',
-              textAlign: TextAlign.center,
-            ),
-          )
-        : Column(
-            children: [
-              Row(
-                mainAxisAlignment: mainEnd,
-                children: [
-                  Consumer(builder: (_, ref, __) {
-                    ref.watch(vendorTrxsProvider(notifier.selectedVendor!));
-                    final noti = ref.watch(
-                        vendorTrxsProvider(notifier.selectedVendor!).notifier);
-                    return Expanded(
-                      child: TextFormField(
-                        controller: noti.searchCntrlr,
-                        decoration: InputDecoration(
-                          hintText: 'Search...',
-                          prefixIcon:
-                              ClearPreffixIcon(() => noti.searchCntrlr.clear()),
-                          suffixIcon: PasteSuffixIcon(() async =>
-                              noti.searchCntrlr.text = await getCliboardData()),
-                        ),
-                      ),
-                    );
-                  }),
-                  const SizedBox(width: 6.0),
-                  OutlinedButton.icon(
-                    onPressed: () async => await showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (_) =>
-                          AddTrxVendorPopup(notifier.selectedVendor!),
-                    ),
-                    icon: const Icon(Icons.add),
-                    label: const Text('Transaction'),
-                  ),
-                  const SizedBox(width: 6.0),
-                  OutlinedButton.icon(
-                    onPressed: () async => await showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (context) => const AddVendorPopup(),
-                    ),
-                    icon: const Icon(Icons.add),
-                    label: const Text('Vendor'),
-                  ),
-                ],
+    return FadeSwitcherTransition(
+      child: notifier.selectedVendor == null
+          ? const Center(
+              child: Text(
+                'No Vendor Selected!\n Please select a vendor see full information.',
+                textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 10),
-              _TrxTable(notifier),
-            ],
-          );
+            )
+          : Column(
+              children: [
+                Row(
+                  mainAxisAlignment: mainEnd,
+                  children: [
+                    Consumer(builder: (_, ref, __) {
+                      ref.watch(vendorTrxsProvider(notifier.selectedVendor!));
+                      final noti = ref.watch(
+                          vendorTrxsProvider(notifier.selectedVendor!).notifier);
+                      return Expanded(
+                        child: TextFormField(
+                          controller: noti.searchCntrlr,
+                          decoration: InputDecoration(
+                            hintText: 'Search...',
+                            prefixIcon:
+                                ClearPreffixIcon(() => noti.searchCntrlr.clear()),
+                            suffixIcon: PasteSuffixIcon(() async =>
+                                noti.searchCntrlr.text = await getCliboardData()),
+                          ),
+                        ),
+                      );
+                    }),
+                    const SizedBox(width: 6.0),
+                    OutlinedButton.icon(
+                      onPressed: () async => await showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (_) =>
+                            AddTrxVendorPopup(notifier.selectedVendor!),
+                      ),
+                      icon: const Icon(Icons.add),
+                      label: const Text('Transaction'),
+                    ),
+                    const SizedBox(width: 6.0),
+                    OutlinedButton.icon(
+                      onPressed: () async => await showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (context) => const AddVendorPopup(),
+                      ),
+                      icon: const Icon(Icons.add),
+                      label: const Text('Vendor'),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                _TrxTable(notifier),
+              ],
+            ),
+    );
   }
 }
 

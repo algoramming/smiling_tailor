@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../shared/animations_widget/animated_popup.dart';
 import '../../../../utils/extensions/extensions.dart';
-import '../../../../utils/transations/big.to.small.dart';
+import '../../../../utils/transations/fade.switcher.dart';
 import '../../../authentication/api/authentication.api.dart';
 import '../../provider/profile.provider.dart';
 
@@ -18,7 +18,7 @@ class ProfileButton extends StatelessWidget {
       child: ElevatedButton(
         style: context.theme.elevatedButtonTheme.style!.copyWith(
             minimumSize: MaterialStateProperty.all(const Size(180, 45))),
-        child: BigToSmallTransition(
+        child: FadeSwitcherTransition(
             child: notifier.isEditable
                 ? const Text('Update Profile')
                 : const Text('Reset Password')),

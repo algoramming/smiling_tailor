@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../../shared/image.widget/image.widget.dart';
 import '../../../../shared/image_process/single/pick.photo.dart';
 import '../../../../utils/extensions/extensions.dart';
-import '../../../../utils/transations/big.to.small.dart';
 import '../../../../utils/transations/down.to.up.dart';
+import '../../../../utils/transations/fade.switcher.dart';
 import '../../provider/authentication.provider.dart';
 
 class AuthImageSelect extends StatelessWidget {
@@ -36,7 +36,7 @@ class AuthImageSelect extends StatelessWidget {
                           width: 2.0,
                         ),
                       ),
-                      child: BigToSmallTransition(
+                      child: FadeSwitcherTransition(
                         child: notifier.image == null
                             ? const Icon(Icons.add, size: 50.0)
                             : ClipRRect(

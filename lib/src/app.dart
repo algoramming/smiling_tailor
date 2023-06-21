@@ -68,9 +68,7 @@ class App extends ConsumerWidget {
           bottomViewPadding = ctx.padding.bottom;
           log.i('App build. Height: ${ctx.height} px, Width: ${ctx.width} px');
           return MediaQuery(
-            data: pt.isWeb
-                ? ctx.mq
-                : ctx.mq.copyWith(textScaleFactor: 1.0, devicePixelRatio: 1.0),
+            data: ctx.mq.copyWith(textScaleFactor: 1.0, devicePixelRatio: 1.0),
             child: isUnderMinSize(ctx.mq.size)
                 ? const ScreenEnlargeWarning()
                 : child ?? const HomeView(),

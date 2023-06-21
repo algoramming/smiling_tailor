@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+
 import '../utils/extensions/extensions.dart';
 
-class ScreenEnlargeWarning extends StatelessWidget {
-  const ScreenEnlargeWarning({super.key});
+class ZoomLevelAdjustWarning extends StatelessWidget {
+  const ZoomLevelAdjustWarning({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Text(
-          'Please enlarge your application window.',
+          'Please reset your PC\'s zoom level to the default setting of 100%. Use the Ctrl/Cmd key in combination with the "+" or "-" keys to adjust the zoom level accordingly.',
           textScaleFactor: 1.5,
           textAlign: TextAlign.center,
           style: context.text.labelLarge!

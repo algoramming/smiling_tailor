@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../utils/extensions/extensions.dart';
-import '../../../../utils/transations/big.to.small.dart';
+import '../../../../utils/transations/fade.switcher.dart';
 import '../../provider/authentication.provider.dart';
 
 class AuthButton extends StatelessWidget {
@@ -16,7 +16,7 @@ class AuthButton extends StatelessWidget {
       child: ElevatedButton(
         style: context.theme.elevatedButtonTheme.style!.copyWith(
             minimumSize: MaterialStateProperty.all(const Size(180, 45))),
-        child: BigToSmallTransition(
+        child: FadeSwitcherTransition(
           child: notifier.isSignup
               ? const Text('Create Account')
               : const Text('Login'),

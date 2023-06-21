@@ -13,6 +13,7 @@ import '../../../../shared/page_not_found/page_not_found.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/logger/logger_helper.dart';
+import '../../../../utils/transations/fade.switcher.dart';
 import '../../../settings/model/settings.model.dart';
 import '../../../transaction/enum/trx.type.dart';
 import '../../../transaction/model/transaction.dart';
@@ -28,73 +29,75 @@ class OrderDetails extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(orderProvider);
     final notifier = ref.watch(orderProvider.notifier);
-    return notifier.selectedOrder == null
-        ? const Center(
-            child: Text(
-              'No Order Selected!\n Please select a order see full information.',
-              textAlign: TextAlign.center,
-            ),
-          )
-        : Column(
-            children: [
-              Row(
-                mainAxisAlignment: mainEnd,
-                children: [
-                  Consumer(builder: (_, ref, __) {
-                    ref.watch(orderTrxsProvider(notifier.selectedOrder!));
-                    final noti = ref.watch(
-                        orderTrxsProvider(notifier.selectedOrder!).notifier);
-                    return Expanded(
-                      child: TextFormField(
-                        controller: noti.searchCntrlr,
-                        decoration: InputDecoration(
-                          hintText: 'Search...',
-                          prefixIcon:
-                              ClearPreffixIcon(() => noti.searchCntrlr.clear()),
-                          suffixIcon: PasteSuffixIcon(() async =>
-                              noti.searchCntrlr.text = await getCliboardData()),
+    return FadeSwitcherTransition(
+      child: notifier.selectedOrder == null
+          ? const Center(
+              child: Text(
+                'No Order Selected!\n Please select a order see full information.',
+                textAlign: TextAlign.center,
+              ),
+            )
+          : Column(
+              children: [
+                Row(
+                  mainAxisAlignment: mainEnd,
+                  children: [
+                    Consumer(builder: (_, ref, __) {
+                      ref.watch(orderTrxsProvider(notifier.selectedOrder!));
+                      final noti = ref.watch(
+                          orderTrxsProvider(notifier.selectedOrder!).notifier);
+                      return Expanded(
+                        child: TextFormField(
+                          controller: noti.searchCntrlr,
+                          decoration: InputDecoration(
+                            hintText: 'Search...',
+                            prefixIcon:
+                                ClearPreffixIcon(() => noti.searchCntrlr.clear()),
+                            suffixIcon: PasteSuffixIcon(() async =>
+                                noti.searchCntrlr.text = await getCliboardData()),
+                          ),
                         ),
+                      );
+                    }),
+                    const SizedBox(width: 6.0),
+                    OutlinedButton.icon(
+                      onPressed: () async => await showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (_) => AddTrxOrderPopup(notifier.selectedOrder!),
                       ),
-                    );
-                  }),
-                  const SizedBox(width: 6.0),
-                  OutlinedButton.icon(
-                    onPressed: () async => await showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (_) => AddTrxOrderPopup(notifier.selectedOrder!),
+                      icon: const Icon(Icons.add),
+                      label: const Text('Transaction'),
                     ),
-                    icon: const Icon(Icons.add),
-                    label: const Text('Transaction'),
-                  ),
-                  const SizedBox(width: 6.0),
-                  OutlinedButton.icon(
-                    onPressed: () async => await showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (context) => const AddOrderPopup(),
+                    const SizedBox(width: 6.0),
+                    OutlinedButton.icon(
+                      onPressed: () async => await showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (context) => const AddOrderPopup(),
+                      ),
+                      icon: const Icon(Icons.add),
+                      label: const Text('Order'),
                     ),
-                    icon: const Icon(Icons.add),
-                    label: const Text('Order'),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              _TrxList(
-                notifier,
-                condition: (t) =>
-                    t.isGoods == false &&
-                    (t.fromType.isUser || t.toType.isUser),
-              ),
-              const SizedBox(height: 10),
-              _TotalSummary(
-                notifier,
-                (t) =>
-                    t.isGoods == false &&
-                    (t.fromType.isUser || t.toType.isUser),
-              ),
-            ],
-          );
+                  ],
+                ),
+                const SizedBox(height: 10),
+                _TrxList(
+                  notifier,
+                  condition: (t) =>
+                      t.isGoods == false &&
+                      (t.fromType.isUser || t.toType.isUser),
+                ),
+                const SizedBox(height: 10),
+                _TotalSummary(
+                  notifier,
+                  (t) =>
+                      t.isGoods == false &&
+                      (t.fromType.isUser || t.toType.isUser),
+                ),
+              ],
+            ),
+    );
   }
 }
 

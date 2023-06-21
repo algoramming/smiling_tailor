@@ -13,6 +13,7 @@ import '../../../../shared/page_not_found/page_not_found.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/logger/logger_helper.dart';
+import '../../../../utils/transations/fade.switcher.dart';
 import '../../../settings/model/settings.model.dart';
 import '../../../transaction/enum/trx.type.dart';
 import '../../../transaction/model/transaction.dart';
@@ -27,53 +28,55 @@ class InventoryDetails extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(inventoryProvider);
     final notifier = ref.watch(inventoryProvider.notifier);
-    return notifier.selectedInventory == null
-        ? const Center(
-            child: Text(
-              'No Inventory Selected!\n Please select a inventory see full information.',
-              textAlign: TextAlign.center,
-            ),
-          )
-        : Column(
-            children: [
-              Row(
-                mainAxisAlignment: mainEnd,
-                children: [
-                  Consumer(builder: (_, ref, __) {
-                    ref.watch(
-                        inventoryTrxsProvider(notifier.selectedInventory!));
-                    final noti = ref.watch(
-                        inventoryTrxsProvider(notifier.selectedInventory!)
-                            .notifier);
-                    return Expanded(
-                      child: TextFormField(
-                        controller: noti.searchCntrlr,
-                        decoration: InputDecoration(
-                          hintText: 'Search...',
-                          prefixIcon:
-                              ClearPreffixIcon(() => noti.searchCntrlr.clear()),
-                          suffixIcon: PasteSuffixIcon(() async =>
-                              noti.searchCntrlr.text = await getCliboardData()),
-                        ),
-                      ),
-                    );
-                  }),
-                  const SizedBox(width: 6.0),
-                  OutlinedButton.icon(
-                    onPressed: () async => await showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (context) => const AddInventoryPopup(),
-                    ),
-                    icon: const Icon(Icons.add),
-                    label: const Text('Inventory'),
-                  ),
-                ],
+    return FadeSwitcherTransition(
+      child: notifier.selectedInventory == null
+          ? const Center(
+              child: Text(
+                'No Inventory Selected!\n Please select a inventory see full information.',
+                textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 10),
-              _TrxTable(notifier),
-            ],
-          );
+            )
+          : Column(
+              children: [
+                Row(
+                  mainAxisAlignment: mainEnd,
+                  children: [
+                    Consumer(builder: (_, ref, __) {
+                      ref.watch(
+                          inventoryTrxsProvider(notifier.selectedInventory!));
+                      final noti = ref.watch(
+                          inventoryTrxsProvider(notifier.selectedInventory!)
+                              .notifier);
+                      return Expanded(
+                        child: TextFormField(
+                          controller: noti.searchCntrlr,
+                          decoration: InputDecoration(
+                            hintText: 'Search...',
+                            prefixIcon:
+                                ClearPreffixIcon(() => noti.searchCntrlr.clear()),
+                            suffixIcon: PasteSuffixIcon(() async =>
+                                noti.searchCntrlr.text = await getCliboardData()),
+                          ),
+                        ),
+                      );
+                    }),
+                    const SizedBox(width: 6.0),
+                    OutlinedButton.icon(
+                      onPressed: () async => await showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (context) => const AddInventoryPopup(),
+                      ),
+                      icon: const Icon(Icons.add),
+                      label: const Text('Inventory'),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                _TrxTable(notifier),
+              ],
+            ),
+    );
   }
 }
 

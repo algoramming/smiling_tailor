@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../config/constants.dart';
 import '../../../utils/extensions/extensions.dart';
-import '../../../utils/transations/big.to.small.dart';
+import '../../../utils/transations/fade.switcher.dart';
 import '../provider/profile.provider.dart';
 import 'components/button.dart';
 import 'components/form.dart';
@@ -48,7 +48,7 @@ class ProfileView extends ConsumerWidget {
         ),
       ),
       floatingActionButton: ElevatedButton.icon(
-        label: BigToSmallTransition(
+        label: FadeSwitcherTransition(
             child: !notifier.isEditable
                 ? Text(
                     'Tap to Editing Mode',
@@ -60,7 +60,7 @@ class ProfileView extends ConsumerWidget {
                     style:
                         context.text.labelLarge!.copyWith(color: Colors.white),
                   )),
-        icon: BigToSmallTransition(
+        icon: FadeSwitcherTransition(
           child: !notifier.isEditable
               ? const Icon(Icons.edit, size: 16.0)
               : const Icon(Icons.remove_red_eye, size: 16.0),

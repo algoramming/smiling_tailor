@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../shared/image.widget/image.widget.dart';
 import '../../../../shared/image_process/single/pick.photo.dart';
 import '../../../../utils/extensions/extensions.dart';
-import '../../../../utils/transations/big.to.small.dart';
+import '../../../../utils/transations/fade.switcher.dart';
 import '../../../authentication/model/user.dart';
 import '../../provider/profile.provider.dart';
 
@@ -26,17 +26,17 @@ class ProfileImage extends StatelessWidget {
                 }),
         child: Stack(
           children: [
-            BigToSmallTransition(
-              child: Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100.0),
-                  border: Border.all(
-                    color: context.theme.primaryColor,
-                    width: 2.0,
-                  ),
+            Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(100.0),
+                border: Border.all(
+                  color: context.theme.primaryColor,
+                  width: 2.0,
                 ),
+              ),
+              child: FadeSwitcherTransition(
                 child: notifier.image == null || !notifier.isEditable
                     ? notifier.user?.imageWidget
                     : ClipRRect(
