@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../config/constants.dart';
 import 'components/all.user.list.dart';
-import 'components/graph.summary.dart';
+import 'components/trxs.graph.summary.dart';
 import 'components/order.status.summary.dart';
 
 class DashboardView extends StatelessWidget {
@@ -20,7 +20,7 @@ class DashboardView extends StatelessWidget {
               child: Column(
                 children: [
                   OrderStatusSummary(),
-                  GraphSummary(),
+                  TrxsGraphSummary(),
                 ],
               ),
             ),

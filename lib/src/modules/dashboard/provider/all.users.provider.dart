@@ -78,7 +78,8 @@ class UserTrxsProvider
     //   log.i('User Trxs: $v');
     //   return v.map((e) => PktbsTrx.fromJson(e.toJson())).toList();
     // });
-    ref.watch(allTrxsProvider);
+    ref.watch(allTrxsProvider.select(
+        (v) => v.value?.any((e) => e.fromId == arg.id || e.toId == arg.id)));
     _trxs = (await ref.watch(allTrxsProvider.future))
         .where((trx) => trx.fromId == arg.id || trx.toId == arg.id)
         .toList();

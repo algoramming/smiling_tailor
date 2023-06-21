@@ -48,12 +48,4 @@ class AllTrxsProvider extends AsyncNotifier<List<PktbsTrx>> {
       });
     });
   }
-
-  List<PktbsTrx> get rawTrxs => _trxs;
-
-  List<PktbsTrx> get trxList {
-    _trxs.sort((a, b) => b.created.toLocal().compareTo(a.created.toLocal()));
-    final vs = _trxs;
-    return vs;
-  }
 }
