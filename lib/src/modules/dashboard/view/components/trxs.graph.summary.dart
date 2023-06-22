@@ -83,13 +83,13 @@ class TrxsGraphSummary extends ConsumerWidget {
                     children: [
                       KRadioButton(
                         value: 0,
-                        label: 'Annual Statement',
+                        label: 'Monthly Statement',
                         groupValue: notifier.summaryRadio,
                         onTap: notifier.changeSummaryRadio,
                       ),
                       KRadioButton(
                         value: 1,
-                        label: 'Monthly Statement',
+                        label: 'Annual Statement',
                         groupValue: notifier.summaryRadio,
                         onTap: notifier.changeSummaryRadio,
                       ),
@@ -97,11 +97,12 @@ class TrxsGraphSummary extends ConsumerWidget {
                   ),
                   const SizedBox(height: 10.0),
                   SfCartesianChart(
+                    enableAxisAnimation: true,
                     primaryXAxis: CategoryAxis(),
                     title: ChartTitle(
                       text: notifier.summaryRadio == 0
-                          ? 'Annual Statement'
-                          : 'Monthly Statement',
+                          ? 'Monthly Statement'
+                          : 'Annual Statement',
                       textStyle: TextStyle(
                         color: context.theme.primaryColor,
                         height: 1.3,
@@ -113,6 +114,7 @@ class TrxsGraphSummary extends ConsumerWidget {
                     tooltipBehavior: TooltipBehavior(enable: true),
                     series: <ChartSeries<GraphData, String>>[
                       LineSeries<GraphData, String>(
+                        color: context.theme.primaryColor,
                         dataSource: notifier.graphData,
                         xValueMapper: (GraphData sales, _) => sales.feature,
                         yValueMapper: (GraphData sales, _) => sales.value,

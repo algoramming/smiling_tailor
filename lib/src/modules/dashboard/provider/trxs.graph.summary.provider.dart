@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smiling_tailor/src/modules/transaction/enum/trx.type.dart';
+import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
 import '../../transaction/model/transaction.dart';
 import '../../transaction/provider/all.trxs.provider.dart';
@@ -44,25 +46,26 @@ class TrxSummaryProvider extends AsyncNotifier<List<PktbsTrx>> {
     final List<GraphData> graphData = [];
     final trxs = _isGoods ? _isGoodsTrxs : _isNotGoodsTrxs;
 
-    if (_summaryRadio == 1) {
+    if (_summaryRadio == 0) {
+      for (int i = 1; i <= DateTime.now().totalDaysInMonth; i++) {
+        final todayMonth = DateTime.now().month;
+        final filteredTrxs = trxs
+            .where((trx) =>
+                trx.created.month == todayMonth && trx.created.day == i)
+            .toList();
+        final double total = filteredTrxs.fold(
+            0, (p, c) => p + (c.trxType.isCredit ? -c.amount : c.amount));
+        graphData.add(GraphData('$i', total));
+      }
+      return graphData;
+    } else {
       for (final mn in monthNames) {
         final filteredTrxs = trxs
             .where((trx) => monthNames[trx.created.month - 1] == mn)
             .toList();
-        final double total = filteredTrxs.fold(0, (p, c) => p + c.amount);
+        final double total = filteredTrxs.fold(
+            0, (p, c) => p + (c.trxType.isCredit ? -c.amount : c.amount));
         graphData.add(GraphData(mn, total));
-      }
-      return graphData;
-    } else {
-      for (int i = 1; i <= 31; i++) {
-        final todayMonth = DateTime.now().month;
-        final todayDay = DateTime.now().day;
-        final filteredTrxs = trxs
-            .where((trx) =>
-                trx.created.month == todayMonth && trx.created.day == todayDay)
-            .toList();
-        final double total = filteredTrxs.fold(0, (p, c) => p + c.amount);
-        graphData.add(GraphData('$i', total));
       }
       return graphData;
     }

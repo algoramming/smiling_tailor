@@ -30,6 +30,8 @@ extension DateUtils on DateTime {
     return year == nowDate.year && month == nowDate.month && day == nowDate.day;
   }
 
+  int get totalDaysInMonth => DateTime(year, month + 1, 0).day;
+
   bool get isYesterday {
     final nowDate = DateTime.now();
     return year == nowDate.year &&
