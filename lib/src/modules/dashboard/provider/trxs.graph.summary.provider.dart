@@ -18,6 +18,7 @@ class TrxSummaryProvider extends AsyncNotifier<List<PktbsTrx>> {
   late List<PktbsTrx> _isNotGoodsTrxs;
   bool _isGoods = false;
   int _summaryRadio = 0; // 0 = monthly, 1 = yearly
+  DateTime? _selectedDate;
   @override
   FutureOr<List<PktbsTrx>> build() async {
     _trxs = [];
@@ -29,6 +30,8 @@ class TrxSummaryProvider extends AsyncNotifier<List<PktbsTrx>> {
   }
 
   bool get isGoods => _isGoods;
+
+  DateTime get selectedDate => _selectedDate ?? DateTime.now();
 
   void toggleIsGoods() {
     _isGoods = !_isGoods;
@@ -42,16 +45,47 @@ class TrxSummaryProvider extends AsyncNotifier<List<PktbsTrx>> {
     ref.notifyListeners();
   }
 
+  void decreaseDate() {
+    if (summaryRadio == 0) {
+      _selectedDate = selectedDate.previousMonth;
+    } else {
+      _selectedDate = selectedDate.previousYear;
+    }
+    ref.notifyListeners();
+  }
+
+  bool get canIncreaseDate {
+    DateTime tempDate = selectedDate;
+    if (summaryRadio == 0) {
+      tempDate = tempDate.nextMonth;
+    } else {
+      tempDate = tempDate.nextYear;
+    }
+    return tempDate.isBefore(DateTime.now());
+  }
+
+  void increaseDate() {
+    if (summaryRadio == 0) {
+      _selectedDate = selectedDate.nextMonth;
+    } else {
+      _selectedDate = selectedDate.nextYear;
+    }
+    ref.notifyListeners();
+  }
+
   List<GraphData> get graphData {
     final List<GraphData> graphData = [];
     final trxs = _isGoods ? _isGoodsTrxs : _isNotGoodsTrxs;
 
     if (_summaryRadio == 0) {
-      for (int i = 1; i <= DateTime.now().totalDaysInMonth; i++) {
-        final todayMonth = DateTime.now().month;
+      for (int i = 1; i <= selectedDate.totalDaysInMonth; i++) {
+        final month = selectedDate.month;
+        final year = selectedDate.year;
         final filteredTrxs = trxs
             .where((trx) =>
-                trx.created.month == todayMonth && trx.created.day == i)
+                trx.created.year == year &&
+                trx.created.month == month &&
+                trx.created.day == i)
             .toList();
         final double total = filteredTrxs.fold(
             0, (p, c) => p + (c.trxType.isCredit ? -c.amount : c.amount));
@@ -61,7 +95,9 @@ class TrxSummaryProvider extends AsyncNotifier<List<PktbsTrx>> {
     } else {
       for (final mn in monthNames) {
         final filteredTrxs = trxs
-            .where((trx) => monthNames[trx.created.month - 1] == mn)
+            .where((trx) =>
+                monthNames[trx.created.month - 1] == mn &&
+                trx.created.year == selectedDate.year)
             .toList();
         final double total = filteredTrxs.fold(
             0, (p, c) => p + (c.trxType.isCredit ? -c.amount : c.amount));

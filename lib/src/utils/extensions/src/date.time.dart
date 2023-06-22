@@ -124,8 +124,12 @@ extension DateUtils on DateTime {
     } else {
       month--;
     }
-    return DateTime(year, month);
+    return DateTime(
+        year, month, day, hour, minute, second, millisecond, microsecond);
   }
+
+  DateTime get previousYear => DateTime(
+      year - 1, month, day, hour, minute, second, millisecond, microsecond);
 
   DateTime get nextMonth {
     var year = this.year;
@@ -137,8 +141,12 @@ extension DateUtils on DateTime {
     } else {
       month++;
     }
-    return DateTime(year, month);
+    return DateTime(
+        year, month, day, hour, minute, second, millisecond, microsecond);
   }
+
+  DateTime get nextYear => DateTime(
+      year + 1, month, day, hour, minute, second, millisecond, microsecond);
 
   DateTime get previousWeek => subtract(const Duration(days: 7));
 

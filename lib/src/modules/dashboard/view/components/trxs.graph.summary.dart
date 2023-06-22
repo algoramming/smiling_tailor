@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:smiling_tailor/src/db/db.dart';
+import 'package:smiling_tailor/src/modules/settings/provider/date.format.provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../config/constants.dart';
@@ -125,6 +127,48 @@ class TrxsGraphSummary extends ConsumerWidget {
                             const DataLabelSettings(isVisible: true),
                       ),
                     ],
+                  ),
+                  const SizedBox(height: 10.0),
+                  Card(
+                    child: Row(
+                      mainAxisAlignment: mainSpaceBetween,
+                      children: [
+                        InkWell(
+                          borderRadius: borderRadius45,
+                          onTap: () => notifier.decreaseDate(),
+                          child: Container(
+                            padding:
+                                const EdgeInsets.fromLTRB(5.0, 15.0, 0.0, 15.0),
+                            margin:
+                                const EdgeInsets.fromLTRB(5.0, 5.0, 0.0, 5.0),
+                            child: const Icon(Icons.arrow_back_ios),
+                          ),
+                        ),
+                        Text(
+                          DateFormat(dateFormates[1])
+                              .format(notifier.selectedDate),
+                          style: context.text.titleLarge,
+                        ),
+                        InkWell(
+                          borderRadius: borderRadius45,
+                          onTap: !notifier.canIncreaseDate
+                              ? null
+                              : () => notifier.increaseDate(),
+                          child: Container(
+                            padding:
+                                const EdgeInsets.fromLTRB(0.0, 15.0, 5.0, 15.0),
+                            margin:
+                                const EdgeInsets.fromLTRB(5.0, 5.0, 0.0, 5.0),
+                            child: Icon(
+                              Icons.arrow_forward_ios,
+                              color: !notifier.canIncreaseDate
+                                  ? context.theme.dividerColor
+                                  : context.theme.primaryColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
