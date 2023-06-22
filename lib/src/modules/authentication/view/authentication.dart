@@ -3,7 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../main.dart';
 import '../../../config/constants.dart';
+import '../../../shared/development/under.development.banner.dart';
 import '../../../utils/extensions/extensions.dart';
 import '../../settings/view/advance/url.config.tile.dart';
 import '../provider/authentication.provider.dart';
@@ -24,30 +26,37 @@ class AuthenticationView extends ConsumerWidget {
       // appBar: AuthAppBar(notifier),
       body: SafeArea(
         child: Center(
-          child: SizedBox(
-            width: min(400, context.width),
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Card(
-                  elevation: 5.0,
-                  child: AnimatedContainer(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 6.0, vertical: 10.0),
-                    duration: const Duration(milliseconds: 200),
-                    child: Column(
-                      mainAxisSize: mainMin,
-                      children: [
-                        AuthImageSelect(notifier),
-                        AuthForm(notifier),
-                        // AuthSignupText(notifier),
-                        AuthButton(notifier),
-                      ],
+          child: Column(
+            children: [
+              if (!isProduction && !isSignup) const UnderDevelopmentBanner(),
+              const Spacer(),
+              SizedBox(
+                width: min(400, context.width),
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      elevation: 5.0,
+                      child: AnimatedContainer(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 6.0, vertical: 10.0),
+                        duration: const Duration(milliseconds: 200),
+                        child: Column(
+                          mainAxisSize: mainMin,
+                          children: [
+                            AuthImageSelect(notifier),
+                            AuthForm(notifier),
+                            // AuthSignupText(notifier),
+                            AuthButton(notifier),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
+              const Spacer(),
+            ],
           ),
         ),
       ),

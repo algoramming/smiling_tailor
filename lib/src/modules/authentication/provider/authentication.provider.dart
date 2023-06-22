@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../main.dart';
 import '../api/authentication.api.dart';
 
 typedef AuthNotifier
@@ -22,7 +23,13 @@ class AuthProvider extends AutoDisposeFamilyNotifier<void, bool> {
   late bool isSignup;
 
   @override
-  void build(bool arg) => isSignup = arg;
+  void build(bool arg) {
+    isSignup = arg;
+    if (!isProduction && !isSignup) {
+      emailCntrlr.text = 'test@algoramming.com';
+      pwdCntrlr.text = '12345678';
+    }
+  }
 
   void toggleIsSignup() {
     isSignup = !isSignup;

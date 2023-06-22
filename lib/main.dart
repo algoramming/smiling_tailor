@@ -10,6 +10,8 @@ import 'src/db/db.dart' show initAppDatum, openDB;
 import 'src/pocketbase/auth.store/helpers.dart';
 import 'src/utils/themes/themes.dart';
 
+const isProduction = false;
+
 void main() async {
   await _init();
   runApp(const ProviderScope(child: App()));

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:smiling_tailor/src/db/db.dart';
-import 'package:smiling_tailor/src/modules/settings/provider/date.format.provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../config/constants.dart';
+import '../../../../db/db.dart';
 import '../../../../shared/error_widget/error_widget.dart';
 import '../../../../shared/loading_widget/loading_widget.dart';
 import '../../../../shared/radio_button/k_radio_button.dart';
 import '../../../../shared/text.size/text.size.dart';
 import '../../../../utils/extensions/extensions.dart';
+import '../../../settings/provider/date.format.provider.dart';
 import '../../provider/trxs.graph.summary.provider.dart';
 
 class TrxsGraphSummary extends ConsumerWidget {
