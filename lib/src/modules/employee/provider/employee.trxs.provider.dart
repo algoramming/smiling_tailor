@@ -21,11 +21,11 @@ class EmployeeTrxsProvider
   FutureOr<List<PktbsTrx>> build(PktbsEmployee arg) async {
     _trxs = [];
     _listener();
-    ref.watch(allTrxsProvider
-    // .select((v) => v.value?.any((e) => e.fromId == arg.id || e.toId == arg.id)) // TODO: Issue
-    );
+    ref.watch(allTrxsProvider.select(
+        (v) => v.value?.where((e) => e.fromId == arg.id || e.toId == arg.id)));
     _trxs = (await ref.watch(allTrxsProvider.future))
-        .where((trx) => trx.isActive && (trx.fromId == arg.id || trx.toId == arg.id))
+        .where((trx) =>
+            trx.isActive && (trx.fromId == arg.id || trx.toId == arg.id))
         .toList();
     return _trxs;
   }
