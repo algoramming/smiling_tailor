@@ -8,6 +8,7 @@ extension TrxExtension on PktbsTrx {
     GLType? toType,
     double? amount,
     String? fromId,
+    bool? isActive,
     String? voucher,
     GLType? fromType,
     TrxType? trxType,
@@ -39,6 +40,7 @@ extension TrxExtension on PktbsTrx {
       updated: updated ?? this.updated,
       creator: creator ?? this.creator,
       updator: updator ?? this.updator,
+      isActive: isActive ?? this.isActive,
       fromType: fromType ?? this.fromType,
       description: description ?? this.description,
       collectionId: collectionId ?? this.collectionId,
@@ -57,6 +59,7 @@ extension TrxExtension on PktbsTrx {
         _Json.unit: unit?.name,
         _Json.isGoods: isGoods,
         _Json.voucher: voucher,
+        _Json.isActive: isActive,
         _Json.creator: creator.id,
         _Json.updator: updator?.id,
         _Json.toType: toType.title,
@@ -155,10 +158,11 @@ extension TrxExtension on PktbsTrx {
 
   bool get isOrderTailorCharge => voucher == tailorChargeOrderVoucher;
 
-  bool get isOrderInventoryAllocation => voucher == inventoryAllocationOrderVoucher;
+  bool get isOrderInventoryAllocation =>
+      voucher == inventoryAllocationOrderVoucher;
 
   bool get isOrderInventoryPurchase => voucher == inventoryPurchaseOrderVoucher;
-  
+
   bool get isOrderDeliveryCharge => voucher == deliveryOrderVoucher;
 
   Widget get modifiers => updator == null

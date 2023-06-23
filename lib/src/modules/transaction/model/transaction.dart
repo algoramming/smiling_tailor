@@ -23,6 +23,7 @@ class PktbsTrx {
   String fromId;
   GLType toType;
   double amount;
+  bool isActive;
   String voucher;
   TrxType trxType;
   GLType fromType;
@@ -54,9 +55,10 @@ class PktbsTrx {
     required this.fromId,
     required this.created,
     required this.creator,
-    required this.fromType,
     required this.trxType,
     required this.voucher,
+    required this.fromType,
+    required this.isActive,
     required this.collectionId,
     required this.collectionName,
     this.isSystemGenerated = false,
@@ -72,6 +74,7 @@ class PktbsTrx {
         from: json[_Json.from] as Map<String, dynamic>,
         isGoods: json[_Json.isGoods] as bool? ?? false,
         description: json[_Json.description] as String?,
+        isActive: json[_Json.isActive] as bool? ?? false,
         trxType: (json[_Json.trxType] as String).trxType,
         collectionId: json[_Json.collectionId] as String,
         fromType: (json[_Json.fromType] as String).glType,
@@ -94,7 +97,7 @@ class PktbsTrx {
 
   @override
   String toString() =>
-      'PktbsTrx(id: $id, created: $created, updated: $updated, creator: $creator, updator: $updator, collectionId: $collectionId, collectionName: $collectionName, fromId: $fromId, from: $from, fromType: $fromType, toId: $toId, to: $to, toType: $toType, amount: $amount, unit: $unit, isGoods: $isGoods, trxType: $trxType, description: $description, voucher: $voucher, isSystemGenerated: $isSystemGenerated)';
+      'PktbsTrx(id: $id, created: $created, updated: $updated, creator: $creator, updator: $updator, collectionId: $collectionId, collectionName: $collectionName, fromId: $fromId, from: $from, fromType: $fromType, toId: $toId, to: $to, toType: $toType, amount: $amount, unit: $unit, isGoods: $isGoods, trxType: $trxType, description: $description, voucher: $voucher, isSystemGenerated: $isSystemGenerated, isActive: $isActive)';
 
   @override
   bool operator ==(Object other) {
@@ -123,6 +126,7 @@ class _Json {
   static const String updated = 'updated';
   static const String creator = 'creator';
   static const String updator = 'updator';
+  static const String isActive = 'isActive';
   static const String fromType = 'fromType';
   static const collectionId = 'collectionId';
   static const collectionName = 'collectionName';

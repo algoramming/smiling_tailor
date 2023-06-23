@@ -89,7 +89,7 @@ flutter_launcher_icons:
     generate: true
     image_path: "assets/icons/app-icon-1024x1024.png"
   # command: dart run flutter_launcher_icons:main
-  
+
 flutter_native_splash:
   color: "#ffffff"
   image: "assets/icons/splash-icon-384x384.png"

@@ -33,6 +33,7 @@ Future<RecordModel?> pktbsAddTrx(
         'to': toJson,
         'unit': unit,
         'to_id': toId,
+        'isActive': true,
         'from': fromJson,
         'from_id': fromId,
         'voucher': voucher,
