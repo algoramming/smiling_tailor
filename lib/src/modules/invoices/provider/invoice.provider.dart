@@ -53,14 +53,14 @@ class InvoiceProvider extends AutoDisposeAsyncNotifier<List<File>> {
 
   bool get isSelectingMode => _isSelectingMode;
 
-  bool get isAllSelected => _selectedFilePaths.length == _files.length;
+  bool get isAllSelected => _selectedFilePaths.length == fileList.length;
 
   void toggleSelectAll() {
     if (isAllSelected) {
       _selectedFilePaths = [];
       if (isSelectingMode) toggleSelectingMode();
     } else {
-      _selectedFilePaths = _files.map((e) => e.path).toList();
+      _selectedFilePaths = fileList.map((e) => e.path).toList();
     }
     ref.notifyListeners();
   }
@@ -81,11 +81,6 @@ class InvoiceProvider extends AutoDisposeAsyncNotifier<List<File>> {
   List<File> get fileList {
     if (searchCntrlr.text.isEmpty) return _files;
     return _files.where((e) => e.path.contains(searchCntrlr.text)).toList();
-  }
-
-  void selectAll() {
-    _selectedFilePaths = _files.map((e) => e.path).toList();
-    ref.notifyListeners();
   }
 
   Future<void> openSelectedFiles() async {
