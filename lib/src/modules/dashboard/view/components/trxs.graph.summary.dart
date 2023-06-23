@@ -144,10 +144,32 @@ class TrxsGraphSummary extends ConsumerWidget {
                             child: const Icon(Icons.arrow_back_ios),
                           ),
                         ),
-                        Text(
-                          DateFormat(dateFormates[1])
-                              .format(notifier.selectedDate),
-                          style: context.text.titleLarge,
+                        InkWell(
+                          borderRadius: borderRadius15,
+                          onTap: () async => await showDatePicker(
+                            context: context,
+                            initialDate: notifier.selectedDate,
+                            firstDate: notifier.selectedDate
+                                .subtract(const Duration(days: 365 * 100)),
+                            lastDate: DateTime.now(),
+                            selectableDayPredicate: (day) =>
+                                day.day == DateTime.now().day,
+                            builder: (_, child) => Theme(
+                              data: context.theme.copyWith(
+                                  colorScheme: context.theme.colorScheme
+                                      .copyWith(
+                                          primary: context.theme.primaryColor)),
+                              child: child!,
+                            ),
+                          ).then((pk) => notifier.changeDate(pk)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Text(
+                              DateFormat(dateFormates[1])
+                                  .format(notifier.selectedDate),
+                              style: context.text.titleLarge,
+                            ),
+                          ),
                         ),
                         InkWell(
                           borderRadius: borderRadius45,

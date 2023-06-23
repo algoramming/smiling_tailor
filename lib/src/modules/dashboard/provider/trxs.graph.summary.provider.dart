@@ -73,6 +73,12 @@ class TrxSummaryProvider extends AsyncNotifier<List<PktbsTrx>> {
     ref.notifyListeners();
   }
 
+  void changeDate(DateTime? date) {
+    if (date == null) return;
+    _selectedDate = date;
+    ref.notifyListeners();
+  }
+
   List<GraphData> get graphData {
     final List<GraphData> graphData = [];
     final trxs = _isGoods ? _isGoodsTrxs : _isNotGoodsTrxs;
