@@ -18,5 +18,12 @@ SystemUiOverlayStyle get uiConfig => themeType.uiConfig;
 
 const Color white = Colors.white;
 const Color black = Colors.black;
+const Color transparent = Colors.transparent;
 
 const Color kPrimaryColor = Colors.teal;
+
+const defaultGradient = LinearGradient(
+  colors: [Color(0xFF5DC095), Color(0xFF1692B6), Color(0xFF2F73B9)],
+  begin: Alignment.topLeft,
+  end: Alignment.bottomRight,
+);

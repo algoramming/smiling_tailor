@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../config/constants.dart';
 import '../../utils/extensions/extensions.dart';
+import '../gradient/gradient.text.dart';
 
 class LoadingWidget extends StatelessWidget {
   const LoadingWidget({
@@ -69,44 +70,64 @@ class _MainLoadingWidgetState extends State<MainLoadingWidget>
 
   @override
   Widget build(BuildContext context) {
+    final pd = (widget.heightWidth ?? max(context.width * 0.045, 60)) * 0.2;
     return Center(
       child: Column(
         mainAxisSize: mainMin,
         children: [
-          AnimatedBuilder(
-            animation: animation,
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-                border: Border.all(
-                  color: context.theme.primaryColor,
-                  width: 2,
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: pd),
+                child: AnimatedBuilder(
+                  animation: animation,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(100),
+                    child: Image.asset(
+                      'assets/icons/loading-back-part.png',
+                      height:
+                          widget.heightWidth ?? max(context.width * 0.045, 60),
+                      width:
+                          widget.heightWidth ?? max(context.width * 0.045, 60),
+                    ),
+                  ),
+                  builder: (_, child) {
+                    return Transform.rotate(
+                      angle: animation.value,
+                      child: child,
+                    );
+                  },
                 ),
               ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(100),
+              Container(
+                margin: EdgeInsets.only(
+                    right:
+                        (widget.heightWidth ?? max(context.width * 0.045, 60)) *
+                            0.55),
+                width: (widget.heightWidth ?? max(context.width * 0.045, 60)) *
+                    0.55,
+                height: (widget.heightWidth ?? max(context.width * 0.045, 60)) *
+                    0.55,
+                color: context.theme.scaffoldBackgroundColor,
+              ),
+              Padding(
+                padding: EdgeInsets.only(right: pd),
                 child: Image.asset(
-                  'assets/gifs/loading.gif',
-                  height: widget.heightWidth ?? max(context.width * 0.045, 60),
-                  width: widget.heightWidth ?? max(context.width * 0.045, 60),
+                  'assets/icons/loading-front-part.png',
+                  height: widget.heightWidth ?? max(context.width * 0.04, 55),
+                  width: widget.heightWidth ?? max(context.width * 0.04, 55),
                 ),
               ),
-            ),
-            builder: (context, child) {
-              return Transform.rotate(
-                angle: animation.value,
-                child: child,
-              );
-            },
+            ],
           ),
           if (widget.showText) SizedBox(height: max(context.width * 0.005, 7)),
           if (widget.showText)
-            Text(
+            GradientText(
               widget.text ?? 'Loading...',
               style: TextStyle(
                 fontSize: max(context.width * 0.011, 13),
                 fontWeight: FontWeight.w700,
-                color: context.theme.primaryColor,
               ),
             ),
         ],
