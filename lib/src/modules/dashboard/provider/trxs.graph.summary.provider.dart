@@ -17,7 +17,7 @@ class TrxSummaryProvider extends AsyncNotifier<List<PktbsTrx>> {
   late List<PktbsTrx> _isGoodsTrxs;
   late List<PktbsTrx> _isNotGoodsTrxs;
   bool _isGoods = false;
-  int _summaryRadio = 0; // 0 = monthly, 1 = yearly
+  int _summaryRadio = 0; // 0 = daily, 1 = monthly, 2 = yearly
   DateTime? _selectedDate;
   @override
   FutureOr<List<PktbsTrx>> build() async {
@@ -42,13 +42,15 @@ class TrxSummaryProvider extends AsyncNotifier<List<PktbsTrx>> {
 
   int get summaryRadio => _summaryRadio;
 
-  void changeSummaryRadio() {
-    _summaryRadio = _summaryRadio == 0 ? 1 : 0;
+  void changeSummaryRadio(int value) {
+    _summaryRadio = value;
     ref.notifyListeners();
   }
 
   void decreaseDate() {
     if (summaryRadio == 0) {
+      _selectedDate = selectedDate.previousDay;
+    } else if (summaryRadio == 1) {
       _selectedDate = selectedDate.previousMonth;
     } else {
       _selectedDate = selectedDate.previousYear;
@@ -59,6 +61,8 @@ class TrxSummaryProvider extends AsyncNotifier<List<PktbsTrx>> {
   bool get canIncreaseDate {
     DateTime tempDate = selectedDate;
     if (summaryRadio == 0) {
+      tempDate = tempDate.nextDay;
+    } else if (summaryRadio == 1) {
       tempDate = tempDate.nextMonth;
     } else {
       tempDate = tempDate.nextYear;
@@ -68,6 +72,8 @@ class TrxSummaryProvider extends AsyncNotifier<List<PktbsTrx>> {
 
   void increaseDate() {
     if (summaryRadio == 0) {
+      _selectedDate = selectedDate.nextDay;
+    } else if (summaryRadio == 1) {
       _selectedDate = selectedDate.nextMonth;
     } else {
       _selectedDate = selectedDate.nextYear;
@@ -86,6 +92,17 @@ class TrxSummaryProvider extends AsyncNotifier<List<PktbsTrx>> {
     final trxs = _isGoods ? _isGoodsTrxs : _isNotGoodsTrxs;
 
     if (_summaryRadio == 0) {
+      for (int i = 1; i <= 24; i++) {
+        final filteredTrxs = trxs
+            .where((trx) =>
+                trx.created.isSameDay(selectedDate) && trx.created.hour == i)
+            .toList();
+        final double total = filteredTrxs.fold(
+            0, (p, c) => p + (c.trxType.isCredit ? -c.amount : c.amount));
+        graphData.add(GraphData('$i', total));
+      }
+      return graphData;
+    } else if (_summaryRadio == 1) {
       for (int i = 1; i <= selectedDate.totalDaysInMonth; i++) {
         final month = selectedDate.month;
         final year = selectedDate.year;

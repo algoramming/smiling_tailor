@@ -90,15 +90,21 @@ class TrxsGraphSummary extends ConsumerWidget {
                     children: [
                       KRadioButton(
                         value: 0,
-                        label: 'Monthly Statement',
+                        label: 'Daily Statement',
                         groupValue: notifier.summaryRadio,
-                        onTap: notifier.changeSummaryRadio,
+                        onTap: () => notifier.changeSummaryRadio(0),
                       ),
                       KRadioButton(
                         value: 1,
+                        label: 'Monthly Statement',
+                        groupValue: notifier.summaryRadio,
+                        onTap: () => notifier.changeSummaryRadio(1),
+                      ),
+                      KRadioButton(
+                        value: 2,
                         label: 'Annual Statement',
                         groupValue: notifier.summaryRadio,
-                        onTap: notifier.changeSummaryRadio,
+                        onTap: () => notifier.changeSummaryRadio(2),
                       ),
                     ],
                   ),
@@ -108,13 +114,12 @@ class TrxsGraphSummary extends ConsumerWidget {
                     primaryXAxis: CategoryAxis(),
                     title: ChartTitle(
                       text: notifier.summaryRadio == 0
-                          ? 'Monthly Statement'
-                          : 'Annual Statement',
-                      textStyle: TextStyle(
-                        color: context.theme.primaryColor,
-                        height: 1.3,
-                        fontWeight: FontWeight.w400,
-                      ),
+                          ? 'Daily Statement'
+                          : notifier.summaryRadio == 1
+                              ? 'Monthly Statement'
+                              : 'Annual Statement',
+                      textStyle: context.text.titleMedium!
+                          .copyWith(color: context.theme.primaryColor),
                     ),
                     legend:
                         Legend(isVisible: true, position: LegendPosition.top),
@@ -157,8 +162,8 @@ class TrxsGraphSummary extends ConsumerWidget {
                             firstDate: notifier.selectedDate
                                 .subtract(const Duration(days: 365 * 100)),
                             lastDate: DateTime.now(),
-                            selectableDayPredicate: (day) =>
-                                day.day == DateTime.now().day,
+                            // selectableDayPredicate: (day) =>
+                            //     day.day == DateTime.now().day,
                             builder: (_, child) => Theme(
                               data: context.theme.copyWith(
                                   colorScheme: context.theme.colorScheme
@@ -172,7 +177,8 @@ class TrxsGraphSummary extends ConsumerWidget {
                             child: Text(
                               DateFormat(dateFormates[1])
                                   .format(notifier.selectedDate),
-                              style: context.text.titleLarge,
+                              style: context.text.titleLarge!
+                                  .copyWith(color: context.theme.primaryColor),
                             ),
                           ),
                         ),
