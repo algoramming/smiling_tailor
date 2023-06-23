@@ -7,7 +7,9 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../config/constants.dart';
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../shared/clipboard_data/clipboard_data.dart';
+import '../../../../shared/error_widget/error_widget.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
+import '../../../../shared/loading_widget/loading_widget.dart';
 import '../../../../shared/page_not_found/page_not_found.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
@@ -170,105 +172,112 @@ class _TrxList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(employeeTrxsProvider(notifier.selectedEmployee!));
-    final noti =
-        ref.watch(employeeTrxsProvider(notifier.selectedEmployee!).notifier);
-    final trxs = noti.trxList.where(condition).toList();
     return Expanded(
-      child: trxs.isEmpty
-          ? const KDataNotFound(msg: 'No Transaction Found!')
-          : SlidableAutoCloseBehavior(
-              child: ListView.builder(
-                itemCount: trxs.length,
-                itemBuilder: (_, i) {
-                  final trx = trxs[i];
-                  final kColor =
-                      trx.trxType.isCredit ? Colors.red : Colors.green;
-                  return Card(
-                    child: KListTile(
-                      key: ValueKey(trx.id),
-                      onEditTap: () => log.i('On Edit Tap'),
-                      onDeleteTap: () => log.i('On Delete Tap'),
-                      onLongPress: () async =>
-                          await copyToClipboard(context, trx.id),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12.0, vertical: 5.0),
-                      leading: AnimatedWidgetShower(
-                        padding: 3.0,
-                        size: 35.0,
-                        child: trx.modifiers,
-                      ),
-                      title: RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: trx.fromName,
-                              style: context.text.titleSmall,
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () async =>
-                                    await copyToClipboard(context, trx.fromId),
+      child: ref.watch(employeeTrxsProvider(notifier.selectedEmployee!)).when(
+          loading: () => const LoadingWidget(withScaffold: false),
+          error: (err, _) => KErrorWidget(error: err),
+          data: (_) {
+            final noti = ref.watch(
+                employeeTrxsProvider(notifier.selectedEmployee!).notifier);
+            final trxs = noti.trxList.where(condition).toList();
+            return trxs.isEmpty
+                ? const KDataNotFound(msg: 'No Transaction Found!')
+                : SlidableAutoCloseBehavior(
+                    child: ListView.builder(
+                      itemCount: trxs.length,
+                      itemBuilder: (_, i) {
+                        final trx = trxs[i];
+                        final kColor =
+                            trx.trxType.isCredit ? Colors.red : Colors.green;
+                        return Card(
+                          child: KListTile(
+                            key: ValueKey(trx.id),
+                            onEditTap: () => log.i('On Edit Tap'),
+                            onDeleteTap: () => log.i('On Delete Tap'),
+                            onLongPress: () async =>
+                                await copyToClipboard(context, trx.id),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12.0, vertical: 5.0),
+                            leading: AnimatedWidgetShower(
+                              padding: 3.0,
+                              size: 35.0,
+                              child: trx.modifiers,
                             ),
-                            WidgetSpan(
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 3.0),
-                                child: RotatedBox(
-                                  quarterTurns: trx.trxType.isDebit ? 0 : 1,
-                                  child: Icon(
-                                    Icons.arrow_outward_rounded,
-                                    size: 16,
-                                    color: kColor,
+                            title: RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: trx.fromName,
+                                    style: context.text.titleSmall,
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () async =>
+                                          await copyToClipboard(
+                                              context, trx.fromId),
                                   ),
+                                  WidgetSpan(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 3.0),
+                                      child: RotatedBox(
+                                        quarterTurns:
+                                            trx.trxType.isDebit ? 0 : 1,
+                                        child: Icon(
+                                          Icons.arrow_outward_rounded,
+                                          size: 16,
+                                          color: kColor,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: trx.toName,
+                                    style: context.text.titleSmall,
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () async =>
+                                          await copyToClipboard(
+                                              context, trx.toId),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: crossStart,
+                              children: [
+                                Text(
+                                  trx.createdDate,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  style: context.text.labelMedium,
+                                ),
+                                if (trx.description != null)
+                                  Text(
+                                    trx.description!,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                    style: context.text.labelSmall!.copyWith(
+                                        fontWeight: FontWeight.normal),
+                                  ),
+                              ],
+                            ),
+                            trailing: TweenAnimationBuilder(
+                              curve: Curves.easeOut,
+                              duration: kAnimationDuration(0.5),
+                              tween: Tween<double>(begin: 0, end: trx.amount),
+                              builder: (_, double x, __) => Tooltip(
+                                message: x.formattedFloat,
+                                child: Text(
+                                  x.formattedCompat,
+                                  style: context.text.labelLarge!
+                                      .copyWith(color: kColor),
                                 ),
                               ),
                             ),
-                            TextSpan(
-                              text: trx.toName,
-                              style: context.text.titleSmall,
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () async =>
-                                    await copyToClipboard(context, trx.toId),
-                            ),
-                          ],
-                        ),
-                      ),
-                      subtitle: Column(
-                        crossAxisAlignment: crossStart,
-                        children: [
-                          Text(
-                            trx.createdDate,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                            style: context.text.labelMedium,
                           ),
-                          if (trx.description != null)
-                            Text(
-                              trx.description!,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              style: context.text.labelSmall!
-                                  .copyWith(fontWeight: FontWeight.normal),
-                            ),
-                        ],
-                      ),
-                      trailing: TweenAnimationBuilder(
-                        curve: Curves.easeOut,
-                        duration: kAnimationDuration(0.5),
-                        tween: Tween<double>(begin: 0, end: trx.amount),
-                        builder: (_, double x, __) => Tooltip(
-                          message: x.formattedFloat,
-                          child: Text(
-                            x.formattedCompat,
-                            style: context.text.labelLarge!
-                                .copyWith(color: kColor),
-                          ),
-                        ),
-                      ),
+                        );
+                      },
                     ),
                   );
-                },
-              ),
-            ),
+          }),
     );
   }
 }

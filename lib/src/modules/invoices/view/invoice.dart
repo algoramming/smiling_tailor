@@ -52,7 +52,7 @@ class _Body extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ref.watch(invoiceProvider).when(
-          loading: () => const LoadingWidget(),
+          loading: () => const LoadingWidget(withScaffold: false),
           error: (err, _) => KErrorWidget(error: err),
           data: (_) {
             final notifier = ref.watch(invoiceProvider.notifier);

@@ -70,7 +70,7 @@ class AddOrderProvider extends AutoDisposeAsyncNotifier<void> {
   bool isInventoryNeeded = false;
 
   @override
-  FutureOr<void> build() {
+  FutureOr<void> build() async {
     employees = ref.watch(employeeProvider).value ?? [];
     inventories = ref.watch(inventoryProvider).value ?? [];
     measurements = appMeasurements

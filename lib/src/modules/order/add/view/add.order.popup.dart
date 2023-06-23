@@ -5,6 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../config/constants.dart';
 import '../../../../shared/animations_widget/animated_popup.dart';
+import '../../../../shared/error_widget/error_widget.dart';
+import '../../../../shared/loading_widget/loading_widget.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../provider/add.order.provider.dart';
 import 'components/customer.infos.dart';
@@ -28,21 +30,25 @@ class AddOrderPopup extends ConsumerWidget {
         title: const Text('Add Order'),
         content: SizedBox(
           width: min(400, context.width),
-          child: Form(
-            key: notifier.formKey,
-            child: Column(
-              mainAxisSize: mainMin,
-              children: [
-                CustomerInfos(notifier: notifier),
-                MeasurementInfos(notifier: notifier),
-                TailorInfos(notifier: notifier),
-                InventoryInfos(notifier: notifier),
-                DeliveryInfos(notifier: notifier),
-                PaymentInfos(notifier: notifier),
-                OthersInfos(notifier: notifier),
-              ],
-            ),
-          ),
+          child: ref.watch(addOrderProvider).when(
+                loading: () => const LoadingWidget(withScaffold: false),
+                error: (err, _) => KErrorWidget(error: err),
+                data: (_) => Form(
+                  key: notifier.formKey,
+                  child: Column(
+                    mainAxisSize: mainMin,
+                    children: [
+                      CustomerInfos(notifier: notifier),
+                      MeasurementInfos(notifier: notifier),
+                      TailorInfos(notifier: notifier),
+                      InventoryInfos(notifier: notifier),
+                      DeliveryInfos(notifier: notifier),
+                      PaymentInfos(notifier: notifier),
+                      OthersInfos(notifier: notifier),
+                    ],
+                  ),
+                ),
+              ),
         ),
         actions: [
           TextButton(
