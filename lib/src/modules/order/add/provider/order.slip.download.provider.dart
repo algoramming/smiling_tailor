@@ -37,7 +37,8 @@ class OrderSlipProvider
     _trxs = await pb
         .collection(transactions)
         .getFullList(
-          filter: '(from_id = "${arg.id}" || to_id = "${arg.id}")',
+          filter:
+              'isActive = true && (from_id = "${arg.id}" || to_id = "${arg.id}")',
           expand: pktbsTrxExpand,
         )
         .then((v) {

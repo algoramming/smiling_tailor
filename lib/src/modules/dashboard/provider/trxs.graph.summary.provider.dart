@@ -23,7 +23,9 @@ class TrxSummaryProvider extends AsyncNotifier<List<PktbsTrx>> {
   FutureOr<List<PktbsTrx>> build() async {
     _trxs = [];
     ref.watch(allTrxsProvider);
-    _trxs = (await ref.watch(allTrxsProvider.future));
+    _trxs = (await ref.watch(allTrxsProvider.future))
+        .where((trx) => trx.isActive)
+        .toList();
     _isGoodsTrxs = _trxs.where((e) => e.isGoods).toList();
     _isNotGoodsTrxs = _trxs.where((e) => !e.isGoods).toList();
     return _trxs;
