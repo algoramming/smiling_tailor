@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../config/constants.dart';
+import '../../../../shared/gradient/gradient.widget.dart';
 import '../../../../shared/radio_button/k_radio_button.dart';
 import '../../../../shared/text.size/text.size.dart';
 import '../../../../utils/extensions/extensions.dart';
@@ -35,16 +36,20 @@ class OrderStatusSummary extends ConsumerWidget {
                       style: context.text.titleLarge,
                     ),
                     const SizedBox(height: 2.0),
-                    Container(
-                      height: 1.8,
-                      width: width,
-                      color: context.theme.primaryColor.withOpacity(0.5),
+                    GradientWidget(
+                      child: Container(
+                        height: 1.8,
+                        width: width,
+                        color: context.theme.primaryColor.withOpacity(0.5),
+                      ),
                     ),
                     const SizedBox(height: 2.0),
-                    Container(
-                      height: 1.8,
-                      width: width,
-                      color: context.theme.primaryColor.withOpacity(0.7),
+                    GradientWidget(
+                      child: Container(
+                        height: 1.8,
+                        width: width,
+                        color: context.theme.primaryColor.withOpacity(0.7),
+                      ),
                     ),
                   ],
                 ),

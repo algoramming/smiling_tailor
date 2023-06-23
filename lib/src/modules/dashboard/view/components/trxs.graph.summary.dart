@@ -6,6 +6,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../../../config/constants.dart';
 import '../../../../db/db.dart';
 import '../../../../shared/error_widget/error_widget.dart';
+import '../../../../shared/gradient/gradient.widget.dart';
 import '../../../../shared/loading_widget/loading_widget.dart';
 import '../../../../shared/radio_button/k_radio_button.dart';
 import '../../../../shared/text.size/text.size.dart';
@@ -41,18 +42,22 @@ class TrxsGraphSummary extends ConsumerWidget {
                               style: context.text.titleLarge,
                             ),
                             const SizedBox(height: 2.0),
-                            Container(
-                              height: 1.8,
-                              width: width,
-                              color:
-                                  context.theme.primaryColor.withOpacity(0.5),
+                            GradientWidget(
+                              child: Container(
+                                height: 1.8,
+                                width: width,
+                                color:
+                                    context.theme.primaryColor.withOpacity(0.5),
+                              ),
                             ),
                             const SizedBox(height: 2.0),
-                            Container(
-                              height: 1.8,
-                              width: width,
-                              color:
-                                  context.theme.primaryColor.withOpacity(0.7),
+                            GradientWidget(
+                              child: Container(
+                                height: 1.8,
+                                width: width,
+                                color:
+                                    context.theme.primaryColor.withOpacity(0.7),
+                              ),
                             ),
                           ],
                         ),
