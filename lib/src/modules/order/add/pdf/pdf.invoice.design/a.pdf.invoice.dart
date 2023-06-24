@@ -7,7 +7,6 @@ import 'package:smiling_tailor/src/modules/transaction/model/transaction.dart';
 
 import '../../../model/order.dart';
 import '../file.handle.dart';
-import '../sample.data.dart';
 
 part 'cashier.pdf.invoice.ext.dart';
 part 'customer.pdf.invoice.ext.dart';
