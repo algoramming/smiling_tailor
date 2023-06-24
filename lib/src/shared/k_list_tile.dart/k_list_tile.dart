@@ -44,7 +44,7 @@ class KListTile extends StatelessWidget {
     return InkWell(
       hoverColor: context.theme.primaryColor.withOpacity(0.2),
       splashColor: context.theme.primaryColor.withOpacity(0.5),
-      borderRadius: borderRadius15,
+      borderRadius: borderRadius12,
       radius: 30,
       onTap: onTap,
       onDoubleTap: onDoubleTap,

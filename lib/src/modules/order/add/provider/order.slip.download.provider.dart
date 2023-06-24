@@ -17,19 +17,20 @@ import '../../model/order.dart';
 import '../pdf/sample.pdf.dart';
 import '../view/order.slip.share.popup.dart';
 
-typedef OrderSlipNotifier = AutoDisposeAsyncNotifierProviderFamily<
-    OrderSlipProvider, void, PktbsOrder>;
+typedef OrderSlipDownloadNotifier = AutoDisposeAsyncNotifierProviderFamily<
+    OrderSlipDownloadProvider, void, PktbsOrder>;
 
-final orderSlipProvider = OrderSlipNotifier(OrderSlipProvider.new);
+final orderSlipDownloadProvider =
+    OrderSlipDownloadNotifier(OrderSlipDownloadProvider.new);
 
 late List<PktbsTrx> _trxs;
 
 late List<Map<String, dynamic>> _slipOptions;
 late List<bool> _selectedSlipOptions;
 late List<Map<String, dynamic>> _downloadOptions;
-late List<bool> _selectedDownloadOptions;
+int _selectedDownloadOption = 0; // 0: PDF, 1: Slip
 
-class OrderSlipProvider
+class OrderSlipDownloadProvider
     extends AutoDisposeFamilyAsyncNotifier<void, PktbsOrder> {
   @override
   FutureOr build(arg) async {
@@ -37,8 +38,7 @@ class OrderSlipProvider
     _trxs = await pb
         .collection(transactions)
         .getFullList(
-          filter:
-              'isActive = true && (from_id = "${arg.id}" || to_id = "${arg.id}")',
+          filter: 'from_id = "${arg.id}" || to_id = "${arg.id}"',
           expand: pktbsTrxExpand,
         )
         .then((v) {
@@ -75,7 +75,6 @@ class OrderSlipProvider
         'img': 'assets/svgs/slip-format.svg'
       },
     ];
-    _selectedDownloadOptions = [true, true];
   }
 
   List<PktbsTrx> get trxs => _trxs;
@@ -115,15 +114,17 @@ class OrderSlipProvider
 
   List<Map<String, dynamic>> get downloadOptions => _downloadOptions;
 
-  List<bool> get selectedDownloadOptions => _selectedDownloadOptions;
+  int get selectedDownloadOption => _selectedDownloadOption;
+
+  bool get isAllSlipUnselected => _selectedSlipOptions.every((e) => !e);
 
   void toggleSlipOption(int index) {
     _selectedSlipOptions[index] = !_selectedSlipOptions[index];
     ref.notifyListeners();
   }
 
-  void toggleDownloadOption(int index) {
-    _selectedDownloadOptions[index] = !_selectedDownloadOptions[index];
+  void toggleDownloadOption() {
+    _selectedDownloadOption = _selectedDownloadOption == 0 ? 1 : 0;
     ref.notifyListeners();
   }
 
@@ -132,10 +133,11 @@ class OrderSlipProvider
     _slipOptions = [];
     _selectedSlipOptions = [];
     _downloadOptions = [];
-    _selectedDownloadOptions = [];
+    _selectedDownloadOption = 0;
   }
 
   Future<void> submit(BuildContext context) async {
+    if (isAllSlipUnselected) return;
     log.i('Order Slip Submit===========================');
     log.i(arg);
     log.i('Order Slip Trxs: $trxs');
@@ -150,7 +152,7 @@ class OrderSlipProvider
     log.i('Order Slip Options: $slipOptions');
     log.i('Order Slip Selected Slip Options: $selectedSlipOptions');
     log.i('Order Slip Download Options: $downloadOptions');
-    log.i('Order Slip Selected Download Options: $selectedDownloadOptions');
+    log.i('Order Slip Selected Download Options: $selectedDownloadOption');
     log.i('Order Slip Submit===========================');
 
     await _print().then((p) async {
@@ -174,7 +176,7 @@ class OrderSlipProvider
     List<File> files = [];
     final pdfInvoice = PdfInvoice(arg);
 
-    if (selectedDownloadOptions[0]) {
+    if (selectedDownloadOption == 0) {
       if (selectedSlipOptions[0]) {
         files.add(await pdfInvoice.samplePdf('customer-pdf'));
       }
@@ -185,7 +187,7 @@ class OrderSlipProvider
         files.add(await pdfInvoice.samplePdf('tailor-pdf'));
       }
     }
-    if (selectedDownloadOptions[1]) {
+    if (selectedDownloadOption == 1) {
       if (selectedSlipOptions[0]) {
         files.add(await pdfInvoice.samplePdf('customer-slip'));
       }

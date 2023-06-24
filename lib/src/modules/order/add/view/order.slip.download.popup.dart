@@ -82,7 +82,8 @@ class OrderSlipDownloadPopup extends StatelessWidget {
           Consumer(
             builder: (_, ref, __) => TextButton(
               onPressed: () async {
-                final notifier = ref.watch(orderSlipProvider(order).notifier);
+                final notifier =
+                    ref.watch(orderSlipDownloadProvider(order).notifier);
                 await notifier.submit(context);
               },
               child: Text(
@@ -104,23 +105,44 @@ class _DownloadOptions extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ref.watch(orderSlipProvider(order)).when(
-          loading: () =>
-              const LoadingWidget(withScaffold: false, heightWidth: 100),
+    return ref.watch(orderSlipDownloadProvider(order)).when(
+          loading: () => const LoadingWidget(withScaffold: false),
           error: (err, _) => KErrorWidget(withScaffold: false, error: err),
           data: (_) {
-            final notifier = ref.watch(orderSlipProvider(order).notifier);
+            final notifier =
+                ref.watch(orderSlipDownloadProvider(order).notifier);
             return Column(
               children: [
                 Text(
                   'Slip Copies',
                   style: context.text.titleMedium,
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 5),
+                if (notifier.isAllSlipUnselected)
+                  Row(
+                    mainAxisAlignment: mainCenter,
+                    children: [
+                      const Icon(
+                        Icons.warning_amber_rounded,
+                        color: Colors.red,
+                        size: 17.0,
+                      ),
+                      const SizedBox(width: 3.0),
+                      Text(
+                        'You have to select at least one slip copy.',
+                        style: context.text.labelMedium!.copyWith(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                const SizedBox(height: 5),
                 ...List.generate(
                   notifier.slipOptions.length,
                   (i) => Card(
                     child: KListTile(
+                      onTap: () => notifier.toggleSlipOption(i),
                       leading: Checkbox(
                         activeColor: context.theme.primaryColor,
                         value: notifier.selectedSlipOptions[i],
@@ -155,10 +177,12 @@ class _DownloadOptions extends ConsumerWidget {
                   notifier.downloadOptions.length,
                   (i) => Card(
                     child: KListTile(
-                      leading: Checkbox(
+                      onTap: () => notifier.toggleDownloadOption(),
+                      leading: Radio(
                         activeColor: context.theme.primaryColor,
-                        value: notifier.selectedDownloadOptions[i],
-                        onChanged: (_) => notifier.toggleDownloadOption(i),
+                        value: i,
+                        groupValue: notifier.selectedDownloadOption,
+                        onChanged: (_) => notifier.toggleDownloadOption(),
                       ),
                       title: Text(notifier.downloadOptions[i]['title']),
                       subtitle: Text(notifier.downloadOptions[i]['subtitle']),
