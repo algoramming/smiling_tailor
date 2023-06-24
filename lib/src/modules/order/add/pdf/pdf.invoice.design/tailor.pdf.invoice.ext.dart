@@ -1,25 +1,9 @@
-import 'dart:io';
+part of 'a.pdf.invoice.dart';
 
-import 'package:flutter/services.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
-
-import '../../model/order.dart';
-import 'file.handle.dart';
-import 'sample.data.dart';
-
-class PdfInvoice {
-  final PktbsOrder order;
-
-  PdfInvoice(this.order);
-
-  Future<File> samplePdf(String name) async {
+extension TailorPdfInvoice on PdfInvoice {
+  //
+  Future<File> tailorPdf(String name) async {
     final pdf = pw.Document();
-
-    final iconImage =
-        (await rootBundle.load('assets/icons/splash-icon-384x384.png'))
-            .buffer
-            .asUint8List();
 
     pdf.addPage(
       pw.MultiPage(
@@ -38,7 +22,7 @@ class PdfInvoice {
             pw.Row(
               children: [
                 pw.Image(
-                  pw.MemoryImage(iconImage),
+                  pw.MemoryImage(icon),
                   height: 72,
                   width: 72,
                 ),

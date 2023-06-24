@@ -6,6 +6,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../config/get.platform.dart';
+import '../../../../db/db.dart';
 import '../../../../pocketbase/auth.store/helpers.dart';
 import '../../../../shared/show_toast/awsome.snackbar/awesome.snackbar.dart';
 import '../../../../shared/show_toast/awsome.snackbar/show.awesome.snackbar.dart';
@@ -14,7 +15,7 @@ import '../../../../utils/logger/logger_helper.dart';
 import '../../../transaction/enum/trx.type.dart';
 import '../../../transaction/model/transaction.dart';
 import '../../model/order.dart';
-import '../pdf/sample.pdf.dart';
+import '../pdf/pdf.invoice.design/a.pdf.invoice.dart';
 import '../view/order.slip.share.popup.dart';
 
 typedef OrderSlipDownloadNotifier = AutoDisposeAsyncNotifierProviderFamily<
@@ -47,14 +48,14 @@ class OrderSlipDownloadProvider
     });
     _slipOptions = [
       {
-        'title': 'Customer Copy',
-        'subtitle': 'This copy is for customer',
-        'img': 'assets/svgs/customer-copy.svg'
-      },
-      {
         'title': 'Cashier Copy',
         'subtitle': 'This copy is for cashier',
         'img': 'assets/svgs/cashier-copy.svg'
+      },
+      {
+        'title': 'Customer Copy',
+        'subtitle': 'This copy is for customer',
+        'img': 'assets/svgs/customer-copy.svg'
       },
       {
         'title': 'Tailor Copy',
@@ -83,30 +84,36 @@ class OrderSlipDownloadProvider
 
   List<PktbsTrx> get nonGoodsTrxs => _trxs.where((e) => !e.isGoods).toList();
 
-  List<PktbsTrx> get paymentTrxs =>
-      _trxs.where((e) => e.fromType.isUser || e.toType.isUser).toList();
-
   PktbsTrx? get advanceTrx => _trxs.any((e) => e.isOrderAdvanceAmount)
       ? _trxs.firstWhere((e) => e.isOrderAdvanceAmount)
       : null;
 
-  PktbsTrx? get tailorTrx => _trxs.any((e) => e.isOrderTailorCharge)
-      ? _trxs.firstWhere((e) => e.isOrderTailorCharge)
-      : null;
+  List<PktbsTrx> get paymentOthersTrxs => _trxs
+      .where((e) =>
+          (e.fromType.isUser || e.toType.isUser) &&
+          !e.isGoods &&
+          !e.isOrderAdvanceAmount)
+      .toList();
+
+  PktbsTrx? get tailorTrx =>
+      _trxs.any((e) => e.isOrderTailorCharge && !e.isGoods)
+          ? _trxs.firstWhere((e) => e.isOrderTailorCharge && !e.isGoods)
+          : null;
 
   PktbsTrx? get inventoryAllocationTrx =>
-      _trxs.any((e) => e.isOrderInventoryAllocation)
-          ? _trxs.firstWhere((e) => e.isOrderInventoryAllocation)
+      _trxs.any((e) => e.isOrderInventoryAllocation && e.isGoods)
+          ? _trxs.firstWhere((e) => e.isOrderInventoryAllocation && e.isGoods)
           : null;
 
   PktbsTrx? get inventoryPurchaseTrx =>
-      _trxs.any((e) => e.isOrderInventoryPurchase)
-          ? _trxs.firstWhere((e) => e.isOrderInventoryPurchase)
+      _trxs.any((e) => e.isOrderInventoryPurchase && !e.isGoods)
+          ? _trxs.firstWhere((e) => e.isOrderInventoryPurchase && !e.isGoods)
           : null;
 
-  PktbsTrx? get deliveryTrx => _trxs.any((e) => e.isOrderDeliveryCharge)
-      ? _trxs.firstWhere((e) => e.isOrderDeliveryCharge)
-      : null;
+  PktbsTrx? get deliveryTrx =>
+      _trxs.any((e) => e.isOrderDeliveryCharge && !e.isGoods)
+          ? _trxs.firstWhere((e) => e.isOrderDeliveryCharge && !e.isGoods)
+          : null;
 
   List<Map<String, dynamic>> get slipOptions => _slipOptions;
 
@@ -143,7 +150,7 @@ class OrderSlipDownloadProvider
     log.i('Order Slip Trxs: $trxs');
     log.i('Order Slip Goods Trxs: $goodsTrxs');
     log.i('Order Slip Non Goods Trxs: $nonGoodsTrxs');
-    log.i('Order Slip Payment Trxs: $paymentTrxs');
+    log.i('Order Slip Payment Others Trxs: $paymentOthersTrxs');
     log.i('Order Slip Advance Trx: $advanceTrx');
     log.i('Order Slip Tailor Trx: $tailorTrx');
     log.i('Order Slip Inventory Allocation Trx: $inventoryAllocationTrx');
@@ -174,27 +181,44 @@ class OrderSlipDownloadProvider
   Future<List<File>> _print() async {
     EasyLoading.show(status: 'Please wait...');
     List<File> files = [];
-    final pdfInvoice = PdfInvoice(arg);
+    final pdfInvoice = PdfInvoice(
+      order: arg,
+      icon: appIcon,
+      tailorTrx: tailorTrx,
+      advanceTrx: advanceTrx,
+      deliveryTrx: deliveryTrx,
+      paymentOthersTrxs: paymentOthersTrxs,
+      inventoryPurchaseTrx: inventoryPurchaseTrx,
+      inventoryAllocationTrx: inventoryAllocationTrx,
+    );
 
     if (selectedDownloadOption == 0) {
+      // Pdf Download
       if (selectedSlipOptions[0]) {
-        files.add(await pdfInvoice.samplePdf('customer-pdf'));
+        // cashier copy
+        files.add(await pdfInvoice.cashierPdf('cashier-pdf'));
       }
       if (selectedSlipOptions[1]) {
-        files.add(await pdfInvoice.samplePdf('cashier-pdf'));
+        // customer copy
+        files.add(await pdfInvoice.customerPdf('customer-pdf'));
       }
       if (selectedSlipOptions[2]) {
-        files.add(await pdfInvoice.samplePdf('tailor-pdf'));
+        // tailor copy
+        files.add(await pdfInvoice.tailorPdf('tailor-pdf'));
       }
     }
     if (selectedDownloadOption == 1) {
+      // Slip Download
       if (selectedSlipOptions[0]) {
-        files.add(await pdfInvoice.samplePdf('customer-slip'));
-      }
-      if (selectedSlipOptions[1]) {
+        // cashier copy
         files.add(await pdfInvoice.samplePdf('cashier-slip'));
       }
+      if (selectedSlipOptions[1]) {
+        // customer copy
+        files.add(await pdfInvoice.samplePdf('customer-slip'));
+      }
       if (selectedSlipOptions[2]) {
+        // tailor copy
         files.add(await pdfInvoice.samplePdf('tailor-slip'));
       }
     }

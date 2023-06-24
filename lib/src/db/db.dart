@@ -14,6 +14,7 @@ import 'db.functions.dart';
 import 'hive.dart';
 import 'paths.dart' show appDir, initDir;
 
+late final Uint8List appIcon;
 late AppSettings appSettings;
 late CurrencyProfile appCurrency;
 late List<Measurement> appMeasurements;
@@ -38,8 +39,11 @@ Future<void> initAppDatum() async {
       .toList()
       .firstWhere((e) => e.shortForm == appSettings.currency);
   appMeasurements = Boxes.measurement.values.toList();
+  appIcon = (await rootBundle.load('assets/icons/splash-icon-384x384.png'))
+      .buffer
+      .asUint8List();
   log.i(
-      'App Initiated with appSettings: ${appSettings.firstRunDateTime}, currency: ${appCurrency.shortForm} and measurements: ${appMeasurements.length} units');
+      'App Initiated with appSettings: ${appSettings.firstRunDateTime}, currency: ${appCurrency.shortForm}, measurements: ${appMeasurements.length} units and appIcon: ${appIcon.length} bytes.');
   listenForAppConfig();
 }
 
