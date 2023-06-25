@@ -31,7 +31,7 @@ Future<void> pktbsAddVendor(
       },
     ).then((r) async {
       // check trx nedded or not
-      if (notifier.openingBalanceCntrlr.text.isNotNullOrEmpty() &&
+      if (notifier.openingBalanceCntrlr.text.isNotNullOrEmpty &&
           notifier.openingBalanceCntrlr.text.toDouble != 0.0) {
         final openingBalance = notifier.openingBalanceCntrlr.text.toDouble;
         await pb

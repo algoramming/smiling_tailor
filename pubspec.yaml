@@ -107,6 +107,7 @@ flutter:
   assets:
     # Add assets from the images directory to the application.
     - assets/files/
+    - assets/fonts/
     - assets/gifs/
     - assets/icons/
     - assets/images/
@@ -114,3 +115,14 @@ flutter:
     - assets/riv/
     - assets/svgs/
     - assets/types/
+
+  # fonts:
+  #   - family: Nunito
+  #     fonts:
+  #       - asset: assets/fonts/Nunito-Regular.ttf
+  #       - asset: assets/fonts/Nunito-Bold.ttf
+  #         weight: 400
+  #       - asset: assets/fonts/Nunito-BoldItalic.ttf
+  #         weight: 400
+  #       - asset: assets/fonts/Nunito-Italic.ttf
+  #         style: italic

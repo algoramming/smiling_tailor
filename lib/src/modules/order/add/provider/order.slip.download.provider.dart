@@ -63,7 +63,7 @@ class OrderSlipDownloadProvider
         'img': 'assets/svgs/tailor-copy.svg'
       },
     ];
-    _selectedSlipOptions = [true, true, true];
+    _selectedSlipOptions = [false, true, false];
     _downloadOptions = [
       {
         'title': 'Download as PDF',
@@ -196,15 +196,15 @@ class OrderSlipDownloadProvider
       // Pdf Download
       if (selectedSlipOptions[0]) {
         // cashier copy
-        files.add(await pdfInvoice.cashierPdf('cashier-pdf'));
+        files.add(await pdfInvoice.cashierPdf('cashier'));
       }
       if (selectedSlipOptions[1]) {
         // customer copy
-        files.add(await pdfInvoice.customerPdf('customer-pdf'));
+        files.add(await pdfInvoice.customerPdf('customer'));
       }
       if (selectedSlipOptions[2]) {
         // tailor copy
-        files.add(await pdfInvoice.tailorPdf('tailor-pdf'));
+        files.add(await pdfInvoice.tailorPdf('tailor'));
       }
     }
     if (selectedDownloadOption == 1) {

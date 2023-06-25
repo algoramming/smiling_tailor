@@ -53,6 +53,13 @@ class FileHandle {
     }
   }
 
+  // open pdf files function
+  static Future openDocuments(List<File> files) async {
+    for (final file in files) {
+      await openDocument(file);
+    }
+  }
+
   // delete pdf file function
   static Future<void> deleteDocument(File file) async => await file.delete();
 

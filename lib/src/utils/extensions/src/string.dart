@@ -41,9 +41,16 @@ extension StringUtils on String {
 }
 
 extension StringNullUtils on String? {
-  bool isNullOrEmpty() => this == null || this!.isEmpty;
+  bool get isNullOrEmpty => this == null || this!.isEmpty;
 
-  bool isNotNullOrEmpty() => !isNullOrEmpty();
+  bool get isNotNullOrEmpty => !isNullOrEmpty;
+
+  String get first50Words {
+    if (this == null) return '';
+    final words = this!.words;
+    final first50Words = words.length > 50 ? words.sublist(0, 50) : words;
+    return first50Words.join(' ');
+  }
 }
 
 String pluralize(

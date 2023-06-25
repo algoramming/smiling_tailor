@@ -8,7 +8,7 @@ extension CashierPdfInvoice on PdfInvoice {
     pdf.addPage(
       pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
-        header: (context) {
+        header: (_) {
           return pw.Text(
             'Smiling Tailor',
             style: pw.TextStyle(

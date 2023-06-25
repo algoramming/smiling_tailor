@@ -77,25 +77,33 @@ class OrderList extends ConsumerWidget {
           ],
         ),
         if (notifier.selectedStatus != orderTypeAll)
-          Align(
-            alignment: Alignment.centerRight,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 3.0),
-              child: RichText(
-                text: TextSpan(
-                  text: 'Oder list is filtered by',
-                  style: context.text.labelMedium,
-                  children: [
-                    TextSpan(
-                      text: ' ${notifier.selectedStatus} ',
-                      style: context.text.labelMedium!.copyWith(
-                        color: context.theme.primaryColor,
-                      ),
-                    ),
-                    TextSpan(text: 'status.', style: context.text.labelMedium),
-                  ],
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 3.0),
+            child: Row(
+              children: [
+                InkWell(
+                  onTap: () => notifier.changeStatus(orderTypeAll),
+                  child: Icon(Icons.close,
+                      color: context.theme.primaryColor, size: 16),
                 ),
-              ),
+                const Spacer(),
+                RichText(
+                  text: TextSpan(
+                    text: 'Oder list is filtered by',
+                    style: context.text.labelMedium,
+                    children: [
+                      TextSpan(
+                        text: ' ${notifier.selectedStatus} ',
+                        style: context.text.labelMedium!.copyWith(
+                          color: context.theme.primaryColor,
+                        ),
+                      ),
+                      TextSpan(
+                          text: 'status.', style: context.text.labelMedium),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
         Flexible(

@@ -74,10 +74,18 @@ class _Body extends ConsumerWidget {
                                   onChanged: (_) => notifier.toggleSelectAll(),
                                 ),
                               ),
-                              Text(
-                                '${notifier.selectedFiles.length} selected',
-                                style: context.text.labelLarge!.copyWith(
-                                    color: context.theme.primaryColor),
+                              InkWell(
+                                onTap: () => notifier.toggleSelectAll(),
+                                borderRadius: borderRadius12,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 5.0),
+                                  child: Text(
+                                    '${notifier.selectedFiles.length} selected',
+                                    style: context.text.labelLarge!.copyWith(
+                                        color: context.theme.primaryColor),
+                                  ),
+                                ),
                               ),
                               const Spacer(),
                               IconButton(

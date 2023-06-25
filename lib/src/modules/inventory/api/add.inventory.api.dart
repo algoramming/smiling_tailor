@@ -56,7 +56,7 @@ Future<void> pktbsAddInventory(
             unit: inven.unit.name,
           ).then((_) async {
             // check another trx nedded or not
-            if (notifier.advanceCntrlr.text.isNotNullOrEmpty() &&
+            if (notifier.advanceCntrlr.text.isNotNullOrEmpty &&
                 notifier.advanceCntrlr.text.toDouble != 0.0) {
               final advanceBalance = notifier.advanceCntrlr.text.toDouble;
               log.i('Need Another Trx for ${inven.title} of $advanceBalance}');
