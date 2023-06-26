@@ -110,4 +110,12 @@ class InvoiceProvider extends AutoDisposeAsyncNotifier<List<File>> {
       EasyLoading.showError('$e');
     }
   }
+
+  Future<void> printSelectedFiles() async {
+    try {
+      await FileHandle.printDocuments(selectedFiles);
+    } catch (e) {
+      EasyLoading.showError('$e');
+    }
+  }
 }

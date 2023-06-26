@@ -68,15 +68,16 @@ class HiveDbViewWebPopup extends StatelessWidget {
         content: SizedBox(
           width: min(400, context.width),
           child: const Text(
-              'This feature is not available in web. However, you can use the following instructions to view the database:\n\n'
-              '1. Right click on the screen and select "Inspect Element".\n'
-              '2. Go to "Application" tab.\n'
-              '3. Select "IndexedDB" from the left panel.\n'
-              '4. Select the database from the list.\n'
-              '5. Select the table from the list.\n'
-              '6. Select the data from the list.\n'
-              '7. You can also delete the data from the list. (Recommended not to delete data from here.)',
-              textAlign: TextAlign.justify),
+            'This feature is not available in web. However, you can use the following instructions to view the database:\n\n'
+            '1. Right click on the screen and select "Inspect Element".\n'
+            '2. Go to "Application" tab.\n'
+            '3. Select "IndexedDB" from the left panel.\n'
+            '4. Select the database from the list.\n'
+            '5. Select the table from the list.\n'
+            '6. Select the data from the list.\n'
+            '7. You can also delete the data from the list. (Recommended not to delete data from here.)',
+            textAlign: TextAlign.justify,
+          ),
         ),
         actions: [
           TextButton(

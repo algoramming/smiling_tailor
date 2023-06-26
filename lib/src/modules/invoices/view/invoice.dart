@@ -116,6 +116,14 @@ class _Body extends ConsumerWidget {
                                 ),
                               ),
                               IconButton(
+                                onPressed: () async =>
+                                    await notifier.printSelectedFiles(),
+                                icon: const Tooltip(
+                                  message: 'Print',
+                                  child: Icon(Icons.print, size: 20),
+                                ),
+                              ),
+                              IconButton(
                                 onPressed: () async => await showDialog(
                                   context: context,
                                   barrierDismissible: false,
