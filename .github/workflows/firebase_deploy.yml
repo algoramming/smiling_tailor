@@ -1,36 +1,36 @@
-name: Build & Deploy Website
+# name: Build & Deploy Website
 
-on:
-  push:
-    branches:
-      - master
+# on:
+#   push:
+#     branches:
+#       - master
       
-jobs:
-  hosting:
-    name: Deploy Website
-    runs-on: ubuntu-latest
-    steps:
-      # Checkout the repository
-      - uses: actions/checkout@v2
+# jobs:
+#   hosting:
+#     name: Deploy Website
+#     runs-on: ubuntu-latest
+#     steps:
+#       # Checkout the repository
+#       - uses: actions/checkout@v2
 
-      # Install flutter command
-      - uses: subosito/flutter-action@v1
-        with:
-          channel: stable
+#       # Install flutter command
+#       - uses: subosito/flutter-action@v1
+#         with:
+#           channel: stable
 
-      # Build the website # flutter build web --web-renderer html --release
-      - name: Build Website
-        run: |
-          flutter config --enable-web
-          flutter pub get
-          flutter build web --web-renderer html --release
-        working-directory: ./
+#       # Build the website # flutter build web --web-renderer html --release
+#       - name: Build Website
+#         run: |
+#           flutter config --enable-web
+#           flutter pub get
+#           flutter build web --web-renderer html --release
+#         working-directory: ./
 
-      # Deploy Firebase Hosting
-      - name: Deploy Firebase Hosting
-        uses: w9jds/firebase-action@master
-        with:
-          args: deploy --only hosting:smilingtailor-algoramming
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-          PROJECT_PATH: ./
+#       # Deploy Firebase Hosting
+#       - name: Deploy Firebase Hosting
+#         uses: w9jds/firebase-action@master
+#         with:
+#           args: deploy --only hosting:smilingtailor-algoramming
+#         env:
+#           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+#           PROJECT_PATH: ./

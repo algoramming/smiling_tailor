@@ -1,0 +1,9 @@
+flutter clean
+flutter pub get
+flutter build web --web-renderer html --release
+cd build
+# firebase login  // if not logged in
+firebase init
+firebase deploy --only hosting
+cd ../
+
