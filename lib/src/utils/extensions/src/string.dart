@@ -51,6 +51,20 @@ extension StringNullUtils on String? {
     final first50Words = words.length > 50 ? words.sublist(0, 50) : words;
     return first50Words.join(' ');
   }
+
+  String get first100Words {
+    if (this == null) return '';
+    final words = this!.words;
+    final first50Words = words.length > 100 ? words.sublist(0, 100) : words;
+    return first50Words.join(' ');
+  }
+
+  String get first200Words {
+    if (this == null) return '';
+    final words = this!.words;
+    final first50Words = words.length > 200 ? words.sublist(0, 200) : words;
+    return first50Words.join(' ');
+  }
 }
 
 String pluralize(

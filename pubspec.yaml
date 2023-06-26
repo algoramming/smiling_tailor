@@ -42,6 +42,7 @@ dependencies:
   path_provider: ^2.0.15
   pdf: ^3.10.4
   pocketbase: ^0.10.1
+  printing: ^5.11.0
   share_plus: ^7.0.2
   shared_preferences: ^2.1.2
   syncfusion_flutter_charts: ^21.2.10
@@ -89,7 +90,6 @@ flutter_launcher_icons:
     generate: true
     image_path: "assets/icons/app-icon-1024x1024.png"
   # command: dart run flutter_launcher_icons:main
-
 flutter_native_splash:
   color: "#ffffff"
   image: "assets/icons/splash-icon-384x384.png"
@@ -115,7 +115,6 @@ flutter:
     - assets/riv/
     - assets/svgs/
     - assets/types/
-
   # fonts:
   #   - family: Nunito
   #     fonts:

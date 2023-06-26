@@ -16,7 +16,7 @@ import '../../../transaction/enum/trx.type.dart';
 import '../../../transaction/model/transaction.dart';
 import '../../model/order.dart';
 import '../pdf/pdf.invoice.design/a.pdf.invoice.dart';
-import '../view/order.slip.share.popup.dart';
+import '../view/order.slip.confirmation.popup.dart';
 
 typedef OrderSlipDownloadNotifier = AutoDisposeAsyncNotifierProviderFamily<
     OrderSlipDownloadProvider, void, PktbsOrder>;

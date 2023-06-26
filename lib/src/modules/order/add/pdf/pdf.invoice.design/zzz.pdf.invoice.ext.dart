@@ -225,13 +225,6 @@ extension SamplePdfInvoice on PdfInvoice {
   }
 }
 
-final tableHeaders = [
-  'Description',
-  'Quantity',
-  'Unit Price',
-  'Total',
-];
-
 final tableData = [
   [
     'Coffee',

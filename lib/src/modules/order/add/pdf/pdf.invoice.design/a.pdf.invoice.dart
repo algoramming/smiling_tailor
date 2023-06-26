@@ -51,6 +51,45 @@ class PdfInvoice {
   DateFormat get pdfDateTimeFormat =>
       DateFormat('${dateFormates[1]} ${timeFormates[1]}');
 
+  double get totalGiven => paymentOthersTrxs.fold(
+      0.0, (p, c) => p + (c.trxType.isCredit ? c.amount : -c.amount));
+
+  final tableHeaders = [
+    'Description',
+    'Quantity',
+    'Unit Price',
+    'Total',
+  ];
+
+  List<List<String>> get tableItems => [
+        [
+          order.tailorNote.isNotNullOrEmpty
+              ? 'Tailor Charge - ${order.tailorNote}'
+              : 'Tailor Charge',
+          order.quantity.toString(),
+          '${tailorTrx?.amount ?? 0.0 / order.quantity}',
+          '${tailorTrx?.amount ?? 0.0}',
+        ],
+        if (order.inventory != null)
+          [
+            order.inventoryNote.isNotNullOrEmpty
+                ? 'Inventory Charge - ${order.inventoryNote}'
+                : 'Inventory Charge',
+            '${order.inventoryQuantity ?? 0}',
+            '${(inventoryPurchaseTrx?.amount ?? 0.0) / (order.inventoryQuantity ?? 0.0)}',
+            '${inventoryPurchaseTrx?.amount ?? 0.0}',
+          ],
+        if (order.deliveryEmployee != null)
+          [
+            order.deliveryNote.isNotNullOrEmpty
+                ? 'Delivery Charge - ${order.deliveryNote}'
+                : 'Delivery Charge',
+            '',
+            '${deliveryTrx?.amount ?? 0.0}',
+            '${deliveryTrx?.amount ?? 0.0}',
+          ],
+      ];
+
   pw.Widget pdfHeader(String name) {
     return pw.Row(
       children: [
@@ -77,7 +116,7 @@ class PdfInvoice {
       children: [
         pw.Divider(
           borderStyle: pw.BorderStyle.solid,
-          color: PdfColors.grey300,
+          color: PdfColors.grey400,
         ),
         pw.Row(
           mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
