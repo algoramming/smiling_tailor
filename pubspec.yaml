@@ -10,7 +10,7 @@ description: Introducing our tailor-focused ERP management system - a powerful,
 # Prevent accidental publishing to pub.dev.
 publish_to: "none"
 
-version: 0.0.11+11
+version: 0.0.12+12
 
 environment:
   sdk: ">=3.0.5 <4.0.0"
@@ -69,7 +69,7 @@ msix_config:
     force_update_from_any_version: false
   publisher_display_name: Algoramming
   identity_name: com.algoramming.smilingtailor
-  msix_version: 0.0.11.0
+  msix_version: 0.0.12.0
   logo_path: D:\Algoramming\Flutter-Projects\smiling_tailor\assets\icons\app-icon-1024x1024.png
 
 flutter_launcher_icons:
@@ -90,6 +90,7 @@ flutter_launcher_icons:
     generate: true
     image_path: "assets/icons/app-icon-1024x1024.png"
   # command: dart run flutter_launcher_icons:main
+
 flutter_native_splash:
   color: "#ffffff"
   image: "assets/icons/splash-icon-384x384.png"
