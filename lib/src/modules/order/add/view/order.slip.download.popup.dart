@@ -177,14 +177,36 @@ class _DownloadOptions extends ConsumerWidget {
                   notifier.downloadOptions.length,
                   (i) => Card(
                     child: KListTile(
-                      onTap: () => notifier.toggleDownloadOption(),
+                      onTap: () => notifier.toggleDownloadOption(i),
                       leading: Radio(
                         activeColor: context.theme.primaryColor,
                         value: i,
                         groupValue: notifier.selectedDownloadOption,
-                        onChanged: (_) => notifier.toggleDownloadOption(),
+                        onChanged: (_) => notifier.toggleDownloadOption(i),
                       ),
-                      title: Text(notifier.downloadOptions[i]['title']),
+                      title: Row(
+                        children: [
+                          Text(notifier.downloadOptions[i]['title']),
+                          if (notifier.downloadOptions[i]['warning'] != null)
+                            const SizedBox(width: 5),
+                          if (notifier.downloadOptions[i]['warning'] != null)
+                            const Icon(
+                              Icons.warning_amber_rounded,
+                              color: Colors.red,
+                              size: 15.0,
+                            ),
+                          if (notifier.downloadOptions[i]['warning'] != null)
+                            const SizedBox(width: 3),
+                          if (notifier.downloadOptions[i]['warning'] != null)
+                            Text(
+                              notifier.downloadOptions[i]['warning'],
+                              style: context.text.labelSmall!.copyWith(
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                        ],
+                      ),
                       subtitle: Text(notifier.downloadOptions[i]['subtitle']),
                       trailing: AnimatedWidgetShower(
                         size: 30.0,

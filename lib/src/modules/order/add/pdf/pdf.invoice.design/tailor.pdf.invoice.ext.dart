@@ -2,7 +2,7 @@ part of 'a.pdf.invoice.dart';
 
 extension TailorPdfInvoice on PdfInvoice {
   //
-  Future<File> tailorPdf(String name) async {
+  Future<dynamic> tailorPdf(String name) async {
     final pdf = pw.Document();
 
     pdf.addPage(

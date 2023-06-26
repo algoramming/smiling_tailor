@@ -1,15 +1,11 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../config/get.platform.dart';
 import '../../../../db/db.dart';
 import '../../../../pocketbase/auth.store/helpers.dart';
-import '../../../../shared/show_toast/awsome.snackbar/awesome.snackbar.dart';
-import '../../../../shared/show_toast/awsome.snackbar/show.awesome.snackbar.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/logger/logger_helper.dart';
 import '../../../transaction/enum/trx.type.dart';
@@ -67,11 +63,13 @@ class OrderSlipDownloadProvider
     _downloadOptions = [
       {
         'title': 'Download as PDF',
+        'warning': null,
         'subtitle': 'Download the order slip as PDF',
         'img': 'assets/svgs/pdf-format.svg'
       },
       {
         'title': 'Print as Slip',
+        'warning': 'Currently unavailable!',
         'subtitle': 'Download the order slip as Slip',
         'img': 'assets/svgs/slip-format.svg'
       },
@@ -130,8 +128,9 @@ class OrderSlipDownloadProvider
     ref.notifyListeners();
   }
 
-  void toggleDownloadOption() {
-    _selectedDownloadOption = _selectedDownloadOption == 0 ? 1 : 0;
+  void toggleDownloadOption(int i) {
+    if (i == 1) return;
+    _selectedDownloadOption = i;
     ref.notifyListeners();
   }
 
@@ -164,23 +163,14 @@ class OrderSlipDownloadProvider
 
     await _print().then((p) async {
       context.pop();
-      if (pt.isNotWeb) {
-        await showOrderSlipSharePopup(context, p);
-      } else {
-        showAwesomeSnackbar(
-          context,
-          'Success!',
-          'Total ${p.length} ${p.length > 1 ? ' files' : ' file'} downloaded!',
-          MessageType.success,
-        );
-      }
+      await showOrderSlipSharePopup(context, p);
       log.i('Order Slip Submit===========================');
     });
   }
 
-  Future<List<File>> _print() async {
+  Future<List<dynamic>> _print() async {
     EasyLoading.show(status: 'Please wait...');
-    List<File> files = [];
+    List<dynamic> files = [];
     final pdfInvoice = PdfInvoice(
       order: arg,
       icon: appIcon,

@@ -2,7 +2,7 @@ part of 'a.pdf.invoice.dart';
 
 extension CashierPdfInvoice on PdfInvoice {
   //
-  Future<File> cashierPdf(String name) async {
+  Future<dynamic> cashierPdf(String name) async {
     final pdf = pw.Document();
 
     pdf.addPage(

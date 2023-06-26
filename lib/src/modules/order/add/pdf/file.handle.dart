@@ -2,7 +2,9 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:path/path.dart';
+import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -12,13 +14,12 @@ import 'web.empty.download.dart' if (dart.library.html) 'web.download.dart';
 
 class FileHandle {
   // save pdf file function
-  static Future<File> saveDocument({
+  static Future<dynamic> saveDocument({
     required String name,
     required pw.Document pdf,
   }) async {
     if (pt.isWeb) {
-      await saveDocumentWeb(name: name, pdf: pdf);
-      return File('');
+      return await saveDocumentWeb(name: name, pdf: pdf);
     } else {
       return await saveDocumentNonWeb(name: name, pdf: pdf);
     }
@@ -36,16 +37,17 @@ class FileHandle {
   }
 
   // save pdf file function for web
-  static Future<void> saveDocumentWeb({
+  static Future<Uint8List> saveDocumentWeb({
     required String name,
     required pw.Document pdf,
   }) async {
     Uint8List pdfInBytes = await pdf.save();
     webDownload(pdfInBytes, '$name.pdf');
+    return pdfInBytes;
   }
 
   // open pdf file function
-  static Future openDocument(File file) async {
+  static Future openDocument(dynamic file) async {
     final url = file.path;
     final uri = Uri.parse(url);
     if (!await launchUrl(uri)) {
@@ -54,7 +56,7 @@ class FileHandle {
   }
 
   // open pdf files function
-  static Future openDocuments(List<File> files) async {
+  static Future openDocuments(List<dynamic> files) async {
     for (final file in files) {
       await openDocument(file);
     }
@@ -64,13 +66,33 @@ class FileHandle {
   static Future<void> deleteDocument(File file) async => await file.delete();
 
   // share pdf file function
-  static Future<void> shareDocuments(List<File> files,
+  static Future<void> shareDocuments(List<dynamic> files,
       [String subject = 'Smiling Tailor',
       String text = 'Smiling Tailor\'s orders invoices']) async {
     await Share.shareXFiles(
-      files.map((e) => XFile(e.path)).toList(),
+      files
+          .map(
+            (e) => pt.isNotWeb
+                ? XFile(e.path)
+                : XFile.fromData(
+                    e as Uint8List,
+                    name: '${DateTime.now().millisecondsSinceEpoch}.pdf',
+                  ),
+          )
+          .toList(),
       subject: subject,
       text: text,
     );
+  }
+
+  // print pdf file function
+  static Future<void> printDocuments(List<dynamic> files) async {
+    for (final file in files) {
+      final pdfData = pt.isWeb ? file : await file.readAsBytes();
+      await Printing.layoutPdf(
+        onLayout: (_) => pdfData,
+        format: PdfPageFormat.a5,
+      );
+    }
   }
 }

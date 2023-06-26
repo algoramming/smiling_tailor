@@ -1,18 +1,16 @@
-import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:smiling_tailor/src/shared/show_toast/awsome.snackbar/awesome.snackbar.dart';
-import 'package:smiling_tailor/src/shared/show_toast/awsome.snackbar/show.awesome.snackbar.dart';
 
 import '../../../../config/constants.dart';
+import '../../../../config/get.platform.dart';
 import '../../../../shared/animations_widget/animated_popup.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../pdf/file.handle.dart';
 
 Future<void> showOrderSlipSharePopup(
   BuildContext context,
-  List<File> files,
+  List<dynamic> files,
 ) async =>
     await showDialog(
       context: context,
@@ -23,7 +21,7 @@ Future<void> showOrderSlipSharePopup(
 class OrderSlipSharePopup extends StatelessWidget {
   const OrderSlipSharePopup(this.files, {super.key});
 
-  final List<File> files;
+  final List<dynamic> files;
 
   @override
   Widget build(BuildContext context) {
@@ -79,26 +77,26 @@ class OrderSlipSharePopup extends StatelessWidget {
             ),
           ),
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               context.pop();
-              showAwesomeSnackbar(context, 'Message', 'Will update soon!', MessageType.warning);
-              
+              await FileHandle.printDocuments(files);
             },
             child: Text(
               'Print',
               style: TextStyle(color: context.theme.primaryColor),
             ),
           ),
-          TextButton(
-            onPressed: () async {
-              context.pop();
-              return await FileHandle.openDocuments(files);
-            },
-            child: Text(
-              'Open',
-              style: TextStyle(color: context.theme.primaryColor),
+          if (pt.isNotWeb)
+            TextButton(
+              onPressed: () async {
+                context.pop();
+                return await FileHandle.openDocuments(files);
+              },
+              child: Text(
+                'Open',
+                style: TextStyle(color: context.theme.primaryColor),
+              ),
             ),
-          ),
         ],
       ),
     );

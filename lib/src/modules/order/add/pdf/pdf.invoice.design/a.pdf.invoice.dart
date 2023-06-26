@@ -1,15 +1,13 @@
-import 'dart:io';
-
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:smiling_tailor/src/db/db.dart';
-import 'package:smiling_tailor/src/modules/order/enum/order.enum.dart';
-import 'package:smiling_tailor/src/modules/settings/model/settings.model.dart';
-import 'package:smiling_tailor/src/modules/transaction/enum/trx.type.dart';
-import 'package:smiling_tailor/src/modules/transaction/model/transaction.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
+import '../../../../../db/db.dart';
+import '../../../enum/order.enum.dart';
+import '../../../../settings/model/settings.model.dart';
+import '../../../../transaction/enum/trx.type.dart';
+import '../../../../transaction/model/transaction.dart';
+import '../../../../../utils/extensions/extensions.dart';
 
 import '../../../../settings/provider/date.format.provider.dart';
 import '../../../../settings/provider/time.format.provider.dart';
