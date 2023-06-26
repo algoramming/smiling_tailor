@@ -7,213 +7,235 @@ extension TailorPdfInvoice on PdfInvoice {
 
     pdf.addPage(
       pw.MultiPage(
-        pageFormat: PdfPageFormat.a4,
-        header: (context) {
-          return pw.Text(
-            'Smiling Tailor',
-            style: pw.TextStyle(
-              fontWeight: pw.FontWeight.bold,
-              fontSize: 15.0,
-            ),
-          );
-        },
-        build: (context) {
+        footer: pdfFooter,
+        header: (_) => pdfHeader(name),
+        pageTheme: pdfPageTheme(name),
+        crossAxisAlignment: pw.CrossAxisAlignment.center,
+        build: (_) {
           return [
             pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
-                pw.Image(
-                  pw.MemoryImage(icon),
-                  height: 72,
-                  width: 72,
-                ),
-                pw.SizedBox(width: 1 * PdfPageFormat.mm),
-                pw.Column(
-                  mainAxisSize: pw.MainAxisSize.min,
-                  crossAxisAlignment: pw.CrossAxisAlignment.start,
-                  children: [
-                    pw.Text(
-                      'INVOICE',
-                      style: pw.TextStyle(
-                        fontSize: 17.0,
-                        fontWeight: pw.FontWeight.bold,
+                pdfCompanyIntro(),
+                pw.Expanded(child: pw.SizedBox.shrink()),
+                pw.Expanded(
+                  child: pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                    mainAxisSize: pw.MainAxisSize.min,
+                    children: [
+                      pw.BarcodeWidget(
+                        color: PdfColors.teal,
+                        barcode: pw.Barcode.qrCode(),
+                        data: order.id,
+                        height: 42,
+                        width: 42,
                       ),
-                    ),
-                    pw.Text(
-                      'Smiling Tailor',
-                      style: const pw.TextStyle(
-                        fontSize: 15.0,
-                        color: PdfColors.grey700,
+                      pw.SizedBox(height: 1.5 * PdfPageFormat.mm),
+                      pw.Text(
+                        order.tailorEmployee?.name ?? 'No Name',
+                        style: pw.TextStyle(
+                          fontSize: 12.5,
+                          fontWeight: pw.FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                pw.Spacer(),
-                pw.Column(
-                  mainAxisSize: pw.MainAxisSize.min,
-                  crossAxisAlignment: pw.CrossAxisAlignment.start,
-                  children: [
-                    pw.Text(
-                      'Algoramming',
-                      style: pw.TextStyle(
-                        fontSize: 15.5,
-                        fontWeight: pw.FontWeight.bold,
+                      pw.SizedBox(height: 0.5 * PdfPageFormat.mm),
+                      pw.Text(
+                        order.tailorEmployee?.address ?? 'No Address',
+                        maxLines: 2,
+                        overflow: pw.TextOverflow.clip,
+                        style: const pw.TextStyle(fontSize: 8.0),
                       ),
-                    ),
-                    pw.Text(
-                      'algoramming@gmail.com',
-                    ),
-                    pw.Text(
-                      DateTime.now().toString(),
-                    ),
-                  ],
+                      pw.SizedBox(height: 0.5 * PdfPageFormat.mm),
+                      pw.Text(
+                        order.tailorEmployee?.email ?? 'No Email',
+                        style: const pw.TextStyle(fontSize: 8.0),
+                      ),
+                      pw.SizedBox(height: 0.5 * PdfPageFormat.mm),
+                      pw.Text(
+                        order.tailorEmployee?.phone ?? 'No Phone',
+                        style: const pw.TextStyle(fontSize: 8.0),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
-            pw.SizedBox(height: 1 * PdfPageFormat.mm),
-            pw.Divider(),
-            pw.SizedBox(height: 1 * PdfPageFormat.mm),
-            pw.Text(
-              'Dear John,\nLorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit, tenetur error',
-              textAlign: pw.TextAlign.justify,
+            pw.Divider(
+              borderStyle: pw.BorderStyle.solid,
+              color: PdfColors.grey400,
             ),
-            pw.SizedBox(height: 5 * PdfPageFormat.mm),
-
-            ///
-            /// PDF Table Create
-            ///
-            pw.TableHelper.fromTextArray(
-              headers: tableHeaders,
-              data: tableData,
-              border: null,
-              headerStyle: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-              headerDecoration:
-                  const pw.BoxDecoration(color: PdfColors.grey300),
-              cellHeight: 30.0,
-              cellAlignments: {
-                0: pw.Alignment.centerLeft,
-                1: pw.Alignment.centerRight,
-                2: pw.Alignment.centerRight,
-                3: pw.Alignment.centerRight,
-                4: pw.Alignment.centerRight,
-              },
-            ),
-            pw.Divider(),
-            pw.Container(
+            pw.Align(
               alignment: pw.Alignment.centerRight,
-              child: pw.Row(
-                children: [
-                  pw.Spacer(flex: 6),
-                  pw.Expanded(
-                    flex: 4,
-                    child: pw.Column(
-                      crossAxisAlignment: pw.CrossAxisAlignment.start,
-                      children: [
-                        pw.Row(
-                          children: [
-                            pw.Expanded(
-                              child: pw.Text(
-                                'Net total',
-                                style: pw.TextStyle(
-                                  fontWeight: pw.FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            pw.Text(
-                              '\$ 464',
-                              style: pw.TextStyle(
-                                fontWeight: pw.FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                        pw.Row(
-                          children: [
-                            pw.Expanded(
-                              child: pw.Text(
-                                'Vat 19.5 %',
-                                style: pw.TextStyle(
-                                  fontWeight: pw.FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            pw.Text(
-                              '\$ 90.48',
-                              style: pw.TextStyle(
-                                fontWeight: pw.FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                        pw.Divider(),
-                        pw.Row(
-                          children: [
-                            pw.Expanded(
-                              child: pw.Text(
-                                'Total amount due',
-                                style: pw.TextStyle(
-                                  fontSize: 14.0,
-                                  fontWeight: pw.FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            pw.Text(
-                              '\$ 554.48',
-                              style: pw.TextStyle(
-                                fontWeight: pw.FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                        pw.SizedBox(height: 2 * PdfPageFormat.mm),
-                        pw.Container(height: 1, color: PdfColors.grey400),
-                        pw.SizedBox(height: 0.5 * PdfPageFormat.mm),
-                        pw.Container(height: 1, color: PdfColors.grey400),
-                      ],
+              child: pw.Text(
+                pdfDateTimeFormat.format(order.created.toLocal()),
+                style: pw.TextStyle(
+                  fontSize: 8.0,
+                  fontWeight: pw.FontWeight.bold,
+                ),
+              ),
+            ),
+            pw.SizedBox(height: 3 * PdfPageFormat.mm),
+            pw.Row(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              children: [
+                pw.Expanded(
+                  child: pw.Text(
+                    'Order Id:',
+                    style: pw.TextStyle(
+                      fontSize: 7.0,
+                      fontWeight: pw.FontWeight.bold,
                     ),
                   ),
-                ],
-              ),
+                ),
+                pw.Expanded(
+                  flex: 3,
+                  child: pw.Text(
+                    order.tailorNote.isNotNullOrEmpty
+                        ? '${order.id} - ${order.tailorNote}'
+                        : order.id,
+                    maxLines: 2,
+                    overflow: pw.TextOverflow.clip,
+                    style: const pw.TextStyle(fontSize: 7.0),
+                  ),
+                ),
+              ],
             ),
+            pw.SizedBox(height: 0.5 * PdfPageFormat.mm),
+            pw.Row(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              children: [
+                pw.Expanded(
+                  child: pw.Text(
+                    'Home Delivery:',
+                    style: pw.TextStyle(
+                      fontSize: 7.0,
+                      fontWeight: pw.FontWeight.bold,
+                    ),
+                  ),
+                ),
+                pw.Expanded(
+                  flex: 3,
+                  child: pw.Text(
+                    order.deliveryEmployee == null
+                        ? 'No'
+                        : 'Yes - (${order.deliveryEmployee!.name})',
+                    maxLines: 2,
+                    overflow: pw.TextOverflow.clip,
+                    style: const pw.TextStyle(fontSize: 7.0),
+                  ),
+                ),
+              ],
+            ),
+            pw.SizedBox(height: 0.5 * PdfPageFormat.mm),
+            pw.Row(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              children: [
+                pw.Expanded(
+                  child: pw.Text(
+                    'Inventory Purchase:',
+                    style: pw.TextStyle(
+                      fontSize: 7.0,
+                      fontWeight: pw.FontWeight.bold,
+                    ),
+                  ),
+                ),
+                pw.Expanded(
+                  flex: 3,
+                  child: pw.Text(
+                    order.inventory == null
+                        ? 'No'
+                        : 'Yes - (${order.inventory!.title} - ${order.inventoryQuantity} ${order.inventoryUnit!.symbol})',
+                    maxLines: 2,
+                    overflow: pw.TextOverflow.clip,
+                    style: const pw.TextStyle(fontSize: 7.0),
+                  ),
+                ),
+              ],
+            ),
+            pw.SizedBox(height: 0.5 * PdfPageFormat.mm),
+            pw.Row(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              children: [
+                pw.Expanded(
+                  child: pw.Text(
+                    'Delivery Time:',
+                    style: pw.TextStyle(
+                      fontSize: 7.0,
+                      fontWeight: pw.FontWeight.bold,
+                    ),
+                  ),
+                ),
+                pw.Expanded(
+                  flex: 3,
+                  child: pw.Text(
+                    pdfDateTimeFormat.format(order.deliveryTime),
+                    maxLines: 2,
+                    overflow: pw.TextOverflow.clip,
+                    style: pw.TextStyle(
+                      fontSize: 7.0,
+                      color: PdfColors.teal,
+                      fontWeight: pw.FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            pw.SizedBox(height: 5 * PdfPageFormat.mm),
+            pw.Table(
+              border: null,
+              columnWidths: {
+                0: const pw.FractionColumnWidth(0.2),
+                1: const pw.FractionColumnWidth(0.8),
+              },
+              children: [
+                pw.TableRow(
+                  decoration: pw.BoxDecoration(
+                    borderRadius: pw.BorderRadius.circular(4.0),
+                    border: pw.Border.all(color: PdfColors.teal),
+                  ),
+                  children: List.generate(
+                    tailorTableHeaders.length,
+                    (i) => pw.Container(
+                      padding: const pw.EdgeInsets.all(5.0),
+                      child: pw.Text(
+                        tailorTableHeaders[i],
+                        textAlign: pw.TextAlign.center,
+                        style: pw.TextStyle(
+                          fontWeight: pw.FontWeight.bold,
+                          fontSize: 8.0,
+                          color: PdfColors.teal,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                ...List.generate(
+                  tailorTableItems.length,
+                  (oi) => pw.TableRow(
+                    children: List.generate(
+                      tailorTableItems[oi].length,
+                      (ii) => pw.Container(
+                        padding: const pw.EdgeInsets.all(5.0),
+                        child: pw.Text(
+                          tailorTableItems[oi][ii],
+                          textAlign: ii == 1
+                              ? pw.TextAlign.justify
+                              : pw.TextAlign.left,
+                          style: pw.TextStyle(
+                            fontWeight: ii == 0
+                                ? pw.FontWeight.bold
+                                : pw.FontWeight.normal,
+                            fontSize: 8.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            pw.Divider(color: PdfColors.teal),
           ];
-        },
-        footer: (context) {
-          return pw.Column(
-            mainAxisSize: pw.MainAxisSize.min,
-            children: [
-              pw.Divider(),
-              pw.SizedBox(height: 2 * PdfPageFormat.mm),
-              pw.Text(
-                'Smiling Tailor',
-                style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-              ),
-              pw.SizedBox(height: 1 * PdfPageFormat.mm),
-              pw.Row(
-                mainAxisAlignment: pw.MainAxisAlignment.center,
-                children: [
-                  pw.Text(
-                    'Address: ',
-                    style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-                  ),
-                  pw.Text(
-                    'Merul Badda, Anandanagor, Dhaka 1212',
-                  ),
-                ],
-              ),
-              pw.SizedBox(height: 1 * PdfPageFormat.mm),
-              pw.Row(
-                mainAxisAlignment: pw.MainAxisAlignment.center,
-                children: [
-                  pw.Text(
-                    'Email: ',
-                    style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-                  ),
-                  pw.Text(
-                    'smilingtailor@algoramming.com',
-                  ),
-                ],
-              ),
-            ],
-          );
         },
       ),
     );

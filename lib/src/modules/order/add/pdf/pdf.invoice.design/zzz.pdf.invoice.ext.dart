@@ -82,7 +82,7 @@ extension SamplePdfInvoice on PdfInvoice {
             /// PDF Table Create
             ///
             pw.TableHelper.fromTextArray(
-              headers: tableHeaders,
+              headers: customerTableHeaders,
               data: tableData,
               border: null,
               headerStyle: pw.TextStyle(fontWeight: pw.FontWeight.bold),

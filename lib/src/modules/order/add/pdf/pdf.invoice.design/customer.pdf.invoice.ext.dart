@@ -9,23 +9,9 @@ extension CustomerPdfInvoice on PdfInvoice {
       pw.MultiPage(
         footer: pdfFooter,
         header: (_) => pdfHeader(name),
-        pageTheme: pw.PageTheme(
-          pageFormat: PdfPageFormat.a5,
-          margin: const pw.EdgeInsets.all(25.0),
-          buildForeground: (context) => pw.Align(
-            alignment: pw.Alignment.center,
-            child: pw.Opacity(
-              opacity: 0.2,
-              child: pw.Image(
-                pw.MemoryImage(icon),
-                width: 200,
-                height: 200,
-              ),
-            ),
-          ),
-        ),
+        pageTheme: pdfPageTheme(name),
         crossAxisAlignment: pw.CrossAxisAlignment.center,
-        build: (context) {
+        build: (_) {
           return [
             pw.Row(
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
@@ -88,8 +74,9 @@ extension CustomerPdfInvoice on PdfInvoice {
                 ),
               ),
             ),
-            pw.SizedBox(height: 5 * PdfPageFormat.mm),
+            pw.SizedBox(height: 3 * PdfPageFormat.mm),
             pw.Row(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
                 pw.Expanded(
                   child: pw.Text(
@@ -104,7 +91,7 @@ extension CustomerPdfInvoice on PdfInvoice {
                   flex: 3,
                   child: pw.Text(
                     order.description.isNotNullOrEmpty
-                        ? '${order.id} - ${order.description?.first50Words}'
+                        ? '${order.id} - ${order.description}'
                         : order.id,
                     maxLines: 2,
                     overflow: pw.TextOverflow.clip,
@@ -115,6 +102,7 @@ extension CustomerPdfInvoice on PdfInvoice {
             ),
             pw.SizedBox(height: 0.5 * PdfPageFormat.mm),
             pw.Row(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
                 pw.Expanded(
                   child: pw.Text(
@@ -140,6 +128,7 @@ extension CustomerPdfInvoice on PdfInvoice {
             ),
             pw.SizedBox(height: 0.5 * PdfPageFormat.mm),
             pw.Row(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
                 pw.Expanded(
                   child: pw.Text(
@@ -165,6 +154,7 @@ extension CustomerPdfInvoice on PdfInvoice {
             ),
             pw.SizedBox(height: 0.5 * PdfPageFormat.mm),
             pw.Row(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
                 pw.Expanded(
                   child: pw.Text(
@@ -190,6 +180,7 @@ extension CustomerPdfInvoice on PdfInvoice {
             ),
             pw.SizedBox(height: 0.5 * PdfPageFormat.mm),
             pw.Row(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
                 pw.Expanded(
                   child: pw.Text(
@@ -231,11 +222,11 @@ extension CustomerPdfInvoice on PdfInvoice {
                     border: pw.Border.all(color: PdfColors.teal),
                   ),
                   children: List.generate(
-                    tableHeaders.length,
+                    customerTableHeaders.length,
                     (i) => pw.Container(
                       padding: const pw.EdgeInsets.all(5.0),
                       child: pw.Text(
-                        tableHeaders[i],
+                        customerTableHeaders[i],
                         textAlign: pw.TextAlign.center,
                         style: pw.TextStyle(
                           fontWeight: pw.FontWeight.bold,
@@ -247,14 +238,14 @@ extension CustomerPdfInvoice on PdfInvoice {
                   ),
                 ),
                 ...List.generate(
-                  tableItems.length,
+                  customerTableItems.length,
                   (oi) => pw.TableRow(
                     children: List.generate(
-                      tableItems[oi].length,
+                      customerTableItems[oi].length,
                       (ii) => pw.Container(
                         padding: const pw.EdgeInsets.all(5.0),
                         child: pw.Text(
-                          tableItems[oi][ii],
+                          customerTableItems[oi][ii],
                           textAlign: ii == 0
                               ? pw.TextAlign.justify
                               : ii == 1

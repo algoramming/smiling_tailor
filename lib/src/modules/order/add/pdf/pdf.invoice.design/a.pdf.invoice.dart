@@ -2,15 +2,15 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import '../../../../../db/db.dart';
-import '../../../enum/order.enum.dart';
-import '../../../../settings/model/settings.model.dart';
-import '../../../../transaction/enum/trx.type.dart';
-import '../../../../transaction/model/transaction.dart';
-import '../../../../../utils/extensions/extensions.dart';
 
+import '../../../../../db/db.dart';
+import '../../../../../utils/extensions/extensions.dart';
+import '../../../../settings/model/settings.model.dart';
 import '../../../../settings/provider/date.format.provider.dart';
 import '../../../../settings/provider/time.format.provider.dart';
+import '../../../../transaction/enum/trx.type.dart';
+import '../../../../transaction/model/transaction.dart';
+import '../../../enum/order.enum.dart';
 import '../../../model/order.dart';
 import '../file.handle.dart';
 
@@ -52,21 +52,57 @@ class PdfInvoice {
   double get totalGiven => paymentOthersTrxs.fold(
       0.0, (p, c) => p + (c.trxType.isCredit ? c.amount : -c.amount));
 
-  final tableHeaders = [
+  final customerTableHeaders = [
     'Description',
     'Quantity',
     'Unit Price',
     'Total',
   ];
 
-  List<List<String>> get tableItems => [
+  final tailorTableHeaders = [
+    'Topic',
+    'Description',
+  ];
+
+  List<List<String>> get tailorTableItems => [
+        [
+          'Plate',
+          order.plate.toString(),
+        ],
+        [
+          'Sleeve',
+          order.sleeve.toString(),
+        ],
+        [
+          'Collar',
+          order.colar.toString(),
+        ],
+        [
+          'Pocket',
+          order.pocket.toString(),
+        ],
+        [
+          'Button',
+          order.button.toString(),
+        ],
+        [
+          'Measurement',
+          order.measurement.toString(),
+        ],
+        [
+          'Others',
+          order.measurementNote.toString(),
+        ],
+      ];
+
+  List<List<String>> get customerTableItems => [
         [
           order.tailorNote.isNotNullOrEmpty
               ? 'Tailor Charge - ${order.tailorNote}'
               : 'Tailor Charge',
           order.quantity.toString(),
-          '${tailorTrx?.amount ?? 0.0 / order.quantity}',
-          '${tailorTrx?.amount ?? 0.0}',
+          ((tailorTrx?.amount ?? 0.0) / order.quantity).toStringAsFixed(1),
+          (tailorTrx?.amount ?? 0.0).toStringAsFixed(1),
         ],
         if (order.inventory != null)
           [
@@ -74,8 +110,10 @@ class PdfInvoice {
                 ? 'Inventory Charge - ${order.inventoryNote}'
                 : 'Inventory Charge',
             '${order.inventoryQuantity ?? 0}',
-            '${(inventoryPurchaseTrx?.amount ?? 0.0) / (order.inventoryQuantity ?? 0.0)}',
-            '${inventoryPurchaseTrx?.amount ?? 0.0}',
+            ((inventoryPurchaseTrx?.amount ?? 0.0) /
+                    (order.inventoryQuantity ?? 0.0))
+                .toStringAsFixed(1),
+            (inventoryPurchaseTrx?.amount ?? 0.0).toStringAsFixed(1),
           ],
         if (order.deliveryEmployee != null)
           [
@@ -83,10 +121,40 @@ class PdfInvoice {
                 ? 'Delivery Charge - ${order.deliveryNote}'
                 : 'Delivery Charge',
             '',
-            '${deliveryTrx?.amount ?? 0.0}',
-            '${deliveryTrx?.amount ?? 0.0}',
+            (deliveryTrx?.amount ?? 0.0).toStringAsFixed(1),
+            (deliveryTrx?.amount ?? 0.0).toStringAsFixed(1),
           ],
       ];
+
+  pw.PageTheme pdfPageTheme(String name) => pw.PageTheme(
+        pageFormat: PdfPageFormat.a5,
+        margin: const pw.EdgeInsets.all(25.0),
+        buildForeground: (context) => pw.Align(
+          alignment: pw.Alignment.center,
+          child: pw.Opacity(
+            opacity: 0.2,
+            child: pw.Column(
+              mainAxisAlignment: pw.MainAxisAlignment.center,
+              children: [
+                pw.Image(
+                  pw.MemoryImage(icon),
+                  width: 200,
+                  height: 200,
+                ),
+                pw.SizedBox(height: 2 * PdfPageFormat.mm),
+                pw.Text(
+                  '${name.capitalize} Copy',
+                  style: pw.TextStyle(
+                    fontSize: 20.0,
+                    color: PdfColors.teal,
+                    fontWeight: pw.FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
 
   pw.Widget pdfHeader(String name) {
     return pw.Row(

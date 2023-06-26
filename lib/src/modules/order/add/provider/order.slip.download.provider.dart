@@ -59,7 +59,7 @@ class OrderSlipDownloadProvider
         'img': 'assets/svgs/tailor-copy.svg'
       },
     ];
-    _selectedSlipOptions = [false, true, false];
+    _selectedSlipOptions = [true, true, true];
     _downloadOptions = [
       {
         'title': 'Download as PDF',

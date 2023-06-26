@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:path/path.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -63,7 +64,21 @@ class FileHandle {
   }
 
   // delete pdf file function
-  static Future<void> deleteDocument(File file) async => await file.delete();
+  static Future<void> deleteDocument(File file) async {
+    try {
+      await file.delete();
+    } catch (e) {
+      if (e is FileSystemException) {
+        final errorCode = e.osError?.errorCode;
+        if (errorCode == 32) {
+          EasyLoading.showError(
+              'Cannot delete the file because it is being used by another process.');
+          return;
+        }
+      }
+      EasyLoading.showError('$e');
+    }
+  }
 
   // share pdf file function
   static Future<void> shareDocuments(List<dynamic> files,

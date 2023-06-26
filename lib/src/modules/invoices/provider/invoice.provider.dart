@@ -99,6 +99,14 @@ class InvoiceProvider extends AutoDisposeAsyncNotifier<List<File>> {
         await FileHandle.deleteDocument(e);
       }
     } catch (e) {
+      if (e is FileSystemException) {
+        final errorCode = e.osError?.errorCode;
+        if (errorCode == 32) {
+          EasyLoading.showError(
+              'Cannot delete the file because it is being used by another process.');
+          return;
+        }
+      }
       EasyLoading.showError('$e');
     }
   }
