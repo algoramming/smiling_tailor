@@ -11,8 +11,8 @@ import '../../../../shared/loading_widget/loading_widget.dart';
 import '../../../../shared/page_not_found/page_not_found.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
-import '../../../../utils/logger/logger_helper.dart';
 import '../../../authentication/model/user.dart';
+import '../../../transaction/api/trx.api.dart';
 import '../../../transaction/enum/trx.type.dart';
 import '../../../transaction/model/transaction.dart';
 import '../../provider/all.users.provider.dart';
@@ -114,7 +114,8 @@ class _UserTrxList extends ConsumerWidget {
                           child: KListTile(
                             key: ValueKey(trx.id),
                             canEdit: false,
-                            onDeleteTap: () => log.i('On Delete Tap'),
+                            onDeleteTap: () async =>
+                                await trxDeletePopup(context, trx),
                             onLongPress: () async =>
                                 await copyToClipboard(context, trx.id),
                             padding: const EdgeInsets.symmetric(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../model/employee.trx.dart';
 
 import '../../../../config/constants.dart';
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
@@ -13,8 +14,8 @@ import '../../../../shared/loading_widget/loading_widget.dart';
 import '../../../../shared/page_not_found/page_not_found.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
-import '../../../../utils/logger/logger_helper.dart';
 import '../../../../utils/transations/fade.switcher.dart';
+import '../../../transaction/api/trx.api.dart';
 import '../../../transaction/enum/trx.type.dart';
 import '../../../transaction/model/transaction.dart';
 import '../../add/view/add.employee.popup.dart';
@@ -66,8 +67,8 @@ class EmployeeDetails extends ConsumerWidget {
                       onPressed: () async => await showDialog(
                         context: context,
                         barrierDismissible: false,
-                        builder: (_) =>
-                            AddTrxEmployeePopup(notifier.selectedEmployee!),
+                        builder: (_) => AddTrxEmployeePopup(
+                            EmployeeTrx(notifier.selectedEmployee!)),
                       ),
                       icon: const Icon(Icons.add),
                       label: const Text('Transaction'),
@@ -193,8 +194,18 @@ class _TrxList extends ConsumerWidget {
                           child: KListTile(
                             key: ValueKey(trx.id),
                             isSystemGenerated: trx.isSystemGenerated,
-                            onEditTap: () => log.i('On Edit Tap'),
-                            onDeleteTap: () => log.i('On Delete Tap'),
+                            onEditTap: () async => await showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (_) => AddTrxEmployeePopup(
+                                EmployeeTrx(
+                                  notifier.selectedEmployee!,
+                                  trx: trx,
+                                ),
+                              ),
+                            ),
+                            onDeleteTap: () async =>
+                                await trxDeletePopup(context, trx),
                             onLongPress: () async =>
                                 await copyToClipboard(context, trx.id),
                             padding: const EdgeInsets.symmetric(

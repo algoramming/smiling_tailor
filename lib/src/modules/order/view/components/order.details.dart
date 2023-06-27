@@ -17,6 +17,7 @@ import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/logger/logger_helper.dart';
 import '../../../../utils/transations/fade.switcher.dart';
 import '../../../settings/model/settings.model.dart';
+import '../../../transaction/api/trx.api.dart';
 import '../../../transaction/enum/trx.type.dart';
 import '../../../transaction/model/transaction.dart';
 import '../../add/view/add.order.popup.dart';
@@ -134,7 +135,8 @@ class _TrxList extends ConsumerWidget {
                               key: ValueKey(trx.id),
                               isSystemGenerated: trx.isSystemGenerated,
                               onEditTap: () => log.i('On Edit Tap'),
-                              onDeleteTap: () => log.i('On Delete Tap'),
+                              onDeleteTap: () async =>
+                                  await trxDeletePopup(context, trx),
                               onLongPress: () async =>
                                   await copyToClipboard(context, trx.id),
                               padding: const EdgeInsets.symmetric(

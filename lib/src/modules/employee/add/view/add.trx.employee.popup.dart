@@ -7,21 +7,23 @@ import '../../../../db/db.dart';
 import '../../../../shared/animations_widget/animated_popup.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
-import '../../model/employee.dart';
+import '../../model/employee.trx.dart';
 import '../provider/add.trx.employee.provider.dart';
 
 class AddTrxEmployeePopup extends ConsumerWidget {
-  const AddTrxEmployeePopup(this.employee, {super.key});
+  const AddTrxEmployeePopup(this.employeeTrx, {super.key});
 
-  final PktbsEmployee employee;
+  final EmployeeTrx employeeTrx;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(addTrxEmployeeProvider(employee));
-    final notifier = ref.read(addTrxEmployeeProvider(employee).notifier);
+    ref.watch(addTrxEmployeeProvider(employeeTrx));
+    final notifier = ref.read(addTrxEmployeeProvider(employeeTrx).notifier);
     return AnimatedPopup(
       child: AlertDialog(
-        title: const Text('Add Transaction'),
+        title: Text(
+          employeeTrx.trx == null ? 'Add Transaction' : 'Edit Transaction',
+        ),
         content: SizedBox(
           width: min(400, context.width),
           child: Form(
@@ -36,7 +38,7 @@ class AddTrxEmployeePopup extends ConsumerWidget {
                     style: context.text.labelLarge,
                     children: [
                       TextSpan(
-                        text: '${employee.name}\'s',
+                        text: '${employeeTrx.employee.name}\'s',
                         style: context.text.labelLarge!
                             .copyWith(color: context.theme.primaryColor),
                       ),
@@ -45,7 +47,7 @@ class AddTrxEmployeePopup extends ConsumerWidget {
                         style: context.text.labelLarge,
                       ),
                       TextSpan(
-                        text: employee.salary.toString(),
+                        text: employeeTrx.employee.salary.toString(),
                         style: context.text.labelLarge!
                             .copyWith(color: context.theme.primaryColor),
                       ),
@@ -131,8 +133,11 @@ class AddTrxEmployeePopup extends ConsumerWidget {
           ),
           TextButton(
             onPressed: () async => await notifier.submit(context),
-            child: const Text('Add Transaction',
-                style: TextStyle(color: Colors.red)),
+            child: Text(
+                employeeTrx.trx == null
+                    ? 'Add Transaction'
+                    : 'Update Transaction',
+                style: const TextStyle(color: Colors.red)),
           ),
         ],
       ),
