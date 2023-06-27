@@ -202,11 +202,11 @@ class _Tile extends StatelessWidget {
           ? null
           : RotatedCornerDecoration.withColor(
               color: context.theme.primaryColor,
-              badgeSize: const Size(46, 46),
+              badgeSize: const Size(32, 32),
               badgeCornerRadius: const Radius.circular(15),
               badgePosition: BadgePosition.topStart,
               textSpan: TextSpan(
-                text: 'Sys Gen',
+                text: 'SG',
                 style: context.text.labelSmall!.copyWith(fontSize: 9),
               ),
             ),
