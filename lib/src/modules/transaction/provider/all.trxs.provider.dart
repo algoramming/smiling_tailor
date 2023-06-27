@@ -31,21 +31,23 @@ class AllTrxsProvider extends AsyncNotifier<List<PktbsTrx>> {
     // Implement Stream needs pocketbase update to add filter and expand options then the autodispose had to remove
     pb.collection(transactions).subscribe('*', (s) async {
       log.i('Stream $s');
-      await pb
-          .collection(transactions)
-          .getOne(s.record!.toJson()['id'], expand: pktbsTrxExpand)
-          .then((trx) {
-        log.i('Stream After Get Trx: $trx');
-        if (s.action == 'create') {
-          _trxs.add(PktbsTrx.fromJson(trx.toJson()));
-        } else if (s.action == 'update') {
-          _trxs.removeWhere((e) => e.id == trx.id);
-          _trxs.add(PktbsTrx.fromJson(trx.toJson()));
-        } else if (s.action == 'delete') {
-          _trxs.removeWhere((e) => e.id == trx.id);
-        }
-        ref.notifyListeners();
-      });
+      if (s.action == 'delete') {
+        _trxs.removeWhere((e) => e.id == s.record!.toJson()['id']);
+      } else {
+        await pb
+            .collection(transactions)
+            .getOne(s.record!.toJson()['id'], expand: pktbsTrxExpand)
+            .then((trx) {
+          log.i('Stream After Get Trx: $trx');
+          if (s.action == 'create') {
+            _trxs.add(PktbsTrx.fromJson(trx.toJson()));
+          } else if (s.action == 'update') {
+            _trxs.removeWhere((e) => e.id == trx.id);
+            _trxs.add(PktbsTrx.fromJson(trx.toJson()));
+          }
+        });
+      }
+      ref.notifyListeners();
     });
   }
 }

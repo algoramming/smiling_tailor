@@ -38,21 +38,23 @@ class InventoryProvider extends AsyncNotifier<List<PktbsInventory>> {
     // Implement Stream needs pocketbase update to add filter and expand options then the autodispose had to remove
     pb.collection(inventories).subscribe('*', (s) async {
       log.i('Stream $s');
-      await pb
-          .collection(inventories)
-          .getOne(s.record!.toJson()['id'], expand: pktbsInventoryExpand)
-          .then((inven) {
-        log.i('Stream After Get Inventory: $inven');
-        if (s.action == 'create') {
-          _inventories.add(PktbsInventory.fromJson(inven.toJson()));
-        } else if (s.action == 'update') {
-          _inventories.removeWhere((e) => e.id == inven.id);
-          _inventories.add(PktbsInventory.fromJson(inven.toJson()));
-        } else if (s.action == 'delete') {
-          _inventories.removeWhere((e) => e.id == inven.id);
-        }
-        ref.notifyListeners();
-      });
+      if (s.action == 'delete') {
+        _inventories.removeWhere((e) => e.id == s.record!.toJson()['id']);
+      } else {
+        await pb
+            .collection(inventories)
+            .getOne(s.record!.toJson()['id'], expand: pktbsInventoryExpand)
+            .then((inven) {
+          log.i('Stream After Get Inventory: $inven');
+          if (s.action == 'create') {
+            _inventories.add(PktbsInventory.fromJson(inven.toJson()));
+          } else if (s.action == 'update') {
+            _inventories.removeWhere((e) => e.id == inven.id);
+            _inventories.add(PktbsInventory.fromJson(inven.toJson()));
+          }
+        });
+      }
+      ref.notifyListeners();
     });
   }
 

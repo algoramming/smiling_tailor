@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../model/vendor.trx.dart';
+import '../../../transaction/api/trx.api.dart';
 
 import '../../../../config/constants.dart';
 import '../../../../db/db.dart';
@@ -15,13 +15,13 @@ import '../../../../shared/loading_widget/loading_widget.dart';
 import '../../../../shared/page_not_found/page_not_found.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
-import '../../../../utils/logger/logger_helper.dart';
 import '../../../../utils/transations/fade.switcher.dart';
 import '../../../settings/model/settings.model.dart';
 import '../../../transaction/enum/trx.type.dart';
 import '../../../transaction/model/transaction.dart';
 import '../../add/view/add.trx.vendor.popup.dart';
 import '../../add/view/add.vendor.popup.dart';
+import '../../model/vendor.trx.dart';
 import '../../provider/vendor.provider.dart';
 import '../../provider/vendor.trxs.provider.dart';
 
@@ -201,7 +201,8 @@ class _TrxList extends ConsumerWidget {
                                 ),
                               ),
                             ),
-                            onDeleteTap: () => log.i('On Delete Tap'),
+                            onDeleteTap: () async =>
+                                await trxDeletePopup(context, trx),
                             onLongPress: () async =>
                                 await copyToClipboard(context, trx.id),
                             padding: const EdgeInsets.symmetric(

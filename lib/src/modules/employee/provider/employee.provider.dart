@@ -38,21 +38,23 @@ class EmployeeProvider extends AsyncNotifier<List<PktbsEmployee>> {
     // Implement Stream needs pocketbase update to add filter and expand options then the autodispose had to remove
     pb.collection(employees).subscribe('*', (s) async {
       log.i('Stream $s');
-      await pb
-          .collection(employees)
-          .getOne(s.record!.toJson()['id'], expand: pktbsEmployeeExpand)
-          .then((emp) {
-        log.i('Stream After Get Employee: $emp');
-        if (s.action == 'create') {
-          _employees.add(PktbsEmployee.fromJson(emp.toJson()));
-        } else if (s.action == 'update') {
-          _employees.removeWhere((e) => e.id == emp.id);
-          _employees.add(PktbsEmployee.fromJson(emp.toJson()));
-        } else if (s.action == 'delete') {
-          _employees.removeWhere((e) => e.id == emp.id);
-        }
-        ref.notifyListeners();
-      });
+      if (s.action == 'delete') {
+        _employees.removeWhere((e) => e.id == s.record!.toJson()['id']);
+      } else {
+        await pb
+            .collection(employees)
+            .getOne(s.record!.toJson()['id'], expand: pktbsEmployeeExpand)
+            .then((emp) {
+          log.i('Stream After Get Employee: $emp');
+          if (s.action == 'create') {
+            _employees.add(PktbsEmployee.fromJson(emp.toJson()));
+          } else if (s.action == 'update') {
+            _employees.removeWhere((e) => e.id == emp.id);
+            _employees.add(PktbsEmployee.fromJson(emp.toJson()));
+          }
+        });
+      }
+      ref.notifyListeners();
     });
   }
 

@@ -1,11 +1,14 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pocketbase/pocketbase.dart';
+import '../../../utils/extensions/extensions.dart';
 
 import '../../../pocketbase/auth.store/helpers.dart';
 import '../../../pocketbase/error.handle/error.handle.func.dart';
+import '../../../shared/animations_widget/animated_popup.dart';
 import '../../../shared/show_toast/awsome.snackbar/awesome.snackbar.dart';
 import '../../../shared/show_toast/awsome.snackbar/show.awesome.snackbar.dart';
 import '../../../utils/logger/logger_helper.dart';
@@ -59,7 +62,6 @@ Future<RecordModel?> pktbsAddTrx(
   }
 }
 
-
 Future<RecordModel?> pktbsUpdateTrx(BuildContext context, PktbsTrx trx) async {
   try {
     return await pb.collection(transactions).update(
@@ -90,5 +92,60 @@ Future<RecordModel?> pktbsUpdateTrx(BuildContext context, PktbsTrx trx) async {
     showAwesomeSnackbar(
         context, 'Failed!', getErrorMessage(e), MessageType.failure);
     return null;
+  }
+}
+
+Future<void> pktbsDeleteTrx(BuildContext context, PktbsTrx trx) async {
+  try {
+    await pb.collection(transactions).delete(trx.id);
+  } on SocketException catch (e) {
+    EasyLoading.showError('No Internet Connection. $e');
+  } on ClientException catch (e) {
+    log.e('Transaction Creation: $e');
+    showAwesomeSnackbar(
+        context, 'Failed!', getErrorMessage(e), MessageType.failure);
+  }
+}
+
+Future<void> trxDeletePopup(BuildContext context, PktbsTrx trx) async {
+  await showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (_) => DeleteTrxAlertDialog(trx),
+  );
+}
+
+class DeleteTrxAlertDialog extends StatelessWidget {
+  const DeleteTrxAlertDialog(this.trx, {super.key});
+
+  final PktbsTrx trx;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedPopup(
+      child: AlertDialog(
+        title: const Text('Delete Transaction'),
+        content: SizedBox(
+          width: min(400, context.width),
+          child: Text(
+              'Are you sure you want to delete this transaction (#${trx.id}) ? This action cannot be undone.'),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => context.pop(),
+            child: Text(
+              'Cancel',
+              style:
+                  TextStyle(color: context.theme.dividerColor.withOpacity(0.8)),
+            ),
+          ),
+          TextButton(
+            onPressed: () async =>
+                await pktbsDeleteTrx(context, trx).then((_) => context.pop()),
+            child: const Text('Delete', style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
   }
 }

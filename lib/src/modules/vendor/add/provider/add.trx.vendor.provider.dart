@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../transaction/model/transaction.dart';
-import '../../model/vendor.trx.dart';
 
 import '../../../../pocketbase/auth.store/helpers.dart';
 import '../../../../shared/show_toast/awsome.snackbar/awesome.snackbar.dart';
@@ -9,7 +7,9 @@ import '../../../../shared/show_toast/awsome.snackbar/show.awesome.snackbar.dart
 import '../../../../utils/extensions/extensions.dart';
 import '../../../transaction/api/trx.api.dart';
 import '../../../transaction/enum/trx.type.dart';
+import '../../../transaction/model/transaction.dart';
 import '../../model/vendor.dart';
+import '../../model/vendor.trx.dart';
 
 typedef AddTrxVendorNotifier
     = AutoDisposeNotifierProviderFamily<AddTrxVendorProvider, void, VendorTrx>;

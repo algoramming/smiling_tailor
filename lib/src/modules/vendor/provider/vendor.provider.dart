@@ -38,21 +38,23 @@ class VendorProvider extends AsyncNotifier<List<PktbsVendor>> {
     // Implement Stream needs pocketbase update to add filter and expand options then the autodispose had to remove
     pb.collection(vendors).subscribe('*', (s) async {
       log.i('Stream $s');
-      await pb
-          .collection(vendors)
-          .getOne(s.record!.toJson()['id'], expand: pktbsVendorExpand)
-          .then((ven) {
-        log.i('Stream After Get Vendor: $ven');
-        if (s.action == 'create') {
-          _vendors.add(PktbsVendor.fromJson(ven.toJson()));
-        } else if (s.action == 'update') {
-          _vendors.removeWhere((e) => e.id == ven.id);
-          _vendors.add(PktbsVendor.fromJson(ven.toJson()));
-        } else if (s.action == 'delete') {
-          _vendors.removeWhere((e) => e.id == ven.id);
-        }
-        ref.notifyListeners();
-      });
+      if (s.action == 'delete') {
+        _vendors.removeWhere((e) => e.id == s.record!.toJson()['id']);
+      } else {
+        await pb
+            .collection(vendors)
+            .getOne(s.record!.toJson()['id'], expand: pktbsVendorExpand)
+            .then((ven) {
+          log.i('Stream After Get Vendor: $ven');
+          if (s.action == 'create') {
+            _vendors.add(PktbsVendor.fromJson(ven.toJson()));
+          } else if (s.action == 'update') {
+            _vendors.removeWhere((e) => e.id == ven.id);
+            _vendors.add(PktbsVendor.fromJson(ven.toJson()));
+          }
+        });
+      }
+      ref.notifyListeners();
     });
   }
 

@@ -2,13 +2,13 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../model/vendor.dart';
-import '../../../../shared/error_widget/error_widget.dart';
-import '../../../../shared/loading_widget/loading_widget.dart';
 
 import '../../../../shared/animations_widget/animated_popup.dart';
+import '../../../../shared/error_widget/error_widget.dart';
+import '../../../../shared/loading_widget/loading_widget.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
+import '../../model/vendor.dart';
 import '../provider/add.vendor.provider.dart';
 
 class AddVendorPopup extends ConsumerWidget {

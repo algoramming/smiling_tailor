@@ -1,5 +1,4 @@
 import '../../transaction/model/transaction.dart';
-
 import 'employee.dart';
 
 class EmployeeTrx {

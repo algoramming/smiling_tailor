@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../pocketbase/auth.store/helpers.dart';
+import '../../../utils/logger/logger_helper.dart';
 import '../../authentication/model/user.dart';
 import '../../transaction/model/transaction.dart';
 import '../../transaction/provider/all.trxs.provider.dart';
@@ -32,7 +33,15 @@ class AllUsersProvider extends AsyncNotifier<List<PktbsUser>> {
 
   _stream() {
     pb.collection(users).subscribe('*', (s) {
-      _users.add(PktbsUser.fromJson(s.record!.toJson()));
+      log.i('Stream $s');
+      if (s.action == 'create') {
+        _users.add(PktbsUser.fromJson(s.record!.toJson()));
+      } else if (s.action == 'update') {
+        _users.removeWhere((e) => e.id == s.record!.toJson()['id']);
+        _users.add(PktbsUser.fromJson(s.record!.toJson()));
+      } else if (s.action == 'delete') {
+        _users.removeWhere((e) => e.id == s.record!.toJson()['id']);
+      }
       ref.notifyListeners();
     });
   }
