@@ -5,7 +5,7 @@ import '../../../../pocketbase/auth.store/helpers.dart';
 import '../../../../shared/show_toast/awsome.snackbar/awesome.snackbar.dart';
 import '../../../../shared/show_toast/awsome.snackbar/show.awesome.snackbar.dart';
 import '../../../../utils/extensions/extensions.dart';
-import '../../../transaction/api/add.trx.api.dart';
+import '../../../transaction/api/trx.api.dart';
 import '../../../transaction/enum/trx.type.dart';
 import '../../model/order.dart';
 

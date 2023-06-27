@@ -13,7 +13,7 @@ import '../../../utils/extensions/extensions.dart';
 import '../../../utils/logger/logger_helper.dart';
 import '../../employee/model/employee.dart';
 import '../../inventory/model/inventory.dart';
-import '../../transaction/api/add.trx.api.dart';
+import '../../transaction/api/trx.api.dart';
 import '../../transaction/enum/trx.type.dart';
 import '../add/provider/add.order.provider.dart';
 import '../add/view/order.slip.download.popup.dart';

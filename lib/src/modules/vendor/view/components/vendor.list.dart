@@ -13,6 +13,7 @@ import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/logger/logger_helper.dart';
 import '../../../../utils/transations/fade.switcher.dart';
+import '../../add/view/add.vendor.popup.dart';
 import '../../provider/vendor.provider.dart';
 
 class VendorList extends ConsumerWidget {
@@ -37,57 +38,62 @@ class VendorList extends ConsumerWidget {
           child: ref.watch(vendorProvider).when(
               loading: () => const LoadingWidget(withScaffold: false),
               error: (err, _) => KErrorWidget(error: err),
-              data: (_) =>  FadeSwitcherTransition(
-                child: notifier.vendorList.isEmpty
-                    ? const KDataNotFound(msg: 'No Vendor Found!')
-                    : SlidableAutoCloseBehavior(
-                        child: ListView.builder(
-                          itemCount: notifier.vendorList.length,
-                          itemBuilder: (_, idx) {
-                            final vendor = notifier.vendorList[idx];
-                            return Card(
-                              child: KListTile(
-                                key: ValueKey(vendor.id),
-                                onEditTap: () => log.i('On Edit Tap'),
-                                onDeleteTap: () => log.i('On Delete Tap'),
-                                selected: notifier.selectedVendor == vendor,
-                                onTap: () => notifier.selectVendor(vendor),
-                                onLongPress: () async =>
-                                    await copyToClipboard(context, vendor.id),
-                                leading: AnimatedWidgetShower(
-                                  size: 30.0,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: SvgPicture.asset(
-                                      'assets/svgs/vendor.svg',
-                                      colorFilter:
-                                          context.theme.primaryColor.toColorFilter,
-                                      semanticsLabel: 'Vendor',
+              data: (_) => FadeSwitcherTransition(
+                    child: notifier.vendorList.isEmpty
+                        ? const KDataNotFound(msg: 'No Vendor Found!')
+                        : SlidableAutoCloseBehavior(
+                            child: ListView.builder(
+                              itemCount: notifier.vendorList.length,
+                              itemBuilder: (_, idx) {
+                                final vendor = notifier.vendorList[idx];
+                                return Card(
+                                  child: KListTile(
+                                    key: ValueKey(vendor.id),
+                                    onEditTap: () async => await showDialog(
+                                      context: context,
+                                      barrierDismissible: false,
+                                      builder: (_) =>
+                                          AddVendorPopup(vendor: vendor),
                                     ),
+                                    onDeleteTap: () => log.i('On Delete Tap'),
+                                    selected: notifier.selectedVendor == vendor,
+                                    onTap: () => notifier.selectVendor(vendor),
+                                    onLongPress: () async =>
+                                        await copyToClipboard(
+                                            context, vendor.id),
+                                    leading: AnimatedWidgetShower(
+                                      size: 30.0,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: SvgPicture.asset(
+                                          'assets/svgs/vendor.svg',
+                                          colorFilter: context
+                                              .theme.primaryColor.toColorFilter,
+                                          semanticsLabel: 'Vendor',
+                                        ),
+                                      ),
+                                    ),
+                                    title: Text(
+                                      vendor.name,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                      style: context.text.titleSmall,
+                                    ),
+                                    subtitle: Text(
+                                      vendor.address,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      style: context.text.labelSmall!.copyWith(
+                                          fontWeight: FontWeight.normal),
+                                    ),
+                                    trailing: const Icon(
+                                        Icons.arrow_circle_right_outlined),
                                   ),
-                                ),
-                                title: Text(
-                                  vendor.name,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                  style: context.text.titleSmall,
-                                ),
-                                subtitle: Text(
-                                  vendor.address,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                  style: context.text.labelSmall!
-                                      .copyWith(fontWeight: FontWeight.normal),
-                                ),
-                                trailing:
-                                    const Icon(Icons.arrow_circle_right_outlined),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-              )
-          ),
+                                );
+                              },
+                            ),
+                          ),
+                  )),
         )
       ],
     );
