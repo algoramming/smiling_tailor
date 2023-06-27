@@ -66,7 +66,7 @@ class EmployeeDetails extends ConsumerWidget {
                       onPressed: () async => await showDialog(
                         context: context,
                         barrierDismissible: false,
-                        builder: (context) =>
+                        builder: (_) =>
                             AddTrxEmployeePopup(notifier.selectedEmployee!),
                       ),
                       icon: const Icon(Icons.add),
@@ -77,7 +77,7 @@ class EmployeeDetails extends ConsumerWidget {
                       onPressed: () async => await showDialog(
                         context: context,
                         barrierDismissible: false,
-                        builder: (context) => const AddEmployeePopup(),
+                        builder: (_) => const AddEmployeePopup(),
                       ),
                       icon: const Icon(Icons.add),
                       label: const Text('Employee'),

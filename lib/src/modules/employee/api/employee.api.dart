@@ -43,3 +43,36 @@ Future<void> pktbsAddEmployee(
     return;
   }
 }
+
+Future<void> pktbsUpdateEmployee(
+    BuildContext context, AddEmployeeProvider notifier) async {
+  try {
+    EasyLoading.show(status: 'Updating employee...');
+    await pb.collection(employees).update(
+      notifier.arg!.id,
+      body: {
+        'name': notifier.nameCntrlr.text,
+        'updator': pb.authStore.model!.id,
+        'email': notifier.emailCntrlr.text,
+        'phone': notifier.phoneCntrlr.text,
+        'address': notifier.addressCntrlr.text,
+        'description': notifier.descriptionCntrlr.text,
+        'salary': notifier.salaryCntrlr.text.toDouble ?? 0.0,
+      },
+    ).then((_) async {
+      notifier.clear();
+      context.pop();
+      showAwesomeSnackbar(context, 'Success!', 'Employee updated successfully.',
+          MessageType.success);
+    });
+    return;
+  } on SocketException catch (e) {
+    EasyLoading.showError('No Internet Connection. $e');
+    return;
+  } on ClientException catch (e) {
+    log.e('Employee updation: $e');
+    showAwesomeSnackbar(
+        context, 'Failed!', getErrorMessage(e), MessageType.failure);
+    return;
+  }
+}

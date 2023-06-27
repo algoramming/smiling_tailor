@@ -13,6 +13,7 @@ import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/logger/logger_helper.dart';
 import '../../../../utils/transations/fade.switcher.dart';
+import '../../add/view/add.employee.popup.dart';
 import '../../provider/employee.provider.dart';
 
 class EmployeeList extends ConsumerWidget {
@@ -48,7 +49,12 @@ class EmployeeList extends ConsumerWidget {
                                 return Card(
                                   child: KListTile(
                                     key: ValueKey(employee.id),
-                                    onEditTap: () => log.i('On Edit Tap'),
+                                    onEditTap: () async => await showDialog(
+                                      context: context,
+                                      barrierDismissible: false,
+                                      builder: (_) =>
+                                          AddEmployeePopup(employee: employee),
+                                    ),
                                     onDeleteTap: () => log.i('On Delete Tap'),
                                     selected:
                                         notifier.selectedEmployee == employee,

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smiling_tailor/src/modules/employee/model/employee.dart';
 
 import '../../../../shared/animations_widget/animated_popup.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
@@ -9,15 +10,17 @@ import '../../../../utils/extensions/extensions.dart';
 import '../provider/add.employee.provider.dart';
 
 class AddEmployeePopup extends ConsumerWidget {
-  const AddEmployeePopup({super.key});
+  const AddEmployeePopup({super.key, this.employee});
+
+  final PktbsEmployee? employee;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(addEmployeeProvider);
-    final notifier = ref.read(addEmployeeProvider.notifier);
+    ref.watch(addEmployeeProvider(employee));
+    final notifier = ref.read(addEmployeeProvider(employee).notifier);
     return AnimatedPopup(
       child: AlertDialog(
-        title: const Text('Add Employee'),
+        title: Text(employee == null ? 'Add Employee' : 'Edit Employee'),
         content: SizedBox(
           width: min(400, context.width),
           child: Form(
@@ -150,7 +153,7 @@ class AddEmployeePopup extends ConsumerWidget {
           ),
           TextButton(
             onPressed: () async => await notifier.submit(context),
-            child: Text('Add Employee',
+            child: Text(employee == null ? 'Add Employee' : 'Update Employee',
                 style: TextStyle(color: context.theme.primaryColor)),
           ),
         ],

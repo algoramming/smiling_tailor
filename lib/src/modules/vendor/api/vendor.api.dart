@@ -116,7 +116,7 @@ Future<void> pktbsUpdateVendor(
     EasyLoading.showError('No Internet Connection. $e');
     return;
   } on ClientException catch (e) {
-    log.e('Vendor Creation: $e');
+    log.e('Vendor Updation: $e');
     showAwesomeSnackbar(
         context, 'Failed!', getErrorMessage(e), MessageType.failure);
     return;
