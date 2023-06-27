@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/modules/vendor/model/vendor.dart';
-import 'package:smiling_tailor/src/shared/error_widget/error_widget.dart';
-import 'package:smiling_tailor/src/shared/loading_widget/loading_widget.dart';
+import '../../model/vendor.dart';
+import '../../../../shared/error_widget/error_widget.dart';
+import '../../../../shared/loading_widget/loading_widget.dart';
 
 import '../../../../shared/animations_widget/animated_popup.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';

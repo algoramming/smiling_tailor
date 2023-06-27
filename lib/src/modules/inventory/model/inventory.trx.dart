@@ -1,11 +1,11 @@
-import 'package:smiling_tailor/src/modules/inventory/model/inventory.dart';
-import 'package:smiling_tailor/src/modules/transaction/model/transaction.dart';
+import '../../transaction/model/transaction.dart';
+import 'inventory.dart';
 
 class InventoryTrx {
   final PktbsInventory inventory;
   final PktbsTrx? trx;
 
-  InventoryTrx(this.inventory, this.trx);
+  InventoryTrx(this.inventory, {this.trx});
 
   @override
   bool operator ==(Object other) {

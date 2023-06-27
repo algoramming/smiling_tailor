@@ -1,12 +1,11 @@
-import 'package:smiling_tailor/src/modules/transaction/model/transaction.dart';
-
+import '../../transaction/model/transaction.dart';
 import 'order.dart';
 
 class OrderTrx {
   final PktbsOrder order;
   final PktbsTrx? trx;
 
-  OrderTrx(this.order, this.trx);
+  OrderTrx(this.order, {this.trx});
 
   @override
   bool operator ==(Object other) {

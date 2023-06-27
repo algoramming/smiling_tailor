@@ -6,21 +6,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../shared/animations_widget/animated_popup.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
-import '../../model/vendor.dart';
+import '../../model/vendor.trx.dart';
 import '../provider/add.trx.vendor.provider.dart';
 
 class AddTrxVendorPopup extends ConsumerWidget {
-  const AddTrxVendorPopup(this.vendor, {super.key});
+  const AddTrxVendorPopup(this.vendorTrx, {super.key});
 
-  final PktbsVendor vendor;
+  final VendorTrx vendorTrx;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(addTrxVendorProvider(vendor));
-    final notifier = ref.read(addTrxVendorProvider(vendor).notifier);
+    ref.watch(addTrxVendorProvider(vendorTrx));
+    final notifier = ref.read(addTrxVendorProvider(vendorTrx).notifier);
     return AnimatedPopup(
       child: AlertDialog(
-        title: const Text('Add Transaction'),
+        title: Text(
+            vendorTrx.trx == null ? 'Add Transaction' : 'Edit Transaction'),
         content: SizedBox(
           width: min(400, context.width),
           child: Form(
@@ -35,7 +36,7 @@ class AddTrxVendorPopup extends ConsumerWidget {
                     style: context.text.labelLarge,
                     children: [
                       TextSpan(
-                        text: '${vendor.name}\'s',
+                        text: '${vendorTrx.vendor.name}\'s',
                         style: context.text.labelLarge!
                             .copyWith(color: context.theme.primaryColor),
                       ),
@@ -121,8 +122,11 @@ class AddTrxVendorPopup extends ConsumerWidget {
           ),
           TextButton(
             onPressed: () async => await notifier.submit(context),
-            child: const Text('Add Transaction',
-                style: TextStyle(color: Colors.red)),
+            child: Text(
+                vendorTrx.trx == null
+                    ? 'Add Transaction'
+                    : 'Update Transaction',
+                style: const TextStyle(color: Colors.red)),
           ),
         ],
       ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../model/vendor.trx.dart';
 
 import '../../../../config/constants.dart';
 import '../../../../db/db.dart';
@@ -67,8 +68,8 @@ class VendorDetails extends ConsumerWidget {
                       onPressed: () async => await showDialog(
                         context: context,
                         barrierDismissible: false,
-                        builder: (_) =>
-                            AddTrxVendorPopup(notifier.selectedVendor!),
+                        builder: (_) => AddTrxVendorPopup(
+                            VendorTrx(notifier.selectedVendor!)),
                       ),
                       icon: const Icon(Icons.add),
                       label: const Text('Transaction'),
@@ -190,7 +191,16 @@ class _TrxList extends ConsumerWidget {
                           child: KListTile(
                             key: ValueKey(trx.id),
                             isSystemGenerated: trx.isSystemGenerated,
-                            onEditTap: () => log.i('On Edit Tap'),
+                            onEditTap: () async => await showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (_) => AddTrxVendorPopup(
+                                VendorTrx(
+                                  notifier.selectedVendor!,
+                                  trx: trx,
+                                ),
+                              ),
+                            ),
                             onDeleteTap: () => log.i('On Delete Tap'),
                             onLongPress: () async =>
                                 await copyToClipboard(context, trx.id),

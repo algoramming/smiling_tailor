@@ -1,4 +1,4 @@
-import 'package:smiling_tailor/src/modules/transaction/model/transaction.dart';
+import '../../transaction/model/transaction.dart';
 
 import 'employee.dart';
 
@@ -6,7 +6,7 @@ class EmployeeTrx {
   final PktbsEmployee employee;
   final PktbsTrx? trx;
 
-  EmployeeTrx(this.employee, this.trx);
+  EmployeeTrx(this.employee, {this.trx});
 
   @override
   bool operator ==(Object other) {

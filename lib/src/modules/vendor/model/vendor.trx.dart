@@ -1,11 +1,11 @@
-import 'package:smiling_tailor/src/modules/transaction/model/transaction.dart';
-import 'package:smiling_tailor/src/modules/vendor/model/vendor.dart';
+import '../../transaction/model/transaction.dart';
+import 'vendor.dart';
 
 class VendorTrx {
   final PktbsVendor vendor;
   final PktbsTrx? trx;
 
-  VendorTrx(this.vendor, this.trx);
+  VendorTrx(this.vendor, {this.trx});
 
   @override
   bool operator ==(Object other) {
