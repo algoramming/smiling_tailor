@@ -84,7 +84,9 @@ class AddOrderProvider
   @override
   FutureOr<void> build(PktbsOrder? arg) async {
     if (arg != null) {
-      _trxs = await ref.watch(allTrxsProvider.future);
+      _trxs = (await ref.watch(allTrxsProvider.future))
+          .where((e) => e.fromId == arg.id || e.toId == arg.id)
+          .toList();
       //
       advanceTrx = _trxs.any((e) => e.isOrderAdvanceAmount)
           ? _trxs.firstWhere((e) => e.isOrderAdvanceAmount)
@@ -147,8 +149,9 @@ class AddOrderProvider
       tailorNoteCntrlr.text = arg.tailorNote ?? '';
       //
       inventory = arg.inventory;
-      inventoryQuantityCntrlr.text = arg.inventoryQuantity.toString();
-      inventoryUnit = arg.inventoryUnit;
+      inventoryQuantityCntrlr.text =
+          inventoryAllocationTrx?.amount.toString() ?? '1';
+      inventoryUnit = inventoryAllocationTrx?.unit;
       inventoryPriceCntrlr.text =
           inventoryPurchaseTrx?.amount.toString() ?? '0.0';
       inventoryNoteCntrlr.text = arg.inventoryNote ?? '';
@@ -171,7 +174,7 @@ class AddOrderProvider
     measurements = appMeasurements
         .where((e) => e.unitOf == 'Length' && e.name != 'Mile')
         .toList();
-    orders = ref.watch(orderProvider).value ?? [];
+    orders = (await ref.watch(orderProvider.future));
   }
 
   void setTailorEmployee(PktbsEmployee? employee) {

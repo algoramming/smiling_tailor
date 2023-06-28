@@ -45,8 +45,8 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
         // 'tailorCharge': notifier.tailorChargeCntrlr.text.toDouble,
         'tailorNote': noti.tailorNoteCntrlr.text,
         'inventory': noti.inventory!.id,
-        'inventoryQuantity': noti.inventoryQuantityCntrlr.text.toInt,
-        'inventoryUnit': noti.inventoryUnit!.name,
+        // 'inventoryQuantity': noti.inventoryQuantityCntrlr.text.toInt,
+        // 'inventoryUnit': noti.inventoryUnit!.name,
         // 'inventoryPrice': notifier.inventoryPriceCntrlr.text.toDouble,
         'inventoryNote': noti.inventoryNoteCntrlr.text,
         'deliveryEmployee': noti.deliveryEmployee?.id,
@@ -243,8 +243,8 @@ Future<RecordModel?> inventoryAllocateApi(
     toJson: order.toJson(),
     toType: order.glType,
     trxType: TrxType.credit,
-    amount: order.inventoryQuantity!.toString().toDouble ?? 0.0,
-    unit: order.inventoryUnit!.name,
+    amount: notifier.inventoryQuantityCntrlr.text.toDouble ?? 0.0,
+    unit: notifier.inventoryUnit!.name,
     isSystemGenerated: true,
     voucher: inventoryAllocationOrderVoucher,
     isGoods: true,
@@ -264,7 +264,7 @@ Future<RecordModel?> inventoryAllocateApi(
       isSystemGenerated: true,
       voucher: inventoryPurchaseOrderVoucher,
       description:
-          'System Generated: Transaction for Inventory Purchase of order #${order.id} allocated to ${order.inventory!.title} [${order.inventory!.id}] of ${order.inventoryQuantity}${order.inventoryUnit!.symbol}',
+          'System Generated: Transaction for Inventory Purchase of order #${order.id} allocated to ${order.inventory!.title} [${order.inventory!.id}] of ${notifier.inventoryQuantityCntrlr.text.toDouble ?? 0.0}${notifier.inventoryUnit!.name}',
     ),
   );
 }

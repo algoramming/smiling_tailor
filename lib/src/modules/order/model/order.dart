@@ -50,12 +50,12 @@ class PktbsOrder {
   String? customerEmail;
   String collectionName;
   String? inventoryNote;
-  int? inventoryQuantity;
+  // int? inventoryQuantity;
   String? customerAddress;
   String? measurementNote;
   String? deliveryAddress;
   PktbsInventory? inventory;
-  Measurement? inventoryUnit;
+  // Measurement? inventoryUnit;
   PaymentMethod paymentMethod;
   PktbsEmployee? tailorEmployee;
   PktbsEmployee? deliveryEmployee;
@@ -77,7 +77,7 @@ class PktbsOrder {
     this.customerNote,
     this.deliveryNote,
     this.customerEmail,
-    this.inventoryUnit,
+    // this.inventoryUnit,
     this.inventoryNote,
     this.tailorEmployee,
     required this.status,
@@ -89,7 +89,7 @@ class PktbsOrder {
     required this.creator,
     this.deliveryEmployee,
     required this.quantity,
-    this.inventoryQuantity,
+    // this.inventoryQuantity,
     required this.deliveryTime,
     required this.collectionId,
     required this.customerName,
@@ -127,7 +127,7 @@ class PktbsOrder {
       created: DateTime.parse(json[_Json.created]).toLocal(),
       creator: PktbsUser.fromJson(json[_Json.expand][_Json.creator]),
       deliveryTime: DateTime.parse(json[_Json.deliveryTime]).toLocal(),
-      inventoryQuantity: json[_Json.inventoryQuantity].toString().toInt,
+      // inventoryQuantity: json[_Json.inventoryQuantity].toString().toInt,
       updator: json[_Json.updator] == null || json[_Json.updator] == ''
           ? null
           : PktbsUser.fromJson(json[_Json.expand][_Json.updator]),
@@ -139,7 +139,7 @@ class PktbsOrder {
               json[_Json.tailorEmployee] == ''
           ? null
           : PktbsEmployee.fromJson(json[_Json.expand][_Json.tailorEmployee]),
-      inventoryUnit: (json[_Json.inventoryUnit] as String?)?.getMeasurement,
+      // inventoryUnit: (json[_Json.inventoryUnit] as String?)?.getMeasurement,
       inventory: json[_Json.inventory] == null || json[_Json.inventory] == ''
           ? null
           : PktbsInventory.fromJson(json[_Json.expand][_Json.inventory]),
@@ -155,7 +155,8 @@ class PktbsOrder {
 
   @override
   String toString() =>
-      'PktbsOrder(id: $id, created: $created, updated: $updated, creator: $creator, updator: $updator, collectionId: $collectionId, collectionName: $collectionName, customerName: $customerName, customerEmail: $customerEmail, customerPhone: $customerPhone, customerAddress: $customerAddress, customerNote: $customerNote, measurement: $measurement, plate: $plate, sleeve: $sleeve, colar: $colar, pocket: $pocket, button: $button, measurementNote: $measurementNote, quantity: $quantity, tailorEmployee: $tailorEmployee, tailorNote: $tailorNote, inventory: $inventory, inventoryQuantity: $inventoryQuantity, inventoryUnit: $inventoryUnit, inventoryNote: $inventoryNote, deliveryEmployee: $deliveryEmployee, deliveryAddress: $deliveryAddress, deliveryNote: $deliveryNote, paymentMethod: $paymentMethod, paymentNote: $paymentNote, amount: $amount, deliveryTime: $deliveryTime, description: $description, status: $status)';
+      // 'PktbsOrder(id: $id, created: $created, updated: $updated, creator: $creator, updator: $updator, collectionId: $collectionId, collectionName: $collectionName, customerName: $customerName, customerEmail: $customerEmail, customerPhone: $customerPhone, customerAddress: $customerAddress, customerNote: $customerNote, measurement: $measurement, plate: $plate, sleeve: $sleeve, colar: $colar, pocket: $pocket, button: $button, measurementNote: $measurementNote, quantity: $quantity, tailorEmployee: $tailorEmployee, tailorNote: $tailorNote, inventory: $inventory, inventoryQuantity: $inventoryQuantity, inventoryUnit: $inventoryUnit, inventoryNote: $inventoryNote, deliveryEmployee: $deliveryEmployee, deliveryAddress: $deliveryAddress, deliveryNote: $deliveryNote, paymentMethod: $paymentMethod, paymentNote: $paymentNote, amount: $amount, deliveryTime: $deliveryTime, description: $description, status: $status)';
+      'PktbsOrder(id: $id, created: $created, updated: $updated, creator: $creator, updator: $updator, collectionId: $collectionId, collectionName: $collectionName, customerName: $customerName, customerEmail: $customerEmail, customerPhone: $customerPhone, customerAddress: $customerAddress, customerNote: $customerNote, measurement: $measurement, plate: $plate, sleeve: $sleeve, colar: $colar, pocket: $pocket, button: $button, measurementNote: $measurementNote, quantity: $quantity, tailorEmployee: $tailorEmployee, tailorNote: $tailorNote, inventory: $inventory, inventoryNote: $inventoryNote, deliveryEmployee: $deliveryEmployee, deliveryAddress: $deliveryAddress, deliveryNote: $deliveryNote, paymentMethod: $paymentMethod, paymentNote: $paymentNote, amount: $amount, deliveryTime: $deliveryTime, description: $description, status: $status)';
 
   @override
   bool operator ==(Object other) {
@@ -193,7 +194,7 @@ class _Json {
   static const customerNote = 'customerNote';
   static const deliveryTime = 'deliveryTime';
   static const paymentMethod = 'paymentMethod';
-  static const inventoryUnit = 'inventoryUnit';
+  // static const inventoryUnit = 'inventoryUnit';
   static const inventoryNote = 'inventoryNote';
   static const customerEmail = 'customerEmail';
   static const customerPhone = 'customerPhone';
@@ -203,5 +204,5 @@ class _Json {
   static const measurementNote = 'measurementNote';
   static const deliveryAddress = 'deliveryAddress';
   static const deliveryEmployee = 'deliveryEmployee';
-  static const inventoryQuantity = 'inventoryQuantity';
+  // static const inventoryQuantity = 'inventoryQuantity';
 }

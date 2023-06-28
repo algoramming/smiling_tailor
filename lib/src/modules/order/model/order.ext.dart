@@ -65,7 +65,7 @@ extension OrderExtension on PktbsOrder {
         customerEmail: customerEmail ?? this.customerEmail,
         customerPhone: customerPhone ?? this.customerPhone,
         inventoryNote: inventoryNote ?? this.inventoryNote,
-        inventoryUnit: inventoryUnit ?? this.inventoryUnit,
+        // inventoryUnit: inventoryUnit ?? this.inventoryUnit,
         paymentMethod: paymentMethod ?? this.paymentMethod,
         collectionName: collectionName ?? this.collectionName,
         tailorEmployee: tailorEmployee ?? this.tailorEmployee,
@@ -73,7 +73,7 @@ extension OrderExtension on PktbsOrder {
         measurementNote: measurementNote ?? this.measurementNote,
         deliveryAddress: deliveryAddress ?? this.deliveryAddress,
         deliveryEmployee: deliveryEmployee ?? this.deliveryEmployee,
-        inventoryQuantity: inventoryQuantity ?? this.inventoryQuantity,
+        // inventoryQuantity: inventoryQuantity ?? this.inventoryQuantity,
       );
 
   Map<String, dynamic> toJson() => {
@@ -106,10 +106,10 @@ extension OrderExtension on PktbsOrder {
         _Json.deliveryAddress: deliveryAddress,
         _Json.paymentMethod: paymentMethod.label,
         _Json.tailorEmployee: tailorEmployee?.id,
-        _Json.inventoryUnit: inventoryUnit?.name,
+        // _Json.inventoryUnit: inventoryUnit?.name,
         _Json.created: created.toIso8601String(),
         _Json.updated: updated?.toIso8601String(),
-        _Json.inventoryQuantity: inventoryQuantity,
+        // _Json.inventoryQuantity: inventoryQuantity,
         _Json.deliveryEmployee: deliveryEmployee?.id,
         _Json.deliveryTime: deliveryTime.toIso8601String(),
         _Json.expand: {

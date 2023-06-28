@@ -109,9 +109,9 @@ class PdfInvoice {
             order.inventoryNote.isNotNullOrEmpty
                 ? 'Inventory Charge - ${order.inventoryNote}'
                 : 'Inventory Charge',
-            '${order.inventoryQuantity ?? 0}',
+            '${inventoryAllocationTrx?.amount ?? 0.0}',
             ((inventoryPurchaseTrx?.amount ?? 0.0) /
-                    (order.inventoryQuantity ?? 0.0))
+                    (inventoryAllocationTrx?.amount ?? 0.0))
                 .toStringAsFixed(1),
             (inventoryPurchaseTrx?.amount ?? 0.0).toStringAsFixed(1),
           ],

@@ -144,7 +144,7 @@ extension CustomerPdfInvoice on PdfInvoice {
                   child: pw.Text(
                     order.inventory == null
                         ? 'No'
-                        : 'Yes - (${order.inventory!.title} - ${order.inventoryQuantity} ${order.inventoryUnit!.symbol})',
+                        : 'Yes - (${order.inventory!.title} - ${inventoryAllocationTrx?.amount ?? 0.0} ${inventoryAllocationTrx?.unit?.symbol})',
                     maxLines: 2,
                     overflow: pw.TextOverflow.clip,
                     style: const pw.TextStyle(fontSize: 7.0),
