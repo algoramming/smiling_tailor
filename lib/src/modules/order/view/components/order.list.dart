@@ -15,6 +15,7 @@ import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/logger/logger_helper.dart';
 import '../../../../utils/themes/themes.dart';
 import '../../../../utils/transations/fade.switcher.dart';
+import '../../add/view/add.order.popup.dart';
 import '../../add/view/order.slip.download.popup.dart';
 import '../../enum/order.enum.dart';
 import '../../provider/order.provider.dart';
@@ -121,7 +122,12 @@ class OrderList extends ConsumerWidget {
                                 return Card(
                                   child: KListTile(
                                     key: ValueKey(order.id),
-                                    onEditTap: () => log.i('On Edit Tap'),
+                                    onEditTap: () async => await showDialog(
+                                      context: context,
+                                      barrierDismissible: false,
+                                      builder: (context) =>
+                                          AddOrderPopup(order: order),
+                                    ),
                                     onDeleteTap: () => log.i('On Delete Tap'),
                                     slidableAction: Theme(
                                       data: context.theme.copyWith(

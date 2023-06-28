@@ -8,6 +8,7 @@ import '../../../../shared/animations_widget/animated_popup.dart';
 import '../../../../shared/error_widget/error_widget.dart';
 import '../../../../shared/loading_widget/loading_widget.dart';
 import '../../../../utils/extensions/extensions.dart';
+import '../../model/order.dart';
 import '../provider/add.order.provider.dart';
 import 'components/customer.infos.dart';
 import 'components/delivery.infos.dart';
@@ -18,19 +19,21 @@ import 'components/payment.infos.dart';
 import 'components/tailor.infos.dart';
 
 class AddOrderPopup extends ConsumerWidget {
-  const AddOrderPopup({super.key});
+  const AddOrderPopup({super.key, this.order});
+
+  final PktbsOrder? order;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(addOrderProvider);
-    final notifier = ref.read(addOrderProvider.notifier);
+    ref.watch(addOrderProvider(order));
+    final notifier = ref.read(addOrderProvider(order).notifier);
     return AnimatedPopup(
       child: AlertDialog(
         scrollable: true,
-        title: const Text('Add Order'),
+        title: Text(order == null ? 'Add Order' : 'Edit Order'),
         content: SizedBox(
           width: min(400, context.width),
-          child: ref.watch(addOrderProvider).when(
+          child: ref.watch(addOrderProvider(order)).when(
                 loading: () => const LoadingWidget(withScaffold: false),
                 error: (err, _) => KErrorWidget(error: err),
                 data: (_) => Form(
@@ -62,7 +65,7 @@ class AddOrderPopup extends ConsumerWidget {
           TextButton(
             onPressed: () async => await notifier.submit(context),
             child: Text(
-              'Add Order',
+              order == null ? 'Add Order' : 'Update Order',
               style: TextStyle(color: context.theme.primaryColor),
             ),
           ),

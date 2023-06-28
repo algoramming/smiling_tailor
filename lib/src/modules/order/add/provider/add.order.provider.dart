@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smiling_tailor/src/modules/transaction/enum/trx.type.dart';
+import 'package:smiling_tailor/src/modules/transaction/provider/all.trxs.provider.dart';
 
 import '../../../../db/db.dart';
 import '../../../../utils/extensions/extensions.dart';
@@ -10,17 +12,19 @@ import '../../../employee/provider/employee.provider.dart';
 import '../../../inventory/model/inventory.dart';
 import '../../../inventory/provider/inventory.provider.dart';
 import '../../../settings/model/measurement/measurement.dart';
+import '../../../transaction/model/transaction.dart';
 import '../../api/add.order.api.dart';
 import '../../enum/order.enum.dart';
 import '../../model/order.dart';
 import '../../provider/order.provider.dart';
 
-typedef AddOrderNotifier
-    = AutoDisposeAsyncNotifierProvider<AddOrderProvider, void>;
+typedef AddOrderNotifier = AutoDisposeAsyncNotifierProviderFamily<
+    AddOrderProvider, void, PktbsOrder?>;
 
 final addOrderProvider = AddOrderNotifier(AddOrderProvider.new);
 
-class AddOrderProvider extends AutoDisposeAsyncNotifier<void> {
+class AddOrderProvider
+    extends AutoDisposeFamilyAsyncNotifier<void, PktbsOrder?> {
   final customerNameCntrlr = TextEditingController();
   final customerEmailCntrlr = TextEditingController();
   final customerPhoneCntrlr = TextEditingController();
@@ -69,8 +73,99 @@ class AddOrderProvider extends AutoDisposeAsyncNotifier<void> {
   bool isHomeDeliveryNeeded = false;
   bool isInventoryNeeded = false;
 
+  List<PktbsTrx> _trxs = [];
+  List<PktbsTrx> paymentOthersTrxs = [];
+  PktbsTrx? advanceTrx;
+  PktbsTrx? tailorTrx;
+  PktbsTrx? inventoryAllocationTrx;
+  PktbsTrx? inventoryPurchaseTrx;
+  PktbsTrx? deliveryTrx;
+
   @override
-  FutureOr<void> build() async {
+  FutureOr<void> build(PktbsOrder? arg) async {
+    if (arg != null) {
+      _trxs = await ref.watch(allTrxsProvider.future);
+      //
+      advanceTrx = _trxs.any((e) => e.isOrderAdvanceAmount)
+          ? _trxs.firstWhere((e) => e.isOrderAdvanceAmount)
+          : null;
+
+      paymentOthersTrxs = _trxs
+          .where((e) =>
+              (e.fromType.isUser || e.toType.isUser) &&
+              !e.isGoods &&
+              !e.isOrderAdvanceAmount)
+          .toList();
+
+      tailorTrx = _trxs.any((e) => e.isOrderTailorCharge && !e.isGoods)
+          ? _trxs.firstWhere((e) => e.isOrderTailorCharge && !e.isGoods)
+          : null;
+
+      inventoryAllocationTrx = _trxs
+              .any((e) => e.isOrderInventoryAllocation && e.isGoods)
+          ? _trxs.firstWhere((e) => e.isOrderInventoryAllocation && e.isGoods)
+          : null;
+
+      inventoryPurchaseTrx = _trxs
+              .any((e) => e.isOrderInventoryPurchase && !e.isGoods)
+          ? _trxs.firstWhere((e) => e.isOrderInventoryPurchase && !e.isGoods)
+          : null;
+
+      deliveryTrx = _trxs.any((e) => e.isOrderDeliveryCharge && !e.isGoods)
+          ? _trxs.firstWhere((e) => e.isOrderDeliveryCharge && !e.isGoods)
+          : null;
+
+      //
+      if (arg.tailorEmployee != null) {
+        allocateTailorNow = true;
+      }
+      if (arg.deliveryEmployee != null) {
+        isHomeDeliveryNeeded = true;
+      }
+      if (arg.inventory != null) {
+        isInventoryNeeded = true;
+      }
+
+      //
+      customerNameCntrlr.text = arg.customerName;
+      customerEmailCntrlr.text = arg.customerEmail ?? '';
+      customerPhoneCntrlr.text = arg.customerPhone;
+      customerAddressCntrlr.text = arg.customerAddress ?? '';
+      customerNoteCntrlr.text = arg.customerNote ?? '';
+      //
+      measurementCntrlr.text = arg.measurement ?? '';
+      plateCntrlr.text = arg.plate ?? '';
+      sleeveCntrlr.text = arg.sleeve ?? '';
+      colarCntrlr.text = arg.colar ?? '';
+      pocketCntrlr.text = arg.pocket ?? '';
+      buttonCntrlr.text = arg.button ?? '';
+      measurementNoteCntrlr.text = arg.measurementNote ?? '';
+      quantityCntrlr.text = arg.quantity.toString();
+      //
+      tailorEmployee = arg.tailorEmployee;
+      tailorChargeCntrlr.text = tailorTrx?.amount.toString() ?? '0.0';
+      tailorNoteCntrlr.text = arg.tailorNote ?? '';
+      //
+      inventory = arg.inventory;
+      inventoryQuantityCntrlr.text = arg.inventoryQuantity.toString();
+      inventoryUnit = arg.inventoryUnit;
+      inventoryPriceCntrlr.text =
+          inventoryPurchaseTrx?.amount.toString() ?? '0.0';
+      inventoryNoteCntrlr.text = arg.inventoryNote ?? '';
+      //
+      deliveryEmployee = arg.deliveryEmployee;
+      deliveryAddressCntrlr.text = arg.deliveryAddress ?? '';
+      deliveryChargeCntrlr.text = deliveryTrx?.amount.toString() ?? '0.0';
+      deliveryNoteCntrlr.text = arg.deliveryNote ?? '';
+      //
+      paymentMethod = arg.paymentMethod;
+      paymentNoteCntrlr.text = arg.paymentNote ?? '';
+      advanceAmountCntrlr.text = advanceTrx?.amount.toString() ?? '0.0';
+      //
+      deliveryTime = arg.deliveryTime;
+      descriptionCntrlr.text = arg.description ?? '';
+      status = arg.status;
+    }
     employees = ref.watch(employeeProvider).value ?? [];
     inventories = ref.watch(inventoryProvider).value ?? [];
     measurements = appMeasurements

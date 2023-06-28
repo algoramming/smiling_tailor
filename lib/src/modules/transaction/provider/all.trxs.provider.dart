@@ -51,3 +51,27 @@ class AllTrxsProvider extends AsyncNotifier<List<PktbsTrx>> {
     });
   }
 }
+
+// final trxStream = StreamProvider((ref) async* {
+//   final _trxs = await ref.watch(allTrxsProvider.future);
+//   pb.collection(transactions).subscribe('*', (s) async {
+//     log.i('Stream $s');
+//     if (s.action == 'delete') {
+//       _trxs.removeWhere((e) => e.id == s.record!.toJson()['id']);
+//     } else {
+//       await pb
+//           .collection(transactions)
+//           .getOne(s.record!.toJson()['id'], expand: pktbsTrxExpand)
+//           .then((trx) {
+//         log.i('Stream After Get Trx: $trx');
+//         if (s.action == 'create') {
+//           _trxs.add(PktbsTrx.fromJson(trx.toJson()));
+//         } else if (s.action == 'update') {
+//           _trxs.removeWhere((e) => e.id == trx.id);
+//           _trxs.add(PktbsTrx.fromJson(trx.toJson()));
+//         }
+//       });
+//     }
+//     ref.notifyListeners();
+//   });
+// });
