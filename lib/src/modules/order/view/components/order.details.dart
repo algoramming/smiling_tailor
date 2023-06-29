@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../model/order.trx.dart';
 
 import '../../../../config/constants.dart';
 import '../../../../db/db.dart';
@@ -14,7 +15,6 @@ import '../../../../shared/loading_widget/loading_widget.dart';
 import '../../../../shared/page_not_found/page_not_found.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
-import '../../../../utils/logger/logger_helper.dart';
 import '../../../../utils/transations/fade.switcher.dart';
 import '../../../settings/model/settings.model.dart';
 import '../../../transaction/api/trx.api.dart';
@@ -68,7 +68,7 @@ class OrderDetails extends ConsumerWidget {
                         context: context,
                         barrierDismissible: false,
                         builder: (_) =>
-                            AddTrxOrderPopup(notifier.selectedOrder!),
+                            AddTrxOrderPopup(OrderTrx(notifier.selectedOrder!)),
                       ),
                       icon: const Icon(Icons.add),
                       label: const Text('Transaction'),
@@ -134,7 +134,16 @@ class _TrxList extends ConsumerWidget {
                             child: KListTile(
                               key: ValueKey(trx.id),
                               isSystemGenerated: trx.isSystemGenerated,
-                              onEditTap: () => log.i('On Edit Tap'),
+                              onEditTap: () async => await showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (_) => AddTrxOrderPopup(
+                                  OrderTrx(
+                                    notifier.selectedOrder!,
+                                    trx: trx,
+                                  ),
+                                ),
+                              ),
                               onDeleteTap: () async =>
                                   await trxDeletePopup(context, trx),
                               onLongPress: () async =>

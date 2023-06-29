@@ -2,25 +2,26 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../model/order.trx.dart';
 
 import '../../../../shared/animations_widget/animated_popup.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
-import '../../model/order.dart';
 import '../provider/add.trx.order.provider.dart';
 
 class AddTrxOrderPopup extends ConsumerWidget {
-  const AddTrxOrderPopup(this.order, {super.key});
+  const AddTrxOrderPopup(this.orderTrx, {super.key});
 
-  final PktbsOrder order;
+  final OrderTrx orderTrx;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(addTrxOrderProvider(order));
-    final notifier = ref.read(addTrxOrderProvider(order).notifier);
+    ref.watch(addTrxOrderProvider(orderTrx));
+    final notifier = ref.read(addTrxOrderProvider(orderTrx).notifier);
     return AnimatedPopup(
       child: AlertDialog(
-        title: const Text('Add Transaction'),
+        title:
+            Text(orderTrx.trx == null ? 'Add Transaction' : 'Edit Transaction'),
         content: SizedBox(
           width: min(400, context.width),
           child: Form(
@@ -35,7 +36,7 @@ class AddTrxOrderPopup extends ConsumerWidget {
                     style: context.text.labelLarge,
                     children: [
                       TextSpan(
-                        text: '${order.customerName}\'s',
+                        text: '${orderTrx.order.customerName}\'s',
                         style: context.text.labelLarge!
                             .copyWith(color: context.theme.primaryColor),
                       ),
@@ -121,8 +122,9 @@ class AddTrxOrderPopup extends ConsumerWidget {
           ),
           TextButton(
             onPressed: () async => await notifier.submit(context),
-            child: const Text('Add Transaction',
-                style: TextStyle(color: Colors.red)),
+            child: Text(
+                orderTrx.trx == null ? 'Add Transaction' : 'Update Transaction',
+                style: const TextStyle(color: Colors.red)),
           ),
         ],
       ),

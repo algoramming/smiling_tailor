@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/modules/transaction/enum/trx.type.dart';
-import 'package:smiling_tailor/src/modules/transaction/provider/all.trxs.provider.dart';
+import '../../../transaction/enum/trx.type.dart';
+import '../../../transaction/provider/all.trxs.provider.dart';
 
 import '../../../../db/db.dart';
 import '../../../../utils/extensions/extensions.dart';

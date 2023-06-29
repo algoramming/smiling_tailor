@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../model/employee.trx.dart';
 
 import '../../../../config/constants.dart';
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
@@ -20,6 +19,7 @@ import '../../../transaction/enum/trx.type.dart';
 import '../../../transaction/model/transaction.dart';
 import '../../add/view/add.employee.popup.dart';
 import '../../add/view/add.trx.employee.popup.dart';
+import '../../model/employee.trx.dart';
 import '../../provider/employee.provider.dart';
 import '../../provider/employee.trxs.provider.dart';
 

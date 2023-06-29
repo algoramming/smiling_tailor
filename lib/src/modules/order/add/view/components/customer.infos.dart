@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:smiling_tailor/src/modules/order/model/order.dart';
-import 'package:smiling_tailor/src/shared/k_list_tile.dart/k_list_tile.dart';
 
 import '../../../../../config/constants.dart';
+import '../../../../../shared/k_list_tile.dart/k_list_tile.dart';
 import '../../../../../shared/substring_highlight/substring_highlight.dart';
 import '../../../../../utils/extensions/extensions.dart';
+import '../../../model/order.dart';
 import '../../provider/add.order.provider.dart';
 import 'info.title.dart';
 
