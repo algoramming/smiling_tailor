@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pocketbase/pocketbase.dart';
-import '../../transaction/model/transaction.dart';
 
 import '../../../db/db.dart';
 import '../../../pocketbase/auth.store/helpers.dart';
@@ -16,6 +15,7 @@ import '../../employee/model/employee.dart';
 import '../../inventory/model/inventory.dart';
 import '../../transaction/api/trx.api.dart';
 import '../../transaction/enum/trx.type.dart';
+import '../../transaction/model/transaction.dart';
 import '../add/provider/add.order.provider.dart';
 import '../add/view/order.slip.download.popup.dart';
 import '../enum/order.enum.dart';

@@ -32,20 +32,32 @@ class AboutTile extends ConsumerWidget {
         style: const TextStyle(fontWeight: FontWeight.bold),
       ),
       subtitle: info == null ? null : Text('${t.appTitle} ${info.version}$bn'),
-      onTap: () => showInfoDialog(context),
+      onTap: () => showInfoDialog(context, '${info?.version}$bn'),
     );
   }
 }
 
-void showInfoDialog(BuildContext context) => showAboutDialog(
+void showInfoDialog(BuildContext context, String version) => showAboutDialog(
       context: context,
       applicationName: 'Smiling Tailor',
-      applicationVersion: '1.0.0',
-      applicationLegalese: '© 2023 Smiling Tailor',
+      applicationVersion: version,
+      applicationLegalese:
+          '© 2023 Smiling Tailor (A product of Rahat\'s Corp.)',
       applicationIcon: Image.asset('assets/icons/splash-icon-384x384.png',
           height: 48, width: 48),
-      children: const [
+      children: [
         Text(
-            'A simple app to manage your tailoring business developed by Algoramming.'),
+          '\nIntroducing our tailor-focused ERP management system - a powerful, user-friendly application designed to streamline your tailoring business. Add managers, vendors, inventory, and employees effortlessly. Seamlessly process orders and track transaction history in real-time. Stay organized, efficient, and in control with our comprehensive software solution. Proudly developed as an in-house product of Algoramming, ensuring quality and reliability in every aspect.',
+          style: context.text.labelMedium,
+          textAlign: TextAlign.justify,
+        ),
+        Text(
+          '\n- Developed by Algoramming.',
+          style: context.text.labelMedium!.copyWith(
+            fontStyle: FontStyle.italic,
+            color: context.theme.primaryColor,
+          ),
+          textAlign: TextAlign.right,
+        )
       ],
     );

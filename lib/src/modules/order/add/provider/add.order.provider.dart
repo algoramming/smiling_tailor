@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../transaction/enum/trx.type.dart';
-import '../../../transaction/provider/all.trxs.provider.dart';
 
 import '../../../../db/db.dart';
 import '../../../../utils/extensions/extensions.dart';
@@ -12,7 +10,9 @@ import '../../../employee/provider/employee.provider.dart';
 import '../../../inventory/model/inventory.dart';
 import '../../../inventory/provider/inventory.provider.dart';
 import '../../../settings/model/measurement/measurement.dart';
+import '../../../transaction/enum/trx.type.dart';
 import '../../../transaction/model/transaction.dart';
+import '../../../transaction/provider/all.trxs.provider.dart';
 import '../../api/add.order.api.dart';
 import '../../api/edit.order.api.dart';
 import '../../enum/order.enum.dart';

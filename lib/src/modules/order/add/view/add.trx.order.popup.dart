@@ -2,11 +2,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../model/order.trx.dart';
 
 import '../../../../shared/animations_widget/animated_popup.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
+import '../../model/order.trx.dart';
 import '../provider/add.trx.order.provider.dart';
 
 class AddTrxOrderPopup extends ConsumerWidget {

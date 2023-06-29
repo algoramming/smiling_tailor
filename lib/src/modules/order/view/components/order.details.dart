@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../model/order.trx.dart';
 
 import '../../../../config/constants.dart';
 import '../../../../db/db.dart';
@@ -22,6 +21,7 @@ import '../../../transaction/enum/trx.type.dart';
 import '../../../transaction/model/transaction.dart';
 import '../../add/view/add.order.popup.dart';
 import '../../add/view/add.trx.order.popup.dart';
+import '../../model/order.trx.dart';
 import '../../provider/order.provider.dart';
 import '../../provider/order.trxs.provider.dart';
 
