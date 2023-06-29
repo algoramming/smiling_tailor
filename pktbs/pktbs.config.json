@@ -330,386 +330,6 @@
         "options": {}
     },
     {
-        "id": "5xup5ow96ez6plc",
-        "name": "orders",
-        "type": "base",
-        "system": false,
-        "schema": [
-            {
-                "id": "wvbqyrhd",
-                "name": "customerName",
-                "type": "text",
-                "system": false,
-                "required": true,
-                "options": {
-                    "min": null,
-                    "max": null,
-                    "pattern": ""
-                }
-            },
-            {
-                "id": "ixvrpakv",
-                "name": "customerEmail",
-                "type": "email",
-                "system": false,
-                "required": false,
-                "options": {
-                    "exceptDomains": [],
-                    "onlyDomains": []
-                }
-            },
-            {
-                "id": "6i91czr0",
-                "name": "customerPhone",
-                "type": "text",
-                "system": false,
-                "required": true,
-                "options": {
-                    "min": null,
-                    "max": null,
-                    "pattern": ""
-                }
-            },
-            {
-                "id": "a2yixg5c",
-                "name": "customerAddress",
-                "type": "text",
-                "system": false,
-                "required": false,
-                "options": {
-                    "min": null,
-                    "max": null,
-                    "pattern": ""
-                }
-            },
-            {
-                "id": "63shbh6e",
-                "name": "customerNote",
-                "type": "text",
-                "system": false,
-                "required": false,
-                "options": {
-                    "min": null,
-                    "max": null,
-                    "pattern": ""
-                }
-            },
-            {
-                "id": "5ooma0ev",
-                "name": "measurement",
-                "type": "text",
-                "system": false,
-                "required": false,
-                "options": {
-                    "min": null,
-                    "max": null,
-                    "pattern": ""
-                }
-            },
-            {
-                "id": "zrw9mtn7",
-                "name": "plate",
-                "type": "text",
-                "system": false,
-                "required": false,
-                "options": {
-                    "min": null,
-                    "max": null,
-                    "pattern": ""
-                }
-            },
-            {
-                "id": "xcl0ranp",
-                "name": "sleeve",
-                "type": "text",
-                "system": false,
-                "required": false,
-                "options": {
-                    "min": null,
-                    "max": null,
-                    "pattern": ""
-                }
-            },
-            {
-                "id": "7dp9sxfn",
-                "name": "colar",
-                "type": "text",
-                "system": false,
-                "required": false,
-                "options": {
-                    "min": null,
-                    "max": null,
-                    "pattern": ""
-                }
-            },
-            {
-                "id": "ikxw8dgz",
-                "name": "pocket",
-                "type": "text",
-                "system": false,
-                "required": false,
-                "options": {
-                    "min": null,
-                    "max": null,
-                    "pattern": ""
-                }
-            },
-            {
-                "id": "xtzyid3f",
-                "name": "button",
-                "type": "text",
-                "system": false,
-                "required": false,
-                "options": {
-                    "min": null,
-                    "max": null,
-                    "pattern": ""
-                }
-            },
-            {
-                "id": "k6fngvli",
-                "name": "measurementNote",
-                "type": "text",
-                "system": false,
-                "required": false,
-                "options": {
-                    "min": null,
-                    "max": null,
-                    "pattern": ""
-                }
-            },
-            {
-                "id": "4gaquebq",
-                "name": "quantity",
-                "type": "number",
-                "system": false,
-                "required": true,
-                "options": {
-                    "min": null,
-                    "max": null
-                }
-            },
-            {
-                "id": "7nqe8rz7",
-                "name": "tailorEmployee",
-                "type": "relation",
-                "system": false,
-                "required": false,
-                "options": {
-                    "collectionId": "ojlqbn2ih9e05m8",
-                    "cascadeDelete": false,
-                    "minSelect": null,
-                    "maxSelect": 1,
-                    "displayFields": []
-                }
-            },
-            {
-                "id": "tyundglk",
-                "name": "tailorNote",
-                "type": "text",
-                "system": false,
-                "required": false,
-                "options": {
-                    "min": null,
-                    "max": null,
-                    "pattern": ""
-                }
-            },
-            {
-                "id": "gfltr1sf",
-                "name": "inventory",
-                "type": "relation",
-                "system": false,
-                "required": false,
-                "options": {
-                    "collectionId": "o7d5a6z1ebu30ul",
-                    "cascadeDelete": false,
-                    "minSelect": null,
-                    "maxSelect": 1,
-                    "displayFields": []
-                }
-            },
-            {
-                "id": "xcbztbp1",
-                "name": "inventoryQuantity",
-                "type": "number",
-                "system": false,
-                "required": false,
-                "options": {
-                    "min": null,
-                    "max": null
-                }
-            },
-            {
-                "id": "71ggzeu7",
-                "name": "inventoryUnit",
-                "type": "text",
-                "system": false,
-                "required": false,
-                "options": {
-                    "min": null,
-                    "max": null,
-                    "pattern": ""
-                }
-            },
-            {
-                "id": "mugxbypb",
-                "name": "inventoryNote",
-                "type": "text",
-                "system": false,
-                "required": false,
-                "options": {
-                    "min": null,
-                    "max": null,
-                    "pattern": ""
-                }
-            },
-            {
-                "id": "e36plw5o",
-                "name": "deliveryEmployee",
-                "type": "relation",
-                "system": false,
-                "required": false,
-                "options": {
-                    "collectionId": "ojlqbn2ih9e05m8",
-                    "cascadeDelete": false,
-                    "minSelect": null,
-                    "maxSelect": 1,
-                    "displayFields": []
-                }
-            },
-            {
-                "id": "aslvankm",
-                "name": "deliveryAddress",
-                "type": "text",
-                "system": false,
-                "required": false,
-                "options": {
-                    "min": null,
-                    "max": null,
-                    "pattern": ""
-                }
-            },
-            {
-                "id": "17m5dteg",
-                "name": "deliveryNote",
-                "type": "text",
-                "system": false,
-                "required": false,
-                "options": {
-                    "min": null,
-                    "max": null,
-                    "pattern": ""
-                }
-            },
-            {
-                "id": "qadzaaua",
-                "name": "paymentMethod",
-                "type": "text",
-                "system": false,
-                "required": true,
-                "options": {
-                    "min": null,
-                    "max": null,
-                    "pattern": ""
-                }
-            },
-            {
-                "id": "kvlfexkk",
-                "name": "paymentNote",
-                "type": "text",
-                "system": false,
-                "required": false,
-                "options": {
-                    "min": null,
-                    "max": null,
-                    "pattern": ""
-                }
-            },
-            {
-                "id": "uljfdkaw",
-                "name": "amount",
-                "type": "number",
-                "system": false,
-                "required": false,
-                "options": {
-                    "min": null,
-                    "max": null
-                }
-            },
-            {
-                "id": "dnawxuaf",
-                "name": "deliveryTime",
-                "type": "date",
-                "system": false,
-                "required": true,
-                "options": {
-                    "min": "",
-                    "max": ""
-                }
-            },
-            {
-                "id": "lbuxjtlg",
-                "name": "description",
-                "type": "text",
-                "system": false,
-                "required": false,
-                "options": {
-                    "min": null,
-                    "max": null,
-                    "pattern": ""
-                }
-            },
-            {
-                "id": "vkoaapkq",
-                "name": "status",
-                "type": "text",
-                "system": false,
-                "required": true,
-                "options": {
-                    "min": null,
-                    "max": null,
-                    "pattern": ""
-                }
-            },
-            {
-                "id": "jl4hzz5c",
-                "name": "creator",
-                "type": "relation",
-                "system": false,
-                "required": true,
-                "options": {
-                    "collectionId": "_pb_users_auth_",
-                    "cascadeDelete": false,
-                    "minSelect": null,
-                    "maxSelect": 1,
-                    "displayFields": []
-                }
-            },
-            {
-                "id": "zpqhtopl",
-                "name": "updator",
-                "type": "relation",
-                "system": false,
-                "required": false,
-                "options": {
-                    "collectionId": "_pb_users_auth_",
-                    "cascadeDelete": false,
-                    "minSelect": null,
-                    "maxSelect": 1,
-                    "displayFields": []
-                }
-            }
-        ],
-        "indexes": [],
-        "listRule": "@request.auth.id != null",
-        "viewRule": "@request.auth.id != null",
-        "createRule": "@request.auth.id != null",
-        "updateRule": "@request.auth.id != null",
-        "deleteRule": "@request.auth.id != null",
-        "options": {}
-    },
-    {
         "id": "_pb_users_auth_",
         "name": "users",
         "type": "auth",
@@ -946,6 +566,363 @@
             },
             {
                 "id": "uly2m0zs",
+                "name": "updator",
+                "type": "relation",
+                "system": false,
+                "required": false,
+                "options": {
+                    "collectionId": "_pb_users_auth_",
+                    "cascadeDelete": false,
+                    "minSelect": null,
+                    "maxSelect": 1,
+                    "displayFields": []
+                }
+            }
+        ],
+        "indexes": [],
+        "listRule": "@request.auth.id != null",
+        "viewRule": "@request.auth.id != null",
+        "createRule": "@request.auth.id != null",
+        "updateRule": "@request.auth.id != null",
+        "deleteRule": "@request.auth.id != null",
+        "options": {}
+    },
+    {
+        "id": "5xup5ow96ez6plc",
+        "name": "orders",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "wvbqyrhd",
+                "name": "customerName",
+                "type": "text",
+                "system": false,
+                "required": true,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "ixvrpakv",
+                "name": "customerEmail",
+                "type": "email",
+                "system": false,
+                "required": false,
+                "options": {
+                    "exceptDomains": [],
+                    "onlyDomains": []
+                }
+            },
+            {
+                "id": "6i91czr0",
+                "name": "customerPhone",
+                "type": "text",
+                "system": false,
+                "required": true,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "a2yixg5c",
+                "name": "customerAddress",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "63shbh6e",
+                "name": "customerNote",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "5ooma0ev",
+                "name": "measurement",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "zrw9mtn7",
+                "name": "plate",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "xcl0ranp",
+                "name": "sleeve",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "7dp9sxfn",
+                "name": "colar",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "ikxw8dgz",
+                "name": "pocket",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "xtzyid3f",
+                "name": "button",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "k6fngvli",
+                "name": "measurementNote",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "4gaquebq",
+                "name": "quantity",
+                "type": "number",
+                "system": false,
+                "required": true,
+                "options": {
+                    "min": null,
+                    "max": null
+                }
+            },
+            {
+                "id": "7nqe8rz7",
+                "name": "tailorEmployee",
+                "type": "relation",
+                "system": false,
+                "required": false,
+                "options": {
+                    "collectionId": "ojlqbn2ih9e05m8",
+                    "cascadeDelete": false,
+                    "minSelect": null,
+                    "maxSelect": 1,
+                    "displayFields": []
+                }
+            },
+            {
+                "id": "tyundglk",
+                "name": "tailorNote",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "gfltr1sf",
+                "name": "inventory",
+                "type": "relation",
+                "system": false,
+                "required": false,
+                "options": {
+                    "collectionId": "o7d5a6z1ebu30ul",
+                    "cascadeDelete": false,
+                    "minSelect": null,
+                    "maxSelect": 1,
+                    "displayFields": []
+                }
+            },
+            {
+                "id": "mugxbypb",
+                "name": "inventoryNote",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "e36plw5o",
+                "name": "deliveryEmployee",
+                "type": "relation",
+                "system": false,
+                "required": false,
+                "options": {
+                    "collectionId": "ojlqbn2ih9e05m8",
+                    "cascadeDelete": false,
+                    "minSelect": null,
+                    "maxSelect": 1,
+                    "displayFields": []
+                }
+            },
+            {
+                "id": "aslvankm",
+                "name": "deliveryAddress",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "17m5dteg",
+                "name": "deliveryNote",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "qadzaaua",
+                "name": "paymentMethod",
+                "type": "text",
+                "system": false,
+                "required": true,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "kvlfexkk",
+                "name": "paymentNote",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "uljfdkaw",
+                "name": "amount",
+                "type": "number",
+                "system": false,
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null
+                }
+            },
+            {
+                "id": "dnawxuaf",
+                "name": "deliveryTime",
+                "type": "date",
+                "system": false,
+                "required": true,
+                "options": {
+                    "min": "",
+                    "max": ""
+                }
+            },
+            {
+                "id": "lbuxjtlg",
+                "name": "description",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "vkoaapkq",
+                "name": "status",
+                "type": "text",
+                "system": false,
+                "required": true,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "jl4hzz5c",
+                "name": "creator",
+                "type": "relation",
+                "system": false,
+                "required": true,
+                "options": {
+                    "collectionId": "_pb_users_auth_",
+                    "cascadeDelete": false,
+                    "minSelect": null,
+                    "maxSelect": 1,
+                    "displayFields": []
+                }
+            },
+            {
+                "id": "zpqhtopl",
                 "name": "updator",
                 "type": "relation",
                 "system": false,
