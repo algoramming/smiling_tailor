@@ -5,11 +5,11 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../db/db.dart';
-import '../../../../pocketbase/auth.store/helpers.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/logger/logger_helper.dart';
 import '../../../transaction/enum/trx.type.dart';
 import '../../../transaction/model/transaction.dart';
+import '../../../transaction/provider/all.trxs.provider.dart';
 import '../../model/order.dart';
 import '../pdf/pdf.invoice.design/a.pdf.invoice.dart';
 import '../view/order.slip.confirmation.popup.dart';
@@ -31,17 +31,9 @@ class OrderSlipDownloadProvider
     extends AutoDisposeFamilyAsyncNotifier<void, PktbsOrder> {
   @override
   FutureOr build(arg) async {
-    _trxs = [];
-    _trxs = await pb
-        .collection(transactions)
-        .getFullList(
-          filter: 'from_id = "${arg.id}" || to_id = "${arg.id}"',
-          expand: pktbsTrxExpand,
-        )
-        .then((v) {
-      log.i('Order Slip Trxs: $v');
-      return v.map((e) => PktbsTrx.fromJson(e.toJson())).toList();
-    });
+    _trxs = (await ref.watch(allTrxsProvider.future))
+        .where((e) => e.fromId == arg.id || e.toId == arg.id)
+        .toList();
     _slipOptions = [
       {
         'title': 'Cashier Copy',
