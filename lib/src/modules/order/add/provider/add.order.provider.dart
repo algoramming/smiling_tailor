@@ -14,6 +14,7 @@ import '../../../inventory/provider/inventory.provider.dart';
 import '../../../settings/model/measurement/measurement.dart';
 import '../../../transaction/model/transaction.dart';
 import '../../api/add.order.api.dart';
+import '../../api/edit.order.api.dart';
 import '../../enum/order.enum.dart';
 import '../../model/order.dart';
 import '../../provider/order.provider.dart';
@@ -150,7 +151,7 @@ class AddOrderProvider
       //
       inventory = arg.inventory;
       inventoryQuantityCntrlr.text =
-          inventoryAllocationTrx?.amount.toString() ?? '1';
+          inventoryAllocationTrx?.amount.toInt().toString() ?? '1';
       inventoryUnit = inventoryAllocationTrx?.unit;
       inventoryPriceCntrlr.text =
           inventoryPurchaseTrx?.amount.toString() ?? '0.0';
@@ -245,7 +246,12 @@ class AddOrderProvider
 
   Future<void> submit(BuildContext context) async {
     if (!formKey.currentState!.validate()) return;
-    await pktbsAddOrder(context, this);
+
+    if (arg == null) {
+      await pktbsAddOrder(context, this);
+    } else {
+      await pktbsUpdateOrder(context, this);
+    }
   }
 
   void clear() {

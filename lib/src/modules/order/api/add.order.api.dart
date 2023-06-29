@@ -62,93 +62,40 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
         'status': noti.status.label,
         'creator': pb.authStore.model!.id
       },
-    ).then((r) async => await pb
-            .collection(orders)
-            .getOne(r.toJson()['id'], expand: pktbsOrderExpand)
-            .then((i) async {
-          final order = PktbsOrder.fromJson(i.toJson());
-          // advance amount trx
-          await pktbsAddTrx(
-            ctx,
-            fromId: order.id,
-            fromJson: order.toJson(),
-            fromType: order.glType,
-            toId: pb.authStore.model?.id,
-            toJson: pb.authStore.model?.toJson(),
-            toType: GLType.user,
-            amount: noti.advanceAmountCntrlr.text.toDouble ?? 0.0,
-            voucher: advanceAmountOrderVoucher,
-            trxType: TrxType.debit,
-            description:
-                'System Generated: Transaction for advance amount of order ${order.id}',
-            isSystemGenerated: true,
-          ).then((_) async {
-            // if tailor needed
-            if (noti.allocateTailorNow) {
-              await tailorAllocateApi(ctx, order, noti).then((_) async {
-                // if inventory needed
-                if (noti.isInventoryNeeded) {
-                  await inventoryAllocateApi(ctx, order, noti).then((_) async {
-                    // if delivery needed
-                    if (noti.isHomeDeliveryNeeded) {
-                      await deliveryAllocationApi(ctx, order, noti)
-                          .then((_) async {
-                        log.wtf(
-                            'order added successfully with - 4 - advance, tailor, inventory and delivery allocation!');
-                        noti.clear();
-                        ctx.pop();
-                        EasyLoading.dismiss();
-                        await showOrderSlipDownloadPopup(ctx, order);
-                        // showAwesomeSnackbar(ctx, 'Success!',
-                        //     'Order added successfully.', MessageType.success);
-                      });
-                    } else {
-                      log.wtf(
-                          'order added successfully with - 3 - advance, tailor and inventory allocation!');
-                      noti.clear();
-                      ctx.pop();
-                      EasyLoading.dismiss();
-                      await showOrderSlipDownloadPopup(ctx, order);
-                      // showAwesomeSnackbar(ctx, 'Success!',
-                      //     'Order added successfully.', MessageType.success);
-                    }
-                  });
-                } else {
-                  // if delivery needed
-                  if (noti.isHomeDeliveryNeeded) {
-                    await deliveryAllocationApi(ctx, order, noti)
-                        .then((_) async {
-                      log.wtf(
-                          'order added successfully with - 3 - advance, tailor and delivery allocation!');
-                      noti.clear();
-                      ctx.pop();
-                      EasyLoading.dismiss();
-                      await showOrderSlipDownloadPopup(ctx, order);
-                      // showAwesomeSnackbar(ctx, 'Success!',
-                      //     'Order added successfully.', MessageType.success);
-                    });
-                  } else {
-                    log.wtf(
-                        'order added successfully with - 2 - advance and tailor allocation!');
-                    noti.clear();
-                    ctx.pop();
-                    EasyLoading.dismiss();
-                    await showOrderSlipDownloadPopup(ctx, order);
-                    // showAwesomeSnackbar(ctx, 'Success!',
-                    //     'Order added successfully.', MessageType.success);
-                  }
-                }
-              });
-            } else {
+    ).then(
+      (r) async => await pb
+          .collection(orders)
+          .getOne(r.toJson()['id'], expand: pktbsOrderExpand)
+          .then((i) async {
+        final order = PktbsOrder.fromJson(i.toJson());
+        // advance amount trx
+        await pktbsAddTrx(
+          ctx,
+          fromId: order.id,
+          fromJson: order.toJson(),
+          fromType: order.glType,
+          toId: pb.authStore.model?.id,
+          toJson: pb.authStore.model?.toJson(),
+          toType: GLType.user,
+          amount: noti.advanceAmountCntrlr.text.toDouble ?? 0.0,
+          voucher: advanceAmountOrderVoucher,
+          trxType: TrxType.debit,
+          description:
+              'System Generated: Transaction for advance amount of order ${order.id}',
+          isSystemGenerated: true,
+        ).then((_) async {
+          // if tailor needed
+          if (noti.allocateTailorNow) {
+            await _tailorAllocateApi(ctx, order, noti).then((_) async {
               // if inventory needed
               if (noti.isInventoryNeeded) {
-                await inventoryAllocateApi(ctx, order, noti).then((_) async {
+                await _inventoryAllocateApi(ctx, order, noti).then((_) async {
                   // if delivery needed
                   if (noti.isHomeDeliveryNeeded) {
-                    await deliveryAllocationApi(ctx, order, noti)
+                    await _deliveryAllocationApi(ctx, order, noti)
                         .then((_) async {
                       log.wtf(
-                          'order added successfully with - 3 - advance, inventory and delivery allocation!');
+                          'order added successfully with - 4 - advance, tailor, inventory and delivery allocation!');
                       noti.clear();
                       ctx.pop();
                       EasyLoading.dismiss();
@@ -158,7 +105,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
                     });
                   } else {
                     log.wtf(
-                        'order added successfully with - 2 - advance and inventory allocation!');
+                        'order added successfully with - 3 - advance, tailor and inventory allocation!');
                     noti.clear();
                     ctx.pop();
                     EasyLoading.dismiss();
@@ -170,9 +117,10 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
               } else {
                 // if delivery needed
                 if (noti.isHomeDeliveryNeeded) {
-                  await deliveryAllocationApi(ctx, order, noti).then((_) async {
+                  await _deliveryAllocationApi(ctx, order, noti)
+                      .then((_) async {
                     log.wtf(
-                        'order added successfully with - 2 - advance and delivery allocation!');
+                        'order added successfully with - 3 - advance, tailor and delivery allocation!');
                     noti.clear();
                     ctx.pop();
                     EasyLoading.dismiss();
@@ -181,7 +129,8 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
                     //     'Order added successfully.', MessageType.success);
                   });
                 } else {
-                  log.wtf('order added successfully with - 1 - advance only!');
+                  log.wtf(
+                      'order added successfully with - 2 - advance and tailor allocation!');
                   noti.clear();
                   ctx.pop();
                   EasyLoading.dismiss();
@@ -190,9 +139,62 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
                   //     'Order added successfully.', MessageType.success);
                 }
               }
+            });
+          } else {
+            // if inventory needed
+            if (noti.isInventoryNeeded) {
+              await _inventoryAllocateApi(ctx, order, noti).then((_) async {
+                // if delivery needed
+                if (noti.isHomeDeliveryNeeded) {
+                  await _deliveryAllocationApi(ctx, order, noti)
+                      .then((_) async {
+                    log.wtf(
+                        'order added successfully with - 3 - advance, inventory and delivery allocation!');
+                    noti.clear();
+                    ctx.pop();
+                    EasyLoading.dismiss();
+                    await showOrderSlipDownloadPopup(ctx, order);
+                    // showAwesomeSnackbar(ctx, 'Success!',
+                    //     'Order added successfully.', MessageType.success);
+                  });
+                } else {
+                  log.wtf(
+                      'order added successfully with - 2 - advance and inventory allocation!');
+                  noti.clear();
+                  ctx.pop();
+                  EasyLoading.dismiss();
+                  await showOrderSlipDownloadPopup(ctx, order);
+                  // showAwesomeSnackbar(ctx, 'Success!',
+                  //     'Order added successfully.', MessageType.success);
+                }
+              });
+            } else {
+              // if delivery needed
+              if (noti.isHomeDeliveryNeeded) {
+                await _deliveryAllocationApi(ctx, order, noti).then((_) async {
+                  log.wtf(
+                      'order added successfully with - 2 - advance and delivery allocation!');
+                  noti.clear();
+                  ctx.pop();
+                  EasyLoading.dismiss();
+                  await showOrderSlipDownloadPopup(ctx, order);
+                  // showAwesomeSnackbar(ctx, 'Success!',
+                  //     'Order added successfully.', MessageType.success);
+                });
+              } else {
+                log.wtf('order added successfully with - 1 - advance only!');
+                noti.clear();
+                ctx.pop();
+                EasyLoading.dismiss();
+                await showOrderSlipDownloadPopup(ctx, order);
+                // showAwesomeSnackbar(ctx, 'Success!',
+                //     'Order added successfully.', MessageType.success);
+              }
             }
-          });
-        }));
+          }
+        });
+      }),
+    );
     return;
   } on SocketException catch (e) {
     EasyLoading.showError('No Internet Connection. $e');
@@ -205,7 +207,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
   }
 }
 
-Future<RecordModel?> tailorAllocateApi(
+Future<RecordModel?> _tailorAllocateApi(
   BuildContext context,
   PktbsOrder order,
   AddOrderProvider notifier,
@@ -228,7 +230,7 @@ Future<RecordModel?> tailorAllocateApi(
   );
 }
 
-Future<RecordModel?> inventoryAllocateApi(
+Future<RecordModel?> _inventoryAllocateApi(
   BuildContext context,
   PktbsOrder order,
   AddOrderProvider notifier,
@@ -244,12 +246,12 @@ Future<RecordModel?> inventoryAllocateApi(
     toType: order.glType,
     trxType: TrxType.credit,
     amount: notifier.inventoryQuantityCntrlr.text.toDouble ?? 0.0,
-    unit: notifier.inventoryUnit!.name,
+    unit: notifier.inventoryUnit?.name,
     isSystemGenerated: true,
     voucher: inventoryAllocationOrderVoucher,
     isGoods: true,
     description:
-        'System Generated: Transaction for Inventory Purchase of order #${order.id} allocated to ${order.inventory!.title} [${order.inventory!.id}] by ${appCurrency.symbol}${notifier.inventoryPriceCntrlr.text.toDouble}}',
+        'System Generated: Transaction for Inventory Purchase of order #${order.id} allocated to ${order.inventory?.title} [${order.inventory?.id}] by ${appCurrency.symbol}${notifier.inventoryPriceCntrlr.text.toDouble}}',
   ).then(
     (_) async => await pktbsAddTrx(
       context,
@@ -269,7 +271,7 @@ Future<RecordModel?> inventoryAllocateApi(
   );
 }
 
-Future<RecordModel?> deliveryAllocationApi(
+Future<RecordModel?> _deliveryAllocationApi(
   BuildContext context,
   PktbsOrder order,
   AddOrderProvider notifier,

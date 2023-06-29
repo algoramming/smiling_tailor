@@ -17,10 +17,8 @@ import '../../../../utils/themes/themes.dart';
 import '../../model/order.dart';
 import '../provider/order.slip.download.provider.dart';
 
-Future<void> showOrderSlipDownloadPopup(
-  BuildContext context,
-  PktbsOrder order,
-) async =>
+Future<void> showOrderSlipDownloadPopup(BuildContext context, PktbsOrder order,
+        {bool isUpdate = false}) async =>
     await showDialog(
       context: context,
       barrierDismissible: false,
@@ -28,9 +26,10 @@ Future<void> showOrderSlipDownloadPopup(
     );
 
 class OrderSlipDownloadPopup extends StatelessWidget {
-  const OrderSlipDownloadPopup(this.order, {super.key});
+  const OrderSlipDownloadPopup(this.order, {super.key, this.isUpdate = false});
 
   final PktbsOrder order;
+  final bool isUpdate;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +58,7 @@ class OrderSlipDownloadPopup extends StatelessWidget {
                     ),
                     TextSpan(
                       text:
-                          ' has been successfully added. Do you want to download the order slip?',
+                          ' has been successfully ${isUpdate ? 'updated.' : 'added.'} . Do you want to download the order slip?',
                       style: context.text.labelLarge,
                     ),
                   ],

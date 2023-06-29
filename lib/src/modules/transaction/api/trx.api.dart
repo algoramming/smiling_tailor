@@ -69,7 +69,7 @@ Future<RecordModel?> pktbsUpdateTrx(BuildContext context, PktbsTrx trx) async {
       body: {
         'to': trx.to,
         'from': trx.from,
-        'unit': trx.unit,
+        'unit': trx.unit?.name,
         'to_id': trx.toId,
         'amount': trx.amount,
         'from_id': trx.fromId,
