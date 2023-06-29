@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
   <AppInstaller xmlns="http://schemas.microsoft.com/appx/appinstaller/2018"
-    Uri="D:\Algoramming\Flutter-Projects\smiling_tailor\publish/smiling_tailor.appinstaller" Version="0.0.12.0">
-    <MainPackage Name="com.algoramming.smilingtailor" Version="0.0.12.0"
+    Uri="D:\Algoramming\Flutter-Projects\smiling_tailor\publish/smiling_tailor.appinstaller" Version="0.0.13.0">
+    <MainPackage Name="com.algoramming.smilingtailor" Version="0.0.13.0"
       Publisher="CN=Msix Testing, O=Msix Testing Corporation, S=Some-State, C=US"
-      Uri="D:\Algoramming\Flutter-Projects\smiling_tailor\publish/versions/smiling_tailor_0.0.12.0.msix"
+      Uri="D:\Algoramming\Flutter-Projects\smiling_tailor\publish/versions/smiling_tailor_0.0.13.0.msix"
       ProcessorArchitecture="x64" />
     <UpdateSettings>
       <OnLaunch HoursBetweenUpdateChecks="0" 
