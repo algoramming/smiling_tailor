@@ -1,12 +1,17 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:smiling_tailor/src/shared/page_not_found/page_not_found.dart';
 
 import '../../../../config/constants.dart';
 import '../../../../localization/loalization.dart';
 import '../../../../shared/animations_widget/animated_popup.dart';
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
+import '../../../../shared/clipboard_data/clipboard_data.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
+import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../provider/currency.provider.dart';
 
@@ -58,7 +63,7 @@ class CurrencyChangerPopup extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(currencyProvider);
-    final currencies = ref.watch(currencyProvider.notifier).currencies;
+    final notifier = ref.watch(currencyProvider.notifier);
     return AnimatedPopup(
       child: AlertDialog(
         title: Row(
@@ -73,41 +78,66 @@ class CurrencyChangerPopup extends ConsumerWidget {
             ),
           ],
         ),
-        content: SingleChildScrollView(
+        content: SizedBox(
+          width: min(400, context.width),
           child: Column(
             children: [
-              ...List.generate(
-                currencies.length,
-                (index) => KListTile(
-                  onTap: () async => await ref
-                      .read(currencyProvider.notifier)
-                      .changeCurrency(currencies[index].shortForm)
-                      .then((_) => Navigator.of(context).pop()),
-                  leading: Radio<String?>(
-                    value: currencies[index].shortForm,
-                    groupValue: ref.watch(currencyProvider) ?? 'BDT',
-                    onChanged: (v) async => await ref
-                        .read(currencyProvider.notifier)
-                        .changeCurrency(v!)
-                        .then((_) => Navigator.of(context).pop()),
-                  ),
-                  trailing: OutlinedButton.icon(
-                    onPressed: null,
-                    icon: Text(
-                      currencies[index].shortForm,
-                      style: const TextStyle(fontSize: 13.0),
-                    ),
-                    label: Text(
-                      currencies[index].symbol,
-                      style: TextStyle(
-                          fontSize: 13.0, color: context.theme.primaryColor),
-                    ),
-                  ),
-                  title: Text(
-                    currencies[index].name,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
+              TextFormField(
+                controller: notifier.searchCntrlr,
+                decoration: InputDecoration(
+                  hintText: 'Search...',
+                  prefixIcon:
+                      ClearPrefixIcon(() => notifier.searchCntrlr.clear()),
+                  suffixIcon: PasteSuffixIcon(() async =>
+                      notifier.searchCntrlr.text = await getCliboardData()),
                 ),
+              ),
+              Flexible(
+                child: notifier.currencies.isEmpty
+                    ? const KDataNotFound()
+                    : SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            ...List.generate(
+                              notifier.currencies.length,
+                              (index) => KListTile(
+                                onTap: () async => await ref
+                                    .read(currencyProvider.notifier)
+                                    .changeCurrency(
+                                        notifier.currencies[index].shortForm)
+                                    .then((_) => Navigator.of(context).pop()),
+                                leading: Radio<String?>(
+                                  value: notifier.currencies[index].shortForm,
+                                  groupValue:
+                                      ref.watch(currencyProvider) ?? 'BDT',
+                                  onChanged: (v) async => await ref
+                                      .read(currencyProvider.notifier)
+                                      .changeCurrency(v!)
+                                      .then((_) => Navigator.of(context).pop()),
+                                ),
+                                trailing: OutlinedButton.icon(
+                                  onPressed: null,
+                                  icon: Text(
+                                    notifier.currencies[index].shortForm,
+                                    style: const TextStyle(fontSize: 13.0),
+                                  ),
+                                  label: Text(
+                                    notifier.currencies[index].symbol,
+                                    style: TextStyle(
+                                        fontSize: 13.0,
+                                        color: context.theme.primaryColor),
+                                  ),
+                                ),
+                                title: Text(
+                                  notifier.currencies[index].name,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
               ),
             ],
           ),

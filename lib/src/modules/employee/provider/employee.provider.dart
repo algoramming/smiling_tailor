@@ -13,7 +13,7 @@ typedef EmployeeNotifier
 final employeeProvider = EmployeeNotifier(EmployeeProvider.new);
 
 class EmployeeProvider extends AsyncNotifier<List<PktbsEmployee>> {
-  TextEditingController searchCntrlr = TextEditingController();
+  final searchCntrlr = TextEditingController();
   PktbsEmployee? selectedEmployee;
   late List<PktbsEmployee> _employees;
   @override
