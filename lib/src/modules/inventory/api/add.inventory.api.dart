@@ -56,38 +56,38 @@ Future<void> pktbsAddInventory(
             unit: inven.unit.name,
           ).then((_) async {
             // check another trx nedded or not
-            if (notifier.advanceCntrlr.text.isNotNullOrEmpty &&
-                notifier.advanceCntrlr.text.toDouble != 0.0) {
-              final advanceBalance = notifier.advanceCntrlr.text.toDouble;
-              log.i('Need Another Trx for ${inven.title} of $advanceBalance}');
-              // trx of advance amount
-              await pktbsAddTrx(
-                context,
-                fromId: inven.from.id,
-                fromJson: inven.from.toJson(),
-                fromType: inven.from.glType,
-                toId: inven.id,
-                toJson: inven.toJson(),
-                toType: inven.glType,
-                trxType: TrxType.credit,
-                isSystemGenerated: true,
-                amount: advanceBalance,
-                voucher: 'Inventory Advance Amount Transaction',
-                description:
-                    'System Generated: Transaction for Advance Amount! ${inven.title} [${inven.id}] - ${inven.quantity}${inven.unit.symbol} has been added to the system through ${inven.from.name} [${inven.from.id}].',
-              ).then((_) {
-                notifier.clear();
-                context.pop();
-                showAwesomeSnackbar(context, 'Success!',
-                    'Inventory added successfully.', MessageType.success);
-              });
-            } else {
-              log.i('No Trx needed!');
+            // if (notifier.advanceCntrlr.text.isNotNullOrEmpty &&
+            //     notifier.advanceCntrlr.text.toDouble != 0.0) {
+            final advanceBalance = notifier.advanceCntrlr.text.toDouble;
+            log.i('Need Another Trx for ${inven.title} of $advanceBalance}');
+            // trx of advance amount
+            await pktbsAddTrx(
+              context,
+              fromId: inven.from.id,
+              fromJson: inven.from.toJson(),
+              fromType: inven.from.glType,
+              toId: inven.id,
+              toJson: inven.toJson(),
+              toType: inven.glType,
+              trxType: TrxType.credit,
+              isSystemGenerated: true,
+              amount: advanceBalance,
+              voucher: 'Inventory Advance Amount Transaction',
+              description:
+                  'System Generated: Transaction for Advance Amount! ${inven.title} [${inven.id}] - ${inven.quantity}${inven.unit.symbol} has been added to the system through ${inven.from.name} [${inven.from.id}].',
+            ).then((_) {
               notifier.clear();
               context.pop();
               showAwesomeSnackbar(context, 'Success!',
                   'Inventory added successfully.', MessageType.success);
-            }
+            });
+            // } else {
+            //   log.i('No Trx needed!');
+            //   notifier.clear();
+            //   context.pop();
+            //   showAwesomeSnackbar(context, 'Success!',
+            //       'Inventory added successfully.', MessageType.success);
+            // }
           });
         }));
     return;

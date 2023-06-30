@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../../transaction/api/trx.api.dart';
 
 import '../../../../config/constants.dart';
 import '../../../../db/db.dart';
@@ -17,6 +16,7 @@ import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/transations/fade.switcher.dart';
 import '../../../settings/model/settings.model.dart';
+import '../../../transaction/api/trx.api.dart';
 import '../../../transaction/enum/trx.type.dart';
 import '../../../transaction/model/transaction.dart';
 import '../../add/view/add.trx.vendor.popup.dart';
@@ -55,7 +55,7 @@ class VendorDetails extends ConsumerWidget {
                           controller: noti.searchCntrlr,
                           decoration: InputDecoration(
                             hintText: 'Search...',
-                            prefixIcon: ClearPreffixIcon(
+                            prefixIcon: ClearPrefixIcon(
                                 () => noti.searchCntrlr.clear()),
                             suffixIcon: PasteSuffixIcon(() async => noti
                                 .searchCntrlr.text = await getCliboardData()),

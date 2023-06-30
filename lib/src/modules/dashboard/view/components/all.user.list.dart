@@ -24,53 +24,55 @@ class AllUsersList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(allUsersProvider);
     final notifier = ref.watch(allUsersProvider.notifier);
-    return Column(
-      children: [
-        TextFormField(
-          controller: notifier.searchCntrlr,
-          decoration: InputDecoration(
-            hintText: 'Search...',
-            prefixIcon: ClearPreffixIcon(() => notifier.searchCntrlr.clear()),
-            suffixIcon: PasteSuffixIcon(() async =>
-                notifier.searchCntrlr.text = await getCliboardData()),
+    return Flexible(
+      child: Column(
+        children: [
+          TextFormField(
+            controller: notifier.searchCntrlr,
+            decoration: InputDecoration(
+              hintText: 'Search...',
+              prefixIcon: ClearPrefixIcon(() => notifier.searchCntrlr.clear()),
+              suffixIcon: PasteSuffixIcon(() async =>
+                  notifier.searchCntrlr.text = await getCliboardData()),
+            ),
           ),
-        ),
-        Flexible(
-          child: ref.watch(allUsersProvider).when(
-                loading: () => const LoadingWidget(withScaffold: false),
-                error: (err, _) => KErrorWidget(error: err),
-                data: (_) => notifier.usersList.isEmpty
-                    ? const KDataNotFound(msg: 'No User Found!')
-                    : ListView.builder(
-                        itemCount: notifier.usersList.length,
-                        itemBuilder: (_, idx) {
-                          final user = notifier.usersList[idx];
-                          return Card(
-                            child: InkWell(
-                              onLongPress: () async =>
-                                  await copyToClipboard(context, user.id),
-                              child: ExpansionTile(
-                                leading: AnimatedWidgetShower(
-                                  size: 30.0,
-                                  child: user.imageWidget,
-                                ),
-                                title: Text(user.name),
-                                subtitle: Text(user.email),
-                                trailing: _UserListTrailing(user),
-                                children: [
-                                  SizedBox(
-                                    height: context.height * 0.5,
-                                    child: _UserTrxList(user),
+          Flexible(
+            child: ref.watch(allUsersProvider).when(
+                  loading: () => const LoadingWidget(withScaffold: false),
+                  error: (err, _) => KErrorWidget(error: err),
+                  data: (_) => notifier.usersList.isEmpty
+                      ? const KDataNotFound(msg: 'No User Found!')
+                      : ListView.builder(
+                          itemCount: notifier.usersList.length,
+                          itemBuilder: (_, idx) {
+                            final user = notifier.usersList[idx];
+                            return Card(
+                              child: InkWell(
+                                onLongPress: () async =>
+                                    await copyToClipboard(context, user.id),
+                                child: ExpansionTile(
+                                  leading: AnimatedWidgetShower(
+                                    size: 30.0,
+                                    child: user.imageWidget,
                                   ),
-                                ],
+                                  title: Text(user.name),
+                                  subtitle: Text(user.email),
+                                  trailing: _UserListTrailing(user),
+                                  children: [
+                                    SizedBox(
+                                      height: context.height * 0.5,
+                                      child: _UserTrxList(user),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                      ),
-              ),
-        ),
-      ],
+                            );
+                          },
+                        ),
+                ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -91,7 +93,7 @@ class _UserTrxList extends ConsumerWidget {
           controller: notifier.searchCntrlr,
           decoration: InputDecoration(
             hintText: 'Search...',
-            prefixIcon: ClearPreffixIcon(() => notifier.searchCntrlr.clear()),
+            prefixIcon: ClearPrefixIcon(() => notifier.searchCntrlr.clear()),
             suffixIcon: PasteSuffixIcon(() async =>
                 notifier.searchCntrlr.text = await getCliboardData()),
           ),

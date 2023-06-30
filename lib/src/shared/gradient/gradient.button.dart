@@ -13,7 +13,7 @@ class GradientButton extends StatelessWidget {
     this.textStyle,
     this.stroke = 2.0,
     this.borderRadius,
-    this.filled = true,
+    this.filled = false,
     this.gradient = defaultGradient,
     this.minSize = const Size(160.0, 40.0),
   });

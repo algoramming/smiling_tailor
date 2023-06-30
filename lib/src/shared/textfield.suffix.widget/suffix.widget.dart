@@ -47,8 +47,8 @@ class PasteSuffixIcon extends StatelessWidget {
   }
 }
 
-class ClearPreffixIcon extends StatelessWidget {
-  const ClearPreffixIcon(this.onTap, {super.key});
+class ClearPrefixIcon extends StatelessWidget {
+  const ClearPrefixIcon(this.onTap, {super.key});
   final void Function()? onTap;
 
   @override

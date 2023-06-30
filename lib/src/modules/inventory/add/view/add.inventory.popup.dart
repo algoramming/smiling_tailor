@@ -7,18 +7,21 @@ import '../../../../config/constants.dart';
 import '../../../../shared/animations_widget/animated_popup.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
+import '../../model/inventory.dart';
 import '../provider/add.inventory.provider.dart';
 
 class AddInventoryPopup extends ConsumerWidget {
-  const AddInventoryPopup({super.key});
+  const AddInventoryPopup({super.key, this.inventory});
+
+  final PktbsInventory? inventory;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(addInventoryProvider);
-    final notifier = ref.read(addInventoryProvider.notifier);
+    ref.watch(addInventoryProvider(inventory));
+    final notifier = ref.read(addInventoryProvider(inventory).notifier);
     return AnimatedPopup(
       child: AlertDialog(
-        title: const Text('Add Inventory'),
+        title: Text(inventory == null ? 'Add Inventory' : 'Edit Inventory'),
         content: SizedBox(
           width: min(400, context.width),
           child: Form(
@@ -196,7 +199,8 @@ class AddInventoryPopup extends ConsumerWidget {
           ),
           TextButton(
             onPressed: () async => await notifier.submit(context),
-            child: Text('Add Inventory',
+            child: Text(
+                inventory == null ? 'Add Inventory' : 'Update Inventory',
                 style: TextStyle(color: context.theme.primaryColor)),
           ),
         ],

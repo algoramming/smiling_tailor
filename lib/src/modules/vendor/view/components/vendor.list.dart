@@ -29,7 +29,7 @@ class VendorList extends ConsumerWidget {
           controller: notifier.searchCntrlr,
           decoration: InputDecoration(
             hintText: 'Search...',
-            prefixIcon: ClearPreffixIcon(() => notifier.searchCntrlr.clear()),
+            prefixIcon: ClearPrefixIcon(() => notifier.searchCntrlr.clear()),
             suffixIcon: PasteSuffixIcon(() async =>
                 notifier.searchCntrlr.text = await getCliboardData()),
           ),

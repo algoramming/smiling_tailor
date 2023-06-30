@@ -54,7 +54,7 @@ class InventoryDetails extends ConsumerWidget {
                           controller: noti.searchCntrlr,
                           decoration: InputDecoration(
                             hintText: 'Search...',
-                            prefixIcon: ClearPreffixIcon(
+                            prefixIcon: ClearPrefixIcon(
                                 () => noti.searchCntrlr.clear()),
                             suffixIcon: PasteSuffixIcon(() async => noti
                                 .searchCntrlr.text = await getCliboardData()),
@@ -67,7 +67,7 @@ class InventoryDetails extends ConsumerWidget {
                       onPressed: () async => await showDialog(
                         context: context,
                         barrierDismissible: false,
-                        builder: (context) => const AddInventoryPopup(),
+                        builder: (_) => const AddInventoryPopup(),
                       ),
                       icon: const Icon(Icons.add),
                       label: const Text('Inventory'),
