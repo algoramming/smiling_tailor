@@ -81,41 +81,42 @@ class AddOrderProvider
   PktbsTrx? inventoryAllocationTrx;
   PktbsTrx? inventoryPurchaseTrx;
   PktbsTrx? deliveryTrx;
+  //
 
   @override
   FutureOr<void> build(PktbsOrder? arg) async {
+    _trxs = (await ref.watch(allTrxsProvider.future));
     if (arg != null) {
-      _trxs = (await ref.watch(allTrxsProvider.future))
-          .where((e) => e.fromId == arg.id || e.toId == arg.id)
-          .toList();
+      final argTrxs =
+          _trxs.where((e) => e.fromId == arg.id || e.toId == arg.id).toList();
       //
-      advanceTrx = _trxs.any((e) => e.isOrderAdvanceAmount)
-          ? _trxs.firstWhere((e) => e.isOrderAdvanceAmount)
+      advanceTrx = argTrxs.any((e) => e.isOrderAdvanceAmount)
+          ? argTrxs.firstWhere((e) => e.isOrderAdvanceAmount)
           : null;
 
-      paymentOthersTrxs = _trxs
+      paymentOthersTrxs = argTrxs
           .where((e) =>
               (e.fromType.isUser || e.toType.isUser) &&
               !e.isGoods &&
               !e.isOrderAdvanceAmount)
           .toList();
 
-      tailorTrx = _trxs.any((e) => e.isOrderTailorCharge && !e.isGoods)
-          ? _trxs.firstWhere((e) => e.isOrderTailorCharge && !e.isGoods)
+      tailorTrx = argTrxs.any((e) => e.isOrderTailorCharge && !e.isGoods)
+          ? argTrxs.firstWhere((e) => e.isOrderTailorCharge && !e.isGoods)
           : null;
 
-      inventoryAllocationTrx = _trxs
+      inventoryAllocationTrx = argTrxs
               .any((e) => e.isOrderInventoryAllocation && e.isGoods)
-          ? _trxs.firstWhere((e) => e.isOrderInventoryAllocation && e.isGoods)
+          ? argTrxs.firstWhere((e) => e.isOrderInventoryAllocation && e.isGoods)
           : null;
 
-      inventoryPurchaseTrx = _trxs
+      inventoryPurchaseTrx = argTrxs
               .any((e) => e.isOrderInventoryPurchase && !e.isGoods)
-          ? _trxs.firstWhere((e) => e.isOrderInventoryPurchase && !e.isGoods)
+          ? argTrxs.firstWhere((e) => e.isOrderInventoryPurchase && !e.isGoods)
           : null;
 
-      deliveryTrx = _trxs.any((e) => e.isOrderDeliveryCharge && !e.isGoods)
-          ? _trxs.firstWhere((e) => e.isOrderDeliveryCharge && !e.isGoods)
+      deliveryTrx = argTrxs.any((e) => e.isOrderDeliveryCharge && !e.isGoods)
+          ? argTrxs.firstWhere((e) => e.isOrderDeliveryCharge && !e.isGoods)
           : null;
 
       //
@@ -187,6 +188,26 @@ class AddOrderProvider
     this.inventory = inventory;
     inventoryUnit = inventory?.unit;
     ref.notifyListeners();
+  }
+
+  int get inventoryLeft {
+    if (inventory == null) return 0;
+    final ts = _trxs
+        .where((e) =>
+            (e.fromId == inventory?.id || e.toId == inventory?.id) &&
+            (e.fromType.isOrder || e.toType.isOrder) &&
+            e.isGoods == true)
+        .toList();
+    final total = inventory?.quantity.toString().toDouble ?? 0.0;
+    final adjusted = ts.isEmpty
+        ? 0.0
+        : ts.fold<double>(
+            0.0,
+            (p, c) =>
+                p +
+                (c.trxType.isCredit ? c.amount : 0.0) -
+                (c.trxType.isDebit ? c.amount : 0.0));
+    return (total - adjusted).toInt();
   }
 
   void setDeliveryEmployee(PktbsEmployee? employee) {

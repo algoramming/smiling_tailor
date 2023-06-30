@@ -90,10 +90,23 @@ class InventoryInfos extends StatelessWidget {
                 if (notifier.isInventoryNeeded && !v!.isInt) {
                   return 'Quantity must be integer';
                 }
+                if (notifier.isInventoryNeeded &&
+                    int.parse(v!) > notifier.inventoryLeft) {
+                  return 'Quantity must be less than or equal to ${notifier.inventoryLeft} ${notifier.inventoryUnit?.symbol ?? '??'}';
+                }
                 return null;
               },
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 3),
+            if (notifier.inventoryLeft != 0)
+              Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  'Total ${notifier.inventoryLeft} ${notifier.inventoryUnit?.symbol ?? '??'} available in stock.',
+                  style: context.text.labelMedium,
+                ),
+              ),
+            const SizedBox(height: 7),
             TextFormField(
               controller: notifier.inventoryPriceCntrlr,
               decoration: const InputDecoration(
