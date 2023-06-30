@@ -34,6 +34,8 @@ class InventoryProvider extends AsyncNotifier<List<PktbsInventory>> {
 
   _listener() => searchCntrlr.addListener(() => ref.notifyListeners());
 
+  refresh() => ref.notifyListeners();
+
   _stream() {
     // Implement Stream needs pocketbase update to add filter and expand options then the autodispose had to remove
     pb.collection(inventories).subscribe('*', (s) async {

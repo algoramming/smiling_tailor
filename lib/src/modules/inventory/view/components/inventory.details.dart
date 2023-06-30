@@ -67,7 +67,7 @@ class InventoryDetails extends ConsumerWidget {
                       onPressed: () async => await showDialog(
                         context: context,
                         barrierDismissible: false,
-                        builder: (context) => const AddInventoryPopup(),
+                        builder: (_) => const AddInventoryPopup(),
                       ),
                       icon: const Icon(Icons.add),
                       label: const Text('Inventory'),
