@@ -54,7 +54,7 @@ class EmployeeDetails extends ConsumerWidget {
                           controller: noti.searchCntrlr,
                           decoration: InputDecoration(
                             hintText: 'Search...',
-                            prefixIcon: ClearPreffixIcon(
+                            prefixIcon: ClearPrefixIcon(
                                 () => noti.searchCntrlr.clear()),
                             suffixIcon: PasteSuffixIcon(() async => noti
                                 .searchCntrlr.text = await getCliboardData()),

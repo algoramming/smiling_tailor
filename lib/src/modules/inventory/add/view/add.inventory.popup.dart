@@ -2,12 +2,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/modules/inventory/model/inventory.dart';
 
 import '../../../../config/constants.dart';
 import '../../../../shared/animations_widget/animated_popup.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
+import '../../model/inventory.dart';
 import '../provider/add.inventory.provider.dart';
 
 class AddInventoryPopup extends ConsumerWidget {

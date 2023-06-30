@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pocketbase/pocketbase.dart';
-import 'package:smiling_tailor/src/modules/transaction/model/transaction.dart';
+import '../../transaction/model/transaction.dart';
 
 import '../../../db/db.dart';
 import '../../../pocketbase/auth.store/helpers.dart';

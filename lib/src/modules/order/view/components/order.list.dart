@@ -37,7 +37,7 @@ class OrderList extends ConsumerWidget {
                 decoration: InputDecoration(
                   hintText: 'Search...',
                   prefixIcon:
-                      ClearPreffixIcon(() => notifier.searchCntrlr.clear()),
+                      ClearPrefixIcon(() => notifier.searchCntrlr.clear()),
                   suffixIcon: PasteSuffixIcon(() async =>
                       notifier.searchCntrlr.text = await getCliboardData()),
                 ),
