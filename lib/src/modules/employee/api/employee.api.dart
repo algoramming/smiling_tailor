@@ -76,3 +76,19 @@ Future<void> pktbsUpdateEmployee(
     return;
   }
 }
+
+Future<bool> pktbsDeleteEmployee(BuildContext context, String id) async {
+  try {
+    EasyLoading.show(status: 'Deleting employee...');
+    await pb.collection(employees).delete(id);
+    return true;
+  } on SocketException catch (e) {
+    EasyLoading.showError('No Internet Connection. $e');
+    return false;
+  } on ClientException catch (e) {
+    log.e('Employee deletion: $e');
+    showAwesomeSnackbar(
+        context, 'Failed!', getErrorMessage(e), MessageType.failure);
+    return false;
+  }
+}

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:smiling_tailor/src/modules/employee/delete/view/delete.employee.popup.dart';
 
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../shared/clipboard_data/clipboard_data.dart';
@@ -11,7 +12,6 @@ import '../../../../shared/loading_widget/loading_widget.dart';
 import '../../../../shared/page_not_found/page_not_found.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
-import '../../../../utils/logger/logger_helper.dart';
 import '../../../../utils/transations/fade.switcher.dart';
 import '../../add/view/add.employee.popup.dart';
 import '../../provider/employee.provider.dart';
@@ -55,7 +55,9 @@ class EmployeeList extends ConsumerWidget {
                                       builder: (_) =>
                                           AddEmployeePopup(employee: employee),
                                     ),
-                                    onDeleteTap: () => log.i('On Delete Tap'),
+                                    onDeleteTap: () async =>
+                                        await showDeleteEmployeePopup(
+                                            context, employee),
                                     selected:
                                         notifier.selectedEmployee == employee,
                                     onTap: () =>
