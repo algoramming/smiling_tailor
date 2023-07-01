@@ -12,6 +12,7 @@ import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 import '../../../transaction/api/trx.api.dart';
 import '../../../transaction/provider/all.trxs.provider.dart';
 import '../../api/employee.api.dart';
+import '../view/confirmation.delete.dart';
 
 typedef DeleteEmployeeNotifier = AutoDisposeAsyncNotifierProviderFamily<
     DeleteEmployeeProvider, void, PktbsEmployee>;
@@ -45,20 +46,28 @@ class DeleteEmployeeProvider
       _trxs.where((e) => _selectedTrxs[_trxs.indexOf(e)]).toList();
 
   Future<void> submit(BuildContext context) async {
-    await pktbsDeleteEmployee(context, arg.id).then((r) async {
-      if (r) {
-        await _deleteTrxs(context).then((_) {
-          EasyLoading.dismiss();
-          context.pop();
-          showAwesomeSnackbar(
-            context,
-            'Success',
-            'Employee & releated transactions deleted successfully',
-            MessageType.success,
-          );
-        });
-      }
-    });
+    await showDialog(
+      context: context,
+      builder: (_) => ConfirmDeletePopup(
+        () async => await pktbsDeleteEmployee(context, arg.id).then(
+          (r) async {
+            if (r) {
+              await _deleteTrxs(context).then((_) {
+                EasyLoading.dismiss();
+                context.pop();
+                context.pop();
+                showAwesomeSnackbar(
+                  context,
+                  'Success',
+                  'Employee & releated transactions deleted successfully',
+                  MessageType.success,
+                );
+              });
+            }
+          },
+        ),
+      ),
+    );
   }
 
   Future<void> _deleteTrxs(BuildContext context) async {
