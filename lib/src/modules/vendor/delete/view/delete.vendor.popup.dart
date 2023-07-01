@@ -3,8 +3,6 @@ import 'dart:math';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/modules/employee/delete/provider/delete.employee.provider.dart';
-import 'package:smiling_tailor/src/modules/employee/model/employee.dart';
 import 'package:smiling_tailor/src/modules/transaction/enum/trx.type.dart';
 import 'package:smiling_tailor/src/modules/transaction/model/transaction.dart';
 import 'package:smiling_tailor/src/shared/animations_widget/animated_popup.dart';
@@ -16,28 +14,30 @@ import '../../../../shared/clipboard_data/clipboard_data.dart';
 import '../../../../shared/error_widget/error_widget.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
 import '../../../../shared/loading_widget/loading_widget.dart';
+import '../../model/vendor.dart';
+import '../provider/delete.vendor.provider.dart';
 
-Future<void> showDeleteEmployeePopup(
-    BuildContext context, PktbsEmployee employee) async {
+Future<void> showDeleteVendorPopup(
+    BuildContext context, PktbsVendor vendor) async {
   await showDialog(
     context: context,
     barrierDismissible: false,
-    builder: (_) => DeleteEmployeePopup(employee),
+    builder: (_) => DeleteVendorPopup(vendor),
   );
 }
 
-class DeleteEmployeePopup extends StatelessWidget {
-  const DeleteEmployeePopup(this.employee, {super.key});
+class DeleteVendorPopup extends StatelessWidget {
+  const DeleteVendorPopup(this.vendor, {super.key});
 
-  final PktbsEmployee employee;
+  final PktbsVendor vendor;
 
   @override
   Widget build(BuildContext context) {
     return AnimatedPopup(
       child: AlertDialog(
         scrollable: true,
-        title: const Text('Delete Employee'),
-        content: _Content(employee),
+        title: const Text('Delete Vendor'),
+        content: _Content(vendor),
         actions: [
           TextButton(
             onPressed: () => context.pop(),
@@ -50,10 +50,10 @@ class DeleteEmployeePopup extends StatelessWidget {
           Consumer(
             builder: (_, ref, __) => TextButton(
               onPressed: () async => await ref
-                  .read(deleteEmployeeProvider(employee).notifier)
+                  .read(deleteVendorProvider(vendor).notifier)
                   .submit(context),
               child: const Text(
-                'Delete Employee',
+                'Delete Vendor',
                 style: TextStyle(color: Colors.red),
               ),
             ),
@@ -65,16 +65,16 @@ class DeleteEmployeePopup extends StatelessWidget {
 }
 
 class _Content extends ConsumerWidget {
-  const _Content(this.employee);
+  const _Content(this.vendor);
 
-  final PktbsEmployee employee;
+  final PktbsVendor vendor;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final notifier = ref.watch(deleteEmployeeProvider(employee).notifier);
+    final notifier = ref.watch(deleteVendorProvider(vendor).notifier);
     return SizedBox(
       width: min(400, context.width),
-      child: ref.watch(deleteEmployeeProvider(employee)).when(
+      child: ref.watch(deleteVendorProvider(vendor)).when(
             loading: () => const LoadingWidget(withScaffold: false),
             error: (err, _) => KErrorWidget(error: err),
             data: (_) => Column(
@@ -84,7 +84,7 @@ class _Content extends ConsumerWidget {
                   text: TextSpan(
                     children: [
                       TextSpan(
-                        text: 'Are you sure you want to delete this employee ',
+                        text: 'Are you sure you want to delete this vendor ',
                         style: context.text.labelLarge,
                       ),
                       TextSpan(
@@ -99,7 +99,7 @@ class _Content extends ConsumerWidget {
                       ),
                       TextSpan(
                         text:
-                            'This will also delete all transactions related to this employee and this action cannot be undone. So please be careful & make sure you want to delete this employee.',
+                            'This will also delete all transactions related to this vendor and this action cannot be undone. So please be careful & make sure you want to delete this vendor.',
                         style: context.text.labelLarge!.copyWith(
                           color: Colors.red,
                         ),

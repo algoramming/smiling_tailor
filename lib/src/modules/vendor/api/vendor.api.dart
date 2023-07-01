@@ -122,3 +122,23 @@ Future<void> pktbsUpdateVendor(
     return;
   }
 }
+
+Future<bool> pktbsDeleteVendor(BuildContext context, String id) async {
+  try {
+    EasyLoading.show(status: 'Deleting vendor...');
+    await pb.collection(vendors).delete(id);
+    return true;
+  } on SocketException catch (e) {
+    context.pop();
+    context.pop();
+    EasyLoading.showError('No Internet Connection. $e');
+    return false;
+  } on ClientException catch (e) {
+    log.e('Vendor deletion: $e');
+    context.pop();
+    context.pop();
+    showAwesomeSnackbar(
+        context, 'Failed!', getErrorMessage(e), MessageType.failure);
+    return false;
+  }
+}

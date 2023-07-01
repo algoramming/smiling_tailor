@@ -3,29 +3,28 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/modules/employee/model/employee.dart';
 import 'package:smiling_tailor/src/modules/transaction/model/transaction.dart';
+import 'package:smiling_tailor/src/modules/vendor/api/vendor.api.dart';
+import 'package:smiling_tailor/src/modules/vendor/model/vendor.dart';
 import 'package:smiling_tailor/src/shared/show_toast/awsome.snackbar/awesome.snackbar.dart';
 import 'package:smiling_tailor/src/shared/show_toast/awsome.snackbar/show.awesome.snackbar.dart';
 import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
 import '../../../transaction/api/trx.api.dart';
 import '../../../transaction/provider/all.trxs.provider.dart';
-import '../../api/employee.api.dart';
-import '../view/confirmation.employee.delete.dart';
+import '../view/confirmation.vendor.delete.dart';
 
-typedef DeleteEmployeeNotifier = AutoDisposeAsyncNotifierProviderFamily<
-    DeleteEmployeeProvider, void, PktbsEmployee>;
+typedef DeleteVendorNotifier = AutoDisposeAsyncNotifierProviderFamily<
+    DeleteVendorProvider, void, PktbsVendor>;
 
-final deleteEmployeeProvider =
-    DeleteEmployeeNotifier(DeleteEmployeeProvider.new);
+final deleteVendorProvider = DeleteVendorNotifier(DeleteVendorProvider.new);
 
-class DeleteEmployeeProvider
-    extends AutoDisposeFamilyAsyncNotifier<void, PktbsEmployee> {
+class DeleteVendorProvider
+    extends AutoDisposeFamilyAsyncNotifier<void, PktbsVendor> {
   late List<PktbsTrx> _trxs;
   late List<bool> _selectedTrxs;
   @override
-  FutureOr<void> build(PktbsEmployee arg) async {
+  FutureOr<void> build(PktbsVendor arg) async {
     _trxs = (await ref.watch(allTrxsProvider.future))
         .where((trx) =>
             trx.isActive && (trx.fromId == arg.id || trx.toId == arg.id))
@@ -48,8 +47,8 @@ class DeleteEmployeeProvider
   Future<void> submit(BuildContext context) async {
     await showDialog(
       context: context,
-      builder: (_) => ConfirmDeleteEmployeePopup(
-        () async => await pktbsDeleteEmployee(context, arg.id).then(
+      builder: (_) => ConfirmDeleteVendorPopup(
+        () async => await pktbsDeleteVendor(context, arg.id).then(
           (r) async {
             if (r) {
               await _deleteTrxs(context).then((_) {
@@ -59,7 +58,7 @@ class DeleteEmployeeProvider
                 showAwesomeSnackbar(
                   context,
                   'Success',
-                  'Employee & releated transactions deleted successfully',
+                  'Vendor & releated transactions deleted successfully',
                   MessageType.success,
                 );
               });

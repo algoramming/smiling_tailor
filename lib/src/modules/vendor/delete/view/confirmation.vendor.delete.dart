@@ -5,16 +5,17 @@ import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
 import '../../../../shared/animations_widget/animated_popup.dart';
 
-class ConfirmDeletePopup extends StatefulWidget {
-  const ConfirmDeletePopup(this.onConfirm, {super.key});
+class ConfirmDeleteVendorPopup extends StatefulWidget {
+  const ConfirmDeleteVendorPopup(this.onConfirm, {super.key});
 
   final Future<void> Function()? onConfirm;
 
   @override
-  State<ConfirmDeletePopup> createState() => _ConfirmDeletePopupState();
+  State<ConfirmDeleteVendorPopup> createState() =>
+      _ConfirmDeleteVendorPopupState();
 }
 
-class _ConfirmDeletePopupState extends State<ConfirmDeletePopup> {
+class _ConfirmDeleteVendorPopupState extends State<ConfirmDeleteVendorPopup> {
   String? text;
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class _ConfirmDeletePopupState extends State<ConfirmDeletePopup> {
           child: Column(
             children: [
               Text(
-                'Are you sure you want to delete this employee and all related transactions?',
+                'Are you sure you want to delete this vendor and all related transactions?',
                 style: context.text.titleSmall,
               ),
               const SizedBox(height: 10),
@@ -86,7 +87,7 @@ class _ConfirmDeletePopupState extends State<ConfirmDeletePopup> {
                 ? null
                 : () async => await widget.onConfirm?.call(),
             child: Text(
-              'Delete Employee',
+              'Delete Vendor',
               style: TextStyle(
                 color:
                     text != 'DELETE' ? Colors.red.withOpacity(0.5) : Colors.red,
