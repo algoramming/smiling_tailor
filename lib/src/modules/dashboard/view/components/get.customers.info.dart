@@ -140,17 +140,6 @@ class GetCustomersInfo extends ConsumerWidget {
                 Row(
                   mainAxisAlignment: mainSpaceEvenly,
                   children: [
-                    // GradientButton(
-                    //   'Message',
-                    //   onTap: () async {
-                    //     final uri =
-                    //         Uri.parse('sms:${notifier.content}?body=' '');
-                    //     if (!await launchUrl(uri)) {
-                    //       throw Exception('Could not launch $uri');
-                    //     }
-                    //   },
-                    //   minSize: const Size(70.0, 40.0),
-                    // ),
                     GradientButton('Copy to Clipboard', onTap: () async {
                       await copyToClipboard(context, notifier.content);
                     }),
@@ -175,16 +164,6 @@ class GetCustomersInfo extends ConsumerWidget {
                           }
                         },
                       ),
-                    // GradientButton(
-                    //   'Email',
-                    //   onTap: () async {
-                    //     final uri = Uri.parse('mailto:${notifier.content}');
-                    //     if (!await launchUrl(uri)) {
-                    //       throw Exception('Could not launch $uri');
-                    //     }
-                    //   },
-                    //   minSize: const Size(70.0, 40.0),
-                    // ),
                   ],
                 ),
                 const SizedBox(height: 5.0),
