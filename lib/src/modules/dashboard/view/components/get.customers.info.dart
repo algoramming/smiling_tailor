@@ -1,7 +1,5 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../utils/extensions/extensions.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../config/constants.dart';
@@ -10,6 +8,7 @@ import '../../../../shared/clipboard_data/clipboard_data.dart';
 import '../../../../shared/gradient/gradient.button.dart';
 import '../../../../shared/radio_button/k_radio_button.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
+import '../../../../utils/extensions/extensions.dart';
 import '../../provider/get.customers.info.provider.dart';
 
 class GetCustomersInfo extends ConsumerWidget {
@@ -39,13 +38,13 @@ class GetCustomersInfo extends ConsumerWidget {
                   children: [
                     KRadioButton(
                       value: 0,
-                      label: 'Phone',
+                      label: 'Phone Number',
                       groupValue: notifier.radioOption,
                       onTap: notifier.changeRadioOption,
                     ),
                     KRadioButton(
                       value: 1,
-                      label: 'Email',
+                      label: 'Email Address',
                       groupValue: notifier.radioOption,
                       onTap: notifier.changeRadioOption,
                     ),
@@ -141,30 +140,51 @@ class GetCustomersInfo extends ConsumerWidget {
                 Row(
                   mainAxisAlignment: mainSpaceEvenly,
                   children: [
-                    GradientButton(
-                      '📩',
-                      onTap: () async {
-                        final uri =
-                            Uri.parse('sms:${notifier.content}?body=' '');
-                        if (!await launchUrl(uri)) {
-                          throw Exception('Could not launch $uri');
-                        }
-                      },
-                      minSize: const Size(50.0, 40.0),
-                    ),
+                    // GradientButton(
+                    //   'Message',
+                    //   onTap: () async {
+                    //     final uri =
+                    //         Uri.parse('sms:${notifier.content}?body=' '');
+                    //     if (!await launchUrl(uri)) {
+                    //       throw Exception('Could not launch $uri');
+                    //     }
+                    //   },
+                    //   minSize: const Size(70.0, 40.0),
+                    // ),
                     GradientButton('Copy to Clipboard', onTap: () async {
                       await copyToClipboard(context, notifier.content);
                     }),
-                    GradientButton(
-                      '📧',
-                      onTap: () async {
-                        final uri = Uri.parse('mailto:${notifier.content}');
-                        if (!await launchUrl(uri)) {
-                          throw Exception('Could not launch $uri');
-                        }
-                      },
-                      minSize: const Size(50.0, 40.0),
-                    ),
+                    if (notifier.radioOption == 0)
+                      GradientButton(
+                        'Send Message',
+                        onTap: () async {
+                          final uri =
+                              Uri.parse('sms:${notifier.content}?body=' '');
+                          if (!await launchUrl(uri)) {
+                            throw Exception('Could not launch $uri');
+                          }
+                        },
+                      ),
+                    if (notifier.radioOption == 1)
+                      GradientButton(
+                        'Send Email',
+                        onTap: () async {
+                          final uri = Uri.parse('mailto:${notifier.content}');
+                          if (!await launchUrl(uri)) {
+                            throw Exception('Could not launch $uri');
+                          }
+                        },
+                      ),
+                    // GradientButton(
+                    //   'Email',
+                    //   onTap: () async {
+                    //     final uri = Uri.parse('mailto:${notifier.content}');
+                    //     if (!await launchUrl(uri)) {
+                    //       throw Exception('Could not launch $uri');
+                    //     }
+                    //   },
+                    //   minSize: const Size(70.0, 40.0),
+                    // ),
                   ],
                 ),
                 const SizedBox(height: 5.0),
