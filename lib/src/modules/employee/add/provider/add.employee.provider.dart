@@ -18,6 +18,7 @@ class AddEmployeeProvider
   final phoneCntrlr = TextEditingController();
   final nameCntrlr = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  
 
   @override
   void build(PktbsEmployee? arg) {

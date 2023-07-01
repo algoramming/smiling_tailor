@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../utils/themes/themes.dart';
 import '../../../utils/transations/big.to.small.dart';
 import '../add/view/add.inventory.popup.dart';
 import '../provider/inventory.provider.dart';
@@ -37,7 +38,7 @@ class InventoryView extends StatelessWidget {
                       barrierDismissible: false,
                       builder: (_) => const AddInventoryPopup(),
                     ),
-                    child: const Icon(Icons.add),
+                    child: const Icon(Icons.add, color: white),
                   ),
           );
         },

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:smiling_tailor/src/modules/inventory/delete/view/delete.inventory.popup.dart';
 
 import '../../../../config/constants.dart';
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
@@ -15,6 +14,7 @@ import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/transations/fade.switcher.dart';
 import '../../add/view/add.inventory.popup.dart';
+import '../../delete/view/delete.inventory.popup.dart';
 import '../../provider/inventory.provider.dart';
 
 class InventoryList extends ConsumerWidget {

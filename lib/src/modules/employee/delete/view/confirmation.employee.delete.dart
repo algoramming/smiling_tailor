@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
 import '../../../../shared/animations_widget/animated_popup.dart';
+import '../../../../utils/extensions/extensions.dart';
 
 class ConfirmDeleteEmployeePopup extends StatefulWidget {
   const ConfirmDeleteEmployeePopup(this.onConfirm, {super.key});

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../utils/themes/themes.dart';
 import '../../../utils/transations/big.to.small.dart';
 import '../add/view/add.employee.popup.dart';
 import '../provider/employee.provider.dart';
@@ -37,7 +38,7 @@ class EmployeeView extends StatelessWidget {
                       barrierDismissible: false,
                       builder: (_) => const AddEmployeePopup(),
                     ),
-                    child: const Icon(Icons.add),
+                    child: const Icon(Icons.add, color: white),
                   ),
           );
         },

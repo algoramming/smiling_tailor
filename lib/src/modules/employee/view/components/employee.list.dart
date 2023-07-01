@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:smiling_tailor/src/modules/employee/delete/view/delete.employee.popup.dart';
 
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../shared/clipboard_data/clipboard_data.dart';
@@ -14,6 +13,7 @@ import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/transations/fade.switcher.dart';
 import '../../add/view/add.employee.popup.dart';
+import '../../delete/view/delete.employee.popup.dart';
 import '../../provider/employee.provider.dart';
 
 class EmployeeList extends ConsumerWidget {

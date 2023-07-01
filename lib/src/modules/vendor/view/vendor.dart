@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../utils/themes/themes.dart';
 import '../../../utils/transations/big.to.small.dart';
 import '../add/view/add.vendor.popup.dart';
 import '../provider/vendor.provider.dart';
@@ -36,7 +37,7 @@ class VendorView extends StatelessWidget {
                       barrierDismissible: false,
                       builder: (_) => const AddVendorPopup(),
                     ),
-                    child: const Icon(Icons.add),
+                    child: const Icon(Icons.add, color: white),
                   ),
           );
         },

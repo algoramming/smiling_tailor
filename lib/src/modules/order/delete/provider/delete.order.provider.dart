@@ -10,22 +10,21 @@ import '../../../../utils/extensions/extensions.dart';
 import '../../../transaction/api/trx.api.dart';
 import '../../../transaction/model/transaction.dart';
 import '../../../transaction/provider/all.trxs.provider.dart';
-import '../../api/delete.inventory.dart';
-import '../../model/inventory.dart';
-import '../view/confirmation.inventory.delete.dart';
+import '../../api/delete.order.dart';
+import '../../model/order.dart';
+import '../view/confirmation.order.delete.dart';
 
-typedef DeleteInventoryNotifier = AutoDisposeAsyncNotifierProviderFamily<
-    DeleteInventoryProvider, void, PktbsInventory>;
+typedef DeleteOrderNotifier = AutoDisposeAsyncNotifierProviderFamily<
+    DeleteOrderProvider, void, PktbsOrder>;
 
-final deleteInventoryProvider =
-    DeleteInventoryNotifier(DeleteInventoryProvider.new);
+final deleteOrderProvider = DeleteOrderNotifier(DeleteOrderProvider.new);
 
-class DeleteInventoryProvider
-    extends AutoDisposeFamilyAsyncNotifier<void, PktbsInventory> {
+class DeleteOrderProvider
+    extends AutoDisposeFamilyAsyncNotifier<void, PktbsOrder> {
   late List<PktbsTrx> _trxs;
   late List<bool> _selectedTrxs;
   @override
-  FutureOr<void> build(PktbsInventory arg) async {
+  FutureOr<void> build(PktbsOrder arg) async {
     _trxs = (await ref.watch(allTrxsProvider.future))
         .where((trx) =>
             trx.isActive && (trx.fromId == arg.id || trx.toId == arg.id))
@@ -48,8 +47,8 @@ class DeleteInventoryProvider
   Future<void> submit(BuildContext context) async {
     await showDialog(
       context: context,
-      builder: (_) => ConfirmDeleteInventoryPopup(
-        () async => await pktbsDeleteInventory(context, arg.id).then(
+      builder: (_) => ConfirmDeleteOrderPopup(
+        () async => await pktbsDeleteOrder(context, arg.id).then(
           (r) async {
             if (r) {
               await _deleteTrxs(context).then((_) {
@@ -59,7 +58,7 @@ class DeleteInventoryProvider
                 showAwesomeSnackbar(
                   context,
                   'Success',
-                  'Inventory & releated transactions deleted successfully',
+                  'Order & releated transactions deleted successfully',
                   MessageType.success,
                 );
               });

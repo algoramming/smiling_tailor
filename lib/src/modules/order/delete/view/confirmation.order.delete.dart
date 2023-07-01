@@ -5,18 +5,17 @@ import '../../../../utils/extensions/extensions.dart';
 
 import '../../../../shared/animations_widget/animated_popup.dart';
 
-class ConfirmDeleteInventoryPopup extends StatefulWidget {
-  const ConfirmDeleteInventoryPopup(this.onConfirm, {super.key});
+class ConfirmDeleteOrderPopup extends StatefulWidget {
+  const ConfirmDeleteOrderPopup(this.onConfirm, {super.key});
 
   final Future<void> Function()? onConfirm;
 
   @override
-  State<ConfirmDeleteInventoryPopup> createState() =>
-      _ConfirmDeleteInventoryPopupState();
+  State<ConfirmDeleteOrderPopup> createState() =>
+      _ConfirmDeleteOrderPopupState();
 }
 
-class _ConfirmDeleteInventoryPopupState
-    extends State<ConfirmDeleteInventoryPopup> {
+class _ConfirmDeleteOrderPopupState extends State<ConfirmDeleteOrderPopup> {
   String? text;
   @override
   Widget build(BuildContext context) {
@@ -29,7 +28,7 @@ class _ConfirmDeleteInventoryPopupState
           child: Column(
             children: [
               Text(
-                'Are you sure you want to delete this inventory and all related transactions?',
+                'Are you sure you want to delete this order and all related transactions?',
                 style: context.text.titleSmall,
               ),
               const SizedBox(height: 10),
@@ -88,7 +87,7 @@ class _ConfirmDeleteInventoryPopupState
                 ? null
                 : () async => await widget.onConfirm?.call(),
             child: Text(
-              'Delete Inventory',
+              'Delete Order',
               style: TextStyle(
                 color:
                     text != 'DELETE' ? Colors.red.withOpacity(0.5) : Colors.red,

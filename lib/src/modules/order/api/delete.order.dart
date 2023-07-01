@@ -11,10 +11,10 @@ import '../../../shared/show_toast/awsome.snackbar/show.awesome.snackbar.dart';
 import '../../../utils/extensions/extensions.dart';
 import '../../../utils/logger/logger_helper.dart';
 
-Future<bool> pktbsDeleteInventory(BuildContext context, String id) async {
+Future<bool> pktbsDeleteOrder(BuildContext context, String id) async {
   try {
-    EasyLoading.show(status: 'Deleting inventory...');
-    await pb.collection(inventories).delete(id);
+    EasyLoading.show(status: 'Deleting order...');
+    await pb.collection(orders).delete(id);
     return true;
   } on SocketException catch (e) {
     context.pop();
@@ -24,7 +24,7 @@ Future<bool> pktbsDeleteInventory(BuildContext context, String id) async {
   } on ClientException catch (e) {
     context.pop();
     context.pop();
-    log.e('Inventory deletion: $e');
+    log.e('Order deletion: $e');
     showAwesomeSnackbar(
         context, 'Failed!', getErrorMessage(e), MessageType.failure);
     return false;

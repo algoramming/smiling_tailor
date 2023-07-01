@@ -12,11 +12,11 @@ import '../../../../shared/loading_widget/loading_widget.dart';
 import '../../../../shared/page_not_found/page_not_found.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
-import '../../../../utils/logger/logger_helper.dart';
 import '../../../../utils/themes/themes.dart';
 import '../../../../utils/transations/fade.switcher.dart';
 import '../../add/view/add.order.popup.dart';
 import '../../add/view/order.slip.download.popup.dart';
+import '../../delete/view/delete.order.popup.dart';
 import '../../enum/order.enum.dart';
 import '../../provider/order.provider.dart';
 
@@ -128,7 +128,9 @@ class OrderList extends ConsumerWidget {
                                       builder: (context) =>
                                           AddOrderPopup(order: order),
                                     ),
-                                    onDeleteTap: () => log.i('On Delete Tap'),
+                                    onDeleteTap: () async =>
+                                        await showDeleteOrderPopup(
+                                            context, order),
                                     slidableAction: Theme(
                                       data: context.theme.copyWith(
                                         iconTheme: context.theme.iconTheme

@@ -3,18 +3,18 @@ import 'dart:math';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/modules/inventory/model/inventory.dart';
-import 'package:smiling_tailor/src/modules/transaction/enum/trx.type.dart';
-import 'package:smiling_tailor/src/modules/transaction/model/transaction.dart';
-import 'package:smiling_tailor/src/shared/animations_widget/animated_popup.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
 import '../../../../config/constants.dart';
+import '../../../../shared/animations_widget/animated_popup.dart';
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../shared/clipboard_data/clipboard_data.dart';
 import '../../../../shared/error_widget/error_widget.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
 import '../../../../shared/loading_widget/loading_widget.dart';
+import '../../../../utils/extensions/extensions.dart';
+import '../../../transaction/enum/trx.type.dart';
+import '../../../transaction/model/transaction.dart';
+import '../../model/inventory.dart';
 import '../provider/delete.inventory.provider.dart';
 
 Future<void> showDeleteInventoryPopup(

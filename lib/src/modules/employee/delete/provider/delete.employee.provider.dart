@@ -3,15 +3,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/modules/employee/model/employee.dart';
-import 'package:smiling_tailor/src/modules/transaction/model/transaction.dart';
-import 'package:smiling_tailor/src/shared/show_toast/awsome.snackbar/awesome.snackbar.dart';
-import 'package:smiling_tailor/src/shared/show_toast/awsome.snackbar/show.awesome.snackbar.dart';
-import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
+import '../../../../shared/show_toast/awsome.snackbar/awesome.snackbar.dart';
+import '../../../../shared/show_toast/awsome.snackbar/show.awesome.snackbar.dart';
+import '../../../../utils/extensions/extensions.dart';
 import '../../../transaction/api/trx.api.dart';
+import '../../../transaction/model/transaction.dart';
 import '../../../transaction/provider/all.trxs.provider.dart';
 import '../../api/employee.api.dart';
+import '../../model/employee.dart';
 import '../view/confirmation.employee.delete.dart';
 
 typedef DeleteEmployeeNotifier = AutoDisposeAsyncNotifierProviderFamily<
