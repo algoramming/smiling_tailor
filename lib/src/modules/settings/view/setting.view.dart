@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../config/constants.dart';
 import '../../../localization/loalization.dart';
 import '../../../utils/extensions/extensions.dart';
+import 'advance/admin.panel.tile.dart';
 import 'advance/db.delete.tile.dart';
 import 'advance/db.view.tile.dart';
 import 'advance/performance.overlay.tile.dart';
@@ -82,6 +83,7 @@ class AdvancePart extends StatelessWidget {
         children: [
           PerformanceOverlayTile(),
           URLConfigTile(),
+          AdminPanelTile(),
           DBViewTile(),
           DBDeleteTile(),
         ],
