@@ -78,14 +78,14 @@ class PktbsTrx {
         trxType: (json[_Json.trxType] as String).trxType,
         collectionId: json[_Json.collectionId] as String,
         fromType: (json[_Json.fromType] as String).glType,
-        updated: json[_Json.updated] == null
-            ? null
-            : DateTime.parse(json[_Json.updated] as String),
         unit: (json[_Json.unit] as String?)?.getMeasurement,
         collectionName: json[_Json.collectionName] as String,
         amount: json[_Json.amount].toString().toDouble ?? 0.0,
-        created: DateTime.parse(json[_Json.created] as String),
         creator: PktbsUser.fromJson(json[_Json.expand][_Json.creator]),
+        updated: json[_Json.updated] == null
+            ? null
+            : DateTime.parse(json[_Json.updated] as String).toLocal(),
+        created: DateTime.parse(json[_Json.created] as String).toLocal(),
         updator: json[_Json.updator] == null || json[_Json.updator] == ''
             ? null
             : PktbsUser.fromJson(json[_Json.expand][_Json.updator]),
