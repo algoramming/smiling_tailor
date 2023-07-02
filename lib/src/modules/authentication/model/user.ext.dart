@@ -88,6 +88,20 @@ extension PktbsUserExtension on PktbsUser {
         ],
       );
 
+  Widget get userTypeWidget => Container(
+        margin: const EdgeInsets.symmetric(horizontal: 5.0),
+        padding: const EdgeInsets.symmetric(horizontal: 5.0),
+        decoration: BoxDecoration(
+          color: type.color.withOpacity(0.3),
+          borderRadius: borderRadius15,
+          border: Border.all(color: type.color, width: 1.5),
+        ),
+        child: Text(
+          type.title,
+          style: const TextStyle(letterSpacing: 0.7, fontSize: 10.0),
+        ),
+      );
+
   bool get isSuperAdmin => type.isSuperAdmin;
 
   bool get isAdmin => type.isAdmin;

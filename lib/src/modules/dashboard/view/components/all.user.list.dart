@@ -55,7 +55,18 @@ class AllUsersList extends ConsumerWidget {
                                     size: 30.0,
                                     child: user.imageWidget,
                                   ),
-                                  title: Text(user.name),
+                                  title: Row(
+                                    children: [
+                                      Flexible(
+                                        child: Text(
+                                          user.name,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      user.userTypeWidget,
+                                    ],
+                                  ),
                                   subtitle: Text(user.email),
                                   trailing: _UserListTrailing(user),
                                   children: [
