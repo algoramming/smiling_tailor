@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smiling_tailor/src/config/constants.dart';
 
 import '../../../../../utils/extensions/extensions.dart';
 import '../../../../authentication/model/user.dart';
@@ -14,7 +15,29 @@ class KDrawerHeader extends ConsumerWidget {
     final user = users.isEmpty ? null : users.last;
     return UserAccountsDrawerHeader(
       decoration: BoxDecoration(color: context.theme.canvasColor),
-      accountName: Text(user?.name ?? '...'),
+      accountName: Row(
+        children: [
+          Flexible(child: Text(user?.name ?? '...')),
+          if (user != null)
+            Row(
+              children: [
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  decoration: BoxDecoration(
+                    color: user.type.color.withOpacity(0.3),
+                    borderRadius: borderRadius30,
+                    border: Border.all(color: user.type.color, width: 1.5),
+                  ),
+                  child: Text(
+                    user.type.title,
+                    style: context.text.labelSmall,
+                  ),
+                ),
+              ],
+            ),
+        ],
+      ),
       accountEmail: Text(user?.email ?? '...'),
       currentAccountPicture: user?.imageWidget,
       // otherAccountsPictures: [

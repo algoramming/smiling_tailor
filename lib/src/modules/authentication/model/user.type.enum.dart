@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 enum UserType {
   superadmin('Super Admin', Colors.red),
-  admin('Admin', Colors.yellow),
+  admin('Admin', Colors.red),
   manager('Manager', Colors.green);
 
   const UserType(this.title, this.color);
