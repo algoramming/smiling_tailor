@@ -12,6 +12,7 @@ import '../../../shared/page_not_found/page_not_found.dart';
 import '../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../authentication/view/authentication.dart';
 import '../../dashboard/provider/all.users.provider.dart';
+import '../../profile/provider/profile.provider.dart';
 import '../provider/all.managers.provider.dart';
 
 class ManagerConfigView extends ConsumerWidget {
@@ -19,6 +20,9 @@ class ManagerConfigView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(profileProvider);
+    if (user == null) return const LoadingWidget();
+    if (user.isDispose || user.isManager) return const AccesDeniedPage();
     return const Row(
       children: [
         Expanded(child: AllManagersList()),

@@ -2,9 +2,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smiling_tailor/src/modules/authentication/model/user.dart';
 
 import '../../../config/constants.dart';
 import '../../../shared/loading_widget/loading_widget.dart';
+import '../../../shared/page_not_found/page_not_found.dart';
 import '../../../utils/extensions/extensions.dart';
 import '../../../utils/transations/fade.switcher.dart';
 import '../provider/profile.provider.dart';
@@ -20,6 +22,7 @@ class ProfileView extends ConsumerWidget {
     ref.watch(profileProvider);
     final notifier = ref.read(profileProvider.notifier);
     if (notifier.user == null) return const LoadingWidget();
+    if (notifier.user?.isDispose ?? true) return const AccesDeniedPage();
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -67,17 +70,16 @@ class ProfileView extends ConsumerWidget {
       ),
       floatingActionButton: ElevatedButton.icon(
         label: FadeSwitcherTransition(
-            child: !notifier.isEditable
-                ? Text(
-                    'Tap to Editing Mode',
-                    style:
-                        context.text.labelLarge!.copyWith(color: Colors.white),
-                  )
-                : Text(
-                    'Tap to View Mode',
-                    style:
-                        context.text.labelLarge!.copyWith(color: Colors.white),
-                  )),
+          child: !notifier.isEditable
+              ? Text(
+                  'Tap to Editing Mode',
+                  style: context.text.labelLarge!.copyWith(color: Colors.white),
+                )
+              : Text(
+                  'Tap to View Mode',
+                  style: context.text.labelLarge!.copyWith(color: Colors.white),
+                ),
+        ),
         icon: FadeSwitcherTransition(
           child: !notifier.isEditable
               ? const Icon(Icons.edit, size: 16.0)

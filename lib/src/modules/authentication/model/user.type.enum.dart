@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 enum UserType {
   superadmin('Super Admin', Colors.red),
   admin('Admin', Colors.red),
-  manager('Manager', Colors.green);
+  manager('Manager', Colors.green),
+  dispose('Dispose', Colors.black87);
 
   const UserType(this.title, this.color);
   final String title;
@@ -19,8 +20,10 @@ extension UserTypeStringExtension on String {
         return UserType.admin;
       case 'Manager':
         return UserType.manager;
+      case 'Dispose':
+        return UserType.dispose;
       default:
-        return UserType.manager;
+        return UserType.dispose;
     }
   }
 }
@@ -32,9 +35,13 @@ extension UserTypeExtension on UserType {
 
   bool get isManager => this == UserType.manager;
 
+  bool get isDispose => this == UserType.dispose;
+
   bool get isNotSuperAdmin => this != UserType.superadmin;
 
   bool get isNotAdmin => this != UserType.admin;
 
   bool get isNotManager => this != UserType.manager;
+
+  bool get isNotDispose => this != UserType.dispose;
 }

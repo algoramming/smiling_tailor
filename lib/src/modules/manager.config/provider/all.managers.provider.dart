@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smiling_tailor/src/modules/dashboard/provider/all.users.provider.dart';
+import 'package:smiling_tailor/src/pocketbase/auth.store/helpers.dart';
 
 import '../../authentication/model/user.dart';
 
@@ -19,6 +20,9 @@ class AllManagersProvider extends AsyncNotifier<List<PktbsUser>> {
     _users = [];
     _listener();
     _users = await ref.watch(allUsersProvider.future);
+    _users.any((e) => e.id == pb.authStore.model.id)
+        ? _users.removeWhere((e) => e.id == pb.authStore.model.id)
+        : null;
     return _users;
   }
 

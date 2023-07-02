@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smiling_tailor/src/modules/authentication/model/user.dart';
 
 import '../../../shared/loading_widget/loading_widget.dart';
+import '../../../shared/page_not_found/page_not_found.dart';
 import '../../../utils/themes/themes.dart';
 import '../../../utils/transations/big.to.small.dart';
 import '../../profile/provider/profile.provider.dart';
@@ -17,6 +19,7 @@ class OrderView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(profileProvider);
     if (user == null) return const LoadingWidget();
+    if (user.isDispose) return const AccesDeniedPage();
     return Scaffold(
       body: const SafeArea(
         child: Row(

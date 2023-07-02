@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:path/path.dart';
+import 'package:smiling_tailor/src/modules/authentication/model/user.dart';
 
 import '../../../config/constants.dart';
 import '../../../shared/animations_widget/animated_popup.dart';
@@ -24,6 +25,7 @@ class InvoiceView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(profileProvider);
     if (user == null) return const LoadingWidget();
+    if (user.isDispose) return const AccesDeniedPage();
     return Scaffold(
       body: SafeArea(
         child: Column(

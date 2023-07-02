@@ -18,7 +18,7 @@ class DashboardView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(profileProvider);
     if (user == null) return const LoadingWidget();
-    if (user.isManager) return const AccesDeniedPage();
+    if (user.isDispose || user.isManager) return const AccesDeniedPage();
     return const Center(
       child: Row(
         crossAxisAlignment: crossStart,
