@@ -38,6 +38,22 @@ class ProfileView extends ConsumerWidget {
                       mainAxisSize: mainMin,
                       children: [
                         ProfileImage(notifier),
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 10.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                          decoration: BoxDecoration(
+                            color: notifier.user?.type.color.withOpacity(0.3),
+                            borderRadius: borderRadius30,
+                            border: Border.all(
+                                color: notifier.user?.type.color ??
+                                    context.theme.primaryColor,
+                                width: 1.5),
+                          ),
+                          child: Text(
+                            notifier.user?.type.title ?? '...',
+                            style: context.text.labelMedium,
+                          ),
+                        ),
                         ProfileForm(notifier),
                         ProfileButton(notifier),
                       ],
