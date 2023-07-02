@@ -18,7 +18,7 @@ class UserProvider extends AutoDisposeAsyncNotifier<List<PktbsUser>> {
 
   @override
   FutureOr<List<PktbsUser>> build() async {
-    final id = PktbsUser.fromJson(pb.authStore.model!.toJson()).id;
+    final id = PktbsUser.fromJson(pb.authStore.model?.toJson()).id;
     try {
       _stream(id);
       await pb

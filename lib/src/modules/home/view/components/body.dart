@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smiling_tailor/src/modules/profile/provider/profile.provider.dart';
+import 'package:smiling_tailor/src/shared/loading_widget/loading_widget.dart';
 
 import '../../../../utils/transations/fade.switcher.dart';
 import '../../enum/home.enum.dart';
@@ -29,6 +31,8 @@ class MainBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(homeProvider);
     final notifier = ref.read(homeProvider.notifier);
+    final user = ref.watch(profileProvider);
+    if (user == null) return const LoadingWidget();
     return Padding(
       padding: const EdgeInsets.all(6.0),
       child: FadeSwitcherTransition(child: notifier.drawer.widget),

@@ -14,13 +14,16 @@ import '../../../shared/page_not_found/page_not_found.dart';
 import '../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../utils/extensions/extensions.dart';
 import '../../order/add/pdf/file.handle.dart';
+import '../../profile/provider/profile.provider.dart';
 import '../provider/invoice.provider.dart';
 
-class InvoiceView extends StatelessWidget {
+class InvoiceView extends ConsumerWidget {
   const InvoiceView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(profileProvider);
+    if (user == null) return const LoadingWidget();
     return Scaffold(
       body: SafeArea(
         child: Column(

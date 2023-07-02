@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smiling_tailor/src/modules/authentication/model/user.dart';
 
+import '../../../shared/loading_widget/loading_widget.dart';
+import '../../../shared/page_not_found/page_not_found.dart';
 import '../../../utils/themes/themes.dart';
 import '../../../utils/transations/big.to.small.dart';
+import '../../profile/provider/profile.provider.dart';
 import '../add/view/add.vendor.popup.dart';
 import '../provider/vendor.provider.dart';
 import 'components/vendor.details.dart';
 import 'components/vendor.list.dart';
 
-class VendorView extends StatelessWidget {
+class VendorView extends ConsumerWidget {
   const VendorView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(profileProvider);
+    if (user == null) return const LoadingWidget();
+    if (user.isManager) return const AccesDeniedPage();
     return Scaffold(
       body: const SafeArea(
         child: Row(

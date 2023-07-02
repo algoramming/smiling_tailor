@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smiling_tailor/src/modules/authentication/model/user.dart';
+import 'package:smiling_tailor/src/shared/page_not_found/page_not_found.dart';
 
 import '../../../config/constants.dart';
+import '../../../shared/loading_widget/loading_widget.dart';
+import '../../profile/provider/profile.provider.dart';
 import 'components/all.user.list.dart';
 import 'components/get.customers.info.dart';
 import 'components/order.status.summary.dart';
 import 'components/trxs.graph.summary.dart';
 
-class DashboardView extends StatelessWidget {
+class DashboardView extends ConsumerWidget {
   const DashboardView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(profileProvider);
+    if (user == null) return const LoadingWidget();
+    if (user.isManager) return const AccesDeniedPage();
     return const Center(
       child: Row(
         crossAxisAlignment: crossStart,

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../config/constants.dart';
+import '../../../shared/loading_widget/loading_widget.dart';
 import '../../../utils/extensions/extensions.dart';
 import '../../../utils/transations/fade.switcher.dart';
 import '../provider/profile.provider.dart';
@@ -18,6 +19,7 @@ class ProfileView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(profileProvider);
     final notifier = ref.read(profileProvider.notifier);
+    if (notifier.user == null) return const LoadingWidget();
     return Scaffold(
       body: SafeArea(
         child: Center(

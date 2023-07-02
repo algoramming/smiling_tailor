@@ -8,20 +8,17 @@ import '../../config/get.platform.dart';
 import '../../modules/settings/view/advance/url.config.tile.dart';
 import '../../utils/extensions/extensions.dart';
 import '../../utils/themes/themes.dart';
+import '../gradient/gradient.widget.dart';
 import '../show_toast/awsome.snackbar/awesome.snackbar.dart';
 import '../show_toast/awsome.snackbar/show.awesome.snackbar.dart';
 
 class KPageNotFound extends StatelessWidget {
-  const KPageNotFound({
-    Key? key,
-    required this.error,
-  }) : super(key: key);
+  const KPageNotFound({super.key, required this.error});
 
   final Object error;
 
   @override
   Widget build(BuildContext context) {
-    // printUrlHistory(context);
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
@@ -51,11 +48,10 @@ class KPageNotFound extends StatelessWidget {
 }
 
 class KServerNotRunning extends StatelessWidget {
-  const KServerNotRunning({Key? key}) : super(key: key);
+  const KServerNotRunning({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // printUrlHistory(context);
     return Scaffold(
       backgroundColor: white,
       body: SafeArea(
@@ -116,13 +112,12 @@ class KServerNotRunning extends StatelessWidget {
 }
 
 class KDataNotFound extends StatelessWidget {
-  const KDataNotFound({Key? key, this.msg}) : super(key: key);
+  const KDataNotFound({super.key, this.msg});
 
   final String? msg;
 
   @override
   Widget build(BuildContext context) {
-    // printUrlHistory(context);
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
@@ -137,6 +132,40 @@ class KDataNotFound extends StatelessWidget {
               ),
               Text(
                 msg ?? 'No data found!',
+                textAlign: TextAlign.center,
+                style: context.text.labelLarge,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class AccesDeniedPage extends StatelessWidget {
+  const AccesDeniedPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: mainMin,
+            mainAxisAlignment: mainCenter,
+            children: [
+              GradientWidget(
+                child: SvgPicture.asset(
+                  'assets/svgs/access-denied.svg',
+                  height: context.width * 0.15,
+                  width: context.width * 0.15,
+                  // colorFilter: context.theme.primaryColor.toColorFilter,
+                ),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                'You are not authorized to access this page!\nIf you think this is a mistake, please contact your administrator.',
                 textAlign: TextAlign.center,
                 style: context.text.labelLarge,
               ),

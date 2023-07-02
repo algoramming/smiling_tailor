@@ -2,11 +2,15 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smiling_tailor/src/modules/authentication/model/user.dart';
 
 import '../../../../main.dart';
 import '../../../config/constants.dart';
 import '../../../shared/development/under.development.banner.dart';
+import '../../../shared/loading_widget/loading_widget.dart';
+import '../../../shared/page_not_found/page_not_found.dart';
 import '../../../utils/extensions/extensions.dart';
+import '../../profile/provider/profile.provider.dart';
 import '../../settings/view/advance/url.config.tile.dart';
 import '../provider/authentication.provider.dart';
 import 'components/button.dart';
@@ -22,6 +26,11 @@ class AuthenticationView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(authProvider(isSignup));
     final notifier = ref.read(authProvider(isSignup).notifier);
+    if (isSignup) {
+      final user = ref.watch(profileProvider);
+      if (user == null && isSignup) return const LoadingWidget();
+      if (user?.isManager ?? true) return const AccesDeniedPage();
+    }
     return Scaffold(
       // appBar: AuthAppBar(notifier),
       body: SafeArea(

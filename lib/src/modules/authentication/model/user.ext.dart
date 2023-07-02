@@ -7,6 +7,7 @@ extension PktbsUserExtension on PktbsUser {
     String? email,
     bool? verified,
     String? avatar,
+    UserType? type,
     String? username,
     DateTime? created,
     DateTime? updated,
@@ -17,6 +18,7 @@ extension PktbsUserExtension on PktbsUser {
     return PktbsUser(
       id: id ?? this.id,
       name: name ?? this.name,
+      type: type ?? this.type,
       email: email ?? this.email,
       avatar: avatar ?? this.avatar,
       created: created ?? this.created,
@@ -34,6 +36,7 @@ extension PktbsUserExtension on PktbsUser {
         _Json.name: name,
         _Json.email: email,
         _Json.avatar: avatar,
+        _Json.type: type.title,
         _Json.verified: verified,
         _Json.username: username,
         _Json.collectionId: collectionId,
@@ -84,4 +87,16 @@ extension PktbsUserExtension on PktbsUser {
           ),
         ],
       );
+
+  bool get isSuperAdmin => type.isSuperAdmin;
+
+  bool get isAdmin => type.isAdmin;
+
+  bool get isManager => type.isManager;
+
+  bool get isNotSuperAdmin => !isSuperAdmin;
+
+  bool get isNotAdmin => !isAdmin;
+
+  bool get isNotManager => !isManager;
 }
