@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:smiling_tailor/src/modules/authentication/model/user.type.enum.dart';
 
+import '../../../../config/constants.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/transations/down.to.up.dart';
 import '../../provider/authentication.provider.dart';
@@ -93,6 +95,51 @@ class AuthForm extends StatelessWidget {
                   return null;
                 },
               ),
+            ),
+            DownToUpTransition(
+              child: !notifier.isSignup
+                  ? const SizedBox.shrink()
+                  : Padding(
+                      padding: const EdgeInsets.only(bottom: 10.0),
+                      child: DropdownButtonFormField(
+                        borderRadius: borderRadius15,
+                        value: notifier.type,
+                        decoration: const InputDecoration(
+                          labelText: 'User Type',
+                          hintText: 'From where you buy this inventory...',
+                        ),
+                        onChanged: (v) => notifier.changeType(v),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        items: UserType.values
+                            .map(
+                              (e) => DropdownMenuItem(
+                                value: e,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      height: 10.0,
+                                      width: 10.0,
+                                      margin:
+                                          const EdgeInsets.only(right: 10.0),
+                                      decoration: BoxDecoration(
+                                        color: e.color,
+                                        borderRadius: borderRadius30,
+                                      ),
+                                    ),
+                                    Text(e.title),
+                                  ],
+                                ),
+                              ),
+                            )
+                            .toList(),
+                        validator: (v) {
+                          if (v == null) {
+                            return 'Vendor selection is required';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
             ),
             Padding(
               padding: EdgeInsets.only(bottom: notifier.isSignup ? 10.0 : 5.0),

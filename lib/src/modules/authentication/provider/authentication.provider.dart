@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smiling_tailor/src/modules/authentication/model/user.type.enum.dart';
 
 import '../../../../main.dart';
 import '../api/authentication.api.dart';
@@ -16,6 +17,7 @@ class AuthProvider extends AutoDisposeFamilyNotifier<void, bool> {
   final TextEditingController nameCntrlr = TextEditingController();
   final TextEditingController pwdCntrlr = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  UserType type = UserType.manager;
   bool pwdConfirmObscure = true;
   bool pwdObscure = true;
   dynamic image;
@@ -28,6 +30,10 @@ class AuthProvider extends AutoDisposeFamilyNotifier<void, bool> {
     if (!isProduction && !isSignup) {
       emailCntrlr.text = 'test@algoramming.com';
       pwdCntrlr.text = '12345678';
+    }
+    if(isSignup){
+      pwdCntrlr.text = '12345678';
+      pwdConfirmCntrlr.text = '12345678';
     }
   }
 
@@ -56,13 +62,20 @@ class AuthProvider extends AutoDisposeFamilyNotifier<void, bool> {
     ref.notifyListeners();
   }
 
+  void changeType(UserType? type) {
+    if (type == null) return;
+    this.type = type;
+    ref.notifyListeners();
+  }
+
   void clear() {
     formKey = GlobalKey<FormState>();
+    pwdConfirmCntrlr.clear();
+    type = UserType.manager;
     usernameCntrlr.clear();
     emailCntrlr.clear();
-    pwdCntrlr.clear();
-    pwdConfirmCntrlr.clear();
     nameCntrlr.clear();
+    pwdCntrlr.clear();
     image = null;
     ref.notifyListeners();
   }

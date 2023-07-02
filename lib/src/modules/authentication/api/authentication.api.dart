@@ -27,6 +27,7 @@ Future<void> pktbsSignup(BuildContext context, AuthProvider notifier,
         'email': notifier.emailCntrlr.text,
         'password': notifier.pwdCntrlr.text,
         'username': notifier.usernameCntrlr.text,
+        'type': notifier.type.title,
         'passwordConfirm': notifier.pwdConfirmCntrlr.text,
       },
       files: notifier.image == null
