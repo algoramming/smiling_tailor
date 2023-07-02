@@ -49,11 +49,11 @@ class PktbsVendor {
       address: json[_Json.address],
       description: json[_Json.description],
       collectionId: json[_Json.collectionId],
+      collectionName: json[_Json.collectionName],
       updated: json[_Json.updated] == null
           ? null
-          : DateTime.parse(json[_Json.updated]),
-      collectionName: json[_Json.collectionName],
-      created: DateTime.parse(json[_Json.created]),
+          : DateTime.parse(json[_Json.updated]).toLocal(),
+      created: DateTime.parse(json[_Json.created]).toLocal(),
       creator: PktbsUser.fromJson(json[_Json.expand][_Json.creator]),
       updator: json[_Json.updator] == null || json[_Json.updator] == ''
           ? null
@@ -76,7 +76,6 @@ class PktbsVendor {
 
   @override
   int get hashCode => id.hashCode;
-
 }
 
 class _Json {

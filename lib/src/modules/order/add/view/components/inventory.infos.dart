@@ -102,7 +102,7 @@ class InventoryInfos extends StatelessWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: Text(
-                  'Total ${notifier.inventoryLeft} ${notifier.inventoryUnit?.symbol ?? '??'} available in stock.',
+                  'Total ${notifier.inventoryLeft}${notifier.inventoryUnit?.symbol ?? '??'} available in stock. (${notifier.inventory?.quantity}${notifier.inventory?.unit.symbol}/${notifier.inventory?.amount})',
                   style: context.text.labelMedium,
                 ),
               ),

@@ -51,12 +51,12 @@ class PktbsEmployee {
         address: json[_Json.address],
         description: json[_Json.description],
         collectionId: json[_Json.collectionId],
-        updated: json[_Json.updated] != null
-            ? DateTime.parse(json[_Json.updated])
-            : null,
         collectionName: json[_Json.collectionName],
-        created: DateTime.parse(json[_Json.created]),
+        updated: json[_Json.updated] != null
+            ? DateTime.parse(json[_Json.updated]).toLocal()
+            : null,
         salary: json[_Json.salary].toString().toDouble ?? 0.0,
+        created: DateTime.parse(json[_Json.created]).toLocal(),
         creator: PktbsUser.fromJson(json[_Json.expand][_Json.creator]),
         updator: json[_Json.updator] == null || json[_Json.updator] == ''
             ? null

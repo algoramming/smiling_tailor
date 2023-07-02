@@ -41,7 +41,7 @@ class DeliveryInfos extends StatelessWidget {
               ),
             ),
             child: Text(
-              notifier.isInventoryNeeded ? 'Yes' : 'No',
+              notifier.isHomeDeliveryNeeded ? 'Yes' : 'No',
               style: context.text.labelMedium!.copyWith(
                 fontWeight: FontWeight.bold,
               ),
