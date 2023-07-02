@@ -3,8 +3,8 @@ name: Android, iOS, Web Build
 on:
   push:
     branches:
-      - master
-      # - release
+      # - master
+      - release
 
 jobs:
   build:
