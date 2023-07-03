@@ -7,6 +7,7 @@ extension PktbsUserExtension on PktbsUser {
     String? email,
     bool? verified,
     String? avatar,
+    UserType? type,
     String? username,
     DateTime? created,
     DateTime? updated,
@@ -17,6 +18,7 @@ extension PktbsUserExtension on PktbsUser {
     return PktbsUser(
       id: id ?? this.id,
       name: name ?? this.name,
+      type: type ?? this.type,
       email: email ?? this.email,
       avatar: avatar ?? this.avatar,
       created: created ?? this.created,
@@ -34,6 +36,7 @@ extension PktbsUserExtension on PktbsUser {
         _Json.name: name,
         _Json.email: email,
         _Json.avatar: avatar,
+        _Json.type: type.title,
         _Json.verified: verified,
         _Json.username: username,
         _Json.collectionId: collectionId,
@@ -84,4 +87,35 @@ extension PktbsUserExtension on PktbsUser {
           ),
         ],
       );
+
+  Widget get userTypeWidget => Container(
+        margin: const EdgeInsets.symmetric(horizontal: 5.0),
+        padding: const EdgeInsets.symmetric(horizontal: 5.0),
+        decoration: BoxDecoration(
+          color: type.color.withOpacity(0.3),
+          borderRadius: borderRadius15,
+          border: Border.all(color: type.color, width: 1.5),
+        ),
+        child: Text(
+          type.title,
+          style: const TextStyle(letterSpacing: 0.7, fontSize: 10.0),
+        ),
+      );
+
+  bool get isAdmin => type.isAdmin;
+
+  bool get isManager => type.isManager;
+
+  bool get isOperator => type.isOperator;
+
+  bool get isDispose => type.isDispose;
+
+  bool get isNotAdmin => !isAdmin;
+
+  bool get isNotManager => !isManager;
+
+  bool get isNotOperator => !isOperator;
+
+  bool get isNotDispose => !isDispose;
+
 }

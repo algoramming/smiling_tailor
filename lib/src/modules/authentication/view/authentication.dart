@@ -22,6 +22,11 @@ class AuthenticationView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(authProvider(isSignup));
     final notifier = ref.read(authProvider(isSignup).notifier);
+    // if (isSignup) {
+    //   final user = ref.watch(profileProvider);
+    //   if (user == null && isSignup) return const LoadingWidget();
+    //   if ((user?.isDispose ?? true) || (user?.isManager ?? true)) return const AccesDeniedPage();
+    // }
     return Scaffold(
       // appBar: AuthAppBar(notifier),
       body: SafeArea(

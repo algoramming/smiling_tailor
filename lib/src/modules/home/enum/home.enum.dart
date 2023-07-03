@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../manager.config/view/manager.config.dart';
 
-import '../../authentication/view/authentication.dart';
 import '../../dashboard/view/dashboard.dart';
 import '../../employee/view/employee.dart';
 import '../../inventory/view/inventory.dart';
@@ -18,7 +18,7 @@ enum KDrawer {
   employee,
   order,
   invoice,
-  addManager,
+  managerConfig,
   settings
 }
 
@@ -39,7 +39,7 @@ extension KDrawerExtension on KDrawer {
         return 'assets/svgs/order.svg';
       case KDrawer.invoice:
         return 'assets/svgs/invoice.svg';
-      case KDrawer.addManager:
+      case KDrawer.managerConfig:
         return 'assets/svgs/url-config.svg';
       case KDrawer.settings:
         return 'assets/svgs/settings.svg';
@@ -64,8 +64,8 @@ extension KDrawerExtension on KDrawer {
         return 'Orders';
       case KDrawer.invoice:
         return 'Invoices';
-      case KDrawer.addManager:
-        return 'Add Manager';
+      case KDrawer.managerConfig:
+        return 'Manager Config';
       case KDrawer.settings:
         return 'Settings';
       default:
@@ -89,8 +89,8 @@ extension KDrawerExtension on KDrawer {
         return const OrderView();
       case KDrawer.invoice:
         return const InvoiceView();
-      case KDrawer.addManager:
-        return const AuthenticationView(isSignup: true);
+      case KDrawer.managerConfig:
+        return const ManagerConfigView();
       case KDrawer.settings:
         return const SettingsView();
       default:
@@ -112,7 +112,7 @@ extension KDrawerExtension on KDrawer {
 
   bool get isInvoice => this == KDrawer.invoice;
 
-  bool get isAddManager => this == KDrawer.addManager;
+  bool get isManagerConfig => this == KDrawer.managerConfig;
 
   bool get isSettings => this == KDrawer.settings;
 
@@ -130,7 +130,7 @@ extension KDrawerExtension on KDrawer {
 
   bool get isNotInvoice => this != KDrawer.invoice;
 
-  bool get isNotAddManager => this != KDrawer.addManager;
+  bool get isNotManagerConfig => this != KDrawer.managerConfig;
 
   bool get isNotSettings => this != KDrawer.settings;
 }

@@ -330,62 +330,6 @@
         "options": {}
     },
     {
-        "id": "_pb_users_auth_",
-        "name": "users",
-        "type": "auth",
-        "system": false,
-        "schema": [
-            {
-                "id": "users_name",
-                "name": "name",
-                "type": "text",
-                "system": false,
-                "required": false,
-                "options": {
-                    "min": null,
-                    "max": null,
-                    "pattern": ""
-                }
-            },
-            {
-                "id": "users_avatar",
-                "name": "avatar",
-                "type": "file",
-                "system": false,
-                "required": false,
-                "options": {
-                    "maxSelect": 1,
-                    "maxSize": 5242880,
-                    "mimeTypes": [
-                        "image/jpeg",
-                        "image/png",
-                        "image/svg+xml",
-                        "image/gif",
-                        "image/webp"
-                    ],
-                    "thumbs": null,
-                    "protected": false
-                }
-            }
-        ],
-        "indexes": [],
-        "listRule": "@request.auth.id != null",
-        "viewRule": "@request.auth.id != null",
-        "createRule": "@request.auth.id != null",
-        "updateRule": "id = @request.auth.id",
-        "deleteRule": "id = @request.auth.id",
-        "options": {
-            "allowEmailAuth": true,
-            "allowOAuth2Auth": true,
-            "allowUsernameAuth": true,
-            "exceptEmailDomains": null,
-            "manageRule": null,
-            "minPasswordLength": 8,
-            "onlyEmailDomains": null,
-            "requireEmail": false
-        }
-    },
-    {
         "id": "vnvl5g2tiqj4xje",
         "name": "transactions",
         "type": "base",
@@ -943,5 +887,77 @@
         "updateRule": "@request.auth.id != null",
         "deleteRule": "@request.auth.id != null",
         "options": {}
+    },
+    {
+        "id": "_pb_users_auth_",
+        "name": "users",
+        "type": "auth",
+        "system": false,
+        "schema": [
+            {
+                "id": "users_name",
+                "name": "name",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "users_avatar",
+                "name": "avatar",
+                "type": "file",
+                "system": false,
+                "required": false,
+                "options": {
+                    "maxSelect": 1,
+                    "maxSize": 5242880,
+                    "mimeTypes": [
+                        "image/jpeg",
+                        "image/png",
+                        "image/svg+xml",
+                        "image/gif",
+                        "image/webp"
+                    ],
+                    "thumbs": null,
+                    "protected": false
+                }
+            },
+            {
+                "id": "4spa7qxc",
+                "name": "type",
+                "type": "select",
+                "system": false,
+                "required": true,
+                "options": {
+                    "maxSelect": 1,
+                    "values": [
+                        "Admin",
+                        "Manager",
+                        "Operator",
+                        "Dispose"
+                    ]
+                }
+            }
+        ],
+        "indexes": [],
+        "listRule": "@request.auth.id != null",
+        "viewRule": "@request.auth.id != null",
+        "createRule": "@request.auth.id != null",
+        "updateRule": "@request.auth.id != null",
+        "deleteRule": "@request.auth.id != null",
+        "options": {
+            "allowEmailAuth": true,
+            "allowOAuth2Auth": true,
+            "allowUsernameAuth": true,
+            "exceptEmailDomains": null,
+            "manageRule": null,
+            "minPasswordLength": 8,
+            "onlyEmailDomains": null,
+            "requireEmail": false
+        }
     }
 ]

@@ -14,7 +14,12 @@ class KDrawerHeader extends ConsumerWidget {
     final user = users.isEmpty ? null : users.last;
     return UserAccountsDrawerHeader(
       decoration: BoxDecoration(color: context.theme.canvasColor),
-      accountName: Text(user?.name ?? '...'),
+      accountName: Row(
+        children: [
+          Flexible(child: Text(user?.name ?? '...')),
+          if (user != null) user.userTypeWidget,
+        ],
+      ),
       accountEmail: Text(user?.email ?? '...'),
       currentAccountPicture: user?.imageWidget,
       // otherAccountsPictures: [

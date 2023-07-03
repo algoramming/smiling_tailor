@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:path/path.dart';
+import '../../authentication/model/user.dart';
 
 import '../../../config/constants.dart';
 import '../../../shared/animations_widget/animated_popup.dart';
@@ -14,13 +15,17 @@ import '../../../shared/page_not_found/page_not_found.dart';
 import '../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../utils/extensions/extensions.dart';
 import '../../order/add/pdf/file.handle.dart';
+import '../../profile/provider/profile.provider.dart';
 import '../provider/invoice.provider.dart';
 
-class InvoiceView extends StatelessWidget {
+class InvoiceView extends ConsumerWidget {
   const InvoiceView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(profileProvider);
+    if (user == null) return const LoadingWidget();
+    if (user.isDispose) return const AccesDeniedPage();
     return Scaffold(
       body: SafeArea(
         child: Column(

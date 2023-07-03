@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'user.type.enum.dart';
 
 import '../../../config/constants.dart';
 import '../../../pocketbase/auth.store/helpers.dart';
@@ -11,6 +12,7 @@ part 'user.ext.dart';
 
 class PktbsUser {
   String name;
+  UserType type;
   bool verified;
   String? avatar;
   final String id;
@@ -26,6 +28,7 @@ class PktbsUser {
     this.avatar,
     this.updated,
     required this.id,
+    required this.type,
     required this.name,
     required this.email,
     required this.created,
@@ -51,6 +54,7 @@ class PktbsUser {
       collectionName: json[_Json.collectionName],
       emailVisibility: json[_Json.emailVisibility],
       created: DateTime.parse(json[_Json.created]),
+      type: json[_Json.type].toString().toUserType,
     );
   }
 
@@ -59,7 +63,7 @@ class PktbsUser {
 
   @override
   String toString() =>
-      'PktbsUser(id: $id, name: $name, email: $email, avatar: $avatar, created: $created, updated: $updated, verified: $verified, username: $username, collectionId: $collectionId, collectionName: $collectionName, emailVisibility: $emailVisibility)';
+      'PktbsUser(id: $id, name: $name, email: $email, avatar: $avatar, created: $created, updated: $updated, verified: $verified, username: $username, userType: $type, collectionId: $collectionId, collectionName: $collectionName, emailVisibility: $emailVisibility)';
 
   @override
   bool operator ==(Object other) {
@@ -74,6 +78,7 @@ class PktbsUser {
 class _Json {
   static const id = 'id';
   static const name = 'name';
+  static const type = 'type';
   static const email = 'email';
   static const avatar = 'avatar';
   static const created = 'created';
