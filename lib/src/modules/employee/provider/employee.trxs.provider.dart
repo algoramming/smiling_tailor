@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../utils/extensions/extensions.dart';
 
 import '../../transaction/model/transaction.dart';
 import '../../transaction/provider/all.trxs.provider.dart';
@@ -16,7 +17,7 @@ class EmployeeTrxsProvider
     extends AutoDisposeFamilyAsyncNotifier<List<PktbsTrx>, PktbsEmployee> {
   TextEditingController searchCntrlr = TextEditingController();
   late List<PktbsTrx> _trxs;
-  bool _showPrevMonth = false;
+  DateTime? _selectedDate;
   @override
   FutureOr<List<PktbsTrx>> build(PktbsEmployee arg) async {
     _trxs = [];
@@ -32,10 +33,27 @@ class EmployeeTrxsProvider
 
   _listener() => searchCntrlr.addListener(() => ref.notifyListeners());
 
-  bool get showPrevMonth => _showPrevMonth;
+  DateTime get selectedDate => _selectedDate ?? DateTime.now();
 
-  void toggleShowPrevMonth() {
-    _showPrevMonth = !_showPrevMonth;
+  // bool get canDecreaseDate {
+  //   DateTime tempDate = selectedDate;
+  //   tempDate = tempDate.previousMonth;
+  //   return tempDate.isAfter(arg.created.toLocal());
+  // }
+
+  void decreaseDate() {
+    _selectedDate = selectedDate.previousMonth;
+    ref.notifyListeners();
+  }
+
+  bool get canIncreaseDate {
+    DateTime tempDate = selectedDate;
+    tempDate = tempDate.nextMonth;
+    return tempDate.isBefore(DateTime.now());
+  }
+
+  void increaseDate() {
+    _selectedDate = selectedDate.nextMonth;
     ref.notifyListeners();
   }
 
