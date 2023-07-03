@@ -102,19 +102,19 @@ extension PktbsUserExtension on PktbsUser {
         ),
       );
 
-  bool get isSuperAdmin => type.isSuperAdmin;
-
   bool get isAdmin => type.isAdmin;
 
   bool get isManager => type.isManager;
 
-  bool get isDispose => type.isDispose;
+  bool get isOperator => type.isOperator;
 
-  bool get isNotSuperAdmin => !isSuperAdmin;
+  bool get isDispose => type.isDispose;
 
   bool get isNotAdmin => !isAdmin;
 
   bool get isNotManager => !isManager;
+
+  bool get isNotOperator => !isOperator;
 
   bool get isNotDispose => !isDispose;
 

@@ -19,7 +19,7 @@ class InventoryView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(profileProvider);
     if (user == null) return const LoadingWidget();
-    if (user.isDispose || user.isManager) return const AccesDeniedPage();
+    if (user.isDispose || user.isOperator) return const AccesDeniedPage();
     return Scaffold(
       body: const SafeArea(
         child: Row(
