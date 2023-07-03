@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/modules/authentication/model/user.dart';
-import 'package:smiling_tailor/src/shared/page_not_found/page_not_found.dart';
+import '../../authentication/model/user.dart';
+import '../../../shared/page_not_found/page_not_found.dart';
 
 import '../../../config/constants.dart';
 import '../../../shared/loading_widget/loading_widget.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/modules/profile/provider/profile.provider.dart';
-import 'package:smiling_tailor/src/shared/loading_widget/loading_widget.dart';
+import '../../../profile/provider/profile.provider.dart';
+import '../../../../shared/loading_widget/loading_widget.dart';
 
 import '../../../../utils/transations/fade.switcher.dart';
 import '../../enum/home.enum.dart';

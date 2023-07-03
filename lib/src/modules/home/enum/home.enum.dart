@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smiling_tailor/src/modules/manager.config/view/manager.config.dart';
+import '../../manager.config/view/manager.config.dart';
 
 import '../../dashboard/view/dashboard.dart';
 import '../../employee/view/employee.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smiling_tailor/src/modules/authentication/model/user.type.enum.dart';
+import '../../model/user.type.enum.dart';
 
 import '../../../../config/constants.dart';
 import '../../../../utils/extensions/extensions.dart';

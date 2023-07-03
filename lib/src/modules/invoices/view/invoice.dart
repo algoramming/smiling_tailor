@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:path/path.dart';
-import 'package:smiling_tailor/src/modules/authentication/model/user.dart';
+import '../../authentication/model/user.dart';
 
 import '../../../config/constants.dart';
 import '../../../shared/animations_widget/animated_popup.dart';

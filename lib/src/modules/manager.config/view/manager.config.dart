@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smiling_tailor/src/modules/authentication/model/user.dart';
-import 'package:smiling_tailor/src/shared/k_list_tile.dart/k_list_tile.dart';
+import 'package:smiling_tailor/src/modules/authentication/model/user.type.enum.dart';
+import 'package:smiling_tailor/src/shared/gradient/gradient.button.dart';
+import 'package:smiling_tailor/src/shared/radio_button/k_radio_button.dart';
 import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
+import 'package:smiling_tailor/src/utils/themes/themes.dart';
 
+import '../../../config/constants.dart';
 import '../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../shared/clipboard_data/clipboard_data.dart';
 import '../../../shared/error_widget/error_widget.dart';
@@ -62,37 +66,83 @@ class AllManagersList extends ConsumerWidget {
                         itemBuilder: (_, idx) {
                           final user = notifier.usersList[idx];
                           return Card(
-                            child: KListTile(
+                            child: InkWell(
                               onLongPress: () async =>
                                   await copyToClipboard(context, user.id),
-                              leading: AnimatedWidgetShower(
-                                size: 30.0,
-                                child: user.imageWidget,
-                              ),
-                              title: Row(
+                              child: ExpansionTile(
+                                leading: AnimatedWidgetShower(
+                                  size: 30.0,
+                                  child: user.imageWidget,
+                                ),
+                                title: Text(
+                                  user.name,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  style: context.text.titleSmall,
+                                ),
+                                subtitle: Text(
+                                  user.email,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
+                                  style: context.text.labelSmall!
+                                      .copyWith(fontWeight: FontWeight.normal),
+                                ),
+                                trailing: user.userTypeWidget,
                                 children: [
-                                  Text(
-                                    user.name,
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                    style: context.text.titleSmall,
-                                  ),
+                                  _Children(user: user),
                                 ],
                               ),
-                              subtitle: Text(
-                                user.email,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 2,
-                                style: context.text.labelSmall!
-                                    .copyWith(fontWeight: FontWeight.normal),
-                              ),
-                              trailing: user.userTypeWidget,
                             ),
                           );
                         },
                       ),
               ),
         ),
+      ],
+    );
+  }
+}
+
+class _Children extends ConsumerWidget {
+  const _Children({required this.user});
+
+  final PktbsUser user;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(managerProvider(user));
+    final notifier = ref.watch(managerProvider(user).notifier);
+    return Column(
+      mainAxisSize: mainMin,
+      children: [
+        const SizedBox(height: 10.0),
+        Text(
+          'Change User Type',
+          style: context.text.titleMedium,
+        ),
+        const SizedBox(height: 10.0),
+        Row(
+          mainAxisAlignment: mainSpaceEvenly,
+          children: List.generate(
+            UserType.values.length,
+            (idx) => KRadioButton(
+              value: idx,
+              label: UserType.values[idx].title,
+              groupValue: notifier.userType,
+              onTap: () => notifier.changeUserType(idx),
+            ),
+          ),
+        ),
+        const SizedBox(height: 10.0),
+        if (notifier.showUpdateButton)
+          GradientButton(
+            'Update',
+            minSize: const Size(120.0, 30.0),
+            textStyle: context.text.labelMedium!.copyWith(color: white),
+            borderRadius: borderRadius30,
+            onTap: () async => await notifier.updateRole(context),
+          ),
+        const SizedBox(height: 10.0),
       ],
     );
   }

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:smiling_tailor/src/modules/authentication/model/user.type.enum.dart';
+import 'user.type.enum.dart';
 
 import '../../../config/constants.dart';
 import '../../../pocketbase/auth.store/helpers.dart';

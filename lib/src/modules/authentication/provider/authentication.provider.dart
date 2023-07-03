@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/modules/authentication/model/user.type.enum.dart';
+import '../model/user.type.enum.dart';
 
 import '../../../../main.dart';
 import '../api/authentication.api.dart';
@@ -17,7 +17,7 @@ class AuthProvider extends AutoDisposeFamilyNotifier<void, bool> {
   final TextEditingController nameCntrlr = TextEditingController();
   final TextEditingController pwdCntrlr = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  UserType type = UserType.manager;
+  UserType type = UserType.operate;
   bool pwdConfirmObscure = true;
   bool pwdObscure = true;
   dynamic image;
@@ -31,7 +31,7 @@ class AuthProvider extends AutoDisposeFamilyNotifier<void, bool> {
       emailCntrlr.text = 'test@algoramming.com';
       pwdCntrlr.text = '12345678';
     }
-    if(isSignup){
+    if (isSignup) {
       pwdCntrlr.text = '12345678';
       pwdConfirmCntrlr.text = '12345678';
     }
