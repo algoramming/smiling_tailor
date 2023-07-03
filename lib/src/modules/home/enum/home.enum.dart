@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../manager.config/view/manager.config.dart';
 
 import '../../dashboard/view/dashboard.dart';
 import '../../employee/view/employee.dart';
 import '../../inventory/view/inventory.dart';
 import '../../invoices/view/invoice.dart';
+import '../../manager.config/view/manager.config.dart';
 import '../../order/view/order.dart';
 import '../../profile/view/profile.dart';
 import '../../settings/view/setting.view.dart';

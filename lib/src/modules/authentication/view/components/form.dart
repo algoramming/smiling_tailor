@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../model/user.type.enum.dart';
 
 import '../../../../config/constants.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/transations/down.to.up.dart';
+import '../../model/user.type.enum.dart';
 import '../../provider/authentication.provider.dart';
 import 'reset.password.dart';
 

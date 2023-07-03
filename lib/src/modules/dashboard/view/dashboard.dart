@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../authentication/model/user.dart';
-import '../../../shared/page_not_found/page_not_found.dart';
 
 import '../../../config/constants.dart';
 import '../../../shared/loading_widget/loading_widget.dart';
+import '../../../shared/page_not_found/page_not_found.dart';
+import '../../authentication/model/user.dart';
 import '../../profile/provider/profile.provider.dart';
 import 'components/all.user.list.dart';
 import 'components/get.customers.info.dart';

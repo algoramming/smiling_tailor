@@ -93,16 +93,15 @@ class KAboutDialog extends StatelessWidget {
             mainAxisSize: mainMin,
             children: [
               Text(
-                '\nIntroducing our tailor-focused ERP management system - a powerful, user-friendly application designed to streamline your tailoring business. Add managers, vendors, inventory, and employees effortlessly. Seamlessly process orders and track transaction history in real-time. Stay organized, efficient, and in control with our comprehensive software solution. Proudly developed as an in-house product of Algoramming, ensuring quality and reliability in every aspect.',
+                '\nWelcome to our tailor-centric Custom Business Management System, where the dynamic fusion of ERP (Enterprise Resource Planning) and CRM (Customer Relationship Management) empowers your tailoring business like never before. Our feature-rich and user-friendly application has been meticulously crafted to streamline your operations effortlessly. With our cutting-edge system, you can easily manage and monitor essential elements of your business, including managers, vendors, inventory, and employees. Effortlessly process orders and witness the seamless flow of transaction history in real-time, ensuring airtight organization, enhanced efficiency, and complete control over your business processes. We take pride in presenting this exceptional software solution, developed in-house by our skilled team at Algoramming. Our commitment to quality and reliability ensures that every aspect of our system is fine-tuned to meet the specific needs of your tailoring business, setting you on a path to success with unparalleled ease.',
                 style: context.text.labelMedium,
                 textAlign: TextAlign.justify,
               ),
               Align(
                 alignment: Alignment.centerRight,
                 child: Text(
-                  '\n- Developed by Algoramming.',
+                  '\n- Algoramming.',
                   style: context.text.labelMedium!.copyWith(
-                    fontStyle: FontStyle.italic,
                     color: context.theme.primaryColor,
                   ),
                   textAlign: TextAlign.right,

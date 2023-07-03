@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../profile/provider/profile.provider.dart';
-import '../../../../shared/loading_widget/loading_widget.dart';
 
+import '../../../../shared/loading_widget/loading_widget.dart';
 import '../../../../utils/transations/fade.switcher.dart';
+import '../../../profile/provider/profile.provider.dart';
 import '../../enum/home.enum.dart';
 import '../../provider/home.provider.dart';
 import 'drawer/drawer.dart';

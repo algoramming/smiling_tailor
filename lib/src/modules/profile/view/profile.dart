@@ -2,13 +2,13 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../authentication/model/user.dart';
 
 import '../../../config/constants.dart';
 import '../../../shared/loading_widget/loading_widget.dart';
 import '../../../shared/page_not_found/page_not_found.dart';
 import '../../../utils/extensions/extensions.dart';
 import '../../../utils/transations/fade.switcher.dart';
+import '../../authentication/model/user.dart';
 import '../provider/profile.provider.dart';
 import 'components/button.dart';
 import 'components/form.dart';
