@@ -19,11 +19,13 @@ const pktbsOrderExpand =
 
 const advanceAmountOrderVoucher = 'Order Advance Amount Transaction';
 const tailorChargeOrderVoucher = 'Order Tailor Charge Transaction';
-const inventoryAllocationOrderVoucher = 'Order Inventory Allocation Transaction';
+const inventoryAllocationOrderVoucher =
+    'Order Inventory Allocation Transaction';
 const inventoryPurchaseOrderVoucher = 'Order Inventory Purchase Transaction';
 const deliveryOrderVoucher = 'Order Delivery Charge Transaction';
 
 class PktbsOrder {
+  double? vat;
   int quantity;
   double amount;
   String? plate;
@@ -33,6 +35,7 @@ class PktbsOrder {
   String? button;
   final String id;
   DateTime created;
+  double? discount;
   DateTime? updated;
   PktbsUser creator;
   OrderStatus status;
@@ -61,6 +64,7 @@ class PktbsOrder {
   PktbsEmployee? deliveryEmployee;
 
   PktbsOrder({
+    this.vat,
     this.plate,
     this.sleeve,
     this.colar,
@@ -68,6 +72,7 @@ class PktbsOrder {
     this.button,
     this.updated,
     this.updator,
+    this.discount,
     this.inventory,
     this.tailorNote,
     this.paymentNote,
@@ -121,10 +126,12 @@ class PktbsOrder {
       customerAddress: json[_Json.customerAddress],
       measurementNote: json[_Json.measurementNote],
       deliveryAddress: json[_Json.deliveryAddress],
+      vat: json[_Json.vat].toString().toDouble ?? 0.0,
       status: (json[_Json.status] as String).toOrderStatus,
       quantity: json[_Json.quantity].toString().toInt ?? 0,
       amount: json[_Json.amount].toString().toDouble ?? 0.0,
       created: DateTime.parse(json[_Json.created]).toLocal(),
+      discount: json[_Json.discount].toString().toDouble ?? 0.0,
       creator: PktbsUser.fromJson(json[_Json.expand][_Json.creator]),
       deliveryTime: DateTime.parse(json[_Json.deliveryTime]).toLocal(),
       // inventoryQuantity: json[_Json.inventoryQuantity].toString().toInt,
@@ -155,8 +162,7 @@ class PktbsOrder {
 
   @override
   String toString() =>
-      // 'PktbsOrder(id: $id, created: $created, updated: $updated, creator: $creator, updator: $updator, collectionId: $collectionId, collectionName: $collectionName, customerName: $customerName, customerEmail: $customerEmail, customerPhone: $customerPhone, customerAddress: $customerAddress, customerNote: $customerNote, measurement: $measurement, plate: $plate, sleeve: $sleeve, colar: $colar, pocket: $pocket, button: $button, measurementNote: $measurementNote, quantity: $quantity, tailorEmployee: $tailorEmployee, tailorNote: $tailorNote, inventory: $inventory, inventoryQuantity: $inventoryQuantity, inventoryUnit: $inventoryUnit, inventoryNote: $inventoryNote, deliveryEmployee: $deliveryEmployee, deliveryAddress: $deliveryAddress, deliveryNote: $deliveryNote, paymentMethod: $paymentMethod, paymentNote: $paymentNote, amount: $amount, deliveryTime: $deliveryTime, description: $description, status: $status)';
-      'PktbsOrder(id: $id, created: $created, updated: $updated, creator: $creator, updator: $updator, collectionId: $collectionId, collectionName: $collectionName, customerName: $customerName, customerEmail: $customerEmail, customerPhone: $customerPhone, customerAddress: $customerAddress, customerNote: $customerNote, measurement: $measurement, plate: $plate, sleeve: $sleeve, colar: $colar, pocket: $pocket, button: $button, measurementNote: $measurementNote, quantity: $quantity, tailorEmployee: $tailorEmployee, tailorNote: $tailorNote, inventory: $inventory, inventoryNote: $inventoryNote, deliveryEmployee: $deliveryEmployee, deliveryAddress: $deliveryAddress, deliveryNote: $deliveryNote, paymentMethod: $paymentMethod, paymentNote: $paymentNote, amount: $amount, deliveryTime: $deliveryTime, description: $description, status: $status)';
+      'PktbsOrder(id: $id, created: $created, updated: $updated, creator: $creator, updator: $updator, collectionId: $collectionId, collectionName: $collectionName, customerName: $customerName, customerEmail: $customerEmail, customerPhone: $customerPhone, customerAddress: $customerAddress, customerNote: $customerNote, measurement: $measurement, plate: $plate, sleeve: $sleeve, colar: $colar, pocket: $pocket, button: $button, measurementNote: $measurementNote, quantity: $quantity, discount: $discount, vat: $vat, tailorEmployee: $tailorEmployee, tailorNote: $tailorNote, inventory: $inventory, inventoryNote: $inventoryNote, deliveryEmployee: $deliveryEmployee, deliveryAddress: $deliveryAddress, deliveryNote: $deliveryNote, paymentMethod: $paymentMethod, paymentNote: $paymentNote, amount: $amount, deliveryTime: $deliveryTime, description: $description, status: $status)';
 
   @override
   bool operator ==(Object other) {
@@ -170,6 +176,7 @@ class PktbsOrder {
 
 class _Json {
   static const id = 'id';
+  static const vat = 'vat';
   static const colar = 'colar';
   static const plate = 'plate';
   static const status = 'status';
@@ -182,6 +189,7 @@ class _Json {
   static const updated = 'updated';
   static const creator = 'creator';
   static const updator = 'updator';
+  static const discount = 'discount';
   static const quantity = 'quantity';
   static const inventory = 'inventory';
   static const tailorNote = 'tailorNote';

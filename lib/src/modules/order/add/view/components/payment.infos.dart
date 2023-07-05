@@ -39,6 +39,74 @@ class PaymentInfos extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         TextFormField(
+          controller: notifier.vatCntrlr,
+          decoration: const InputDecoration(
+            labelText: 'Vat',
+            hintText: 'Enter vat amount(if any) ...',
+            suffixIcon: CurrencySuffixIcon(),
+          ),
+          onFieldSubmitted: (_) async => notifier.submit(context),
+          onChanged: (_) => notifier.reload(),
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          textInputAction: TextInputAction.next,
+          keyboardType: TextInputType.number,
+          validator: (v) {
+            if (v!.isEmpty) {
+              return 'Vat amount is required';
+            }
+            if (!v.isNumeric) {
+              return 'Invalid amount';
+            }
+            return null;
+          },
+        ),
+        const SizedBox(height: 3),
+        Align(
+          alignment: Alignment.centerRight,
+          child: Builder(builder: (_) {
+            final vat = notifier.vatCntrlr.text.toString().toDouble ?? 0.0;
+            return Text(
+              'Vat: $vat${appCurrency.symbol}',
+              style: context.text.labelMedium,
+            );
+          }),
+        ),
+        const SizedBox(height: 7),
+        TextFormField(
+          controller: notifier.discountCntrlr,
+          decoration: const InputDecoration(
+            labelText: 'Discount',
+            hintText: 'Enter discount amount(if any) ...',
+            suffixIcon: CurrencySuffixIcon(),
+          ),
+          onFieldSubmitted: (_) async => notifier.submit(context),
+          onChanged: (_) => notifier.reload(),
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          textInputAction: TextInputAction.next,
+          keyboardType: TextInputType.number,
+          validator: (v) {
+            if (v!.isEmpty) {
+              return 'Discount amount is required';
+            }
+            if (!v.isNumeric) {
+              return 'Invalid amount';
+            }
+            return null;
+          },
+        ),
+        const SizedBox(height: 3),
+        Align(
+          alignment: Alignment.centerRight,
+          child: Builder(builder: (_) {
+            final vat = notifier.vatCntrlr.text.toString().toDouble ?? 0.0;
+            return Text(
+              'Discount: $vat${appCurrency.symbol}',
+              style: context.text.labelMedium,
+            );
+          }),
+        ),
+        const SizedBox(height: 7),
+        TextFormField(
           controller: notifier.advanceAmountCntrlr,
           decoration: const InputDecoration(
             labelText: 'Advance Amount',
@@ -69,7 +137,9 @@ class PaymentInfos extends StatelessWidget {
                     (notifier.inventoryPriceCntrlr.text.toString().toDouble ??
                         0.0) +
                     (notifier.deliveryChargeCntrlr.text.toString().toDouble ??
-                        0.0);
+                        0.0) +
+                    (notifier.vatCntrlr.text.toString().toDouble ?? 0.0) -
+                    (notifier.discountCntrlr.text.toString().toDouble ?? 0.0);
             return Text(
               'Total: $total${appCurrency.symbol} and Remaining: ${total - (notifier.advanceAmountCntrlr.text.toString().toDouble ?? 0.0)}${appCurrency.symbol}',
               style: context.text.labelMedium,

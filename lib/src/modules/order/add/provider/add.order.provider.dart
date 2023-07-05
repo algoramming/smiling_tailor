@@ -63,6 +63,8 @@ class AddOrderProvider
   DateTime deliveryTime = DateTime.now().addDays(7);
   final descriptionCntrlr = TextEditingController();
   OrderStatus status = OrderStatus.pending;
+  final vatCntrlr = TextEditingController(text: '0.0');
+  final discountCntrlr = TextEditingController(text: '0.0');
   //
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   List<PktbsEmployee> employees = [];
@@ -168,6 +170,8 @@ class AddOrderProvider
       advanceAmountCntrlr.text = advanceTrx?.amount.toString() ?? '0.0';
       //
       deliveryTime = arg.deliveryTime;
+      vatCntrlr.text = arg.vat.toString();
+      discountCntrlr.text = arg.discount.toString();
       descriptionCntrlr.text = arg.description ?? '';
       status = arg.status;
     }

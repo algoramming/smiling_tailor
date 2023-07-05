@@ -3,6 +3,7 @@ part of 'order.dart';
 extension OrderExtension on PktbsOrder {
   PktbsOrder copyWith({
     String? id,
+    double? vat,
     String? plate,
     int? quantity,
     String? colar,
@@ -10,6 +11,7 @@ extension OrderExtension on PktbsOrder {
     String? pocket,
     String? sleeve,
     double? amount,
+    double? discount,
     DateTime? created,
     DateTime? updated,
     PktbsUser? creator,
@@ -40,6 +42,7 @@ extension OrderExtension on PktbsOrder {
   }) =>
       PktbsOrder(
         id: id ?? this.id,
+        vat: vat ?? this.vat,
         plate: plate ?? this.plate,
         colar: colar ?? this.colar,
         button: button ?? this.button,
@@ -52,6 +55,7 @@ extension OrderExtension on PktbsOrder {
         creator: creator ?? this.creator,
         updator: updator ?? this.updator,
         quantity: quantity ?? this.quantity,
+        discount: discount ?? this.discount,
         inventory: inventory ?? this.inventory,
         tailorNote: tailorNote ?? this.tailorNote,
         measurement: measurement ?? this.measurement,
@@ -78,12 +82,14 @@ extension OrderExtension on PktbsOrder {
 
   Map<String, dynamic> toJson() => {
         _Json.id: id,
+        _Json.vat: vat,
         _Json.plate: plate,
         _Json.colar: colar,
         _Json.sleeve: sleeve,
         _Json.pocket: pocket,
         _Json.button: button,
         _Json.amount: amount,
+        _Json.discount: discount,
         _Json.quantity: quantity,
         _Json.creator: creator.id,
         _Json.updator: updator?.id,
