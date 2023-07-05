@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:path/path.dart';
-import '../../authentication/model/user.dart';
 
 import '../../../config/constants.dart';
 import '../../../shared/animations_widget/animated_popup.dart';
@@ -14,6 +13,7 @@ import '../../../shared/loading_widget/loading_widget.dart';
 import '../../../shared/page_not_found/page_not_found.dart';
 import '../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../utils/extensions/extensions.dart';
+import '../../authentication/model/user.dart';
 import '../../order/add/pdf/file.handle.dart';
 import '../../profile/provider/profile.provider.dart';
 import '../provider/invoice.provider.dart';

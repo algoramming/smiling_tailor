@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../utils/extensions/extensions.dart';
 
+import '../../../utils/extensions/extensions.dart';
 import '../../transaction/model/transaction.dart';
 import '../../transaction/provider/all.trxs.provider.dart';
 import '../model/employee.dart';
