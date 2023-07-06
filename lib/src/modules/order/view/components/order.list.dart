@@ -10,6 +10,7 @@ import '../../../../shared/error_widget/error_widget.dart';
 import '../../../../shared/k_list_tile.dart/k_list_tile.dart';
 import '../../../../shared/loading_widget/loading_widget.dart';
 import '../../../../shared/page_not_found/page_not_found.dart';
+import '../../../../shared/swipe.indicator/swipe.indicator.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../../utils/themes/themes.dart';
@@ -114,77 +115,89 @@ class OrderList extends ConsumerWidget {
                 data: (_) => FadeSwitcherTransition(
                   child: notifier.orderList.isEmpty
                       ? const KDataNotFound(msg: 'No Order Found!')
-                      : SlidableAutoCloseBehavior(
-                          child: ListView.builder(
-                            itemCount: notifier.orderList.length,
-                            itemBuilder: (_, idx) {
-                              final order = notifier.orderList[idx];
-                              return Card(
-                                child: KListTile(
-                                  key: ValueKey(order.id),
-                                  onEditTap: () async => await showDialog(
-                                    context: context,
-                                    barrierDismissible: false,
-                                    builder: (context) =>
-                                        AddOrderPopup(order: order),
-                                  ),
-                                  onDeleteTap: () async =>
-                                      await showDeleteOrderPopup(
-                                          context, order),
-                                  slidableAction: Theme(
-                                    data: context.theme.copyWith(
-                                      iconTheme: context.theme.iconTheme
-                                          .copyWith(size: 20.0),
-                                    ),
-                                    child: SlidableAction(
-                                      borderRadius: borderRadius15,
-                                      onPressed: (_) async =>
-                                          await showOrderSlipDownloadPopup(
-                                              context, order),
-                                      backgroundColor:
-                                          context.theme.primaryColor,
-                                      foregroundColor: white,
-                                      icon: Icons.print_outlined,
-                                      label: 'Print',
-                                      padding: EdgeInsets.zero,
-                                      autoClose: true,
-                                    ),
-                                  ),
-                                  selected: notifier.selectedOrder == order,
-                                  onTap: () => notifier.selectOrder(order),
-                                  onLongPress: () async =>
-                                      await copyToClipboard(context, order.id),
-                                  leading: AnimatedWidgetShower(
-                                    size: 30.0,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(3.0),
-                                      child: SvgPicture.asset(
-                                        'assets/svgs/order.svg',
-                                        colorFilter: context
-                                            .theme.primaryColor.toColorFilter,
-                                        semanticsLabel: 'Inventory',
+                      : Column(
+                          children: [
+                            const SwipeIndicator(),
+                            Flexible(
+                              child: SlidableAutoCloseBehavior(
+                                child: ListView.builder(
+                                  itemCount: notifier.orderList.length,
+                                  itemBuilder: (_, idx) {
+                                    final order = notifier.orderList[idx];
+                                    return Card(
+                                      child: KListTile(
+                                        key: ValueKey(order.id),
+                                        onEditTap: () async => await showDialog(
+                                          context: context,
+                                          barrierDismissible: false,
+                                          builder: (context) =>
+                                              AddOrderPopup(order: order),
+                                        ),
+                                        onDeleteTap: () async =>
+                                            await showDeleteOrderPopup(
+                                                context, order),
+                                        slidableAction: Theme(
+                                          data: context.theme.copyWith(
+                                            iconTheme: context.theme.iconTheme
+                                                .copyWith(size: 20.0),
+                                          ),
+                                          child: SlidableAction(
+                                            borderRadius: borderRadius15,
+                                            onPressed: (_) async =>
+                                                await showOrderSlipDownloadPopup(
+                                                    context, order),
+                                            backgroundColor:
+                                                context.theme.primaryColor,
+                                            foregroundColor: white,
+                                            icon: Icons.print_outlined,
+                                            label: 'Print',
+                                            padding: EdgeInsets.zero,
+                                            autoClose: true,
+                                          ),
+                                        ),
+                                        selected:
+                                            notifier.selectedOrder == order,
+                                        onTap: () =>
+                                            notifier.selectOrder(order),
+                                        onLongPress: () async =>
+                                            await copyToClipboard(
+                                                context, order.id),
+                                        leading: AnimatedWidgetShower(
+                                          size: 30.0,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(3.0),
+                                            child: SvgPicture.asset(
+                                              'assets/svgs/order.svg',
+                                              colorFilter: context.theme
+                                                  .primaryColor.toColorFilter,
+                                              semanticsLabel: 'Inventory',
+                                            ),
+                                          ),
+                                        ),
+                                        title: Text(
+                                          order.customerName,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                          style: context.text.titleSmall,
+                                        ),
+                                        subtitle: Text(
+                                          order.customerPhone,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          style: context.text.labelSmall!
+                                              .copyWith(
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                        ),
+                                        trailing: const Icon(
+                                            Icons.arrow_circle_right_outlined),
                                       ),
-                                    ),
-                                  ),
-                                  title: Text(
-                                    order.customerName,
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                    style: context.text.titleSmall,
-                                  ),
-                                  subtitle: Text(
-                                    order.customerPhone,
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                    style: context.text.labelSmall!.copyWith(
-                                        fontWeight: FontWeight.normal),
-                                  ),
-                                  trailing: const Icon(
-                                      Icons.arrow_circle_right_outlined),
+                                    );
+                                  },
                                 ),
-                              );
-                            },
-                          ),
+                              ),
+                            ),
+                          ],
                         ),
                 ),
               ),

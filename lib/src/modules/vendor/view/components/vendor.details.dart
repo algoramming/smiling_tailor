@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../../../shared/swipe.indicator/swipe.indicator.dart';
 
 import '../../../../config/constants.dart';
 import '../../../../db/db.dart';
@@ -180,115 +181,129 @@ class _TrxList extends ConsumerWidget {
             final trxs = noti.trxList.where(condition).toList();
             return trxs.isEmpty
                 ? const KDataNotFound(msg: 'No Transaction Found!')
-                : SlidableAutoCloseBehavior(
-                    child: ListView.builder(
-                      itemCount: trxs.length,
-                      itemBuilder: (_, i) {
-                        final trx = trxs[i];
-                        final kColor =
-                            trx.trxType.isCredit ? Colors.red : Colors.green;
-                        return Card(
-                          child: KListTile(
-                            key: ValueKey(trx.id),
-                            isSystemGenerated: trx.isSystemGenerated,
-                            onEditTap: () async => await showDialog(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (_) => AddTrxVendorPopup(
-                                VendorTrx(
-                                  notifier.selectedVendor!,
-                                  trx: trx,
-                                ),
-                              ),
-                            ),
-                            onDeleteTap: () async =>
-                                await trxDeletePopup(context, trx),
-                            onLongPress: () async =>
-                                await copyToClipboard(context, trx.id),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12.0, vertical: 5.0),
-                            leading: AnimatedWidgetShower(
-                              padding: 3.0,
-                              size: 35.0,
-                              child: trx.modifiers,
-                            ),
-                            title: RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: trx.fromName,
-                                    style: context.text.titleSmall,
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () async =>
-                                          await copyToClipboard(
-                                              context, trx.fromId),
-                                  ),
-                                  WidgetSpan(
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 6.0),
-                                      child: RotatedBox(
-                                        quarterTurns:
-                                            trx.trxType.isDebit ? 0 : 1,
-                                        child: Icon(
-                                          Icons.arrow_outward_rounded,
-                                          size: 16,
-                                          color: kColor,
-                                        ),
+                : Column(
+                    children: [
+                      if (trxs.isNotEmpty &&
+                          trxs.any((e) => !e.isSystemGenerated))
+                        const SwipeIndicator(),
+                      Expanded(
+                        child: SlidableAutoCloseBehavior(
+                          child: ListView.builder(
+                            itemCount: trxs.length,
+                            itemBuilder: (_, i) {
+                              final trx = trxs[i];
+                              final kColor = trx.trxType.isCredit
+                                  ? Colors.red
+                                  : Colors.green;
+                              return Card(
+                                child: KListTile(
+                                  key: ValueKey(trx.id),
+                                  isSystemGenerated: trx.isSystemGenerated,
+                                  onEditTap: () async => await showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (_) => AddTrxVendorPopup(
+                                      VendorTrx(
+                                        notifier.selectedVendor!,
+                                        trx: trx,
                                       ),
                                     ),
                                   ),
-                                  TextSpan(
-                                    text: trx.toName,
-                                    style: context.text.titleSmall,
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () async =>
-                                          await copyToClipboard(
-                                              context, trx.toId),
+                                  onDeleteTap: () async =>
+                                      await trxDeletePopup(context, trx),
+                                  onLongPress: () async =>
+                                      await copyToClipboard(context, trx.id),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12.0, vertical: 5.0),
+                                  leading: AnimatedWidgetShower(
+                                    padding: 3.0,
+                                    size: 35.0,
+                                    child: trx.modifiers,
                                   ),
-                                ],
-                              ),
-                            ),
-                            subtitle: Column(
-                              crossAxisAlignment: crossStart,
-                              children: [
-                                Text(
-                                  trx.createdDate,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                  style: context.text.labelMedium,
+                                  title: RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: trx.fromName,
+                                          style: context.text.titleSmall,
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () async =>
+                                                await copyToClipboard(
+                                                    context, trx.fromId),
+                                        ),
+                                        WidgetSpan(
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 6.0),
+                                            child: RotatedBox(
+                                              quarterTurns:
+                                                  trx.trxType.isDebit ? 0 : 1,
+                                              child: Icon(
+                                                Icons.arrow_outward_rounded,
+                                                size: 16,
+                                                color: kColor,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: trx.toName,
+                                          style: context.text.titleSmall,
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () async =>
+                                                await copyToClipboard(
+                                                    context, trx.toId),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  subtitle: Column(
+                                    crossAxisAlignment: crossStart,
+                                    children: [
+                                      Text(
+                                        trx.createdDate,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                        style: context.text.labelMedium,
+                                      ),
+                                      if (trx.description != null)
+                                        Text(
+                                          trx.description!,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          style: context.text.labelSmall!
+                                              .copyWith(
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                        ),
+                                    ],
+                                  ),
+                                  trailing: TweenAnimationBuilder(
+                                    curve: Curves.easeOut,
+                                    duration: kAnimationDuration(0.5),
+                                    tween: Tween<double>(
+                                        begin: 0, end: trx.amount),
+                                    builder: (_, double x, __) {
+                                      return Tooltip(
+                                        message:
+                                            trx.isGoods ? '' : x.formattedFloat,
+                                        child: Text(
+                                          !trx.isGoods
+                                              ? x.formattedCompat
+                                              : '${x.toInt()} ${trx.unit?.symbol ?? '??'}',
+                                          style: context.text.labelLarge!
+                                              .copyWith(color: kColor),
+                                        ),
+                                      );
+                                    },
+                                  ),
                                 ),
-                                if (trx.description != null)
-                                  Text(
-                                    trx.description!,
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                    style: context.text.labelSmall!.copyWith(
-                                        fontWeight: FontWeight.normal),
-                                  ),
-                              ],
-                            ),
-                            trailing: TweenAnimationBuilder(
-                              curve: Curves.easeOut,
-                              duration: kAnimationDuration(0.5),
-                              tween: Tween<double>(begin: 0, end: trx.amount),
-                              builder: (_, double x, __) {
-                                return Tooltip(
-                                  message: trx.isGoods ? '' : x.formattedFloat,
-                                  child: Text(
-                                    !trx.isGoods
-                                        ? x.formattedCompat
-                                        : '${x.toInt()} ${trx.unit?.symbol ?? '??'}',
-                                    style: context.text.labelLarge!
-                                        .copyWith(color: kColor),
-                                  ),
-                                );
-                              },
-                            ),
+                              );
+                            },
                           ),
-                        );
-                      },
-                    ),
+                        ),
+                      ),
+                    ],
                   );
           }),
     );
