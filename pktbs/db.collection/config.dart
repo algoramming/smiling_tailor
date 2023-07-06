@@ -121,7 +121,9 @@
 //   //
 //   PaymentMethod paymentMethod; // enum PaymentMethod { cash, mfs, card, cheque, others }
 //   String? paymentNote;
-//   double amount; // total amount = tailorCharge + inventoryPrice + deliveryCharge
+//   double vat;
+//   double discount;
+//   double amount; // total amount = tailorCharge + inventoryPrice + deliveryCharge + vat - discount
 //   //
 //   DateTime deliveryTime;
 //   String? description;

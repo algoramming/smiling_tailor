@@ -98,9 +98,10 @@ class PaymentInfos extends StatelessWidget {
         Align(
           alignment: Alignment.centerRight,
           child: Builder(builder: (_) {
-            final vat = notifier.vatCntrlr.text.toString().toDouble ?? 0.0;
+            final discount =
+                notifier.discountCntrlr.text.toString().toDouble ?? 0.0;
             return Text(
-              'Discount: $vat${appCurrency.symbol}',
+              'Discount: $discount${appCurrency.symbol}',
               style: context.text.labelMedium,
             );
           }),

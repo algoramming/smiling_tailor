@@ -52,6 +52,9 @@ class PdfInvoice {
   double get totalGiven => paymentOthersTrxs.fold(
       0.0, (p, c) => p + (c.trxType.isCredit ? c.amount : -c.amount));
 
+  double get rawTotal =>
+      order.amount + (order.discount ?? 0.0) - (order.vat ?? 0.0);
+
   final customerTableHeaders = [
     'Description',
     'Quantity',
@@ -241,6 +244,173 @@ class PdfInvoice {
           pw.Text(
             shopPhone,
             style: const pw.TextStyle(fontSize: 8.0),
+          ),
+        ],
+      ),
+    );
+  }
+
+  pw.Widget paymentSummary() {
+    return pw.Container(
+      alignment: pw.Alignment.centerRight,
+      child: pw.Row(
+        children: [
+          pw.Spacer(flex: 6),
+          pw.Expanded(
+            flex: 4,
+            child: pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              mainAxisSize: pw.MainAxisSize.min,
+              children: [
+                pw.Row(
+                  children: [
+                    pw.Expanded(
+                      child: pw.Text(
+                        'Net total',
+                        style: pw.TextStyle(
+                          fontWeight: pw.FontWeight.bold,
+                          fontSize: 9.5,
+                        ),
+                      ),
+                    ),
+                    pw.Text(
+                      rawTotal.toStringAsFixed(2),
+                      style: pw.TextStyle(
+                        fontWeight: pw.FontWeight.bold,
+                        fontSize: 9.5,
+                      ),
+                    ),
+                  ],
+                ),
+                pw.Row(
+                  children: [
+                    pw.Expanded(
+                      child: pw.Text(
+                        'Vat (${(((order.vat ?? 0.0) * 100) / rawTotal).toStringAsFixed(1)}%)',
+                        style: pw.TextStyle(
+                          fontWeight: pw.FontWeight.bold,
+                          fontSize: 9.5,
+                        ),
+                      ),
+                    ),
+                    pw.Text(
+                      (order.vat ?? 0.0).toStringAsFixed(2),
+                      style: pw.TextStyle(
+                        fontWeight: pw.FontWeight.bold,
+                        fontSize: 9.5,
+                      ),
+                    ),
+                  ],
+                ),
+                pw.Row(
+                  children: [
+                    pw.Expanded(
+                      child: pw.Text(
+                        'Discount (${(((order.discount ?? 0.0) * 100) / rawTotal).toStringAsFixed(1)}%)',
+                        style: pw.TextStyle(
+                          fontWeight: pw.FontWeight.bold,
+                          fontSize: 9.5,
+                        ),
+                      ),
+                    ),
+                    pw.Text(
+                      '- ${(order.discount ?? 0.0).toStringAsFixed(2)}',
+                      style: pw.TextStyle(
+                        fontWeight: pw.FontWeight.bold,
+                        fontSize: 9.5,
+                      ),
+                    ),
+                  ],
+                ),
+                pw.Divider(color: PdfColors.teal),
+                pw.Row(
+                  children: [
+                    pw.Expanded(
+                      child: pw.Text(
+                        'Gross total',
+                        style: pw.TextStyle(
+                          fontWeight: pw.FontWeight.bold,
+                          fontSize: 9.5,
+                        ),
+                      ),
+                    ),
+                    pw.Text(
+                      order.amount.toStringAsFixed(2),
+                      style: pw.TextStyle(
+                        fontWeight: pw.FontWeight.bold,
+                        fontSize: 9.5,
+                      ),
+                    ),
+                  ],
+                ),
+                pw.Row(
+                  children: [
+                    pw.Expanded(
+                      child: pw.Text(
+                        'Advance Payment',
+                        style: pw.TextStyle(
+                          fontWeight: pw.FontWeight.bold,
+                          fontSize: 9.5,
+                        ),
+                      ),
+                    ),
+                    pw.Text(
+                      (advanceTrx?.amount ?? 0.0).toStringAsFixed(2),
+                      style: pw.TextStyle(
+                        fontWeight: pw.FontWeight.bold,
+                        fontSize: 9.5,
+                      ),
+                    ),
+                  ],
+                ),
+                pw.Row(
+                  children: [
+                    pw.Expanded(
+                      child: pw.Text(
+                        'Collection',
+                        style: pw.TextStyle(
+                          fontWeight: pw.FontWeight.bold,
+                          fontSize: 9.5,
+                        ),
+                      ),
+                    ),
+                    pw.Text(
+                      totalGiven.toStringAsFixed(2),
+                      style: pw.TextStyle(
+                        fontWeight: pw.FontWeight.bold,
+                        fontSize: 9.5,
+                      ),
+                    ),
+                  ],
+                ),
+                pw.Divider(color: PdfColors.teal),
+                pw.Row(
+                  children: [
+                    pw.Expanded(
+                      child: pw.Text(
+                        'Due',
+                        style: pw.TextStyle(
+                          fontWeight: pw.FontWeight.bold,
+                          fontSize: 9.5,
+                        ),
+                      ),
+                    ),
+                    pw.Text(
+                      (order.amount - (advanceTrx?.amount ?? 0.0) - totalGiven)
+                          .toStringAsFixed(2),
+                      style: pw.TextStyle(
+                        fontWeight: pw.FontWeight.bold,
+                        fontSize: 9.5,
+                      ),
+                    ),
+                  ],
+                ),
+                pw.SizedBox(height: 2 * PdfPageFormat.mm),
+                pw.Container(height: 1, color: PdfColors.teal400),
+                pw.SizedBox(height: 0.5 * PdfPageFormat.mm),
+                pw.Container(height: 1, color: PdfColors.teal400),
+              ],
+            ),
           ),
         ],
       ),

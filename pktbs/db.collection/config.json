@@ -532,6 +532,78 @@
         "options": {}
     },
     {
+        "id": "_pb_users_auth_",
+        "name": "users",
+        "type": "auth",
+        "system": false,
+        "schema": [
+            {
+                "id": "users_name",
+                "name": "name",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "users_avatar",
+                "name": "avatar",
+                "type": "file",
+                "system": false,
+                "required": false,
+                "options": {
+                    "maxSelect": 1,
+                    "maxSize": 5242880,
+                    "mimeTypes": [
+                        "image/jpeg",
+                        "image/png",
+                        "image/svg+xml",
+                        "image/gif",
+                        "image/webp"
+                    ],
+                    "thumbs": null,
+                    "protected": false
+                }
+            },
+            {
+                "id": "4spa7qxc",
+                "name": "type",
+                "type": "select",
+                "system": false,
+                "required": true,
+                "options": {
+                    "maxSelect": 1,
+                    "values": [
+                        "Admin",
+                        "Manager",
+                        "Operator",
+                        "Dispose"
+                    ]
+                }
+            }
+        ],
+        "indexes": [],
+        "listRule": "@request.auth.id != null",
+        "viewRule": "@request.auth.id != null",
+        "createRule": "@request.auth.id != null",
+        "updateRule": "@request.auth.id != null",
+        "deleteRule": "@request.auth.id != null",
+        "options": {
+            "allowEmailAuth": true,
+            "allowOAuth2Auth": true,
+            "allowUsernameAuth": true,
+            "exceptEmailDomains": null,
+            "manageRule": null,
+            "minPasswordLength": 8,
+            "onlyEmailDomains": null,
+            "requireEmail": false
+        }
+    },
+    {
         "id": "5xup5ow96ez6plc",
         "name": "orders",
         "type": "base",
@@ -806,6 +878,28 @@
                 }
             },
             {
+                "id": "1qfdyjii",
+                "name": "vat",
+                "type": "number",
+                "system": false,
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null
+                }
+            },
+            {
+                "id": "hskykurp",
+                "name": "discount",
+                "type": "number",
+                "system": false,
+                "required": false,
+                "options": {
+                    "min": null,
+                    "max": null
+                }
+            },
+            {
                 "id": "uljfdkaw",
                 "name": "amount",
                 "type": "number",
@@ -887,77 +981,5 @@
         "updateRule": "@request.auth.id != null",
         "deleteRule": "@request.auth.id != null",
         "options": {}
-    },
-    {
-        "id": "_pb_users_auth_",
-        "name": "users",
-        "type": "auth",
-        "system": false,
-        "schema": [
-            {
-                "id": "users_name",
-                "name": "name",
-                "type": "text",
-                "system": false,
-                "required": false,
-                "options": {
-                    "min": null,
-                    "max": null,
-                    "pattern": ""
-                }
-            },
-            {
-                "id": "users_avatar",
-                "name": "avatar",
-                "type": "file",
-                "system": false,
-                "required": false,
-                "options": {
-                    "maxSelect": 1,
-                    "maxSize": 5242880,
-                    "mimeTypes": [
-                        "image/jpeg",
-                        "image/png",
-                        "image/svg+xml",
-                        "image/gif",
-                        "image/webp"
-                    ],
-                    "thumbs": null,
-                    "protected": false
-                }
-            },
-            {
-                "id": "4spa7qxc",
-                "name": "type",
-                "type": "select",
-                "system": false,
-                "required": true,
-                "options": {
-                    "maxSelect": 1,
-                    "values": [
-                        "Admin",
-                        "Manager",
-                        "Operator",
-                        "Dispose"
-                    ]
-                }
-            }
-        ],
-        "indexes": [],
-        "listRule": "@request.auth.id != null",
-        "viewRule": "@request.auth.id != null",
-        "createRule": "@request.auth.id != null",
-        "updateRule": "@request.auth.id != null",
-        "deleteRule": "@request.auth.id != null",
-        "options": {
-            "allowEmailAuth": true,
-            "allowOAuth2Auth": true,
-            "allowUsernameAuth": true,
-            "exceptEmailDomains": null,
-            "manageRule": null,
-            "minPasswordLength": 8,
-            "onlyEmailDomains": null,
-            "requireEmail": false
-        }
     }
 ]
