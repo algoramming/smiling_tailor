@@ -12,7 +12,6 @@ import '../../../../shared/page_not_found/page_not_found.dart';
 import '../../../../shared/textfield.suffix.widget/suffix.widget.dart';
 import '../../../../utils/extensions/extensions.dart';
 import '../../../authentication/model/user.dart';
-import '../../../transaction/api/trx.api.dart';
 import '../../../transaction/enum/trx.type.dart';
 import '../../../transaction/model/transaction.dart';
 import '../../provider/all.users.provider.dart';
@@ -125,10 +124,10 @@ class _UserTrxList extends ConsumerWidget {
                             trx.trxType.isCredit ? Colors.red : Colors.green;
                         return Card(
                           child: KListTile(
-                            key: ValueKey(trx.id),
-                            canEdit: false,
-                            onDeleteTap: () async =>
-                                await trxDeletePopup(context, trx),
+                            // key: ValueKey(trx.id),
+                            // canEdit: false,
+                            // onDeleteTap: () async =>
+                            //     await trxDeletePopup(context, trx),
                             onLongPress: () async =>
                                 await copyToClipboard(context, trx.id),
                             padding: const EdgeInsets.symmetric(
