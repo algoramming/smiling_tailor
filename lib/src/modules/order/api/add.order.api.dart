@@ -23,11 +23,6 @@ import '../model/order.dart';
 Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
   try {
     EasyLoading.show(status: 'Confirming Order...');
-    final amount = (noti.tailorChargeCntrlr.text.toDouble ?? 0.0) +
-        (noti.inventoryPriceCntrlr.text.toDouble ?? 0.0) +
-        (noti.deliveryChargeCntrlr.text.toDouble ?? 0.0) +
-        (noti.vatCntrlr.text.toDouble ?? 0.0) -
-        (noti.discountCntrlr.text.toDouble ?? 0.0);
     await pb.collection(orders).create(
       body: {
         'customerName': noti.customerNameCntrlr.text,
@@ -58,9 +53,9 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
         'paymentMethod': noti.paymentMethod.label,
         'paymentNote': noti.paymentNoteCntrlr.text,
         // 'amount': notifier.advanceAmountCntrlr.text.toDouble,
-        'vat': noti.vatCntrlr.text.toDouble ?? 0.0,
-        'discount': noti.discountCntrlr.text.toDouble ?? 0.0,
-        'amount': amount,
+        'vat': noti.vat,
+        'discount': noti.discount,
+        'amount': noti.grandTotal,
         'deliveryTime': noti.deliveryTime.toUtc().toIso8601String(),
         'description': noti.descriptionCntrlr.text,
         'status': noti.status.label,

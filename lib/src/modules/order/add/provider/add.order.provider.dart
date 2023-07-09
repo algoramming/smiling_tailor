@@ -75,6 +75,9 @@ class AddOrderProvider
   bool allocateTailorNow = false;
   bool isHomeDeliveryNeeded = false;
   bool isInventoryNeeded = false;
+  //
+  bool isVatPercentage = true;
+  bool isDiscountPercentage = true;
 
   List<PktbsTrx> _trxs = [];
   List<PktbsTrx> paymentOthersTrxs = [];
@@ -174,6 +177,9 @@ class AddOrderProvider
       discountCntrlr.text = arg.discount.toString();
       descriptionCntrlr.text = arg.description ?? '';
       status = arg.status;
+
+      isVatPercentage = false;
+      isDiscountPercentage = false;
     }
     employees = ref.watch(employeeProvider).value ?? [];
     inventories = ref.watch(inventoryProvider).value ?? [];
@@ -254,6 +260,33 @@ class AddOrderProvider
       deliveryChargeCntrlr.text = '0.0';
       deliveryNoteCntrlr.clear();
     }
+    ref.notifyListeners();
+  }
+
+  double get total =>
+      (tailorChargeCntrlr.text.toString().toDouble ?? 0.0) +
+      (inventoryPriceCntrlr.text.toString().toDouble ?? 0.0) +
+      (deliveryChargeCntrlr.text.toString().toDouble ?? 0.0);
+
+  double get grandTotal => total + vat - discount;
+
+  double get vat {
+    final v = vatCntrlr.text.toDouble;
+    return isVatPercentage ? ((total * (v ?? 0.0)) / 100) : (v ?? 0.0);
+  }
+
+  void toggleVatPercentage() {
+    isVatPercentage = !isVatPercentage;
+    ref.notifyListeners();
+  }
+
+  double get discount {
+    final d = discountCntrlr.text.toDouble;
+    return isDiscountPercentage ? ((total * (d ?? 0.0)) / 100) : (d ?? 0.0);
+  }
+
+  void toggleDiscountPercentage() {
+    isDiscountPercentage = !isDiscountPercentage;
     ref.notifyListeners();
   }
 

@@ -38,73 +38,182 @@ class PaymentInfos extends StatelessWidget {
           },
         ),
         const SizedBox(height: 10),
-        TextFormField(
-          controller: notifier.vatCntrlr,
-          decoration: const InputDecoration(
-            labelText: 'Vat',
-            hintText: 'Enter vat amount(if any) ...',
-            suffixIcon: CurrencySuffixIcon(),
-          ),
-          onFieldSubmitted: (_) async => notifier.submit(context),
-          onChanged: (_) => notifier.reload(),
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          textInputAction: TextInputAction.next,
-          keyboardType: TextInputType.number,
-          validator: (v) {
-            if (v!.isEmpty) {
-              return 'Vat amount is required';
-            }
-            if (!v.isNumeric) {
-              return 'Invalid amount';
-            }
-            return null;
-          },
+        Row(
+          children: [
+            Expanded(
+              child: TextFormField(
+                controller: notifier.vatCntrlr,
+                decoration: InputDecoration(
+                  labelText: 'Vat',
+                  hintText: 'Enter vat amount(if any) ...',
+                  suffixIcon: CurrencySuffixIcon(
+                    text: notifier.isVatPercentage ? '%' : appCurrency.symbol,
+                  ),
+                ),
+                onFieldSubmitted: (_) async => notifier.submit(context),
+                onChanged: (_) => notifier.reload(),
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                textInputAction: TextInputAction.next,
+                keyboardType: TextInputType.number,
+                validator: (v) {
+                  if (v!.isEmpty) {
+                    return 'Vat amount is required';
+                  }
+                  if (!v.isNumeric) {
+                    return 'Invalid amount';
+                  }
+                  return null;
+                },
+              ),
+            ),
+            const SizedBox(width: 5),
+            InkWell(
+              onTap: notifier.toggleVatPercentage,
+              child: Container(
+                height: 48.0,
+                width: 25.0,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  borderRadius: borderRadius10,
+                  color: !notifier.isVatPercentage
+                      ? context.theme.dividerColor.withOpacity(0.15)
+                      : context.theme.primaryColor.withOpacity(0.15),
+                  border: Border.all(
+                    color: !notifier.isVatPercentage
+                        ? context.theme.dividerColor.withOpacity(0.5)
+                        : context.theme.primaryColor.withOpacity(0.5),
+                  ),
+                ),
+                child: Text(
+                  '%',
+                  style: context.text.titleMedium,
+                ),
+              ),
+            ),
+            const SizedBox(width: 5),
+            InkWell(
+              onTap: notifier.toggleVatPercentage,
+              child: Container(
+                height: 48.0,
+                width: 25.0,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  borderRadius: borderRadius10,
+                  color: notifier.isVatPercentage
+                      ? context.theme.dividerColor.withOpacity(0.15)
+                      : context.theme.primaryColor.withOpacity(0.15),
+                  border: Border.all(
+                    color: notifier.isVatPercentage
+                        ? context.theme.dividerColor.withOpacity(0.5)
+                        : context.theme.primaryColor.withOpacity(0.5),
+                  ),
+                ),
+                child: Text(
+                  appCurrency.symbol,
+                  style: context.text.titleMedium!
+                      .copyWith(fontWeight: FontWeight.w600),
+                ),
+              ),
+            ),
+          ],
         ),
         const SizedBox(height: 3),
         Align(
           alignment: Alignment.centerRight,
-          child: Builder(builder: (_) {
-            final vat = notifier.vatCntrlr.text.toString().toDouble ?? 0.0;
-            return Text(
-              'Vat: $vat${appCurrency.symbol}',
-              style: context.text.labelMedium,
-            );
-          }),
+          child: Text(
+            'Vat: ${notifier.vat}${appCurrency.symbol}',
+            style: context.text.labelMedium,
+          ),
         ),
         const SizedBox(height: 7),
-        TextFormField(
-          controller: notifier.discountCntrlr,
-          decoration: const InputDecoration(
-            labelText: 'Discount',
-            hintText: 'Enter discount amount(if any) ...',
-            suffixIcon: CurrencySuffixIcon(),
-          ),
-          onFieldSubmitted: (_) async => notifier.submit(context),
-          onChanged: (_) => notifier.reload(),
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          textInputAction: TextInputAction.next,
-          keyboardType: TextInputType.number,
-          validator: (v) {
-            if (v!.isEmpty) {
-              return 'Discount amount is required';
-            }
-            if (!v.isNumeric) {
-              return 'Invalid amount';
-            }
-            return null;
-          },
+        Row(
+          children: [
+            Expanded(
+              child: TextFormField(
+                controller: notifier.discountCntrlr,
+                decoration: InputDecoration(
+                  labelText: 'Discount',
+                  hintText: 'Enter discount amount(if any) ...',
+                  suffixIcon: CurrencySuffixIcon(
+                    text: notifier.isDiscountPercentage
+                        ? '%'
+                        : appCurrency.symbol,
+                  ),
+                ),
+                onFieldSubmitted: (_) async => notifier.submit(context),
+                onChanged: (_) => notifier.reload(),
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                textInputAction: TextInputAction.next,
+                keyboardType: TextInputType.number,
+                validator: (v) {
+                  if (v!.isEmpty) {
+                    return 'Discount amount is required';
+                  }
+                  if (!v.isNumeric) {
+                    return 'Invalid amount';
+                  }
+                  return null;
+                },
+              ),
+            ),
+            const SizedBox(width: 5),
+            InkWell(
+              onTap: notifier.toggleDiscountPercentage,
+              child: Container(
+                height: 48.0,
+                width: 25.0,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  borderRadius: borderRadius10,
+                  color: !notifier.isDiscountPercentage
+                      ? context.theme.dividerColor.withOpacity(0.15)
+                      : context.theme.primaryColor.withOpacity(0.15),
+                  border: Border.all(
+                    color: !notifier.isDiscountPercentage
+                        ? context.theme.dividerColor.withOpacity(0.5)
+                        : context.theme.primaryColor.withOpacity(0.5),
+                  ),
+                ),
+                child: Text(
+                  '%',
+                  style: context.text.titleMedium,
+                ),
+              ),
+            ),
+            const SizedBox(width: 5),
+            InkWell(
+              onTap: notifier.toggleDiscountPercentage,
+              child: Container(
+                height: 48.0,
+                width: 25.0,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  borderRadius: borderRadius10,
+                  color: notifier.isDiscountPercentage
+                      ? context.theme.dividerColor.withOpacity(0.15)
+                      : context.theme.primaryColor.withOpacity(0.15),
+                  border: Border.all(
+                    color: notifier.isDiscountPercentage
+                        ? context.theme.dividerColor.withOpacity(0.5)
+                        : context.theme.primaryColor.withOpacity(0.5),
+                  ),
+                ),
+                child: Text(
+                  appCurrency.symbol,
+                  style: context.text.titleMedium!
+                      .copyWith(fontWeight: FontWeight.w600),
+                ),
+              ),
+            ),
+          ],
         ),
         const SizedBox(height: 3),
         Align(
           alignment: Alignment.centerRight,
-          child: Builder(builder: (_) {
-            final discount =
-                notifier.discountCntrlr.text.toString().toDouble ?? 0.0;
-            return Text(
-              'Discount: $discount${appCurrency.symbol}',
-              style: context.text.labelMedium,
-            );
-          }),
+          child: Text(
+            'Discount: ${notifier.discount}${appCurrency.symbol}',
+            style: context.text.labelMedium,
+          ),
         ),
         const SizedBox(height: 7),
         TextFormField(
@@ -132,20 +241,10 @@ class PaymentInfos extends StatelessWidget {
         const SizedBox(height: 3),
         Align(
           alignment: Alignment.centerRight,
-          child: Builder(builder: (context) {
-            final total =
-                (notifier.tailorChargeCntrlr.text.toString().toDouble ?? 0.0) +
-                    (notifier.inventoryPriceCntrlr.text.toString().toDouble ??
-                        0.0) +
-                    (notifier.deliveryChargeCntrlr.text.toString().toDouble ??
-                        0.0) +
-                    (notifier.vatCntrlr.text.toString().toDouble ?? 0.0) -
-                    (notifier.discountCntrlr.text.toString().toDouble ?? 0.0);
-            return Text(
-              'Total: $total${appCurrency.symbol} and Remaining: ${total - (notifier.advanceAmountCntrlr.text.toString().toDouble ?? 0.0)}${appCurrency.symbol}',
-              style: context.text.labelMedium,
-            );
-          }),
+          child: Text(
+            'Total: ${notifier.grandTotal}${appCurrency.symbol} and Remaining: ${notifier.grandTotal - (notifier.advanceAmountCntrlr.text.toString().toDouble ?? 0.0)}${appCurrency.symbol}',
+            style: context.text.labelMedium,
+          ),
         ),
         const SizedBox(height: 7),
         TextFormField(
