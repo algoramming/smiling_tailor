@@ -1,6 +1,7 @@
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart';
 
 Client clientFactoryWeb() {
-  print('I do nothing');
+  debugPrint('I do nothing');
   return Client();
 }

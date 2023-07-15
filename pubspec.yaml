@@ -4,10 +4,10 @@ description: Welcome to our tailor-centric Custom Business Management System, wh
 # Prevent accidental publishing to pub.dev.
 publish_to: "none"
 
-version: 0.0.21+21
+version: 0.0.22+22
 
 environment:
-  sdk: ">=3.0.5 <4.0.0"
+  sdk: ">=3.0.6 <4.0.0"
 
 dependencies:
   beamer: ^1.5.5
@@ -65,7 +65,7 @@ msix_config:
     force_update_from_any_version: false
   publisher_display_name: Algoramming
   identity_name: com.algoramming.smilingtailor
-  msix_version: 0.0.21.0
+  msix_version: 0.0.22.0
   logo_path: D:\Algoramming\Flutter-Projects\smiling_tailor\assets\icons\app-icon-1024x1024.png
 
 flutter_launcher_icons:
