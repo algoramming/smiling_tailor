@@ -5,9 +5,9 @@ import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart'
     show getApplicationDocumentsDirectory;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smiling_tailor/src/config/get.platform.dart';
 
 import '../config/constants.dart' show appName;
+import '../config/get.platform.dart';
 import '../utils/extensions/extensions.dart';
 import '../utils/logger/logger_helper.dart';
 

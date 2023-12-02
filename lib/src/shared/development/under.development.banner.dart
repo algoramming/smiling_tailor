@@ -6,10 +6,10 @@ import '../clipboard_data/clipboard_data.dart';
 
 class UnderDevelopmentBanner extends StatelessWidget {
   const UnderDevelopmentBanner({
-    Key? key,
+    super.key,
     this.onPressed,
     this.height = 45.0,
-  }) : super(key: key);
+  });
 
   final double height;
   final void Function()? onPressed;

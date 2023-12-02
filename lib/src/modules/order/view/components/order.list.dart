@@ -59,7 +59,7 @@ class OrderList extends ConsumerWidget {
               itemBuilder: (_) => [
                 orderTypeAll,
                 orderDeliveryDateToday,
-                ...OrderStatus.values.map((e) => e.label).toList()
+                ...OrderStatus.values.map((e) => e.label)
               ]
                   .map(
                     (e) => PopupMenuItem(

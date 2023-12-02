@@ -67,15 +67,15 @@ extension GLTypeStringExt on String {
 extension GLTypeObjectExt on Object {
   GLType get glType {
     switch (this) {
-      case PktbsVendor:
+      case PktbsVendor _:
         return GLType.vendor;
-      case PktbsInventory:
+      case PktbsInventory _:
         return GLType.inventory;
-      case PktbsEmployee:
+      case PktbsEmployee _:
         return GLType.employee;
-      case PktbsOrder:
+      case PktbsOrder _:
         return GLType.order;
-      case PktbsUser:
+      case PktbsUser _:
         return GLType.user;
       default:
         return GLType.user;

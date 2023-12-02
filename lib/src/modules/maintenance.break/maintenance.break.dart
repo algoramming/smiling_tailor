@@ -35,12 +35,12 @@ class MaintenanceBreak extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                     letterSpacing: 1.1,
                   ),
-                  textScaleFactor: 1.4,
+                  textScaler: TextScaler.linear(1.4),
                 ),
               ),
               const Text(
                 'We will be back soon.',
-                textScaleFactor: 1.1,
+                textScaler: TextScaler.linear(1.1),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
@@ -64,7 +64,7 @@ class MaintenanceBreak extends StatelessWidget {
                         const SizedBox(width: 10.0),
                         Text(
                           t.contactWithAdmin,
-                          textScaleFactor: 0.8,
+                          textScaler: const TextScaler.linear(0.8),
                         ),
                       ],
                     ),

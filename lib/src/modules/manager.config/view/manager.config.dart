@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smiling_tailor/src/modules/authentication/model/user.dart';
-import 'package:smiling_tailor/src/modules/authentication/model/user.type.enum.dart';
-import 'package:smiling_tailor/src/shared/gradient/gradient.button.dart';
-import 'package:smiling_tailor/src/shared/radio_button/k_radio_button.dart';
 import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
-import 'package:smiling_tailor/src/utils/themes/themes.dart';
 
 import '../../../config/constants.dart';
 import '../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../shared/clipboard_data/clipboard_data.dart';
 import '../../../shared/error_widget/error_widget.dart';
+import '../../../shared/gradient/gradient.button.dart';
 import '../../../shared/loading_widget/loading_widget.dart';
 import '../../../shared/page_not_found/page_not_found.dart';
+import '../../../shared/radio_button/k_radio_button.dart';
 import '../../../shared/textfield.suffix.widget/suffix.widget.dart';
+import '../../../utils/themes/themes.dart';
+import '../../authentication/model/user.dart';
+import '../../authentication/model/user.type.enum.dart';
 import '../../authentication/view/authentication.dart';
 import '../../dashboard/provider/all.users.provider.dart';
 import '../../profile/provider/profile.provider.dart';

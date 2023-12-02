@@ -13,6 +13,7 @@ import 'package:flutter/material.dart'
         ScrollDecelerationRate,
         ScrollPhysics,
         ScrollableDetails,
+        TextScaler,
         ThemeData,
         Widget;
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -22,7 +23,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerWidget, WidgetRef;
 import 'package:smiling_tailor/src/modules/settings/model/locale/locale.model.dart';
 import 'package:smiling_tailor/src/modules/settings/model/theme/theme.model.dart';
-import 'package:smiling_tailor/src/utils/logger/logger_helper.dart';
 
 import '../beamer.routes.dart';
 import 'config/constants.dart' show appName;
@@ -38,6 +38,7 @@ import 'modules/settings/provider/locale.provider.dart';
 import 'modules/settings/provider/performance.overlay.provider.dart';
 import 'modules/settings/provider/theme.provider.dart';
 import 'utils/extensions/extensions.dart';
+import 'utils/logger/logger_helper.dart';
 
 class App extends ConsumerWidget {
   const App({super.key = const Key(appName)});
@@ -68,7 +69,10 @@ class App extends ConsumerWidget {
           bottomViewPadding = ctx.padding.bottom;
           log.i('App build. Height: ${ctx.height} px, Width: ${ctx.width} px');
           return MediaQuery(
-            data: ctx.mq.copyWith(textScaleFactor: 1.0, devicePixelRatio: 1.0),
+            data: ctx.mq.copyWith(
+              textScaler: const TextScaler.linear(1.0),
+              devicePixelRatio: 1.0,
+            ),
             child: isUnderMinSize(ctx.mq.size)
                 ? const ScreenEnlargeWarning()
                 : child ?? const HomeView(),

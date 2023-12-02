@@ -4,13 +4,13 @@ import '../../config/constants.dart';
 
 class KRadioButton extends StatelessWidget {
   const KRadioButton({
-    Key? key,
+    super.key,
     required this.value,
     required this.label,
     required this.groupValue,
     required this.onTap,
     this.style,
-  }) : super(key: key);
+  });
 
   final String label;
   final int value;

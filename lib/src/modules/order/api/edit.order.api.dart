@@ -93,6 +93,7 @@ Future<void> pktbsUpdateOrder(BuildContext ctx, AddOrderProvider noti) async {
     return;
   } on ClientException catch (e) {
     log.e('Order Creation: $e');
+    if (!ctx.mounted) return;
     showAwesomeSnackbar(
         ctx, 'Failed!', getErrorMessage(e), MessageType.failure);
     return;
@@ -113,7 +114,7 @@ Future<void> _updateTrxs(
           // if delivery needed
           if (noti.isHomeDeliveryNeeded) {
             await _deliveryAllocationApi(ctx, order, noti).then((_) async {
-              log.wtf(
+              log.f(
                   'order added successfully with - 4 - advance, tailor, inventory and delivery allocation!');
               //
               await _deleteTrxs(ctx, order, noti);
@@ -127,7 +128,7 @@ Future<void> _updateTrxs(
               //     'Order added successfully.', MessageType.success);
             });
           } else {
-            log.wtf(
+            log.f(
                 'order added successfully with - 3 - advance, tailor and inventory allocation!');
             //
             await _deleteTrxs(ctx, order, noti);
@@ -145,7 +146,7 @@ Future<void> _updateTrxs(
         // if delivery needed
         if (noti.isHomeDeliveryNeeded) {
           await _deliveryAllocationApi(ctx, order, noti).then((_) async {
-            log.wtf(
+            log.f(
                 'order added successfully with - 3 - advance, tailor and delivery allocation!');
             //
             await _deleteTrxs(ctx, order, noti);
@@ -159,7 +160,7 @@ Future<void> _updateTrxs(
             //     'Order added successfully.', MessageType.success);
           });
         } else {
-          log.wtf(
+          log.f(
               'order added successfully with - 2 - advance and tailor allocation!');
           //
           await _deleteTrxs(ctx, order, noti);
@@ -181,7 +182,7 @@ Future<void> _updateTrxs(
         // if delivery needed
         if (noti.isHomeDeliveryNeeded) {
           await _deliveryAllocationApi(ctx, order, noti).then((_) async {
-            log.wtf(
+            log.f(
                 'order added successfully with - 3 - advance, inventory and delivery allocation!');
             //
             await _deleteTrxs(ctx, order, noti);
@@ -195,7 +196,7 @@ Future<void> _updateTrxs(
             //     'Order added successfully.', MessageType.success);
           });
         } else {
-          log.wtf(
+          log.f(
               'order added successfully with - 2 - advance and inventory allocation!');
           //
           await _deleteTrxs(ctx, order, noti);
@@ -213,7 +214,7 @@ Future<void> _updateTrxs(
       // if delivery needed
       if (noti.isHomeDeliveryNeeded) {
         await _deliveryAllocationApi(ctx, order, noti).then((_) async {
-          log.wtf(
+          log.f(
               'order added successfully with - 2 - advance and delivery allocation!');
           //
           await _deleteTrxs(ctx, order, noti);
@@ -227,7 +228,7 @@ Future<void> _updateTrxs(
           //     'Order added successfully.', MessageType.success);
         });
       } else {
-        log.wtf('order added successfully with - 1 - advance only!');
+        log.f('order added successfully with - 1 - advance only!');
         //
         await _deleteTrxs(ctx, order, noti);
         //
@@ -421,7 +422,7 @@ Future<void> _deleteTrxs(
           // delivery check
           if (!noti.isHomeDeliveryNeeded && noti.deliveryTrx != null) {
             await pktbsDeleteTrx(ctx, noti.deliveryTrx!).then((_) async {
-              log.wtf(
+              log.f(
                   'order trxs delete with - 3 - no tailor, inventory, delivery trx anymore!');
               noti.clear();
               ctx.pop();
@@ -429,7 +430,7 @@ Future<void> _deleteTrxs(
               await showOrderSlipDownloadPopup(ctx, order, isUpdate: true);
             });
           } else {
-            log.wtf(
+            log.f(
                 'order trxs delete with - 2 - no tailor, inventory trx anymore!');
             noti.clear();
             ctx.pop();
@@ -441,7 +442,7 @@ Future<void> _deleteTrxs(
         // delivery check
         if (!noti.isHomeDeliveryNeeded && noti.deliveryTrx != null) {
           await pktbsDeleteTrx(ctx, noti.deliveryTrx!).then((_) async {
-            log.wtf(
+            log.f(
                 'order trxs delete with - 2 - no tailor, delivery trx anymore!');
             noti.clear();
             ctx.pop();
@@ -449,7 +450,7 @@ Future<void> _deleteTrxs(
             await showOrderSlipDownloadPopup(ctx, order, isUpdate: true);
           });
         } else {
-          log.wtf('order trxs delete with - 1 - no tailor trx anymore!');
+          log.f('order trxs delete with - 1 - no tailor trx anymore!');
           noti.clear();
           ctx.pop();
           EasyLoading.dismiss();
@@ -469,7 +470,7 @@ Future<void> _deleteTrxs(
         // delivery check
         if (!noti.isHomeDeliveryNeeded && noti.deliveryTrx != null) {
           await pktbsDeleteTrx(ctx, noti.deliveryTrx!).then((_) async {
-            log.wtf(
+            log.f(
                 'order trxs delete with - 2 - no inventory, delivery trx anymore!');
             noti.clear();
             ctx.pop();
@@ -477,7 +478,7 @@ Future<void> _deleteTrxs(
             await showOrderSlipDownloadPopup(ctx, order, isUpdate: true);
           });
         } else {
-          log.wtf('order trxs delete with - 1 - no inventory trx anymore!');
+          log.f('order trxs delete with - 1 - no inventory trx anymore!');
           noti.clear();
           ctx.pop();
           EasyLoading.dismiss();
@@ -488,14 +489,14 @@ Future<void> _deleteTrxs(
       // delivery check
       if (!noti.isHomeDeliveryNeeded && noti.deliveryTrx != null) {
         await pktbsDeleteTrx(ctx, noti.deliveryTrx!).then((_) async {
-          log.wtf('order trxs delete with - 1 - no delivery trx anymore!');
+          log.f('order trxs delete with - 1 - no delivery trx anymore!');
           noti.clear();
           ctx.pop();
           EasyLoading.dismiss();
           await showOrderSlipDownloadPopup(ctx, order, isUpdate: true);
         });
       } else {
-        log.wtf('order trxs delete with - 0 - all trxs are needed!');
+        log.f('order trxs delete with - 0 - all trxs are needed!');
         noti.clear();
         ctx.pop();
         EasyLoading.dismiss();

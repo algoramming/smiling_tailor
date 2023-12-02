@@ -6,18 +6,18 @@ import 'package:beamer/beamer.dart'
         BeamerDelegate,
         RoutesLocationBuilder;
 import 'package:flutter/widgets.dart' show ValueKey;
-import 'package:smiling_tailor/src/config/constants.dart';
-import 'package:smiling_tailor/src/modules/authentication/view/authentication.dart';
-import 'package:smiling_tailor/src/modules/maintenance.break/maintenance.break.dart';
-import 'package:smiling_tailor/src/pocketbase/auth.store/helpers.dart';
-import 'package:smiling_tailor/src/shared/page_not_found/page_not_found.dart';
-
 import 'app.routes.dart';
+import 'src/config/constants.dart';
+import 'src/modules/authentication/view/authentication.dart';
 import 'src/modules/home/view/home.view.dart';
+import 'src/modules/maintenance.break/maintenance.break.dart';
+import 'src/pocketbase/auth.store/helpers.dart';
+import 'src/shared/page_not_found/page_not_found.dart';
 
 final routerDelegate = BeamerDelegate(
   initialPath: AppRoutes.homeRoute,
   notFoundPage: const BeamPage(
+    key: ValueKey('not-found'),
     title: 'Page not found - $appName',
     child: KPageNotFound(error: '404 - Page not found!'),
   ),
@@ -56,37 +56,37 @@ final routerDelegate = BeamerDelegate(
         );
       },
     },
-  ),
+  ).call,
   guards: [
     BeamGuard(
       pathPatterns: AppRoutes.allRoutes,
       check: (_, __) => !AppRoutes.isMaintenanceBreak,
-      beamToNamed: (_, __) => AppRoutes.maintenanceBreakRoute,
+      beamToNamed: (_, __, ___) => AppRoutes.maintenanceBreakRoute,
     ),
     BeamGuard(
       pathPatterns: [AppRoutes.maintenanceBreakRoute],
       check: (_, __) => AppRoutes.isMaintenanceBreak,
-      beamToNamed: (_, __) => AppRoutes.homeRoute,
+      beamToNamed: (_, __, ___) => AppRoutes.homeRoute,
     ),
     BeamGuard(
       pathPatterns: AppRoutes.allRoutes,
       check: (_, __) => isServerRunning,
-      beamToNamed: (_, __) => AppRoutes.serverDisconnectedRoute,
+      beamToNamed: (_, __, ___) => AppRoutes.serverDisconnectedRoute,
     ),
     BeamGuard(
       pathPatterns: [AppRoutes.serverDisconnectedRoute],
       check: (_, __) => !isServerRunning,
-      beamToNamed: (_, __) => AppRoutes.homeRoute,
+      beamToNamed: (_, __, ___) => AppRoutes.homeRoute,
     ),
     BeamGuard(
       pathPatterns: AppRoutes.allAuthRequiredRoutes,
       check: (_, __) => pb.authStore.isValid,
-      beamToNamed: (_, __) => AppRoutes.signinRoute,
+      beamToNamed: (_, __, ___) => AppRoutes.signinRoute,
     ),
     BeamGuard(
       pathPatterns: [AppRoutes.signinRoute],
       check: (_, __) => !pb.authStore.isValid,
-      beamToNamed: (_, __) => AppRoutes.homeRoute,
+      beamToNamed: (_, __, ___) => AppRoutes.homeRoute,
     ),
   ],
 );

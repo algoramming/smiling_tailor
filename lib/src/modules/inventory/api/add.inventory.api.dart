@@ -96,6 +96,7 @@ Future<void> pktbsAddInventory(
     return;
   } on ClientException catch (e) {
     log.e('Inventory Creation: $e');
+    if (!context.mounted) return;
     showAwesomeSnackbar(
         context, 'Failed!', getErrorMessage(e), MessageType.failure);
     return;

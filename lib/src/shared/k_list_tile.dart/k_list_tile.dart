@@ -8,7 +8,7 @@ import '../../utils/themes/themes.dart';
 
 class KListTile extends StatelessWidget {
   const KListTile({
-    Key? key,
+    super.key,
     this.onTap,
     this.title,
     this.leading,
@@ -24,7 +24,7 @@ class KListTile extends StatelessWidget {
     this.canEdit = true,
     this.isSystemGenerated = false,
     this.paddingBetweenTitleAndSubtitle,
-  }) : super(key: key);
+  });
 
   final bool canEdit;
   final Widget? title;

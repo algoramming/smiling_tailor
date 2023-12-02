@@ -90,6 +90,7 @@ class ManagerProvider extends AutoDisposeFamilyNotifier<void, PktbsUser> {
       return;
     } on ClientException catch (e) {
       log.e('User Update: $e');
+      if(!context.mounted) return;
       showAwesomeSnackbar(
           context, 'Failed!', getErrorMessage(e), MessageType.failure);
       return;

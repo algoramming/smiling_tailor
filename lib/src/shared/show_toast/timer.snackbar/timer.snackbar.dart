@@ -88,7 +88,7 @@ class TimerSnackbarContent extends StatelessWidget {
                           Center(
                             child: Text(
                               (second - (value / 1000)).toInt().toString(),
-                              textScaleFactor: 0.85,
+                              textScaler: const TextScaler.linear(0.85),
                               style: contentTextStyle ??
                                   context.text.labelLarge!
                                       .copyWith(color: white),
@@ -127,7 +127,7 @@ class TimerSnackbarContent extends StatelessWidget {
                           style: contentTextStyle ??
                               context.text.labelLarge!
                                   .copyWith(color: context.theme.primaryColor),
-                          textScaleFactor: 1.1,
+                          textScaler: const TextScaler.linear(1.1),
                         ),
                       ],
                     ),

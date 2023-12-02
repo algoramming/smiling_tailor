@@ -11,7 +11,7 @@ class ScreenEnlargeWarning extends StatelessWidget {
       body: Center(
         child: Text(
           'Please enlarge your application window.',
-          textScaleFactor: 1.5,
+          textScaler: const TextScaler.linear(1.5),
           textAlign: TextAlign.center,
           style: context.text.labelLarge!
               .copyWith(color: context.theme.dividerColor),

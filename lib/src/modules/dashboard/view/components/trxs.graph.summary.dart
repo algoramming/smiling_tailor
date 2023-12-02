@@ -121,8 +121,8 @@ class TrxsGraphSummary extends ConsumerWidget {
                       textStyle: context.text.titleMedium!
                           .copyWith(color: context.theme.primaryColor),
                     ),
-                    legend:
-                        Legend(isVisible: true, position: LegendPosition.top),
+                    legend: const Legend(
+                        isVisible: true, position: LegendPosition.top),
                     tooltipBehavior: TooltipBehavior(enable: true),
                     series: <ChartSeries<GraphData, String>>[
                       LineSeries<GraphData, String>(

@@ -86,7 +86,7 @@ extension BuildContextBeamerExtension on BuildContext {
       Beamer.of(this).beamToReplacementNamed(uri);
 
   void urlHistory() => log.i(
-      'Url History: ${Beamer.of(this).beamingHistory.map((e) => e.history.map((v) => v.routeInformation.location)).toList()}');
+      'Url History: ${Beamer.of(this).beamingHistory.map((e) => e.history.map((v) => v.routeInformation.uri)).toList()}');
 }
 
 extension BuildContextBeamerDelegateExtension on BeamerDelegate  {
@@ -105,5 +105,5 @@ extension BuildContextBeamerDelegateExtension on BeamerDelegate  {
   void beamPushReplacement(String uri) => beamToReplacementNamed(uri);
 
   void urlHistory() => log.i(
-      'Url History: ${beamingHistory.map((e) => e.history.map((v) => v.routeInformation.location)).toList()}');
+      'Url History: ${beamingHistory.map((e) => e.history.map((v) => v.routeInformation.uri)).toList()}');
 }

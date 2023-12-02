@@ -93,7 +93,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
                   if (noti.isHomeDeliveryNeeded) {
                     await _deliveryAllocationApi(ctx, order, noti)
                         .then((_) async {
-                      log.wtf(
+                      log.f(
                           'order added successfully with - 4 - advance, tailor, inventory and delivery allocation!');
                       noti.clear();
                       ctx.pop();
@@ -103,7 +103,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
                       //     'Order added successfully.', MessageType.success);
                     });
                   } else {
-                    log.wtf(
+                    log.f(
                         'order added successfully with - 3 - advance, tailor and inventory allocation!');
                     noti.clear();
                     ctx.pop();
@@ -118,7 +118,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
                 if (noti.isHomeDeliveryNeeded) {
                   await _deliveryAllocationApi(ctx, order, noti)
                       .then((_) async {
-                    log.wtf(
+                    log.f(
                         'order added successfully with - 3 - advance, tailor and delivery allocation!');
                     noti.clear();
                     ctx.pop();
@@ -128,7 +128,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
                     //     'Order added successfully.', MessageType.success);
                   });
                 } else {
-                  log.wtf(
+                  log.f(
                       'order added successfully with - 2 - advance and tailor allocation!');
                   noti.clear();
                   ctx.pop();
@@ -147,7 +147,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
                 if (noti.isHomeDeliveryNeeded) {
                   await _deliveryAllocationApi(ctx, order, noti)
                       .then((_) async {
-                    log.wtf(
+                    log.f(
                         'order added successfully with - 3 - advance, inventory and delivery allocation!');
                     noti.clear();
                     ctx.pop();
@@ -157,7 +157,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
                     //     'Order added successfully.', MessageType.success);
                   });
                 } else {
-                  log.wtf(
+                  log.f(
                       'order added successfully with - 2 - advance and inventory allocation!');
                   noti.clear();
                   ctx.pop();
@@ -171,7 +171,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
               // if delivery needed
               if (noti.isHomeDeliveryNeeded) {
                 await _deliveryAllocationApi(ctx, order, noti).then((_) async {
-                  log.wtf(
+                  log.f(
                       'order added successfully with - 2 - advance and delivery allocation!');
                   noti.clear();
                   ctx.pop();
@@ -181,7 +181,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
                   //     'Order added successfully.', MessageType.success);
                 });
               } else {
-                log.wtf('order added successfully with - 1 - advance only!');
+                log.f('order added successfully with - 1 - advance only!');
                 noti.clear();
                 ctx.pop();
                 EasyLoading.dismiss();
@@ -200,6 +200,7 @@ Future<void> pktbsAddOrder(BuildContext ctx, AddOrderProvider noti) async {
     return;
   } on ClientException catch (e) {
     log.e('Order Creation: $e');
+    if (!ctx.mounted) return;
     showAwesomeSnackbar(
         ctx, 'Failed!', getErrorMessage(e), MessageType.failure);
     return;

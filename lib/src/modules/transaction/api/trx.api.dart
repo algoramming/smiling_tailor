@@ -102,6 +102,7 @@ Future<void> pktbsDeleteTrx(BuildContext context, PktbsTrx trx) async {
     EasyLoading.showError('No Internet Connection. $e');
   } on ClientException catch (e) {
     log.e('Transaction Creation: $e');
+    if (!context.mounted) return;
     showAwesomeSnackbar(
         context, 'Failed!', getErrorMessage(e), MessageType.failure);
   }

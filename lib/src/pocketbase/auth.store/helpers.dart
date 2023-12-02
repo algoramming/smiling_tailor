@@ -5,7 +5,6 @@ import '../../config/get.platform.dart';
 import '../../db/db.dart';
 import '../../db/paths.dart';
 import '../../utils/logger/logger_helper.dart';
-import 'custom.auth.store.dart';
 import 'web.empty.client.factory.dart'
     if (dart.library.html) 'web.client.factory.dart';
 
@@ -20,12 +19,19 @@ const globalBaseUrl = 'smilingtailor.fly.dev';
 const devBaseUrl = '103.113.227.244:4200';
 final localBaseUrl = pt.isNotMobile ? '127.0.0.1:8090' : '10.0.2.2:8090';
 
+const key = 'pb_auth';
+
 Future<void> initPocketbase() async {
   final sprefs = await SharedPreferences.getInstance();
   appDir.sprefs = sprefs;
+  final customAuthStore = AsyncAuthStore(
+    save: (String data) async => sprefs.setString(key, data),
+    clear: () async => sprefs.remove(key),
+    initial: sprefs.getString(key),
+  );
   pb = PocketBase(
     baseUrl,
-    authStore: CustomAuthStore(sprefs),
+    authStore: customAuthStore,
     httpClientFactory: pt.isWeb ? clientFactoryWeb : null,
   );
   log.i('Pocketbase initialized. AuthStore isValid: ${pb.authStore.isValid}');

@@ -60,6 +60,7 @@ Future<void> pktbsSignup(BuildContext context, AuthProvider notifier,
     return;
   } on ClientException catch (e) {
     log.e('User Creation: $e');
+    if(!context.mounted) return;
     showAwesomeSnackbar(
         context, 'Failed!', getErrorMessage(e), MessageType.failure);
     return;
@@ -85,6 +86,7 @@ Future<void> pktbsSignin(BuildContext context, AuthProvider notifier) async {
     return;
   } on ClientException catch (e) {
     log.e('User signin: $e');
+    if (!context.mounted) return;
     showAwesomeSnackbar(
         context, 'Failed!', getErrorMessage(e), MessageType.failure);
     return;
@@ -171,6 +173,7 @@ Future<void> pktbsUpdate(
     return;
   } on ClientException catch (e) {
     log.e('User Update: $e');
+    if (!context.mounted) return;
     showAwesomeSnackbar(
         context, 'Failed!', getErrorMessage(e), MessageType.failure);
     return;
@@ -193,6 +196,7 @@ Future<void> pktbsSignout(BuildContext context) async {
     return;
   } on ClientException catch (e) {
     log.e('User signout: $e');
+    if (!context.mounted) return;
     showAwesomeSnackbar(
         context, 'Failed!', getErrorMessage(e), MessageType.failure);
     return;

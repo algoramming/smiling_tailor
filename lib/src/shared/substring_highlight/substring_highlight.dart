@@ -158,10 +158,11 @@ class SubstringHighlight extends StatelessWidget {
     }
 
     return RichText(
-        maxLines: maxLines,
-        overflow: overflow,
-        text: TextSpan(children: children, style: textStyle),
-        textAlign: textAlign,
-        textScaleFactor: MediaQuery.of(context).textScaleFactor);
+      maxLines: maxLines,
+      overflow: overflow,
+      text: TextSpan(children: children, style: textStyle),
+      textAlign: textAlign,
+      textScaler: MediaQuery.textScalerOf(context),
+    );
   }
 }

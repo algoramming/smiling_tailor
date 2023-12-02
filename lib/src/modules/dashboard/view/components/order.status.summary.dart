@@ -107,7 +107,7 @@ class OrderStatusSummary extends ConsumerWidget {
             children: [
               for (final status in [
                 orderDeliveryDateToday,
-                ...OrderStatus.values.map((e) => e.label).toList(),
+                ...OrderStatus.values.map((e) => e.label),
               ])
                 InkWell(
                   onTap: () => notifier.goToOrderTab(status),

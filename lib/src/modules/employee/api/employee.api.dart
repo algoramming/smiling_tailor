@@ -38,6 +38,7 @@ Future<void> pktbsAddEmployee(
     return;
   } on ClientException catch (e) {
     log.e('Employee Creation: $e');
+    if (!context.mounted) return;
     showAwesomeSnackbar(
         context, 'Failed!', getErrorMessage(e), MessageType.failure);
     return;
@@ -71,6 +72,7 @@ Future<void> pktbsUpdateEmployee(
     return;
   } on ClientException catch (e) {
     log.e('Employee updation: $e');
+    if (!context.mounted) return;
     showAwesomeSnackbar(
         context, 'Failed!', getErrorMessage(e), MessageType.failure);
     return;
@@ -83,11 +85,13 @@ Future<bool> pktbsDeleteEmployee(BuildContext context, String id) async {
     await pb.collection(employees).delete(id);
     return true;
   } on SocketException catch (e) {
+    if (!context.mounted) return false;
     context.pop();
     context.pop();
     EasyLoading.showError('No Internet Connection. $e');
     return false;
   } on ClientException catch (e) {
+    if (!context.mounted) return false;
     context.pop();
     context.pop();
     log.e('Employee deletion: $e');

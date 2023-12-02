@@ -98,6 +98,7 @@ Future<void> pktbsUpdateInventory(
     return;
   } on ClientException catch (e) {
     log.e('Inventory Updation: $e');
+    if (!context.mounted) return;
     showAwesomeSnackbar(
         context, 'Failed!', getErrorMessage(e), MessageType.failure);
     return;

@@ -17,11 +17,13 @@ Future<bool> pktbsDeleteInventory(BuildContext context, String id) async {
     await pb.collection(inventories).delete(id);
     return true;
   } on SocketException catch (e) {
+    if (!context.mounted) return false;
     context.pop();
     context.pop();
     EasyLoading.showError('No Internet Connection. $e');
     return false;
   } on ClientException catch (e) {
+    if (!context.mounted) return false;
     context.pop();
     context.pop();
     log.e('Inventory deletion: $e');

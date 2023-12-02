@@ -4,4 +4,4 @@ import '../utils/extensions/extensions.dart';
 import 'get.platform.dart';
 
 bool isNeedZoomAdjust(BuildContext context) =>
-    pt.isWeb && context.mq.textScaleFactor != 1.0;
+    pt.isWeb && context.mq.textScaler !=  const TextScaler.linear(1.0);
