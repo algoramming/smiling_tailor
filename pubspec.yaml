@@ -4,21 +4,21 @@ description: Welcome to our tailor-centric Custom Business Management System, wh
 # Prevent accidental publishing to pub.dev.
 publish_to: "none"
 
-version: 0.0.22+22
+version: 0.0.23+23
 
 environment:
-  sdk: ">=3.2.0 <4.0.0"
+  sdk: ">=3.3.0 <4.0.0"
 
 dependencies:
   beamer: ^2.0.0-dev.0
-  fetch_client: ^1.0.2
+  fetch_client: ^1.1.0-wasm
   file_picker: ^6.1.1
   flutter:
     sdk: flutter
   flutter_easyloading: ^3.0.5
   flutter_localizations:
     sdk: flutter
-  flutter_riverpod: ^2.4.9
+  flutter_riverpod: ^3.0.0-dev.3
   flutter_slidable: ^3.0.1
   flutter_svg: ^2.0.9
   flutter_typeahead: ^4.8.0
@@ -28,25 +28,25 @@ dependencies:
   hive_ui: ^1.0.14
   http: ^1.1.2
   image_cropper: ^5.0.1
-  image_picker: ^1.0.4
+  image_picker: ^1.0.7
   intl: ^0.18.1
   logger: ^2.0.2+1
   msix: ^3.16.7
   package_info_plus: ^5.0.1
-  path: ^1.8.3
-  path_provider: ^2.1.1
-  pdf: ^3.10.6
-  pocketbase: ^0.16.0
+  path: ^1.9.0
+  path_provider: ^2.1.2
+  pdf: ^3.10.7
+  pocketbase: ^0.18.1
   printing: ^5.11.1
   rotated_corner_decoration: ^2.1.0+1
-  share_plus: ^7.2.1
+  share_plus: ^7.2.2
   shared_preferences: ^2.2.2
-  syncfusion_flutter_charts: ^23.2.6
+  syncfusion_flutter_charts: ^24.2.6
   toggle_switch: ^2.1.0
-  url_launcher: ^6.2.1
+  url_launcher: ^6.2.4
 
 dev_dependencies:
-  build_runner: ^2.4.7
+  build_runner: ^2.4.8
   flutter_launcher_icons: ^0.13.1
   flutter_lints: ^3.0.1
   flutter_native_splash: ^2.3.6

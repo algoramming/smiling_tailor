@@ -111,7 +111,7 @@ class TrxsGraphSummary extends ConsumerWidget {
                   const SizedBox(height: 10.0),
                   SfCartesianChart(
                     enableAxisAnimation: true,
-                    primaryXAxis: CategoryAxis(),
+                    primaryXAxis: const CategoryAxis(),
                     title: ChartTitle(
                       text: notifier.summaryRadio == 0
                           ? 'Daily Statement'
@@ -124,7 +124,7 @@ class TrxsGraphSummary extends ConsumerWidget {
                     legend: const Legend(
                         isVisible: true, position: LegendPosition.top),
                     tooltipBehavior: TooltipBehavior(enable: true),
-                    series: <ChartSeries<GraphData, String>>[
+                    series: [
                       LineSeries<GraphData, String>(
                         color: context.theme.primaryColor,
                         dataSource: notifier.graphData,
