@@ -122,7 +122,7 @@ Welcome to our tailor-centric Custom Business Management System, where the dynam
 - Now you can install the msix appinstaller file.
 
 
-## Deploy Pocketbase on `fly.io` [Windows]
+## Deploy Pocketbase on `fly.io` [Windows] 
 
 - https://github.com/pocketbase/pocketbase/discussions/537
 

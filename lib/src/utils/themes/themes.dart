@@ -8,7 +8,7 @@ import '../../modules/settings/model/theme/theme.model.dart';
 import '../extensions/extensions.dart';
 
 String get fontFamily =>
-    Boxes.appSettings.get(appName, defaultValue: AppSettings())!.fontFamily;
+    Boxes.appSettings.get(appName.toCamelWord, defaultValue: AppSettings())!.fontFamily;
 
 ThemeProfile get themeType => Boxes.appSettings
     .get(appName.toCamelWord, defaultValue: AppSettings())!

@@ -22,7 +22,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - run: |
           echo "Your Repo is $my_repo"
@@ -39,10 +39,9 @@ jobs:
 
       # Setup the flutter environment.
       - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@v1
         with:
           channel: stable
-          flutter-version: "3.10.5"
 
       - run: flutter config --enable-android
       - run: flutter config --enable-ios
