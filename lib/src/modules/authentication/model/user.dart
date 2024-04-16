@@ -43,7 +43,7 @@ class PktbsUser {
     return PktbsUser(
       id: json[_Json.id],
       name: json[_Json.name],
-      email: json[_Json.email],
+      email: json[_Json.email] ?? 'No Email',
       avatar: json[_Json.avatar],
       verified: json[_Json.verified],
       username: json[_Json.username],

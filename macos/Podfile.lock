@@ -48,11 +48,11 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   file_selector_macos: 0f85c1108e2fd597b58246bc0b0c1cb483d7593b
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
-  package_info_plus: 02d7a575e80f194102bef286361c6c326e4c29ce
-  path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
+  package_info_plus: fa739dd842b393193c5ca93c26798dff6e3d0e0c
+  path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
   printing: 1dd6a1fce2209ec240698e2439a4adbb9b427637
-  share_plus: 76dd39142738f7a68dd57b05093b5e8193f220f7
-  shared_preferences_foundation: e2dae3258e06f44cc55f49d42024fd8dd03c590c
+  share_plus: 36537c04ce0c3e3f5bd297ce4318b6d5ee5fd6cf
+  shared_preferences_foundation: b4c3b4cddf1c21f02770737f147a3f5da9d39695
   url_launcher_macos: d2691c7dd33ed713bf3544850a623080ec693d95
 
 PODFILE CHECKSUM: 236401fc2c932af29a9fcf0e97baeeb2d750d367
