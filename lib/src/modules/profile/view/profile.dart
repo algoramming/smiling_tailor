@@ -86,7 +86,7 @@ class ProfileView extends ConsumerWidget {
               : const Icon(Icons.remove_red_eye, size: 16.0),
         ),
         style: context.theme.elevatedButtonTheme.style!.copyWith(
-            minimumSize: MaterialStateProperty.all(const Size(200, 45))),
+            minimumSize: WidgetStateProperty.all(const Size(200, 45))),
         onPressed: () => notifier.toggleEditable(),
       ),
     );

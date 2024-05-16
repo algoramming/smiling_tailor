@@ -17,7 +17,7 @@ class ProfileButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 15.0),
       child: ElevatedButton(
         style: context.theme.elevatedButtonTheme.style!.copyWith(
-            minimumSize: MaterialStateProperty.all(const Size(180, 45))),
+            minimumSize: WidgetStateProperty.all(const Size(180, 45))),
         child: FadeSwitcherTransition(
             child: notifier.isEditable
                 ? const Text('Update Profile')
@@ -58,7 +58,8 @@ class ConfirmationSendPopup extends StatelessWidget {
           TextButton(
             onPressed: () async => await pktbsResetPassword(context, email)
                 .then((_) => context.pop()),
-            child: Text('Confirm', style: TextStyle(color: context.theme.primaryColor)),
+            child: Text('Confirm',
+                style: TextStyle(color: context.theme.primaryColor)),
           ),
         ],
       ),

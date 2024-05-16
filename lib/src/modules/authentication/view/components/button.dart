@@ -15,7 +15,7 @@ class AuthButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 15.0),
       child: ElevatedButton(
         style: context.theme.elevatedButtonTheme.style!.copyWith(
-            minimumSize: MaterialStateProperty.all(const Size(180, 45))),
+            minimumSize: WidgetStateProperty.all(const Size(180, 45))),
         child: FadeSwitcherTransition(
           child: notifier.isSignup
               ? const Text('Create Account')

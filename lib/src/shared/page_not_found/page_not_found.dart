@@ -77,7 +77,7 @@ class KServerNotRunning extends StatelessWidget {
                 const SizedBox(height: 20),
                 OutlinedButton.icon(
                   style: ButtonStyle(
-                    minimumSize: MaterialStateProperty.all(const Size(150, 42)),
+                    minimumSize: WidgetStateProperty.all(const Size(150, 42)),
                   ),
                   onPressed: () {
                     if (pt.isNotWeb) {

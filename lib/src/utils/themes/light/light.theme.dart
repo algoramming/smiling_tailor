@@ -69,8 +69,8 @@ final lightTheme = ThemeData(
 );
 
 final _switchTheme = SwitchThemeData(
-  thumbColor: MaterialStateProperty.all(lightPrimaryColor),
-  trackColor: MaterialStateProperty.all(lightPrimaryColor.withOpacity(0.5)),
+  thumbColor: WidgetStateProperty.all(lightPrimaryColor),
+  trackColor: WidgetStateProperty.all(lightPrimaryColor.withOpacity(0.5)),
 );
 
 final _lightInputDecorationTheme = InputDecorationTheme(
@@ -140,8 +140,8 @@ final _cardTheme = CardTheme(
 );
 
 final _radioTheme = RadioThemeData(
-  fillColor: MaterialStateProperty.all(lightPrimaryColor),
-  overlayColor: MaterialStateProperty.all(_primaryLightColor),
+  fillColor: WidgetStateProperty.all(lightPrimaryColor),
+  overlayColor: WidgetStateProperty.all(_primaryLightColor),
 );
 
 final _listTileTheme = ListTileThemeData(shape: roundedRectangleBorder30);

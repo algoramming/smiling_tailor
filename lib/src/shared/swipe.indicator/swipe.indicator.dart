@@ -7,7 +7,9 @@ import '../../config/constants.dart';
 import '../../utils/extensions/extensions.dart';
 
 class SwipeIndicator extends StatelessWidget {
-  const SwipeIndicator({super.key});
+  const SwipeIndicator({super.key, this.text});
+
+  final String? text;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class SwipeIndicator extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Text(
-            'Swipe to see more options',
+            'Swipe to see more options$text',
             style: context.text.labelSmall!.copyWith(
               color: context.theme.dividerColor,
             ),

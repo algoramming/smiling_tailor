@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smiling_tailor/src/config/constants.dart';
 
 import '../../../shared/loading_widget/loading_widget.dart';
 import '../../../shared/page_not_found/page_not_found.dart';
@@ -33,19 +34,30 @@ class VendorView extends ConsumerWidget {
       floatingActionButton: Consumer(
         builder: (_, ref, __) {
           ref.watch(vendorProvider);
-          final notifier = ref.watch(vendorProvider.notifier).selectedVendor;
-          return BigToSmallTransition(
-            child: notifier != null
-                ? const SizedBox.shrink()
-                : FloatingActionButton.small(
-                    tooltip: 'Add Vendor',
-                    onPressed: () async => await showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (_) => const AddVendorPopup(),
-                    ),
-                    child: const Icon(Icons.add, color: white),
-                  ),
+          final notifier = ref.watch(vendorProvider.notifier);
+          return Column(
+            mainAxisAlignment: mainEnd,
+            children: [
+              BigToSmallTransition(
+                child: notifier.selectedVendor != null
+                    ? const SizedBox.shrink()
+                    : FloatingActionButton.small(
+                        tooltip: 'Add Vendor',
+                        onPressed: () async => await showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (_) => const AddVendorPopup(),
+                        ),
+                        child: const Icon(Icons.add, color: white),
+                      ),
+              ),
+              const SizedBox(height: 6.0),
+              FloatingActionButton.small(
+                tooltip: 'Add dummy Vendor',
+                onPressed: () async => await notifier.createDummy(context),
+                child: const Icon(Icons.bug_report_outlined, color: white),
+              ),
+            ],
           );
         },
       ),
