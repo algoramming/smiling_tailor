@@ -33,6 +33,7 @@ class SettingsView extends StatelessWidget {
               headerSliverBuilder: (_, __) => [
                 SliverToBoxAdapter(
                   child: TabBar(
+                    tabAlignment: TabAlignment.start,
                     splashBorderRadius: borderRadius30,
                     isScrollable: true,
                     physics: const BouncingScrollPhysics(),

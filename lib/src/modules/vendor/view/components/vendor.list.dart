@@ -1,9 +1,8 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:smiling_tailor/src/modules/vendor/model/vendor.dart';
 
 import '../../../../shared/animations_widget/animated_widget_shower.dart';
 import '../../../../shared/clipboard_data/clipboard_data.dart';
@@ -26,107 +25,103 @@ class VendorList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(vendorProvider);
     final notifier = ref.watch(vendorProvider.notifier);
-    return SmartRefresher(
-      controller: notifier.refreshController,
-      enablePullUp: true,
-      onRefresh: notifier.refresh,
-      onLoading: notifier.loadMore,
-      // header: const WaterDropMaterialHeader(),
-      // footer: const ClassicFooter(),
-      dragStartBehavior: DragStartBehavior.down,
-      
-      child: Column(
-        children: [
-          TextFormField(
-            controller: notifier.searchCntrlr,
-            decoration: InputDecoration(
-              hintText: 'Search...',
-              prefixIcon: ClearPrefixIcon(() => notifier.searchCntrlr.clear()),
-              suffixIcon: PasteSuffixIcon(() async =>
-                  notifier.searchCntrlr.text = await getCliboardData()),
-            ),
+    return Column(
+      children: [
+        TextFormField(
+          controller: notifier.searchCntrlr,
+          decoration: InputDecoration(
+            hintText: 'Search...',
+            prefixIcon: ClearPrefixIcon(() => notifier.searchCntrlr.clear()),
+            suffixIcon: PasteSuffixIcon(() async =>
+                notifier.searchCntrlr.text = await getCliboardData()),
           ),
-          Flexible(
-            child: ref.watch(vendorProvider).when(
-                  loading: () => const LoadingWidget(withScaffold: false),
-                  error: (err, _) => KErrorWidget(error: err),
-                  data: (_) => FadeSwitcherTransition(
-                    child: notifier.vendorList.isEmpty
-                        ? const KDataNotFound(msg: 'No Vendor Found!')
-                        : Column(
-                            children: [
-                              SwipeIndicator(
-                                  text:
-                                      ' (Total ${notifier.vendorList.length} Vendors. Page: ${notifier.page})'),
-                              Flexible(
-                                child: SlidableAutoCloseBehavior(
+        ),
+        Flexible(
+          child: ref.watch(vendorProvider).when(
+                loading: () => const LoadingWidget(withScaffold: false),
+                error: (err, _) => KErrorWidget(error: err),
+                data: (_) => FadeSwitcherTransition(
+                  child: notifier.vendorList.isEmpty
+                      ? const KDataNotFound(msg: 'No Vendor Found!')
+                      : Column(
+                          children: [
+                            SwipeIndicator(
+                                text:
+                                    ' (Total ${notifier.vendorList.length} Vendors. Page: ${notifier.page})'),
+                            Flexible(
+                              child: SlidableAutoCloseBehavior(
+                                child: RefreshIndicator(
+                                  onRefresh: notifier.refresh,
+                                  color: context.theme.primaryColor,
                                   child: ListView.builder(
+                                    controller: notifier.scrollCntrlr,
                                     itemCount: notifier.vendorList.length,
-                                    itemBuilder: (_, idx) {
-                                      final vendor = notifier.vendorList[idx];
-                                      return Card(
-                                        child: KListTile(
-                                          key: ValueKey(vendor.id),
-                                          onEditTap: () async =>
-                                              await showDialog(
-                                            context: context,
-                                            barrierDismissible: false,
-                                            builder: (_) =>
-                                                AddVendorPopup(vendor: vendor),
-                                          ),
-                                          onDeleteTap: () async =>
-                                              await showDeleteVendorPopup(
-                                                  context, vendor),
-                                          selected:
-                                              notifier.selectedVendor == vendor,
-                                          onTap: () =>
-                                              notifier.selectVendor(vendor),
-                                          onLongPress: () async =>
-                                              await copyToClipboard(
-                                                  context, vendor.id),
-                                          leading: AnimatedWidgetShower(
-                                            size: 30.0,
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(4.0),
-                                              child: SvgPicture.asset(
-                                                'assets/svgs/vendor.svg',
-                                                colorFilter: context.theme
-                                                    .primaryColor.toColorFilter,
-                                                semanticsLabel: 'Vendor',
-                                              ),
-                                            ),
-                                          ),
-                                          title: Text(
-                                            vendor.name,
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 1,
-                                            style: context.text.titleSmall,
-                                          ),
-                                          subtitle: Text(
-                                            vendor.address,
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 2,
-                                            style: context.text.labelSmall!
-                                                .copyWith(
-                                                    fontWeight:
-                                                        FontWeight.normal),
-                                          ),
-                                          trailing: const Icon(Icons
-                                              .arrow_circle_right_outlined),
-                                        ),
-                                      );
-                                    },
+                                    itemBuilder: (_, idx) => _Tile(
+                                      vendor: notifier.vendorList[idx],
+                                      notifier: notifier,
+                                    ),
                                   ),
                                 ),
                               ),
-                              const SizedBox(height: 50.0)
-                            ],
-                          ),
-                  ),
+                            ),
+                          ],
+                        ),
                 ),
-          )
-        ],
+              ),
+        )
+      ],
+    );
+  }
+}
+
+class _Tile extends StatelessWidget {
+  const _Tile({
+    required this.vendor,
+    required this.notifier,
+  });
+
+  final PktbsVendor vendor;
+  final VendorProvider notifier;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: KListTile(
+        key: ValueKey(vendor.id),
+        onEditTap: () async => await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) => AddVendorPopup(vendor: vendor),
+        ),
+        onDeleteTap: () async => await showDeleteVendorPopup(context, vendor),
+        selected: notifier.selectedVendor == vendor,
+        onTap: () => notifier.selectVendor(vendor),
+        onLongPress: () async => await copyToClipboard(context, vendor.id),
+        leading: AnimatedWidgetShower(
+          size: 30.0,
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: SvgPicture.asset(
+              'assets/svgs/vendor.svg',
+              colorFilter: context.theme.primaryColor.toColorFilter,
+              semanticsLabel: 'Vendor',
+            ),
+          ),
+        ),
+        title: Text(
+          vendor.name,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
+          style: context.text.titleSmall,
+        ),
+        subtitle: Text(
+          vendor.address,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 2,
+          style:
+              context.text.labelSmall!.copyWith(fontWeight: FontWeight.normal),
+        ),
+        trailing: const Icon(Icons.arrow_circle_right_outlined),
       ),
     );
   }

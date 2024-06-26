@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:smiling_tailor/src/utils/extensions/extensions.dart';
 
 import '../../../db/db.dart';
 import '../../authentication/model/user.dart';
@@ -8,8 +9,6 @@ import '../../settings/model/settings.model.dart';
 import '../../transaction/enum/trx.type.dart';
 
 part 'vendor.ext.dart';
-
-const pktbsVendorExpand = 'creator, updator';
 
 class PktbsVendor {
   String name;
@@ -63,6 +62,14 @@ class PktbsVendor {
 
   factory PktbsVendor.fromRawJson(String str) =>
       PktbsVendor.fromJson(json.decode(str));
+
+  static const sort = '-created';
+
+  static const expand = 'creator, updator';
+
+  static String? query(String? q) => q.isNullOrEmpty
+      ? null
+      : 'name ~ "$q" || email ~ "$q" || phone ~ "$q" || address ~ "$q" || description ~ "$q"';
 
   @override
   String toString() =>

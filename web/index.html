@@ -12,36 +12,23 @@
     This is a placeholder for base href that will be replaced by the value of
     the `--base-href` argument provided to `flutter build`.
   -->
-  <base href="$FLUTTER_BASE_HREF"> 
-  <!--<base href="/smiling_tailor/"> -->
+  <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="Welcome to our tailor-centric Custom Business Management System, where the dynamic fusion of ERP (Enterprise Resource Planning) and CRM (Customer Relationship Management) empowers your tailoring business like never before. Our feature-rich and user-friendly application has been meticulously crafted to streamline your operations effortlessly. With our cutting-edge system, you can easily manage and monitor essential elements of your business, including managers, vendors, inventory, and employees. Effortlessly process orders and witness the seamless flow of transaction history in real-time, ensuring airtight organization, enhanced efficiency, and complete control over your business processes. We take pride in presenting this exceptional software solution, developed in-house by our skilled team at Algoramming. Our commitment to quality and reliability ensures that every aspect of our system is fine-tuned to meet the specific needs of your tailoring business, setting you on a path to success with unparalleled ease.">
+  <meta name="description" content="A new Flutter project.">
 
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="smiling_tailor">
+  <meta name="apple-mobile-web-app-title" content="smilingtailor">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png">
 
-  <title>Smiling Tailor</title>
+  <title>smilingtailor</title>
   <link rel="manifest" href="manifest.json">
-
-  <script>
-    // The value below is injected by flutter build, do not touch.
-    var serviceWorkerVersion = null;
-  </script>
-  <!-- This script adds the flutter initialization JS code -->
-  <script src="flutter.js" defer=""></script>
-  
-  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
-  
-  
-  
   <style id="splash-screen-style">
     html {
       height: 100%
@@ -107,10 +94,7 @@
       document.body.style.background = "transparent";
     }
   </script>
-
-  <script>
-    var dartPdfJsVersion = "3.2.146";
-  </script>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
 </head>
 <body>
   <picture id="splash">
@@ -118,22 +102,7 @@
       <source srcset="splash/img/dark-1x.png 1x, splash/img/dark-2x.png 2x, splash/img/dark-3x.png 3x, splash/img/dark-4x.png 4x" media="(prefers-color-scheme: dark)">
       <img class="center" aria-hidden="true" src="splash/img/light-1x.png" alt="">
   </picture>
-          
-  <script>
-    window.addEventListener('load', function(ev) {
-      // Download main.dart.js
-      _flutter.loader.loadEntrypoint({
-        serviceWorker: {
-          serviceWorkerVersion: serviceWorkerVersion,
-        },
-        onEntrypointLoaded: function(engineInitializer) {
-          engineInitializer.initializeEngine().then(function(appRunner) {
-            appRunner.runApp();
-          });
-        }
-      });
-    });
-  </script>
+  <script src="flutter_bootstrap.js" async=""></script>
 
 
 </body></html>

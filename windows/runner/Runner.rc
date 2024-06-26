@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.algoramming" "\0"
-            VALUE "FileDescription", "smiling_tailor" "\0"
+            VALUE "FileDescription", "smilingtailor" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "smiling_tailor" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2023 com.algoramming. All rights reserved." "\0"
-            VALUE "OriginalFilename", "smiling_tailor.exe" "\0"
-            VALUE "ProductName", "smiling_tailor" "\0"
+            VALUE "InternalName", "smilingtailor" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2024 com.algoramming. All rights reserved." "\0"
+            VALUE "OriginalFilename", "smilingtailor.exe" "\0"
+            VALUE "ProductName", "smilingtailor" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

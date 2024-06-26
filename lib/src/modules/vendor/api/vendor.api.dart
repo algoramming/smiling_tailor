@@ -30,34 +30,30 @@ Future<void> pktbsAddVendor(
         'address': notifier.addressCntrlr.text,
         'description': notifier.descriptionCntrlr.text,
       },
+      expand: PktbsVendor.expand,
     ).then((r) async {
       final openingBalance = notifier.openingBalanceCntrlr.text.toDouble;
-      await pb
-          .collection(vendors)
-          .getOne(r.toJson()['id'], expand: pktbsVendorExpand)
-          .then((v) async {
-        final ven = PktbsVendor.fromJson(v.toJson());
-        log.i('Need Trx for ${ven.name} of $openingBalance}');
-        await pktbsAddTrx(
-          context,
-          fromId: pb.authStore.model?.id,
-          fromJson: pb.authStore.model?.toJson(),
-          fromType: GLType.user,
-          toId: ven.id,
-          toJson: ven.toJson(),
-          toType: ven.glType,
-          trxType: notifier.isPaybale ? TrxType.debit : TrxType.credit,
-          isSystemGenerated: true,
-          amount: openingBalance,
-          voucher: 'Vendor Opening Balance Transaction',
-          description:
-              'System Generated: Transaction for Opening Balance. ${ven.name} [${ven.id}] is ${!notifier.isPaybale ? 'Payable' : 'Receivable'} of ${appCurrency.symbol}$openingBalance. Liability ${notifier.isPaybale ? 'Credit/Increase' : 'Debit/Decrease'}.',
-        ).then((value) {
-          notifier.clear();
-          context.pop();
-          showAwesomeSnackbar(context, 'Success!', 'Vendor added successfully.',
-              MessageType.success);
-        });
+      final ven = PktbsVendor.fromJson(r.toJson());
+      log.i('Need Trx for ${ven.name} of $openingBalance}');
+      await pktbsAddTrx(
+        context,
+        fromId: pb.authStore.model?.id,
+        fromJson: pb.authStore.model?.toJson(),
+        fromType: GLType.user,
+        toId: ven.id,
+        toJson: ven.toJson(),
+        toType: ven.glType,
+        trxType: notifier.isPaybale ? TrxType.debit : TrxType.credit,
+        isSystemGenerated: true,
+        amount: openingBalance,
+        voucher: 'Vendor Opening Balance Transaction',
+        description:
+            'System Generated: Transaction for Opening Balance. ${ven.name} [${ven.id}] is ${!notifier.isPaybale ? 'Payable' : 'Receivable'} of ${appCurrency.symbol}$openingBalance. Liability ${notifier.isPaybale ? 'Credit/Increase' : 'Debit/Decrease'}.',
+      ).then((value) {
+        notifier.clear();
+        context.pop();
+        showAwesomeSnackbar(context, 'Success!', 'Vendor added successfully.',
+            MessageType.success);
       });
     });
     return;
@@ -77,39 +73,38 @@ Future<void> pktbsUpdateVendor(
     BuildContext context, AddVendorProvider notifier) async {
   try {
     EasyLoading.show(status: 'Updating vendor...');
-    await pb.collection(vendors).update(
-      notifier.arg!.id,
-      body: {
-        'name': notifier.nameCntrlr.text,
-        'updator': pb.authStore.model!.id,
-        'email': notifier.emailCntrlr.text,
-        'phone': notifier.phoneCntrlr.text,
-        'address': notifier.addressCntrlr.text,
-        'description': notifier.descriptionCntrlr.text,
-      },
-    ).then((r) async {
+    await pb
+        .collection(vendors)
+        .update(
+          notifier.arg!.id,
+          body: {
+            'name': notifier.nameCntrlr.text,
+            'updator': pb.authStore.model!.id,
+            'email': notifier.emailCntrlr.text,
+            'phone': notifier.phoneCntrlr.text,
+            'address': notifier.addressCntrlr.text,
+            'description': notifier.descriptionCntrlr.text,
+          },
+          expand: PktbsVendor.expand,
+        )
+        .then((r) async {
       final openingBalance = notifier.openingBalanceCntrlr.text.toDouble;
-      await pb
-          .collection(vendors)
-          .getOne(r.toJson()['id'], expand: pktbsVendorExpand)
-          .then((v) async {
-        final ven = PktbsVendor.fromJson(v.toJson());
-        log.i('Need Trx for ${ven.name} of $openingBalance}');
-        await pktbsUpdateTrx(
-          context,
-          notifier.openingTrx!.copyWith(
-            amount: openingBalance,
-            trxType: notifier.isPaybale ? TrxType.debit : TrxType.credit,
-            to: ven.toJson(),
-            description:
-                'System Generated: Transaction for Opening Balance. ${ven.name} [${ven.id}] is ${!notifier.isPaybale ? 'Payable' : 'Receivable'} of ${appCurrency.symbol}$openingBalance. Liability ${notifier.isPaybale ? 'Credit/Increase' : 'Debit/Decrease'}.',
-          ),
-        ).then((value) {
-          notifier.clear();
-          context.pop();
-          showAwesomeSnackbar(context, 'Success!',
-              'Vendor updated successfully.', MessageType.success);
-        });
+      final ven = PktbsVendor.fromJson(r.toJson());
+      log.i('Need Trx for ${ven.name} of $openingBalance}');
+      await pktbsUpdateTrx(
+        context,
+        notifier.openingTrx!.copyWith(
+          amount: openingBalance,
+          trxType: notifier.isPaybale ? TrxType.debit : TrxType.credit,
+          to: ven.toJson(),
+          description:
+              'System Generated: Transaction for Opening Balance. ${ven.name} [${ven.id}] is ${!notifier.isPaybale ? 'Payable' : 'Receivable'} of ${appCurrency.symbol}$openingBalance. Liability ${notifier.isPaybale ? 'Credit/Increase' : 'Debit/Decrease'}.',
+        ),
+      ).then((value) {
+        notifier.clear();
+        context.pop();
+        showAwesomeSnackbar(context, 'Success!', 'Vendor updated successfully.',
+            MessageType.success);
       });
     });
     return;
